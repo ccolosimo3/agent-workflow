@@ -137,8 +137,9 @@ runtime versions, and contracts.
 ## Kickoff Templates
 
 Canonical kickoff prompts live in `~/.agents/workflow/KICKOFFS.md`: Planning,
-Domain Pass, Issue Draft, Execution/Implementation, Review, PR Review Comment,
-Fast Fix, Post-Plan Grill.
+Domain Pass, Issue Draft, Plan Review, Plan Re-Review,
+Execution/Implementation, Review, Re-Review, PR Review Comment, Fast Fix,
+Post-Plan Grill.
 
 **Fidelity rule:** When asked to hand off a kickoff to the operator or another
 agent, paste the matching section from KICKOFFS.md verbatim with placeholders

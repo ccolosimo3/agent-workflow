@@ -91,6 +91,92 @@ Conventions:
 - If a required section cannot be filled, insert `<!-- TODO: ... -->` rather than skip silently
 ```
 
+## Plan Review Kickoff
+
+```text
+Review plan / spec / issue draft <path or link> for <feature/workstream>.
+
+Context (filled by planner; reviewer treats this as the source of truth for what to validate against):
+
+1. Plan artifact
+   - path or link: <url or path>
+   - artifact type: <rough-spec | issue-draft | other planning markdown>
+   - intended downstream action: <gh issue create | implementation kickoff | other>
+   - target repo (if filing an issue): <repo>
+   - target labels (if filing an issue): <comma-separated; pulled from `gh label list --repo <repo>`>
+
+2. Planner summary (2-3 sentences)
+   <what the plan delivers and why>
+
+3. Source material
+   - upstream spec / rough-spec (if reviewing a derived artifact): <path>
+   - related issues, ADRs, prior discussion: <urls or paths>
+   - touched modules / files claimed in scope: <paths>
+
+4. Scope coverage
+   - intended in-scope items: <bullets>
+   - intentional out-of-scope items: <bullets + reason>
+   - dependency / ordering claims: <"blocks #X" / "blocked by #Y" / "ordered after #Z">
+
+5. Hot spots / known risk in the plan
+   - <ambiguous areas; claims the reviewer should fact-check against the code>
+   - <decisions made and rejected alternatives>
+
+Return:
+1. Verdict: APPROVED or ACTIONABLE
+2. Findings if ACTIONABLE: [severity] section-or-line | category | issue | required fix
+   Validation categories (focus, not exhaustive):
+   - scope coverage gaps (missing acceptance criteria, undefined non-goals)
+   - file/line claim accuracy (do paths claimed in scope exist; do referenced symbols exist)
+   - label correctness against the repo's actual label set
+   - self-containment of an issue body (would this issue be actionable to someone with no prior context)
+   - dependency claims (do blocked/ordered-after references point at real issues with the claimed state)
+   - ambiguous terminology or undefined nouns
+   - missing or untestable acceptance criteria
+   - missing or wrong verification commands
+3. Notes on scope or framing improvements (non-blocking but useful)
+
+When Verdict is ACTIONABLE, mark any finding requiring operator input (scope change, contract decision, label policy interpretation) with `[decision-required]` in its required fix. Append this planner directive verbatim at the end of your output so it stays with the findings when the operator forwards them:
+
+> Planner: address every finding autonomously. For any finding marked `[decision-required]`, skip the revision, summarize the decision needed, and return to the operator. Do not block other revisions on those.
+
+Focus on whether the plan is correct, complete, and self-contained enough to be acted on. Do not write the implementation. Do not propose new scope unless it closes a coverage gap the plan claims to cover.
+
+If Verdict is ACTIONABLE, return findings and stop. The planner revises and hands back to the operator; no second review cycle from this reviewer.
+```
+
+## Plan Re-Review Kickoff
+
+```text
+Re-review plan / spec / issue draft <path> after revisions following a prior ACTIONABLE plan review.
+
+## Prior review
+- verdict: ACTIONABLE
+- source kickoff: <pointer to original Plan Review Kickoff if present>
+- findings (restated verbatim from prior reviewer):
+  - [severity] section-or-line | category | issue | required fix
+  - ...
+
+## Revisions applied
+- artifact path: <path>
+- summary of revisions: <one or two sentences mapping revisions to findings>
+- diff (if version-controlled): <verbatim output of `git diff <base>..HEAD -- <artifact path>`, or before/after snippet>
+
+## Verify
+Return:
+1. Per-finding status: for each prior finding, "addressed" or "not addressed", with the revised section quoted or referenced.
+2. New issues introduced by the revisions (rare but possible — e.g. revisions widened scope, introduced contradictions with non-goals, broke self-containment).
+3. Verdict: APPROVED or ACTIONABLE.
+
+When Verdict is ACTIONABLE, mark any finding requiring operator input with `[decision-required]` and append the planner directive verbatim:
+
+> Planner: address every finding autonomously. For any finding marked `[decision-required]`, skip the revision, summarize the decision needed, and return to the operator. Do not block other revisions on those.
+
+Focus on the revisions and the prior findings. Do not perform a fresh broad plan review.
+
+If Verdict is ACTIONABLE, return findings and stop. The planner revises and hands back to the operator; no second review cycle from this reviewer.
+```
+
 ## Execution Kickoff / Implementation Kickoff
 
 ```text
@@ -193,6 +279,43 @@ When Verdict is ACTIONABLE, mark any finding that requires operator input (scope
 Focus on correctness, regressions, contract drift, state/failure behavior, security,
 data loss, and missing tests/docs. Do not rerun broad verification already reported
 green unless the diff makes that evidence suspect.
+
+If Verdict is ACTIONABLE, return findings and stop. The implementer patches and hands back to the operator; no second review cycle from this reviewer.
+```
+
+## Re-Review Kickoff
+
+```text
+Re-review work item <id/link> / PR <id/link> / branch <branch> against <base>.
+
+## Prior review
+- verdict: ACTIONABLE
+- source kickoff: <pointer/quote of original Review Kickoff if present>
+- findings (restated verbatim from prior reviewer):
+  - [severity] path:line | category | issue | impact | required fix
+  - ...
+
+## Patches applied since the prior review
+- base: <commit sha>
+- tip: <commit sha>
+- commits:
+  - <sha> <subject>
+  - ...
+- diff stat: <verbatim output of `git diff --stat <base>..HEAD`>
+- implementer notes (if any): <summary of how each finding was patched>
+
+## Verify
+Return:
+1. Per-finding status: for each prior finding, "addressed" or "not addressed" with `path:line` evidence in the new code. If `[decision-required]` was on a finding, the implementer may have skipped it — note that and do not mark it not addressed.
+2. Regressions: any behavior the patches broke that worked under the prior reviewed state.
+3. New issues: anything surfaced in the changed lines that wasn't a prior finding (correctness, regression, contract drift, state/failure behavior, security, data loss, missing tests/docs).
+4. Verdict: APPROVED or ACTIONABLE.
+
+When Verdict is ACTIONABLE, mark any finding requiring operator input (scope change, contract decision, ambiguous spec interpretation) with `[decision-required]` in its required fix. Append this implementer directive verbatim at the end of your output:
+
+> Implementer: patch every finding autonomously. For any finding marked `[decision-required]`, skip the patch, summarize the decision needed, and return to the operator. Do not block other patches on those.
+
+Focus on the changed lines and the prior findings. Do not rerun broad verification already reported green unless the patch makes that evidence suspect.
 
 If Verdict is ACTIONABLE, return findings and stop. The implementer patches and hands back to the operator; no second review cycle from this reviewer.
 ```
