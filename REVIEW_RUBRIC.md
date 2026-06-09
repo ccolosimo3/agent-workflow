@@ -153,6 +153,23 @@ paths.
 Do not rerun broad verification already reported green unless the diff makes that
 evidence suspect.
 
+## Time-sensitive & external claims (verify, don't assert from memory)
+
+Today's date is in your context — treat your training knowledge as potentially stale
+for anything dated. When a finding or recommendation HINGES on an external, dated
+fact — an API/option is deprecated or removed, a pattern is the "current" recommended
+one, a version-specific behavior, or a security advisory/CVE — do not assert it from
+memory. Verify it, in this order, and cite the source + the date you checked:
+1. the repo's pinned version (package.json / lockfile) and the repo-bundled SME/doc
+   skills (e.g. sme-vendure, stripe-best-practices, sme-sentry, expo-docs,
+   claude-api) — authoritative for THIS repo;
+2. official upstream docs / changelog / advisory via WebSearch / WebFetch.
+Temper "latest best practice" against the repo's ACTUAL pinned major: do not flag
+code for missing a pattern its pinned version cannot support, and do not recommend an
+API the pinned version lacks. If you cannot verify a time-sensitive claim, mark it a
+non-blocking note (not a blocking finding) and say it is unverified — never upgrade a
+freshness hunch to ACTIONABLE.
+
 ## Output contract (your Return, in order)
 
 0. Confirm you ran `git diff <base>..<tip>` and reviewed the full diff. List any

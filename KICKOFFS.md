@@ -178,6 +178,11 @@ Return:
    - label correctness against the repo's actual label set
    - self-containment of an issue body (would this issue be actionable to someone with no prior context)
    - dependency claims (do blocked/ordered-after references point at real issues with the claimed state)
+   - time-sensitive / external claims: if the plan picks a library, API, pattern, or
+     version, or asserts something is deprecated / current / best-practice, verify it
+     against the repo's pinned version + bundled SME/doc skills, then official
+     upstream docs via web search (cite source + date) — don't approve or reject a
+     dated claim from memory; temper "latest" against the repo's actual pinned major
    - ambiguous terminology or undefined nouns
    - missing or untestable acceptance criteria
    - missing or wrong verification commands
@@ -249,122 +254,54 @@ If Verdict is ACTIONABLE, return findings and stop. The planner revises and hand
 
 ```text
 Run execution kickoff for existing work item <id/link>.
+Mode: <task|gated|fast>  # default task; gated for high-risk/multi-step work; fast per the Fast Fix kickoff. State the mode and the one risk signal driving it.
 
-Mode: <task|gated|fast>  # inherit from planning if known
+Execute Startup Routing A ("Implement Existing Work Item") in AGENTS.md end to end:
+read the item + local shim, restate goal/non-goals/AC, scope in/out, spot-check the
+spec's load-bearing file:line claims against the tree before editing (surface any
+conflict instead of coding against a stale claim), branch from a clean tree,
+implement minimally, verify by tier, hand off for review (emit the Review Kickoff in
+chat BEFORE spawning exactly one reviewer; the operator owns the second), then PR.
+Do NOT restate the rules AGENTS.md already owns — follow them: Verification Tiers,
+the Destructive Action Policy (identify every approval-gated command before running
+it), the Review Loop, PR Handoff (PR body in the locked shape below, labels, PR-GO),
+and Definition of Done.
 
-Then execute end-to-end:
-1. read the work item and local repo shim
-2. restate goal, non-goals, acceptance criteria, and verification routing:
-   Tier 1 loop checks, Tier 3/PR-parity gates, any broader local gates selected
-   for this task, and any available broader gates intentionally not selected.
-   Before editing, spot-check the spec's load-bearing source claims (cited
-   file:line wiring points and referenced symbols) against the current tree; if a
-   claimed path has moved, no longer exists, or the code already contradicts a spec
-   assumption, surface the conflict to the operator and adjust scope instead of
-   coding against the stale claim.
-3. identify files in scope and out of scope
-4. identify any approval-gated commands before running them, including
-   destructive local data operations, provider mutations, live migrations,
-   externally visible tracker/PR actions, dependency/toolchain changes, and
-   commands that use staging or production credentials
-5. check `git status` first; never build on a dirty tree or discard unowned
-   changes, and confirm the intended base branch before you create/switch to the
-   team-standard branch (when edits are expected)
-6. implement minimally; if mode=gated, pause for operator review after step 2 and after first Tier 1 verification. If you write a test purely to verify a one-time repair (static asset, config, or data fix) with no ongoing regression surface a normal code change would hit, do NOT commit it to the suite — pocket it to the work-item `artifacts/` (or record a Tier-4 note) and disclose it in the Review Kickoff test-quality block for the operator to confirm
-7. run verification by tier. Use local repo commands for the selected level of
-   verification; run build, contract, e2e, visual/manual QA, local-stack QA, or
-   other broader gates when the touched surface or operator request justifies
-   them. Tie tier selection to the changed SURFACE, not to convenience: if the diff
-   touches a surface that the repo's verification doc (clearsnake
-   mobile/VERIFICATION.md, townchest AGENTS.local.md) names a broader gate for —
-   migration/schema/persisted state, native config, routing, auth, or a contract
-   surface — that named gate is REQUIRED, and "Tier 1 sufficient" is not a valid
-   record for it. If a broader local gate is available but not selected, name the
-   surface you changed and why no surface-triggered gate applies; if a gate is
-   blocked, record the exact blocker.
-8. summarize changes and verification. Reconcile the summary against your terminal
-   history: claim a gate passed only if it actually ran in this session/branch, and
-   report each as a real result (the per-command number goes in Review Kickoff
-   section 4). Mark any gate you did not run as not-run (with its reason/blocker or
-   as CI-owned) — never as passing. State an explicit docs-impact decision in that
-   summary per the Docs Impact Check — either `Docs impact: none` or the updated
-   tracked-doc path. Then commit the implementation on the branch (a real commit,
-   no push, no amend) and record the review range `<base>..<tip>` (base =
-   merge-base with the target branch, tip = HEAD) so reviewers diff a stable range
-   from git instead of a pasted file list.
-9. hand the operator a populated Review Kickoff prompt as a required completion
-   artifact:
-   a. Produce one Review Kickoff with all context blocks pre-populated from this session (see Review Kickoff template).
-   b. Emit the full populated prompt in chat verbatim under `Review Kickoff Prompt` before spawning any reviewer subagent.
-   c. Treat the implementation summary as incomplete until that prompt has been shown to the operator in chat. Do not wait until the reviewer has completed to show it.
-10. obtain two independent fresh-context review verdicts. Do not stop after
-   producing the prompt:
-   a. After the `Review Kickoff Prompt` is visible in chat, spawn exactly one fresh-context reviewer agent with that exact prompt, or with one focused variant if the work item needs a specific review angle. Announce "spawning one reviewer" so the operator sees the handoff.
-   b. Tell the operator that the same `Review Kickoff Prompt` is for their second independent reviewer. The implementer must not spawn a second reviewer unless the operator explicitly asks in the current session.
-   c. Wait for both verdicts before PR handoff: one from the implementer-spawned reviewer and one supplied by the operator from their separately launched reviewer. If the operator waives or defers the second review, record that explicitly before continuing.
-   Step 10 is complete only after the implementer-spawned reviewer verdict is in hand and the operator has either supplied the second verdict or explicitly waived/deferred it. Emitting the prompt without spawning one reviewer is not a valid completion state.
-11. on ACTIONABLE verdict: patch listed findings, rerun targeted verification,
-   post a brief patch summary, then run another fresh-context review pass
-   (cjcrereview) when the patch is non-trivial, touches
-   lifecycle/state/concurrency, changes acceptance behavior, rewrites/adds a test
-   in response to a test-quality or weak-test finding, or the operator asks. You
-   may skip the re-review only for a genuinely trivial patch with no behavior or
-   test-assertion change (comment/whitespace/typo/rename/import), and only when
-   you state that justification explicitly. A test-quality finding is NOT
-   "addressed" on the implementer's say-so: the re-reviewer must confirm the new
-   or rewritten test exercises the real operation boundary and goes RED when the
-   fix is reverted. A reshaped test that still only asserts a config constant,
-   generated-SQL text, file/class existence, or "mock was called" is NOT
-   addressed. Commit each patch round as its own real commit (no amend) so the
-   re-reviewer can diff `<prior-review-tip>..HEAD` — that range goes in the
-   Re-Review Kickoff.
-12. before PR authorization, prepare PR handoff artifacts:
-   a. PR body file in the locked shape (see "PR Body / Optional Review Notes"
-      below): closing reference on the top line, required `## Summary` /
-      `## Verification` / `## Docs Impact`, and optional sections (Root Cause,
-      Impact, Screenshots/Visual QA, Risks, Follow-ups, Notes) only when they
-      carry real content.
-   b. Optional PR review-record comment file using the PR Body / Optional Review
-      Notes template below only when the operator requests it.
-   Show the PR body, any optional review-record comment artifact, the intended
-   labels, and exact PR create/update, label, and optional PR comment commands.
-13. open/update PR only when authorized; use `Fixes #<issue>` in the PR body
-   only when the PR fully resolves the source issue. Use `Refs #<issue>` or
-   `Part of #<issue>` for partial phases, validation-only slices, or follow-up
-   work that should not close the issue on merge. Before asking for PR
-   authorization, fetch the source issue labels, filter them through the local
-   label policy, and state which labels will be applied to the PR. Carry issue
-   labels onto the PR only when those labels still describe the diff; omit stale
-   status labels or subsystem labels that do not describe the PR. Apply the
-   selected labels during `gh pr create` or immediately after PR creation with
-   `gh pr edit --add-label`. Git Bash label recipe:
-   gh issue view <issue> --repo Enbasis/clearsnake-mobile --json labels --jq '.labels[].name'
-   gh pr edit <pr> --repo Enbasis/clearsnake-mobile --add-label "<comma-separated labels that still apply>"
-   If the operator has already said `PR-GO` or a natural equivalent such as
-   "approved, open the PR" or "approved, edit the PR" after seeing or explicitly
-   accepting the current PR body draft/file, final label list, repo, target
-   branch for create or target PR for edit/update, optional comment body, and
-   requested PR action, derive the matching `gh` command(s), state them
-   immediately before running them, and run the PR-handoff packet without asking
-   for another approval.
-14. after the PR exists, post optional prepared review notes under the PR only
-   when the operator requested them and the exact `gh pr comment <pr> --repo
-   <repo> --body-file <comment-file>` command, or equivalent `gh` command, was
-   covered by the same bundled approval before PR creation.
+Enforce these forcing functions ON TOP of Routing A:
 
-Scope-creep guard:
-- If you discover work outside the original acceptance criteria, do not expand silently. List it under "discovered follow-ups" in the Review Kickoff so the operator can capture it as a separate issue.
-- Scope creep includes SUBSTITUTION, not only addition. If you satisfied an acceptance criterion by swapping a component, library, framework primitive, algorithm, or data path the work item did not ask to change, disclose it in the Review Kickoff 'Hot spots' block as 'approach substitution: <old> -> <new>, not explicitly requested', and flag any preserved identifier (testid, route, key, public name) whose underlying implementation changed, since a preserved id can mask the swap from existing tests. An empty 'Hot spots' block is valid only after you have scanned the diff and confirmed no such substitution or masked-identifier case applies. A satisfied AC does not authorize an unrequested mechanism change.
-
-Commit & history discipline:
-- Commit freely on the branch during implementation and each review round (real
-  commits, no amend) — granular history is what lets reviewers diff a precise
-  range, and it does not reach mainline.
-- Do NOT locally squash, rewrite, or force-push to "clean up" history before the
-  PR. Both repos allow squash-merge: rely on GitHub squash-merge so mainline gets
-  exactly one commit per PR while the branch keeps its review-round commits.
-  (townchest's squash body defaults to the concatenated commit messages — keep
-  commit subjects presentable, or set the PR's squash message at merge time.)
+- Surface-tied verification: if the diff touches a surface the repo verification doc
+  (clearsnake `mobile/VERIFICATION.md`, townchest `AGENTS.local.md`) names a gate
+  for — migration/schema/persisted state, native config, routing, auth, contract —
+  that gate is REQUIRED; "Tier 1 sufficient" is not a valid record. Name the surface
+  you changed and why no surface-triggered gate applies.
+- Honest verification reporting: claim a gate passed only if it actually ran this
+  session/branch; report each as a real result/number; mark un-run gates as not-run
+  (reason/blocker or CI-owned), never as passing.
+- Docs impact: state `Docs impact: none` or the updated tracked-doc path in the
+  summary (per the Docs Impact Check).
+- Commit discipline: commit after implementation and each patch round as real
+  commits (no push, no amend); record the `<base>..<tip>` range so reviewers and
+  re-reviewers diff a precise range. Commit freely on the branch; do NOT locally
+  squash/rewrite/force-push — rely on GitHub squash-merge for one mainline commit
+  per PR (townchest's squash body concatenates commit messages, so keep subjects
+  presentable).
+- Re-review trigger: on an ACTIONABLE verdict, patch + rerun targeted verification +
+  re-review (cjcrereview) when the patch is non-trivial, touches lifecycle/state/
+  concurrency, changes acceptance behavior, or rewrites/adds a test for a
+  test-quality finding; skip only for a truly trivial patch, stated. A test-quality
+  finding is addressed only if the new/edited test exercises the real boundary and
+  goes RED on revert.
+- Scope-creep guard covers SUBSTITUTION, not only addition: list out-of-scope work as
+  "discovered follow-ups"; if you met an AC by swapping a component/library/
+  primitive/algorithm/data path the item did not ask to change, disclose it in the
+  Review Kickoff Hot spots as "approach substitution: <old> -> <new>, not requested"
+  and flag any preserved identifier (testid/route/name) whose implementation changed
+  underneath it. A satisfied AC does not authorize an unrequested mechanism change.
+- One-off verification tests (a static-asset/config/data repair proof with no ongoing
+  regression surface) → pocket to the work-item `artifacts/`, don't commit to the
+  suite; disclose in the Review Kickoff.
+- If mode=gated: pause for operator review after the restate step and after the first
+  Tier 1 verification.
 ```
 
 ## Review Kickoff
