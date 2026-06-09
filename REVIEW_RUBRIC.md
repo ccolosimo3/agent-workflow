@@ -50,10 +50,10 @@ code you read, mark it unverified.
 The skill injects the exact existing paths under "Repo conventions to enforce"; if
 it did not, resolve them yourself:
 
-- testing-philosophy — townchest:
-  `.agent-workflow/plans/reference/testing-philosophy.md`; clearsnake-mobile:
-  `plans/reference/testing-philosophy.md`. Use its "Anti-patterns — delete on
-  sight" table and its 10-second check as your test rubric.
+- testing — `~/.agents/workflow/TESTING.md` (single source of truth). Apply Part 1
+  (principles) + Part 2 (universal anti-patterns) and the section for this repo's
+  stack (Part 3 tc-commerce/Vendure, Part 4 tc-app, or Part 5 clearsnake mobile).
+  Use its anti-pattern tables and 10-second check as your test rubric.
 - coding-standards / patterns — townchest:
   `.agent-workflow/plans/reference/coding-standards.md` (it names the EGN-50 drift:
   a hand-rolled Box+@keyframes shimmer where the repo mandates the existing MUI
@@ -80,8 +80,8 @@ drift.
     semantics, and its framework contract did not silently change (full identity +
     masking check below).
 (d) Open each new or changed test file yourself and judge it against the
-    Test-quality rules below and the testing-philosophy doc; do not rely on the
-    implementer's self-report.
+    Test-quality rules below and `~/.agents/workflow/TESTING.md`; do not rely on
+    the implementer's self-report.
 (e) For a migration, persistence, data-loss, or contract change, confirm the proof
     exercised the real operation — apply the migration bar under "Surface-specific
     test bars"; if that proof was not run, raise it or mark it `[decision-required]`.

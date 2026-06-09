@@ -49,9 +49,7 @@ the artifact gets promoted to a tracker issue or handed to an implementer.
      memory; the stop-and-ask rule below does not apply to it)**: detect the
      repo root and resolve the real, existing paths the reviewer must load to
      judge the plan's test strategy and convention conformance —
-     testing-philosophy
-     (`<root>/.agent-workflow/plans/reference/testing-philosophy.md` or
-     `<root>/plans/reference/testing-philosophy.md`) and coding-standards /
+     testing (`~/.agents/workflow/TESTING.md`, fixed) and coding-standards /
      patterns (`<root>/.agent-workflow/plans/reference/coding-standards.md`,
      else `<root>/mobile/CLAUDE.md`). Write `none found` only after checking.
 

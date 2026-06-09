@@ -55,9 +55,8 @@ or new issues introduced by the patches).
    - Implementer notes if available
    - **Repo conventions to enforce (fill from the FILESYSTEM, not operator
      memory)**: detect the repo root and resolve the real, existing paths the
-     re-reviewer must load — testing-philosophy
-     (`<root>/.agent-workflow/plans/reference/testing-philosophy.md` or
-     `<root>/plans/reference/testing-philosophy.md`), coding-standards
+     re-reviewer must load — testing (`~/.agents/workflow/TESTING.md`, fixed),
+     coding-standards
      (`<root>/.agent-workflow/plans/reference/coding-standards.md`, else
      `<root>/mobile/CLAUDE.md`), and whether `<root>/.coderabbit.yaml` excludes
      any touched surface (e.g. migrations). Write `none found` only after

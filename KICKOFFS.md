@@ -181,10 +181,10 @@ Return:
    - ambiguous terminology or undefined nouns
    - missing or untestable acceptance criteria
    - missing or wrong verification commands
-   - weak test strategy: BEFORE judging, open this repo's testing-philosophy.md
-     (townchest: `.agent-workflow/plans/reference/testing-philosophy.md`;
-     clearsnake: `plans/reference/testing-philosophy.md`) and apply its
-     anti-pattern table + 10-second check to each PLANNED test. Flag ACTIONABLE
+   - weak test strategy: BEFORE judging, open `~/.agents/workflow/TESTING.md`
+     (Part 1 principles + Part 2 universal anti-patterns + the repo's stack
+     section) and apply its anti-pattern tables + 10-second check to each PLANNED
+     test. Flag ACTIONABLE
      any planned test that, as described, would only assert a constant/config
      value, a generated-SQL string, "a mock was called", or that a
      class/migration/file exists — or that would still pass if the fix were
@@ -416,8 +416,8 @@ Context (per-task):
    - <`none`, or the owning tracked doc path updated in this change>
 
 6. Test quality (implementer's CLAIM — do NOT accept; re-derive each test per the
-   rubric's Test-quality rules + inclusion-disposition check and the repo
-   testing-philosophy doc)
+   rubric's Test-quality rules + inclusion-disposition check and
+   `~/.agents/workflow/TESTING.md`)
    - behavior/failure mode each new or changed test protects + real boundary
      exercised + any implementation-shape test (why contractual/supplemental) +
      manual/Tier-4 proof

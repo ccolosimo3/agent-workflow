@@ -56,9 +56,8 @@ This skill is the operator's one-step trigger for that handoff.
      operator memory; the stop-and-ask rule below does not apply to it)**:
      detect the repo root under review and resolve the real, existing paths the
      reviewer must load, writing `none found` for a doc only after checking:
-     - testing-philosophy:
-       `<root>/.agent-workflow/plans/reference/testing-philosophy.md` or
-       `<root>/plans/reference/testing-philosophy.md`
+     - testing: `~/.agents/workflow/TESTING.md` (fixed kernel path — Part 1/2 +
+       the repo's stack section; no per-repo resolution needed)
      - coding-standards / patterns:
        `<root>/.agent-workflow/plans/reference/coding-standards.md`, else the
        subtree conventions doc (e.g. `<root>/mobile/CLAUDE.md`)

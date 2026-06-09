@@ -50,8 +50,8 @@ issues introduced by the revisions).
    - Summary of revisions mapped to findings
    - Diff or before/after snippet
    - **Repo conventions to enforce (fill from the FILESYSTEM)**: the existing
-     testing-philosophy and coding-standards paths under the repo root, so the
-     re-reviewer can confirm revised test-strategy/convention findings against
+     the kernel `~/.agents/workflow/TESTING.md` plus the repo's coding-standards
+     path, so the re-reviewer can confirm revised test-strategy/convention against
      the actual docs. Write `none found` only after checking.
 
    If any OPERATOR-SUPPLIED placeholder cannot be filled honestly, stop and ask
