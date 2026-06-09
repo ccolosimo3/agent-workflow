@@ -1,6 +1,6 @@
 ---
 name: planrereview
-description: Hand off a revised plan, spec, or issue draft for a follow-up
+description: Hand off a revised plan or spec for a follow-up
   review after the planner has addressed findings from a prior ACTIONABLE
   plan review. Reads the canonical Plan Re-Review Kickoff template from
   ~/.agents/workflow/KICKOFFS.md, populates it with the prior findings and
@@ -26,7 +26,7 @@ issues introduced by the revisions).
    continuing. Do not invent or paraphrase prior findings.
 
 2. **Identify the revised artifact.** Confirm the path of the plan / spec
-   / issue draft being re-reviewed. If the artifact is version-controlled,
+   being re-reviewed. If the artifact is version-controlled,
    identify the **base** commit (state the prior reviewer saw) and the
    **tip** (current state). If not version-controlled, ask the operator
    for a summary of revisions or a before/after snippet.
@@ -49,8 +49,13 @@ issues introduced by the revisions).
    - Prior findings (quote verbatim)
    - Summary of revisions mapped to findings
    - Diff or before/after snippet
+   - **Repo conventions to enforce (fill from the FILESYSTEM)**: the existing
+     testing-philosophy and coding-standards paths under the repo root, so the
+     re-reviewer can confirm revised test-strategy/convention findings against
+     the actual docs. Write `none found` only after checking.
 
-   If any placeholder cannot be filled honestly, stop and ask the operator.
+   If any OPERATOR-SUPPLIED placeholder cannot be filled honestly, stop and ask
+   the operator.
 
 6. **Emit the populated prompt verbatim in chat** under a
    `## Plan Re-Review Kickoff Prompt` heading, in a ```text fenced block.

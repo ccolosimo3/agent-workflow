@@ -1,22 +1,22 @@
 ---
 name: planreview
-description: Hand off a plan, spec, or issue draft for review before promotion
+description: Hand off a plan or spec for review before promotion
   (e.g. before `gh issue create`, before implementation kickoff). Reads the
   canonical Plan Review Kickoff template from
   ~/.agents/workflow/KICKOFFS.md, populates it from the current session,
   emits the populated prompt verbatim in chat under a
   `Plan Review Kickoff Prompt` block, then spawns exactly one fresh-context
   reviewer subagent. Use when the operator says /planreview, "review this
-  spec", "pre-promotion review", "review the draft before I file the
+  spec", "pre-promotion review", "review the final spec before I file the
   issue", or similar.
 ---
 
 # planreview
 
-Pre-promotion review for planning artifacts (rough-specs, issue drafts,
-plan markdown). The planning equivalent of [[cjcreview]] — same
+Pre-promotion review for planning artifacts (rough specs, review-ready specs,
+final specs, and plan markdown). The planning equivalent of [[cjcreview]] — same
 orchestration, different subject and validation focus. Encodes the
-"Spec review before issue promotion" ritual: validate scope coverage,
+"Spec review before tracker promotion" ritual: validate scope coverage,
 file/line claim accuracy, label correctness, self-containment of the
 issue body, and dependency claims at the cheapest possible point, before
 the artifact gets promoted to a tracker issue or handed to an implementer.
@@ -33,22 +33,32 @@ the artifact gets promoted to a tracker issue or handed to an implementer.
 2. **Populate every placeholder** from the current session:
 
    - **Plan artifact**: path or link to the markdown, artifact type
-     (`rough-spec`, `issue-draft`, or other), intended downstream action
+     (`rough-spec`, `review-ready-spec`, `final-spec`, or other), intended downstream action
      (`gh issue create`, implementation kickoff, etc.), target repo and
      intended labels if filing an issue.
    - **Planner summary**: 2-3 sentences naming what the plan delivers and
      why.
-   - **Source material**: upstream spec / rough-spec path (if reviewing a
-     derived artifact), related issues / ADRs / prior discussion, modules
-     and files claimed in scope.
+   - **Source material**: upstream context / parent spec / audit path (if
+     any), related issues / ADRs / prior discussion, modules and files claimed
+     in scope.
    - **Scope coverage**: intended in-scope items, intentional out-of-scope
      items + reason, dependency / ordering claims.
    - **Hot spots / known risk in the plan**: ambiguous areas, claims to
      fact-check against the code, decisions made and rejected alternatives.
+   - **Repo conventions to enforce (fill from the FILESYSTEM, not operator
+     memory; the stop-and-ask rule below does not apply to it)**: detect the
+     repo root and resolve the real, existing paths the reviewer must load to
+     judge the plan's test strategy and convention conformance —
+     testing-philosophy
+     (`<root>/.agent-workflow/plans/reference/testing-philosophy.md` or
+     `<root>/plans/reference/testing-philosophy.md`) and coding-standards /
+     patterns (`<root>/.agent-workflow/plans/reference/coding-standards.md`,
+     else `<root>/mobile/CLAUDE.md`). Write `none found` only after checking.
 
-   If any placeholder cannot be filled honestly from this session, **stop
-   and ask the operator**. Do not invent scope items, label sets, or
-   dependencies — missing items are often what the reviewer should flag.
+   If any OPERATOR-SUPPLIED placeholder cannot be filled honestly from this
+   session, **stop and ask the operator**. Do not invent scope items, label
+   sets, or dependencies — missing items are often what the reviewer should
+   flag.
 
 3. **Emit the populated prompt verbatim in chat.** Use a
    `## Plan Review Kickoff Prompt` heading immediately followed by a
@@ -79,5 +89,5 @@ the artifact gets promoted to a tracker issue or handed to an implementer.
   block is the operator's record and their handoff to the second reviewer.
 - **Spawning more than one reviewer** from this skill. The second review
   is operator-owned by default.
-- **Reviewing a non-plan artifact.** This skill is for plans, specs, and
-  issue drafts. For implemented code, use [[cjcreview]] instead.
+- **Reviewing a non-plan artifact.** This skill is for plans and specs. For
+  implemented code, use [[cjcreview]] instead.

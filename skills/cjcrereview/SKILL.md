@@ -43,7 +43,9 @@ or new issues introduced by the patches).
    `~/.agents/workflow/KICKOFFS.md`, `## Re-Review Kickoff` section. Apply
    the AGENTS.md **Fidelity Rule**: paste the section verbatim with
    placeholders filled — do not paraphrase, restructure, or invent a
-   different shape.
+   different shape. The Re-Review Kickoff is short and points the reviewer at
+   `~/.agents/workflow/REVIEW_RUBRIC.md` ("Re-review mode"); do NOT inline the
+   rubric — the spawned re-reviewer reads it itself.
 
 5. **Populate every placeholder** from steps 1-3:
    - Work item link, PR link, branch, base
@@ -51,8 +53,19 @@ or new issues introduced by the patches).
    - Prior findings (quote verbatim)
    - Base/tip commit shas, commit list, diff stat
    - Implementer notes if available
+   - **Repo conventions to enforce (fill from the FILESYSTEM, not operator
+     memory)**: detect the repo root and resolve the real, existing paths the
+     re-reviewer must load — testing-philosophy
+     (`<root>/.agent-workflow/plans/reference/testing-philosophy.md` or
+     `<root>/plans/reference/testing-philosophy.md`), coding-standards
+     (`<root>/.agent-workflow/plans/reference/coding-standards.md`, else
+     `<root>/mobile/CLAUDE.md`), and whether `<root>/.coderabbit.yaml` excludes
+     any touched surface (e.g. migrations). Write `none found` only after
+     checking. The re-reviewer needs these to confirm a rewritten test actually
+     satisfies the repo's anti-pattern table, not just the literal prior finding.
 
-   If any placeholder cannot be filled honestly, stop and ask the operator.
+   If any OPERATOR-SUPPLIED placeholder cannot be filled honestly, stop and ask
+   the operator.
 
 6. **Emit the populated prompt verbatim in chat** under a `## Re-Review
    Kickoff Prompt` heading, in a ```text fenced block. This must appear in
