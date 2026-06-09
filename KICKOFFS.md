@@ -319,10 +319,11 @@ Then execute end-to-end:
    re-reviewer can diff `<prior-review-tip>..HEAD` — that range goes in the
    Re-Review Kickoff.
 12. before PR authorization, prepare PR handoff artifacts:
-   a. PR body file using `## Summary` and `## Verification` as default anchors.
-      Add other sections when useful for review, such as Root Cause, Impact,
-      Work Item, Screenshots, Visual QA, Docs Impact, Risks, Follow-ups, Notes,
-      or Release Notes.
+   a. PR body file in the locked shape (see "PR Body / Optional Review Notes"
+      below): closing reference on the top line, required `## Summary` /
+      `## Verification` / `## Docs Impact`, and optional sections (Root Cause,
+      Impact, Screenshots/Visual QA, Risks, Follow-ups, Notes) only when they
+      carry real content.
    b. Optional PR review-record comment file using the PR Body / Optional Review
       Notes template below only when the operator requests it.
    Show the PR body, any optional review-record comment artifact, the intended
@@ -481,57 +482,78 @@ this reviewer.
 ```text
 Compose PR handoff text for work item <id/link> / PR <id/link>.
 
-Default placement: PR body only. Include `## Summary` and `## Verification` as
-default anchors, but do not treat them as the only allowed sections. Add other
-sections when useful for review, such as Root Cause, Impact, Work Item,
-Screenshots, Visual QA, Docs Impact, Risks, Follow-ups, Notes, or Release Notes.
-Do not include a standalone `## Review Summary` section by default. Use a
-separate review-record PR comment only when the operator requests it.
+# Locked PR body shape
 
-Source material:
-- populated Review Kickoff prompt(s)
-- reviewer verdict(s)
-- findings patched in this implementation
-- final verification run after patching
-- deferred follow-ups and residual risk
+Required core, always present and in this order: `## Summary`, `## Verification`,
+`## Docs Impact`. Optional sections appear ONLY when they carry real content, in
+the order shown below. Omit an optional section entirely rather than writing
+"None" — except Docs Impact, which is required and may be "None".
 
-Cover:
-- `## Summary`: what changed and why, in user-facing/product terms first
-- `## Verification`: commands and manual QA actually run, plus any waived or
-  blocked gates and any broader local gates considered but not selected
-- additional sections when useful: Root Cause, Impact, Work Item, Screenshots,
-  Visual QA, Docs Impact, Risks, Follow-ups, Notes, Release Notes, or
-  repo-specific sections
-- review findings only when they materially help the reviewer understand a
-  patched edge case, deferred follow-up, residual risk, or unusual verification
-  choice
+Closing reference — the FIRST line of the body, above `## Summary`:
+- GitHub issue (e.g. clearsnake): `Fixes #<n>` when merge fully resolves it;
+  `Refs #<n>` or `Part of #<n>` for partial / phase / validation-only work.
+- Linear (e.g. townchest): `Closes <full https://linear.app/...> URL` when fully
+  resolved; `Part of <url>` for partial. GitHub keywords do NOT close a Linear
+  issue; the `issue.gitBranchName` branch also auto-links it. Never use a prose
+  "Source issue: <url>" line to close — it does not auto-close.
 
-Format:
-1. For PR bodies, include `## Summary` and `## Verification` as anchors and add
-   other useful sections as needed. Put material review-driven context in
-   `## Notes` only when it explains a patched edge case, residual risk, or
-   deferred follow-up.
-2. For optional separate review-record comments, start with `# Review Notes`.
-3. Scope recap — one sentence when useful.
-4. For optional review-record comments, include findings patched in this PR as
-   a brief bullet list with `path:line` when this helps the reviewer.
-5. Follow-ups deferred — bullet list, each captured as a separate issue when
-   applicable.
-6. Residual risk — one or two sentences, omit if none.
+Layout (annotations are not part of the output):
+
+  <closing reference>                 # top line, per above
+
+  ## Summary            (required)
+  <one sentence: what changed + why, in user-facing/product terms>
+  - <concrete change bullet>
+  - <concrete change bullet>
+
+  ## Root Cause         (optional — bug or non-obvious change)
+  <why it broke / why this is needed; system nouns over implementation trivia>
+
+  ## Impact             (optional — what now works or what risk is reduced; NOT a second summary)
+  <one short paragraph>
+
+  ## Screenshots        (optional — UI; or `## Visual QA`)
+  <images / before -> after>
+
+  ## Verification       (required)
+  - `<command>` -> <result with a useful number>
+  - <manual / Tier-4 proof, or state none>
+  - gates considered but not selected: <reason>   # omit line if N/A
+
+  ## Docs Impact        (required)
+  None
+  # or: <updated tracked-doc path> — <one line on what changed>
+
+  ## Risks              (optional)
+  <residual risk, 1-2 sentences>
+
+  ## Follow-ups         (optional)
+  - <deferred item> — <full issue URL if filed>
+
+  ## Notes              (optional)
+  - <rollback / migration / dependency / generated-output / build caveat>
 
 Constraints:
-- plain `path:line`, no markdown file links (GitHub does not resolve them in PR comments)
-- factual and concise, no marketing tone
-- treat optional review notes as a review/verification record, not a certification
-- do not mention plan review by default; accepted implementation specs normally
-  pass through plan review before coding
-- use neutral labels such as "Implementation review", "Second independent
-  review", and "Operator review"
-- prefer "no remaining blocking issues found" over absolute claims like
-  "approved", "fully safe", or "all issues resolved"
-- if no findings were patched or no follow-ups remain, omit those sections entirely rather than write "None"
-- return the PR body or optional comment body only, no preamble like "here is
-  the summary"
+- Keep review verdicts OUT of the PR body by default — review evidence stays
+  local. Mention a review finding only in `## Notes`, and only when it explains a
+  patched edge case, residual risk, or deferred follow-up. No standalone
+  `## Review Summary` section.
+- Plain `path:line` and full issue URLs; no markdown file links (GitHub does not
+  resolve them in PR comments).
+- Factual and concise, no marketing tone; prefer "no remaining blocking issues
+  found" over absolutes like "approved", "fully safe", or "all issues resolved".
+- Do not mention plan review by default; accepted specs normally pass plan review
+  before coding.
+- Return the PR body only, no preamble like "here is the summary".
+
+# Optional separate review-record comment (only when the operator requests one)
+
+A separate PR comment, not the body. Start with `# Review Notes`. Include: findings
+patched in this PR as a brief bullet list with `path:line`; deferred follow-ups,
+each captured as a separate issue when applicable; residual risk in one or two
+sentences (omit if none). Use neutral labels ("Implementation review", "Second
+independent review", "Operator review") and treat it as a verification record, not
+a certification.
 ```
 
 ## Fast Fix
