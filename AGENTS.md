@@ -435,12 +435,14 @@ Keep this review material available locally:
 
 Flow:
 
-1. Prepare a PR body file with correct issue closing semantics: `Fixes
-   #<issue>` only when merge fully resolves the issue; otherwise use `Refs
-   #<issue>` or `Part of #<issue>`. Include `## Summary` and `## Verification`
-   as default anchor sections, plus repo-specific sections that make the PR
-   easier to review, such as Root Cause, Impact, Work Item, Screenshots, Visual
-   QA, Docs Impact, Risks, Follow-ups, Notes, or Release Notes.
+1. Prepare a PR body file in the locked shape (see the "PR Body / Optional Review
+   Notes" template in KICKOFFS.md): a closing reference on the top line with
+   correct semantics — GitHub `Fixes #<issue>` only when merge fully resolves it,
+   else `Refs #<issue>` / `Part of #<issue>`; Linear `Closes <full url>` when fully
+   resolved, else `Part of <url>` — then the required core `## Summary`,
+   `## Verification`, `## Docs Impact` in that order, plus optional sections (Root
+   Cause, Impact, Screenshots / Visual QA, Risks, Follow-ups, Notes) only when they
+   carry real content.
 2. Do not include a standalone `## Review Summary` section by default. Keep
    review prompts, transcripts, and detailed verdicts in local planning
    artifacts. Mention a review finding in the PR body only when it materially
