@@ -5,3 +5,5 @@ tmp/
 *.tar.gz
 .DS_Store
 Thumbs.db
+/.skill-lock.json
+/skills/
