@@ -12,11 +12,18 @@ https://github.com/odysian/agent-workflow
 
 ## GitHub Sync
 
-The workflow repo should contain portable workflow files only, such as:
+The repo root is `%USERPROFILE%\.agents` (re-rooted from
+`%USERPROFILE%\.agents\workflow` on 2026-06-10). It tracks portable
+agent/workflow files only, such as:
 
 - `%USERPROFILE%\.agents\workflow\AGENTS.md`
 - `%USERPROFILE%\.agents\workflow\KICKOFFS.md`
+- `%USERPROFILE%\.agents\workflow\skills\` (workflow trigger skills)
 - workflow templates and transfer instructions
+
+Installer-managed top-level state (`.skill-lock.json`, top-level `skills\`)
+and OS junk are ignored by the root `.gitignore`. Add new top-level
+directories deliberately, not by default.
 
 Do not put repo-local `AGENTS.md`, `CLAUDE.md`, `COMMANDS.md`, or
 `CONTEXT.md` files in this portable workflow repo. Those are local shims and
@@ -26,16 +33,36 @@ them with `.git/info/exclude`, and sync them manually only when needed.
 Common sync commands:
 
 ```powershell
-cd $env:USERPROFILE\.agents\workflow
+cd $env:USERPROFILE\.agents
 git pull --ff-only
 git status --short
-git add AGENTS.md KICKOFFS.md PLANS.md WORKFLOW_TRANSFER.md CONTEXT.template.md CLAUDE.md
+git add workflow
 git commit -m "Update agent workflow"
 git push
 ```
 
 Before pushing, scan changes for secrets, local credentials, device
 identifiers, and personal paths.
+
+### One-Time Migration For Old Clones
+
+A machine still cloned at `%USERPROFILE%\.agents\workflow` must NOT plain
+`git pull` after the re-root — it would nest a second `workflow\` inside the
+old checkout. Migrate once instead:
+
+```powershell
+cd $env:USERPROFILE\.agents\workflow
+git status --short        # must be clean; commit or stash local changes first
+git fetch origin
+Move-Item .git ..\.git
+cd ..
+git reset --hard origin/main
+```
+
+`git reset --hard` is safe here only because the tree was confirmed clean
+before moving `.git`; it follows the destructive-action approval rules.
+Alternatively, delete the old clone and re-clone into
+`%USERPROFILE%\.agents`, then restore any ignored local state.
 
 ## Zip Transfer Fallback
 
@@ -53,6 +80,7 @@ Include:
 
 Exclude:
 
+- `%USERPROFILE%\.agents\.git\` — the repo syncs via GitHub; do not zip it
 - `.codex/` app state unless the operator explicitly asks for it
 - `node_modules/`, `.expo/`, Gradle/CMake caches, build output, and logs
 - nested `.git/` directories inside local planning folders
