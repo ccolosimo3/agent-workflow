@@ -5,9 +5,10 @@ description: Review someone else's PR end to end. Populates the External PR
   spawns one fresh-context reviewer that runs the strict rubric pass with local
   verification, then calibrates the returned findings via the calibrate-review
   skill into an operator action brief (patch myself / raise with author /
-  discuss / defer). Use when the operator says /cjcprreview, "review PR #N for
-  me", or asks for a coworker-PR review with calibrated takeaways. Do not use
-  for the operator's own implementation handoff — that is cjcreview.
+  discuss / defer). Use when the operator says /cjcprreview, asks to review a
+  numbered PR for them, or wants a coworker-PR review with calibrated
+  takeaways. Do not use for the operator's own implementation handoff — that
+  is cjcreview.
 ---
 
 # cjcprreview
