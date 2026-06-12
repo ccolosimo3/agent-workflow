@@ -38,7 +38,12 @@ research.
 2. **Investigate — orchestrate, don't wander.** Decompose the unknowns into
    independent questions: reproduction path, root-cause candidates, blast
    radius, existing repo patterns to reuse, prior art in git history and
-   merged PRs. Spawn read-only subagents in parallel for independent
+   merged PRs — and, for bug fixes and edge cases, the adjacent-mechanism
+   question: what existing code path already handles analogous behavior (read
+   the FULL function/module being modified, not just the lines the issue
+   points at), and can the case be routed into it with a narrower condition
+   change before any new helper/filter/policy/state is proposed? Spawn
+   read-only subagents in parallel for independent
    questions — each scoped to one question with a structured, file:line-cited
    return. Use web search freely for framework/provider/library behavior,
    known upstream issues, and changelogs (prefer primary docs; note the
@@ -50,8 +55,10 @@ research.
 
 3. **Synthesize.** Root cause (or, for feature work, the governing design
    constraints) with evidence; two or three candidate approaches with
-   tradeoffs; one recommendation plus a rejected alternative (the decision
-   brief); the one-line Domain Pass decision per the kernel's triggers.
+   tradeoffs — when an adjacent mechanism exists, the minimal
+   route-into-the-existing-path option MUST be one of them; one recommendation
+   plus a rejected alternative (the decision brief); the one-line Domain Pass
+   decision per the kernel's triggers.
 
 4. **Write the living spec.** Create or reuse the work-item folder per the
    repo's planning conventions (e.g.

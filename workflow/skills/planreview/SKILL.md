@@ -40,6 +40,11 @@ the parameters below.
   + reason, dependency / ordering claims.
 - **Hot spots / known risk in the plan**: ambiguous areas, claims to
   fact-check against the code, decisions made and rejected alternatives.
+- **Existing-mechanism claim (field 4a; fill from the FILESYSTEM, not
+  memory)**: for bug fixes, edge cases, fallback/error/loading behavior, or
+  business-rule tweaks, name the current code path that already handles
+  analogous behavior (file:line) and whether the plan reuses or bypasses it;
+  write "none found" only after searching the modules the plan touches.
 
 Missing material is signal, not a gap to fill: if the spec lacks explicit
 non-goals, file claims, or dependencies, say so in the kickoff — that is often

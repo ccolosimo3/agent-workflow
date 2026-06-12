@@ -147,6 +147,14 @@ or refute. Assume the most important gap is something the planner did NOT list.
    - intentional out-of-scope items: <bullets + reason>
    - dependency / ordering claims: <"blocks #X" / "blocked by #Y" / "ordered after #Z">
 
+4a. Existing-mechanism claim (required for bug fixes, edge cases,
+    fallback/error/loading behavior, and business-rule tweaks; planner's CLAIM —
+    the reviewer verifies it)
+   - adjacent mechanism: <the current code path that already handles analogous
+     behavior, file:line — or "none found" + where you searched>
+   - plan's relationship to it: <reuses/extends it | bypasses it, with why a
+     narrower condition change cannot reach the existing path>
+
 5. Hot spots / known risk in the plan
    - <ambiguous areas; claims the reviewer should fact-check against the code>
    - <decisions made and rejected alternatives>
@@ -198,6 +206,14 @@ Return:
      established primitive for it (e.g. a custom Box/@keyframes shimmer where the
      repo mandates the existing Skeleton/loading primitive). Do not flag steps
      that reuse existing primitives or where no repo primitive is documented.
+   - existing-mechanism reuse / over-scope: does the plan invent a new helper,
+     policy, query, filter, fallback, branch, state, or UI behavior where the
+     codebase already has an adjacent mechanism? Verify the 4a claim by reading
+     the FULL function/module the plan modifies, not only the lines it cites —
+     the missed mechanism is usually adjacent to the cited ones. For bug fixes
+     the default is routing the case into the existing path via a narrower
+     condition change; a new mechanism with no 4a justification (or a 4a of
+     "none found" the code contradicts) is a blocking finding.
    - local-only/private notes that should not be published
 3. Notes on scope or framing improvements (non-blocking but useful)
 
