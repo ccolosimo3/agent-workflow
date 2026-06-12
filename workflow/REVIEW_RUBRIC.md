@@ -54,13 +54,18 @@ it did not, resolve them yourself:
   (principles) + Part 2 (universal anti-patterns) and the section for this repo's
   stack (Part 3 tc-commerce/Vendure, Part 4 tc-app, or Part 5 clearsnake mobile).
   Use its anti-pattern tables and 10-second check as your test rubric.
-- coding-standards / patterns — townchest:
-  `.agent-workflow/plans/reference/coding-standards.md` (it names the EGN-50 drift:
-  a hand-rolled Box+@keyframes shimmer where the repo mandates the existing MUI
-  <Skeleton>); clearsnake-mobile: `mobile/CLAUDE.md`.
-- verification policy — townchest:
-  `.agent-workflow/plans/reference/townchest-pr-checklist.md`; clearsnake-mobile:
-  `mobile/VERIFICATION.md`.
+- coding-standards / patterns and verification policy — resolved per repo from
+  its shim; the paths below are an illustrative example of shim routing from one
+  operator's repos — your repo's shim names its own equivalents. The rule the
+  patterns doc enforces: hand-rolled code that duplicates a documented repo
+  primitive (e.g. a custom shimmer where the repo mandates the existing loading
+  primitive) is convention drift.
+  - coding-standards / patterns — townchest:
+    `.agent-workflow/plans/reference/coding-standards.md`; clearsnake-mobile:
+    `mobile/CLAUDE.md`.
+  - verification policy — townchest:
+    `.agent-workflow/plans/reference/townchest-pr-checklist.md`;
+    clearsnake-mobile: `mobile/VERIFICATION.md`.
 
 If you cannot open a doc in this environment, say so explicitly and fall back to
 the kernel "Test Quality Floor" anti-pattern list — do not silently skip this. Cite
@@ -193,23 +198,15 @@ freshness hunch to ACTIONABLE.
 
 Inclusion disposition (a SECOND axis, separate from PASS/FAIL — a test can be a
 10-second-check PASS and still not be worth shipping). For each ledger row, judge
-whether the test belongs in the PR's permanent suite:
-- ship — protects an ongoing regression surface this change introduced or touched;
-  the default for real behavior tests, so most rows are "ship".
-- redundant-with-<test> — an existing or other added test already goes RED for this
-  regression; recommend dropping or merging.
-- trim — valid but over-weight (a heavy harness/dependency for trivial logic) or
-  brittle; recommend lightening it to the lowest boundary that proves the behavior.
-- one-off-proof->pocket — a valid verification of a ONE-TIME repair (static asset,
-  config, data fix) with no ongoing regression surface a normal code change would
-  hit; recommend keeping it as a local artifact (`artifacts/` or a Tier-4 note),
-  NOT as permanent suite coverage.
-Any row whose disposition is not "ship" is a valid-but-marginal inclusion call:
-raise it in Findings as `[decision-required]` (low/medium severity, NOT a quality
-FAIL) with your recommendation, so the OPERATOR makes the final include/exclude
-decision. Do NOT silently delete a working test and do NOT auto-FAIL it for worth —
-disposition is about worth; the sub-verdict above is about weakness; keep them
-separate.
+whether the test belongs in the PR's permanent suite and record one of
+ship / trim / redundant-with-<test> / one-off-proof->pocket; the disposition
+definitions live in `~/.agents/workflow/TESTING.md` ("Inclusion: should this
+test ship?"). Any row whose disposition is not "ship" is a valid-but-marginal
+inclusion call: raise it in Findings as `[decision-required]` (low/medium
+severity, NOT a quality FAIL) with your recommendation, so the OPERATOR makes
+the final include/exclude decision. Do NOT silently delete a working test and
+do NOT auto-FAIL it for worth — disposition is about worth; the sub-verdict
+above is about weakness; keep them separate.
 
 3. Overall verdict: APPROVED or ACTIONABLE (cannot be APPROVED while line 2 is FAIL,
    while a Required-investigation step was skipped, or while an unresolved
@@ -260,8 +257,9 @@ them:
 > Implementer: patch every finding autonomously. For any finding marked
 > `[decision-required]`, skip the patch, summarize the decision needed, and return
 > to the operator. An unresolved `[decision-required]` finding is an open ACTIONABLE
-> item — it blocks PR handoff under the "two approved verdicts, no ACTIONABLE
-> findings before PR" rule until the operator resolves it. Do not block other
+> item — it blocks PR handoff under the kernel's "Implementation Completion
+> Handoff" requirement (two independent approved review verdicts before PR
+> handoff by default) until the operator resolves it. Do not block other
 > patches on those.
 
 ## After the verdict

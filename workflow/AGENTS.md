@@ -3,32 +3,21 @@
 This is the portable operating kernel for coding agents. It is intentionally
 project-agnostic. Local repo shims define stack facts, commands, and local constraints.
 
-## Codex Startup Adapter
+## Startup Adapters
 
-When this file is loaded as global Codex guidance, treat it as workflow
-bootstrap, not repository policy.
+When this file is loaded as global agent guidance (Codex, Claude Code, or a
+similar host), treat it as workflow bootstrap, not repository policy.
 
 - Tracked repo/company/security instructions are authoritative over this kernel.
 - If a repo root contains `AGENTS.local.md`, read it before substantive work as
   a local-only workflow adapter.
-- Treat `AGENTS.local.md` as additive. If it conflicts with tracked repo rules,
-  ignore the conflicting local instruction and follow the tracked rule.
-- Do not commit local workflow adapters, personal paths, credentials, or kernel
-  symlinks unless the repo explicitly asks for them.
-
-## Claude Code Startup Adapter
-
-When this file is loaded as global Claude Code guidance, treat it as workflow
-bootstrap, not repository policy.
-
-- Tracked repo/company/security instructions are authoritative over this kernel.
-- If a repo root contains `CLAUDE.md`, read it as the Claude project adapter.
-- If the Claude project adapter imports or points at `AGENTS.md` and
-  `AGENTS.local.md`, compose those files in the order the adapter describes.
 - Treat local adapters as additive. If they conflict with tracked repo rules,
   ignore the conflicting local instruction and follow the tracked rule.
 - Do not commit local workflow adapters, personal paths, credentials, or kernel
   symlinks unless the repo explicitly asks for them.
+- Claude Code delta: also read a repo-root `CLAUDE.md` as the Claude project
+  adapter; when it imports or points at `AGENTS.md` and `AGENTS.local.md`,
+  compose those files in the order the adapter describes.
 
 ## Precedence
 
@@ -51,48 +40,37 @@ or data-handling policies.
 - Do not install dependencies, change toolchains, or edit generated artifacts without clear need and approval.
 - Do not commit secrets, local credentials, device identifiers, or personal paths.
 - Prefer existing repo patterns over new abstractions.
-- Add tests and verification proportional to risk. When broader local gates are
-  available, choose intentionally whether to run them based on the changed
-  surface and risk; do not skip or run them only because they are or are not in
-  the default PR CI path.
+- Add tests and verification proportional to risk; broader-gate selection and
+  routing reporting follow the rules under Verification Tiers.
 - Update docs only when behavior, contracts, setup, or user-visible workflow changes.
 - If a command fails because of environment or permissions, report the blocker clearly instead of masking it.
 
 ## Test Quality Floor
 
-Tests should protect behavior, contracts, failure modes, or user/system outcomes.
-A useful test would fail if the regression the work item is fixing came back.
+- Tests protect behavior, contracts, failure modes, or user/system outcomes. A
+  useful test would fail iff the regression it protects against came back.
+- Before adding or changing a test, identify: the behavior or contract
+  protected, the original or plausible failure mode to catch, the real
+  operation boundary exercised (service method, API route, job, import/export
+  flow, UI interaction, persistence reload, integration boundary, CLI command),
+  and any manual/provider/hardware/local-stack/database proof needed when the
+  meaningful failure mode cannot be represented in the automated harness.
+- Prefer running the real operation the product or system depends on. For
+  persistence, save and reload through the relevant repository/ORM/service/
+  API/UI boundary before asserting; for integrations, use the smallest
+  deterministic boundary that still exercises the integration logic.
+- Avoid tests whose only value is implementation shape (a config constant's
+  value, generated SQL text, file/class/migration existence, mock call order,
+  a snapshot without a behavioral assertion, a private helper's return) unless
+  that shape is itself the contract or the test is clearly supplemental to a
+  behavior-level test or a documented Tier 4 proof.
+- Do not add automated tests just to increase apparent coverage. If no
+  meaningful automated test is practical, say so and document the
+  manual/provider/local-stack verification instead of inventing weak coverage.
 
-Before adding or changing tests, identify:
-
-- the behavior or contract being protected
-- the original or plausible failure mode the test should catch
-- the real operation boundary exercised, such as a service method, API route,
-  job, import/export flow, UI interaction, persistence reload, integration
-  boundary, or CLI command
-- any manual, provider, hardware, local-stack, or database proof needed because
-  the meaningful failure mode cannot be fully represented in the automated test
-  harness
-
-Prefer tests that run the operation the product or system depends on. For
-persistence bugs, prefer saving and reloading through the relevant repository,
-ORM, service, API, or UI boundary before asserting. For integration bugs, prefer
-the smallest deterministic boundary that still exercises the integration logic.
-
-Avoid tests whose only value is proving implementation shape, such as:
-
-- a config constant equals a value
-- generated SQL text matches line-for-line
-- a migration, class, function, or file merely exists
-- a mock was called in an exact order unrelated to the public contract
-- a snapshot changed without a behavioral assertion
-- a private helper returns a value while the real operation remains untested
-
-Implementation-shape tests are allowed only when that shape is itself the
-contract, or when they are clearly supplemental to a behavior-level test or a
-documented Tier 4 proof. Do not add automated tests just to increase apparent
-coverage. If no meaningful automated test is practical, say so and document the
-manual/provider/local-stack verification instead of inventing weak coverage.
+Full doctrine lives in `~/.agents/workflow/TESTING.md`; this digest is the
+offline fallback (REVIEW_RUBRIC.md falls back to it when TESTING.md cannot be
+opened).
 
 ## GitHub CLI
 
@@ -153,29 +131,29 @@ Operating rules:
 - Authorization is scoped to the exact action and target stated. A push to
   branch X does not authorize a force push, a push to a different branch, or
   a later merge.
-- For PR handoff, one approval may cover the prepared PR create/edit/update,
-  label, and any optional PR comment packet; it authorizes the agent to derive
-  and run the matching `gh` command(s) once and no unstated mutation.
-- For PR handoff only, the preferred shorthand approval is `PR-GO`. Natural
-  equivalents such as "approved, open the PR", "approved, update the PR", or
-  "approved, edit the PR", or "approved, post the PR comment" also count when
-  the operator has already seen or explicitly accepted the current PR body
-  draft/file, final label list, repo, target branch for create or target PR for
-  edit/update, optional comment body, and requested PR action. In that case,
-  derive the matching `gh` command(s), state them immediately before running
-  them, and do not ask for a second approval. Ask again if the repo, branch, PR
-  body, labels, comment text, target PR, or requested action differs materially
-  from the prepared packet.
-- For GitHub issue creation or edit from a prepared issue body/update, the
-  preferred shorthand approval is `ISSUE-GO`. Natural equivalents such as
-  "approved, create the issue", "approved, open the issue", "approved, file the
-  issue", "approved, update the issue", or "approved, edit the issue" also
-  count when the operator has already seen the issue body or requested edit,
-  labels, repo, target issue when editing, and requested `gh issue create` or
-  `gh issue edit` action. In that case, derive the matching `gh` command, state
-  it immediately before running it, and do not ask for a second approval. Ask
-  again if the repo, issue target, title, body, labels, milestone, assignee, or
-  edit differs materially from the prepared packet.
+- Prepared-packet shorthand approvals: when the operator has already seen or
+  explicitly accepted the prepared packet for one of the bundles below, the
+  named shorthand or a natural-equivalent phrasing covers the stated bundle
+  once. It authorizes the agent to derive the matching `gh` command(s), state
+  them immediately before running them, and run them without asking for a
+  second approval — and no unstated mutation. Ask again if any material part of
+  the packet differs from what was prepared.
+  - `PR-GO` (PR handoff only): one approval may cover the prepared PR
+    create/edit/update, label, and any optional PR comment packet. Packet: the
+    current PR body draft/file, final label list, repo, target branch for
+    create or target PR for edit/update, optional comment body, and requested
+    PR action. Natural equivalents: "approved, open the PR", "approved, update
+    the PR", "approved, edit the PR", "approved, post the PR comment". Ask
+    again if the repo, branch, PR body, labels, comment text, target PR, or
+    requested action differs materially.
+  - `ISSUE-GO` (GitHub issue creation or edit from a prepared issue
+    body/update): packet: the issue body or requested edit, labels, repo,
+    target issue when editing, and requested `gh issue create` or `gh issue
+    edit` action. Natural equivalents: "approved, create the issue",
+    "approved, open the issue", "approved, file the issue", "approved, update
+    the issue", "approved, edit the issue". Ask again if the repo, issue
+    target, title, body, labels, milestone, assignee, or edit differs
+    materially.
 - For destructive local data commands, state the exact data store, volume,
   worktree, cache, or container target and whether data loss is expected before
   asking for approval.
@@ -205,21 +183,14 @@ Use this when a ticket, issue, bug, or explicit task already exists.
 8. Select and run tiered verification based on changed surface and risk. Use the
    local repo shim for exact commands. Run broader local gates such as build,
    contract, e2e, visual/manual QA, or local-stack QA when the task touches the
-   matching surface or the operator asks for extra confidence. If a broader gate
-   is available but not selected, state why; if it is blocked, state the blocker.
-9. Hand the operator a fully populated, copy/paste-ready Review Kickoff prompt
-   in chat as a dedicated completion artifact. The prompt must be visible in
-   chat before any reviewer subagent is spawned.
-10. After the prompt has been emitted in chat, spawn exactly one fresh-context
-    reviewer from that prompt by default, and tell the operator to use the same
-    prompt for the second independent review.
-11. Obtain two independent approved review verdicts before PR handoff by
-    default; the implementer owns one spawned reviewer, the operator owns the
-    second reviewer unless they explicitly ask the implementer to spawn both.
-    Patch any actionable findings in scope and rerun targeted verification
-    before continuing.
-12. Open/update PR or push only when authorized by the user/team flow.
-13. When a PR is opened, keep detailed review evidence local by default. Include
+   matching surface or the operator asks for extra confidence; report routing
+   (gates run / not selected / blocked) per the Verification Tiers rules.
+9. Hand off for review per "Implementation Completion Handoff" (Review Kickoff
+   prompt in chat before spawning, one spawned reviewer, two approved verdicts
+   before PR handoff by default); patch actionable findings in scope and rerun
+   targeted verification per the Review Loop before continuing.
+10. Open/update PR or push only when authorized by the user/team flow.
+11. When a PR is opened, keep detailed review evidence local by default. Include
     review findings in the PR body only when they materially help the reviewer
     understand the change, residual risk, or follow-up work. Post a separate
     review-record comment only when the operator requests it.
@@ -318,9 +289,8 @@ A Task is done when:
 - implementation satisfies acceptance criteria
 - selected verification passed or blockers are documented with exact failed
   commands
-- every broader local gate that was available but not selected is listed with a
-  short reason, matching the explicit verification-routing rule under Verification
-  Tiers (no self-judged "only if a reviewer would ask")
+- verification routing is reported per the explicit verification-routing rule
+  under Verification Tiers
 - tests/docs changed where risk requires it; new tests protect the intended
   behavior rather than only implementation shape, or the implementation-shape
   coverage is justified as supplemental/contractual
@@ -328,8 +298,7 @@ A Task is done when:
   contracts, setup, verification, or user-visible workflow changed, or the
   agent stated `Docs impact: none`
 - PR/review requirements are satisfied
-- the operator received a populated Review Kickoff prompt in chat as a
-  dedicated completion artifact
+- the Implementation Completion Handoff contract was met
 - if a PR was opened, the PR body captures the change, validation, and any
   material residual risk; when a separate review-record comment was requested,
   it is posted or the blocker is documented
@@ -377,11 +346,10 @@ Required:
 - Delete obsolete local issue drafts, PR body drafts, review-note drafts,
   kickoff prompts, and one-off review prompts now represented by the tracker or
   PR.
-- After issue creation, mark the same living spec `promoted` and add the issue
-  URL instead of deleting it by default. Delete only transient split/redaction
-  issue drafts or prompts at that point. Keep the living spec active until
-  implementation lands; then set it to `implemented`, delete it, or archive
-  durable context according to the local repo policy.
+- After issue creation, advance the same living spec through its lifecycle
+  instead of deleting it by default — lifecycle statuses and the
+  plans-directory layout live in `~/.agents/workflow/PLANS.md`. Delete only
+  transient split/redaction issue drafts or prompts at that point.
 - Archive only durable context: reusable specs, verification reports, audit
   reports, ADR-like rationale, or cross-issue policy decisions.
 - Move still-actionable future work to backlog, or keep it active only when it
@@ -414,9 +382,13 @@ Required shape:
    receives the prompt and may paste it into another agent. Do not spawn a
    second reviewer unless the operator explicitly asks in the current session.
 
-If two independent reviews are expected, the same populated prompt may be used
-for both the implementer-spawned reviewer and the operator-launched reviewer
-unless the operator or work item needs different review focuses.
+Obtain two independent approved review verdicts before PR handoff by default:
+the implementer owns the one spawned reviewer, and the operator owns the second
+reviewer unless they explicitly ask the implementer to spawn both. The second
+review runs on the final tip after the implementer's review/re-review loop
+converges, with a freshly populated prompt whenever patches have landed since
+emission. Shared handoff mechanics — sequencing, freshness, the independence
+seal, and the ritual→skill index — live in `~/.agents/workflow/HANDOFF.md`.
 
 ## PR Handoff
 
@@ -435,14 +407,11 @@ Keep this review material available locally:
 
 Flow:
 
-1. Prepare a PR body file in the locked shape (see the "PR Body / Optional Review
-   Notes" template in KICKOFFS.md): a closing reference on the top line with
-   correct semantics — GitHub `Fixes #<issue>` only when merge fully resolves it,
-   else `Refs #<issue>` / `Part of #<issue>`; Linear `Closes <full url>` when fully
-   resolved, else `Part of <url>` — then the required core `## Summary`,
-   `## Verification`, `## Docs Impact` in that order, plus optional sections (Root
-   Cause, Impact, Screenshots / Visual QA, Risks, Follow-ups, Notes) only when they
-   carry real content.
+1. Prepare a PR body file in the locked shape owned by the "PR Body / Optional
+   Review Notes" template in KICKOFFS.md. Keep the closing-reference semantics:
+   GitHub `Fixes #<issue>` only when merge fully resolves it, else `Refs
+   #<issue>` / `Part of #<issue>`; Linear `Closes <full url>` when fully
+   resolved, else `Part of <url>`.
 2. Do not include a standalone `## Review Summary` section by default. Keep
    review prompts, transcripts, and detailed verdicts in local planning
    artifacts. Mention a review finding in the PR body only when it materially
@@ -458,16 +427,13 @@ Flow:
    and requested PR action before asking for one bundled approval.
 6. Create/update the PR only when authorized, applying the selected labels
    during `gh pr create` or immediately after with `gh pr edit --add-label`.
-   If the operator has already supplied `PR-GO` or an equivalent explicit
-   approval for the shown PR handoff packet, derive the matching `gh`
-   command(s), state them, and run them without a second approval prompt.
+   Approval semantics, including `PR-GO`, follow the Destructive Action Policy.
 7. If a separate review-record comment was prepared and authorized, post it
    under the PR with `gh pr comment` once the PR number or URL exists.
 
-All externally visible GitHub mutations in this flow still follow the
-Destructive Action Policy: state the exact `gh` command(s), including the PR
-label command and any optional PR comment command. A `PR-GO` or equivalent
-explicit PR-handoff approval covers the stated bundle once.
+All externally visible GitHub mutations in this flow — including the PR label
+command and any optional PR comment command — follow the Destructive Action
+Policy.
 
 ## Domain Pass
 
@@ -519,8 +485,12 @@ Rules:
 
 - Prefer repo-provided verify commands.
 - Before implementation handoff and PR handoff, make verification routing
-  explicit: commands run, gates intentionally not selected, gates blocked, and
+  explicit: commands run, gates intentionally not selected (each with a short
+  reason — no self-judged "only if a reviewer would ask"), gates blocked, and
   any Tier 4/operator work remaining.
+- When broader local gates are available, choose intentionally whether to run
+  them based on the changed surface and risk; do not skip or run them only
+  because they are or are not in the default PR CI path.
 - Do not treat optional, nightly-only, or CI-only-by-policy gates as impossible
   to run locally. If the repo exposes a local command and the environment is
   prepared, agents may run it when the task risk justifies it.
@@ -538,19 +508,18 @@ Rules:
 
 Default review pass:
 
-- verdict: `APPROVED` or `ACTIONABLE`
-- review adversarially: for each change ask the cheapest way it is
-  wrong/weak/out-of-scope; for each test, try to construct a regression it would
-  miss; for UI/contract swaps, ask whether a human reviewer would flag it as
-  unrequested. Approve clean only after naming the checks run — see the Stance
-  section of REVIEW_RUBRIC.md.
-- if `ACTIONABLE`, list only concrete findings with required fixes
+- verdict and findings semantics (`APPROVED` / `ACTIONABLE`, blocking rules)
+  are owned by Startup Routing path C and REVIEW_RUBRIC.md
+- review adversarially and approve clean only after naming the checks run —
+  the Stance section of REVIEW_RUBRIC.md owns the adversarial checks
 - patch only listed findings unless scope expands
 - rerun targeted verification
-- run two independent fresh-context reviews by default before opening a PR. To
-  avoid correlated misses (two same-lens reviewers rubber-stamping the same blind
-  spot), the two reviews use deliberately different lenses, and BOTH still run the
-  shared per-test and swap checks in REVIEW_RUBRIC.md:
+- the default two independent fresh-context reviews (mechanics — who spawns
+  which reviewer, prompt reuse, two approved verdicts before PR handoff — live
+  in "Implementation Completion Handoff") use deliberately different lenses to
+  avoid correlated misses (two same-lens reviewers rubber-stamping the same
+  blind spot), and BOTH still run the shared per-test and swap checks in
+  REVIEW_RUBRIC.md:
   - Reviewer A (implementer-spawned): primary correctness / regression / contract
     / state / security pass.
   - Reviewer B (operator-launched, when run): adversarial test-quality +
@@ -559,10 +528,8 @@ Default review pass:
     "what regression could come back and still leave this suite green?".
   When only one reviewer runs (common in the solo repo), that reviewer performs
   BOTH lenses.
-- if the repo runs an automated PR reviewer (e.g. CodeRabbit), know which paths it
-  EXCLUDES (commonly migrations and generated files): on those surfaces the agent
-  review is the sole automated check and must be line-by-line; the repo shim names
-  the excluded paths.
+- automated PR reviewer (e.g. CodeRabbit) path-exclusion handling: see
+  "Automated-reviewer awareness" in REVIEW_RUBRIC.md
 - additional review passes are allowed whenever patches after review are
   non-trivial, touch lifecycle/state/concurrency, change acceptance behavior, or
   the operator asks for another pass

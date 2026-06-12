@@ -50,27 +50,15 @@ Output: update the same spec file in place so it can land verbatim as the GitHub
 
 Pre-promotion review (recommended for non-trivial specs): spawn a fresh-context reviewer agent against the spec before publication. The reviewer validates scope coverage, file/line claim accuracy, label correctness against the repo's label set (`gh label list --repo <repo>`), self-containment of the final issue body, and dependency claims. Apply review feedback directly to the spec before marking it final. This catches stale paths, missed scope, mislabeled categories, and assumed-but-wrong code claims at the cheapest possible point.
 
-Publication approval: before running `gh issue create` or `gh issue edit`, show
-the final issue body or requested edit, labels, repo, target issue when editing,
-and requested issue action. If the operator has already said `ISSUE-GO` or a
-natural equivalent such as "approved, create the issue" or "approved, edit the
-issue" after seeing that prepared packet, derive the matching `gh` command,
-state it immediately before running it, and run it without asking for another
-approval. Ask again if the repo, issue target, title, body, labels, milestone,
-assignee, or edit changed materially.
+Publication approval: `gh issue create` / `gh issue edit` follow the kernel's
+Destructive Action Policy, including the `ISSUE-GO` prepared-packet shorthand.
 
-Lifecycle:
-- Start with `status: rough`.
-- Move to `status: review-ready` only when the spec is coherent AND its
-  load-bearing code claims (paths, identifiers, behavior-parity claims) have been
-  grounded against current code with file:line evidence; log any claim you could
-  not ground as an open question rather than asserting it.
-- Move to `status: final` only after review findings are addressed and the operator approves promotion.
-- Move to `status: promoted` after `gh issue create` succeeds and add the issue URL.
-- Keep the same living spec active after issue creation until implementation
-  lands. After implementation, move to `status: implemented`, delete the
-  one-off spec, or archive durable context according to the local repo cleanup
-  policy.
+Lifecycle: advance the spec `rough` -> `review-ready` -> `final` -> `promoted`
+-> `implemented` per the statuses and update rules in
+`~/.agents/workflow/PLANS.md`. Move to `review-ready` only when the spec is
+coherent AND its load-bearing code claims (paths, identifiers, behavior-parity
+claims) have been grounded against current code with file:line evidence; log
+any claim you could not ground as an open question rather than asserting it.
 
 Structure (required unless marked optional, in this order):
 
@@ -81,7 +69,7 @@ Structure (required unless marked optional, in this order):
 - Labels: <platform + subsystem + workstream + work-type labels from the local shim's label set>
 - (optional) Priority: <P0|P1>
 - Execution mode: <build paths allowed; explicit guardrails on remote/EAS builds; manual gates>
-- Suggested branch: `<task|fix|chore>/<topic-slug>`
+- Suggested branch: `<per the local repo shim's branch convention>`
 - Source / prior context: `<paths, issue links, audits, or parent specs>`
 - (optional) Parent workstream / Supersedes / Related roadmap
 - (optional) Blocked by / Ordered after: <full GitHub issue URLs>
@@ -169,6 +157,13 @@ or refute. Assume the most important gap is something the planner did NOT list.
    - implementation-shape tests, if any, and why that shape is contractual or supplemental:
    - manual/Tier 4 proof needed when automation cannot represent the failure mode:
 
+7. Repo conventions to enforce (optional — include only when the repo shim names
+   conventions the reviewer must check; real, existing paths in the repo under review)
+   - testing: `~/.agents/workflow/TESTING.md`
+   - coding-standards / patterns: <path, or "none found">
+   - verification policy: <path, or "none found">
+   - local shim: <path, or "none found">
+
 Return:
 1. Verdict: APPROVED or ACTIONABLE
 2. Findings if ACTIONABLE: [severity] section-or-line | category | issue | required fix
@@ -189,15 +184,12 @@ Return:
    - weak test strategy: BEFORE judging, open `~/.agents/workflow/TESTING.md`
      (Part 1 principles + Part 2 universal anti-patterns + the repo's stack
      section) and apply its anti-pattern tables + 10-second check to each PLANNED
-     test. Flag ACTIONABLE
-     any planned test that, as described, would only assert a constant/config
-     value, a generated-SQL string, "a mock was called", or that a
-     class/migration/file exists — or that would still pass if the fix were
-     reverted. For any planned migration/schema/persisted-field change, the spec
-     must plan a real import/service/repository save+reload test PLUS a named
-     Tier-4 proof (e.g. local-Postgres `migrate:run`, store rehydrate); a spec
-     that plans only SQL-string or config-value assertions, or only "add a
-     migration test", is a blocking finding at plan time.
+     test; flag ACTIONABLE any planned test that, as described, matches an
+     anti-pattern or would still pass if the fix were reverted. For any planned
+     migration/schema/persisted-field change, apply the migration bar in
+     REVIEW_RUBRIC.md "Surface-specific test bars" at plan time: a spec that
+     plans only implementation-shape assertions, or only "add a migration
+     test", is a blocking finding.
    - convention conformance: if any plan step explicitly proposes hand-rolling a
      component, helper, hook, loading state, or style primitive, open this repo's
      patterns doc (townchest:
@@ -234,6 +226,14 @@ Re-review plan / spec <path> after revisions following a prior ACTIONABLE plan r
 - artifact path: <path>
 - summary of revisions: <one or two sentences mapping revisions to findings>
 - diff (if version-controlled): <verbatim output of `git diff <base>..HEAD -- <artifact path>`, or before/after snippet>
+
+## Repo conventions to enforce (optional)
+Include only when the repo shim names conventions the reviewer must check;
+real, existing paths in the repo under review.
+- testing: `~/.agents/workflow/TESTING.md`
+- coding-standards / patterns: <path, or "none found">
+- verification policy: <path, or "none found">
+- local shim: <path, or "none found">
 
 ## Verify
 Return:
@@ -291,12 +291,12 @@ Enforce these forcing functions ON TOP of Routing A:
   test-quality finding; skip only for a truly trivial patch, stated. A test-quality
   finding is addressed only if the new/edited test exercises the real boundary and
   goes RED on revert.
-- Scope-creep guard covers SUBSTITUTION, not only addition: list out-of-scope work as
-  "discovered follow-ups"; if you met an AC by swapping a component/library/
-  primitive/algorithm/data path the item did not ask to change, disclose it in the
+- Scope-creep guard covers SUBSTITUTION, not only addition (the rule and masking
+  check live in REVIEW_RUBRIC.md, Stance / Scope-vs-intent sections): list
+  out-of-scope work as "discovered follow-ups"; disclose any unrequested swap in the
   Review Kickoff Hot spots as "approach substitution: <old> -> <new>, not requested"
   and flag any preserved identifier (testid/route/name) whose implementation changed
-  underneath it. A satisfied AC does not authorize an unrequested mechanism change.
+  underneath it.
 - One-off verification tests (a static-asset/config/data repair proof with no ongoing
   regression surface) → pocket to the work-item `artifacts/`, don't commit to the
   suite; disclose in the Review Kickoff.
@@ -331,9 +331,10 @@ Context (per-task):
 2. Implementer summary (2-3 sentences)
    <what changed and why>
 
-2a. Original operator request / intent (verbatim or close paraphrase)
-   <the exact ask that triggered this work, e.g. "stronger shimmer on the
-    skeleton"; if broader than the AC, say so>
+2a. Original operator request / intent (verbatim or close paraphrase — the
+    rubric's "Scope-vs-intent & contract-identity check" and Stance checks
+    compare the diff against THIS)
+   <the exact ask that triggered this work; if broader than the AC, say so>
 
 3. Scope
    - in scope: <1-2 sentence summary of what changed; do NOT enumerate file
@@ -368,6 +369,13 @@ Context (per-task):
 
 8. Tier 4 gate
    - required: yes/no; if yes, what (manual QA / hardware / live provider) + who runs it
+
+9. Repo conventions to enforce (optional — include only when the repo shim names
+   conventions the reviewer must check; real, existing paths in the repo under review)
+   - testing: `~/.agents/workflow/TESTING.md`
+   - coding-standards / patterns: <path, or "none found">
+   - verification policy: <path, or "none found">
+   - local shim: <path, or "none found">
 ```
 
 ## Re-Review Kickoff
@@ -393,20 +401,23 @@ decision-required rules to what changed.
 - diff stat: <`git diff --stat <base>..<tip>`>
 - implementer notes (if any): <how each finding was patched>
 
+## Repo conventions to enforce (optional)
+Include only when the repo shim names conventions the reviewer must check;
+real, existing paths in the repo under review.
+- testing: `~/.agents/workflow/TESTING.md`
+- coding-standards / patterns: <path, or "none found">
+- verification policy: <path, or "none found">
+- local shim: <path, or "none found">
+
 ## Return
+The "addressed" bar, reverse-tautology rule, and OUTSTANDING
+`[decision-required]` handling are owned by REVIEW_RUBRIC.md "Re-review mode".
 1. Per-finding status: for each prior finding, "addressed" / "not addressed" /
-   "OUTSTANDING" (unresolved `[decision-required]`) with `path:line` evidence. A
-   weak/false-confidence-test finding is "addressed" ONLY if the new or edited test
-   exercises the real operation boundary and goes RED when the original regression
-   returns; a reverse-tautology patch (editing a constant, SQL string, file/class
-   existence, or snapshot to match the new code) does NOT resolve it. An unresolved
-   `[decision-required]` stays OUTSTANDING and keeps the verdict ACTIONABLE.
+   "OUTSTANDING" (unresolved `[decision-required]`) with `path:line` evidence.
 2. Regressions: any behavior the patches broke that worked under the prior reviewed
    state.
-3. New issues in the changed lines (correctness, contract drift, an unrequested
-   component-type/contract/a11y substitution, weak/missing or false-confidence
-   tests, a preserved testid/snapshot masking a changed implementation, missing
-   docs).
+3. New issues in the changed lines — apply the rubric's test-quality, masking/swap,
+   and contract checks (Stance section of REVIEW_RUBRIC.md) plus missing docs.
 4. Verdict: APPROVED or ACTIONABLE. When ACTIONABLE, mark operator-input findings
    `[decision-required]` and append the rubric's implementer directive.
 
