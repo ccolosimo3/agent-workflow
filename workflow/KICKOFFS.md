@@ -514,9 +514,9 @@ Context (per-task):
    - verification policy: <path, or "none found">
    - local shim: <path, or "none found">
 
-Return: the rubric Output contract in full (diff-coverage confirmation,
-per-test ledger, test-quality sub-verdict, verdict, findings with severities,
-verification notes, convention conformance, residual risk), plus:
+Return: the rubric Output contract in full (diff- and acceptance-criteria-coverage
+confirmations, per-test ledger, test-quality sub-verdict, verdict, findings with
+severities, verification notes, convention conformance, residual risk), plus:
 
 8. Verified-clean record — bullets of the specific checks that came back CLEAN:
    files read, traces followed (X -> Y), commands run with results, contracts
@@ -532,10 +532,12 @@ Compose PR handoff text for work item <id/link> / PR <id/link>.
 
 # Locked PR body shape
 
-Required core, always present and in this order: `## Summary`, `## Verification`,
-`## Docs Impact`. Optional sections appear ONLY when they carry real content, in
-the order shown below. Omit an optional section entirely rather than writing
-"None" — except Docs Impact, which is required and may be "None".
+Required core, always present: `## Summary`, `## Verification`, and a one-line
+`Docs impact:` footer at the very bottom. Optional sections appear ONLY when they
+carry real content, in the order shown below — omit an optional section entirely
+rather than writing "None". One shape serves human and agent reviewers alike (both
+want stable headings, claims tied to verifiable specifics, the intent, and the
+noise cut); do not split formats.
 
 Closing reference — the FIRST line of the body, above `## Summary`:
 - GitHub issue (e.g. clearsnake): `Fixes #<n>` when merge fully resolves it;
@@ -560,28 +562,43 @@ Layout (annotations are not part of the output):
   ## Impact             (optional — what now works or what risk is reduced; NOT a second summary)
   <one short paragraph>
 
+  ## Scope boundary     (optional — what this deliberately does NOT change)
+  - <adjacent behavior/system left untouched, and why the in-scope work did not need it>
+  # High value when the change has a tempting overreach — it is the line an agent
+  # reviewer uses to catch approach/scope substitution. Omit when there is no
+  # meaningful boundary to draw.
+
   ## Screenshots        (optional — UI; or `## Visual QA`)
   <images / before -> after>
 
   ## Verification       (required)
-  - `<command>` -> <result with a useful number>
-  - <manual / Tier-4 proof, or state none>
-  - gates considered but not selected: <reason>   # omit line if N/A
-
-  ## Docs Impact        (required)
-  None
-  # or: <updated tracked-doc path> — <one line on what changed>
+  Full local PR-parity gates green: <only the gates that ACTUALLY ran green>.
+  - <focused test / behavior proof specific to THIS change> -> <result>
+  - <manual / visual / Tier-4 QA, or "none needed">
+  - <gate blocked / skipped / CI-owned that affects THIS change> -> <why>   # omit if N/A
 
   ## Risks              (optional)
   <residual risk, 1-2 sentences>
 
-  ## Follow-ups         (optional)
+  ## Follow-ups         (optional — ONLY operator-named deferrals or filed issues)
   - <deferred item> — <full issue URL if filed>
 
-  ## Notes              (optional)
-  - <rollback / migration / dependency / generated-output / build caveat>
+  ## Notes              (optional — reviewer-ACTIONABLE caveats only)
+  - <rollback / migration / residual risk / a deliberate non-obvious tradeoff>
+
+  Docs impact: none                   # footer LINE at the very bottom, not a section
+  # when docs changed: Docs impact: <tracked-doc path> — <one line on what changed>
 
 Constraints:
+- Verification is ONE PR-parity sweep line plus only targeted proofs (the focused
+  behavior test, manual/visual/Tier-4 QA). The exhaustive command log lives in the
+  work item's verification.md, never the PR. Do NOT list individual gate
+  invocations or flag strings, module/dependency/doc counts, tooling warnings
+  irrelevant to the diff, or rerun/post-rebase process history. The sweep line
+  names ONLY gates that actually ran green; a blocked or skipped gate gets its own
+  explicit line (honesty rule unchanged).
+- Reviewer-skip test for every line (human OR agent reviewer): if a reviewer
+  skipped it, would their review be worse? If not, it is a log entry — cut it.
 - Keep review verdicts OUT of the PR body by default — review evidence stays
   local. Mention a review finding only in `## Notes`, and only when it explains a
   patched edge case, residual risk, or deferred follow-up. No standalone

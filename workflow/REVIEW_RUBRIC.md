@@ -90,6 +90,11 @@ drift.
 (e) For a migration, persistence, data-loss, or contract change, confirm the proof
     exercised the real operation — apply the migration bar under "Surface-specific
     test bars"; if that proof was not run, raise it or mark it `[decision-required]`.
+(f) For each exported symbol the diff changes, removes, or renames, `git grep` its
+    references repo-wide and account for every one: a caller left on the old shape is
+    a regression; a symbol with no remaining non-test consumer is dead code to flag
+    per the repo's deprecation convention; a type or test that should have moved with
+    it is a gap. Reading only the changed file hides all three.
 
 ## Scope-vs-intent & contract-identity check (run BEFORE issuing any verdict)
 
@@ -177,9 +182,14 @@ freshness hunch to ACTIONABLE.
 
 ## Output contract (your Return, in order)
 
-0. Confirm you ran `git diff <base>..<tip>` and reviewed the full diff. List any
-   changed file you did NOT open and why — normally empty; if you cannot account for
-   every changed file, the review is incomplete, say so.
+0. Coverage confirmations, both REQUIRED:
+   (a) Diff coverage: confirm you ran `git diff <base>..<tip>` and reviewed the full
+       diff; list any changed file you did NOT open and why — normally empty; if you
+       cannot account for every changed file, the review is incomplete, say so.
+   (b) Acceptance-criteria ledger: one row per AC (re-derived in Required
+       investigation (a)) — AC | met / not met / deferred | the diff evidence or the
+       gap. A "not met" AC is a `[high]` finding; a silently dropped requirement is
+       what this ledger exists to surface.
 1. Per-test ledger (REQUIRED — one row for EACH added or changed test that carries
    an assertion; quote the key assertion you inspected):
    test name/path | real boundary it drives (service / import / job / API route /
@@ -272,7 +282,9 @@ hands back to the operator; no second review cycle from this reviewer.
 When invoked for a re-review — a prior ACTIONABLE verdict whose findings were
 patched — your scope narrows to the changed lines and the prior findings; do NOT
 perform a fresh broad review. Still load Required reading and apply the
-test-quality, masking, and decision-required rules above to what changed. Use the
+test-quality, masking, consumer/orphan-sweep (Required investigation (f)), and
+decision-required rules above to what changed — a patch that renames or removes a
+symbol still needs the reference sweep. Use the
 Re-Review Kickoff's Return shape (per-finding status / regressions / new issues /
 verdict), not the full Output contract. A prior weak/false-confidence-test finding
 is "addressed" ONLY if the new or edited test exercises the real operation boundary

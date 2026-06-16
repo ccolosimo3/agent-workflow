@@ -108,6 +108,44 @@ non-`ship` disposition, surface it with a recommendation and let the **operator*
 make the final include/exclude call — don't silently delete a working test. (This is
 worth, not weakness; it is independent of whether the test is a quality FAIL.)
 
+### Right-sizing agent output & coverage-gate interaction (hard rules)
+
+These harden the two sections above into required behavior, because agents
+systematically over-produce tests to chase a coverage number.
+
+- **Behavior-first; coverage is a byproduct, never the target.** Write the tests
+  the behavior needs; never add a test, an assertion-free execution, or a
+  permutation whose only purpose is to move a coverage %. A repo's coverage gate
+  (e.g. townchest `docs/testing/coverage-scope.md` + the *enforced*
+  `jest.shared.cjs` allowlist) still wins as repo policy — but you satisfy it
+  *with behavior tests*, and only for files the gate actually enforces. Do not
+  pre-emptively exhaustively cover files the gate does not include. If a real
+  branch is only reachable by a Part 2 anti-pattern, stop and surface the
+  gate-vs-quality conflict to the operator rather than shipping a shape/no-assert
+  test to make the number — Part 2 is not waived by a coverage target.
+
+- **A spec's required-test list is the CEILING, not the floor.** When a plan/spec
+  enumerates the tests for a change, implement those and stop. Any case beyond the
+  list must name the distinct regression it protects. Don't mirror production
+  permutations into test permutations.
+
+- **Disproportionality is a stop-and-triage trigger.** A test artifact whose size
+  is out of proportion to the behavior changed (heuristic: a many-hundred-line
+  test file for a small/medium change) must be triaged test-by-test with the
+  10-second check and the inclusion axis before handoff.
+
+- **Trim before you split.** Splitting a big test file is not a fix for an
+  oversized one. First delete redundant/implementation-shape tests, collapse
+  permutations into table-driven cases, and push fixtures into factories/builders.
+  Split into multiple files only if the *trimmed* suite is still large enough that
+  splitting by behavior/concern aids comprehension — never to make bloat look
+  smaller.
+
+- **Disposition reporting is a hard handoff output.** Every implementation handoff
+  names, for new/changed tests: total count, each non-`ship` disposition with a
+  one-line reason, and confirmation the suite was trimmed to behaviors. A handoff
+  without this is incomplete.
+
 ### Reviewer quick-check (for agent output)
 
 🚩 **Reject/rewrite** if: it's named after a migration/class/constant; asserts a

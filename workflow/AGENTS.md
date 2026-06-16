@@ -330,7 +330,8 @@ authority instead of creating a new doc or repeating content:
 - ADRs only for decisions that are hard to reverse, surprising without
   context, and the result of a real trade-off
 
-If no, state `Docs impact: none` in the implementation summary and PR body.
+If no, state `Docs impact: none` in the implementation summary and as the
+one-line PR-body footer (not a standalone section).
 Do not add documentation just to appear thorough. Prefer concise updates that
 reduce future confusion, remove stale text, or point readers to the existing
 authority.
