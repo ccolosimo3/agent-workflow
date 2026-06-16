@@ -200,13 +200,14 @@ Return:
      plans only implementation-shape assertions, or only "add a migration
      test", is a blocking finding.
    - convention conformance: if any plan step explicitly proposes hand-rolling a
-     component, helper, hook, loading state, or style primitive, open this repo's
-     patterns doc (townchest:
-     `.agent-workflow/plans/reference/coding-standards.md`; clearsnake:
-     `mobile/CLAUDE.md`) and flag ACTIONABLE if the repo already has an
-     established primitive for it (e.g. a custom Box/@keyframes shimmer where the
-     repo mandates the existing Skeleton/loading primitive). Do not flag steps
-     that reuse existing primitives or where no repo primitive is documented.
+     component, helper, hook, loading state, or style primitive, open the repo's
+     patterns doc (the coding-standards / patterns path resolved in "Repo
+     conventions to enforce" above, or via the repo shim — e.g.
+     `.agent-workflow/plans/reference/coding-standards.md`; your repo's shim names
+     its own) and flag ACTIONABLE if the repo already has an established primitive
+     for it (e.g. a custom Box/@keyframes shimmer where the repo mandates the
+     existing Skeleton/loading primitive). Do not flag steps that reuse existing
+     primitives or where no repo primitive is documented.
    - existing-mechanism reuse / over-scope: does the plan invent a new helper,
      policy, query, filter, fallback, branch, state, or UI behavior where the
      codebase already has an adjacent mechanism? Verify the 4a claim by reading
@@ -286,9 +287,10 @@ and Definition of Done.
 
 Enforce these forcing functions ON TOP of Routing A:
 
-- Surface-tied verification: if the diff touches a surface the repo verification doc
-  (clearsnake `mobile/VERIFICATION.md`, townchest `AGENTS.local.md`) names a gate
-  for — migration/schema/persisted state, native config, routing, auth, contract —
+- Surface-tied verification: if the diff touches a surface the repo's verification
+  doc (named by the repo shim — e.g. a verification-routing or PR-checklist
+  reference) names a gate for — migration/schema/persisted state, native config,
+  routing, auth, contract —
   that gate is REQUIRED; "Tier 1 sufficient" is not a valid record. Name the surface
   you changed and why no surface-triggered gate applies.
 - Honest verification reporting: claim a gate passed only if it actually ran this
