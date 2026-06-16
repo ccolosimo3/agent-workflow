@@ -37,7 +37,9 @@ kernel's "Implementation Completion Handoff".
 3. **Repo conventions resolution** (fill from the FILESYSTEM, not operator
    memory; the stop-and-ask rule does not apply to this step). Resolve real,
    existing paths the reviewer must load:
-   - testing: `~/.agents/workflow/TESTING.md` (fixed kernel path)
+   - testing: `~/.agents/workflow/TESTING.md` (fixed kernel path — Part 1/2
+     principles + anti-patterns) plus the repo's stack section in its testing
+     reference (resolve via the shim, e.g. `plans/reference/testing-philosophy.md`)
    - coding-standards / verification / checklist docs: the repo shim
      (`<root>/AGENTS.local.md` or the repo's CLAUDE/AGENTS adapter) names the
      repo's docs — resolve from it. Fallback when no shim names them: search

@@ -190,8 +190,9 @@ Return:
    - missing or untestable acceptance criteria
    - missing or wrong verification commands
    - weak test strategy: BEFORE judging, open `~/.agents/workflow/TESTING.md`
-     (Part 1 principles + Part 2 universal anti-patterns + the repo's stack
-     section) and apply its anti-pattern tables + 10-second check to each PLANNED
+     (Part 1 principles + Part 2 universal anti-patterns) and the repo's testing
+     reference for its stack section, then apply their anti-pattern tables +
+     10-second check to each PLANNED
      test; flag ACTIONABLE any planned test that, as described, matches an
      anti-pattern or would still pass if the fix were reverted. For any planned
      migration/schema/persisted-field change, apply the migration bar in

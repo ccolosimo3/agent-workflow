@@ -50,10 +50,12 @@ code you read, mark it unverified.
 The skill injects the exact existing paths under "Repo conventions to enforce"; if
 it did not, resolve them yourself:
 
-- testing — `~/.agents/workflow/TESTING.md` (single source of truth). Apply Part 1
-  (principles) + Part 2 (universal anti-patterns) and the section for this repo's
-  stack (Part 3 tc-commerce/Vendure, Part 4 tc-app, or Part 5 clearsnake mobile).
-  Use its anti-pattern tables and 10-second check as your test rubric.
+- testing — `~/.agents/workflow/TESTING.md` owns Part 1 (principles) + Part 2
+  (universal anti-patterns); apply both, then the repo's own stack section in its
+  testing reference (resolved via the repo shim, e.g.
+  `plans/reference/testing-philosophy.md`), which names the canonical example files
+  and coverage authority for that stack. Use the anti-pattern tables and 10-second
+  check as your test rubric.
 - coding-standards / patterns and verification policy — resolved per repo from
   its shim; the paths below are an illustrative example of shim routing from one
   operator's repos — your repo's shim names its own equivalents. The rule the

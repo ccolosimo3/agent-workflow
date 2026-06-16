@@ -1,14 +1,13 @@
-# Testing — Principles & Per-Stack Guide
+# Testing — Principles & Universal Anti-Patterns
 
-Single source of truth for how to write and review tests across the operator's
-repos. The review *process* lives in `REVIEW_RUBRIC.md`; this doc owns *what/how*
-to test. **Apply Parts 1–2 always, plus the one stack section for the repo you are
-in.**
+Single source of truth for the test PRINCIPLES and universal anti-patterns across
+the operator's repos. The review *process* lives in `REVIEW_RUBRIC.md`; this doc
+owns *what/how* to test at the principle level. **Apply Parts 1–2 always; the
+concrete per-stack recipes, code examples, and canonical files live in the repo's
+own testing reference** (see "Your repo's stack section" at the end).
 
-Composes with each repo's coverage/verification authority (those win on conflict):
-- townchest: `docs/testing/coverage-scope.md` (the 100% in-scope coverage policy).
-- clearsnake-mobile: `mobile/VERIFICATION.md` (Automated Unit-Test Policy + coverage
-  treatments) and `mobile/jest.config.js` (mechanical coverage authority).
+Composes with each repo's coverage/verification authority, named in that repo's
+testing reference (it wins on conflict).
 
 ---
 
@@ -189,203 +188,12 @@ is the defect). Don't generalize it to other constants.
 
 ---
 
-## Part 3 — tc-commerce / Vendure / Mirakl (Vitest)
+## Part 3 — Your repo's stack section
 
-Boot a real Vendure test server → run the real service method → **save + reload from
-the DB** → assert the reloaded entity. Mock only the external Mirakl SDK.
-
-```ts
-const variant = await app.get(ProductVariantService).findOne(ctx, variantId);
-await app.get(EntityHydrator).hydrate(ctx, variant!, { relations: ['assets'] });
-expect(variant!.assets[0].asset.customFields.original_url).toBe(longUrl);
-```
-
-- **Save + reload is the core.** Re-fetch via the repository/service after the
-  operation; assert the reloaded entity, never the in-memory return value.
-- Use real fixtures from `test-fixtures/`, mutated per case (delete a field to force
-  a failure; bump ids to avoid collisions).
-- Repair/persistence bugs: corrupt real state, **assert it's broken first**, run the
-  operation, reload (ideally two read paths), assert it healed.
-- Split pure logic (fast unit tests) from orchestration (one real save+reload
-  integration test).
-- **Migrations:** prove behavior via the import/service path; local-Postgres
-  `migrate:run` is the **Tier-4** proof — SQL.js is supplemental. Generate via
-  `pnpm --filter tc-commerce migrate:generate`, never bare `npx vendure`. A
-  generated-SQL string match or "`up()`/`down()` were called" is **not** sufficient
-  on its own.
-
-**Stack anti-pattern:** generated-SQL string match as the sole proof (OK only as
-clearly-supplemental to a save+reload / migrate:run proof).
-
-**Canonical files:**
-- Import + save/reload: `services/tc-commerce/src/plugins/mirakl-connector/products/tests/product-import.spec.ts`
-
----
-
-## Part 4 — tc-app frontend (React Query / Jest+RTL / Next routes)
-
-### React Query stores / hooks (Vitest)
-
-Run the real query through `TCQueryClient`; assert resolved data **and the failure
-path**.
-
-```ts
-vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 401, json: ... }));
-await expect(new TCQueryClient().fetchQuery(paymentMethodsBootstrapQuery('user-1')))
-  .rejects.toBeInstanceOf(PaymentMethodsBootstrapUnauthorizedError);
-```
-
-- Always cover the failure path (e.g. 401 → typed redirect error).
-- Test derived flags (`isPending`/`isError`/`isUnavailable`, default-vs-custom) as
-  pure functions of query state.
-- Don't assert the raw options object (`gcTime`, `refetchOnWindowFocus`, …) — that's
-  config shape. `queryKey` may be asserted when cache isolation is a real contract.
-- For stores that hit Supabase directly, prefer a real-DB test: insert fixtures with
-  `SUDOsupabase`, run the query, assert, clean up in `afterAll`.
-
-### Components (Jest + React Testing Library)
-
-Render the real component, drive it with `userEvent`/`fireEvent`, assert
-user-visible output and the **absence** of the wrong state.
-
-```tsx
-/** @jest-environment jsdom */
-render(<ThemeProvider theme={theme}><Page /></ThemeProvider>);
-expect(screen.getByTestId('payment-methods-bootstrap-skeleton')).toBeTruthy();
-expect(screen.queryByText('Cards')).toBeNull();
-```
-
-- One render+assert per real branch; match cases to branch count, not line count.
-- Cover failure/rollback explicitly (retry calls refetch; unauthorized → redirect;
-  optimistic action reverts on write failure).
-- Include an old-copy/regression case for display-conditional changes.
-- Mock at the seam (`jest.mock` + a mutable ref reset in `beforeEach`); import real
-  shared classes/helpers instead of re-declaring them in the mock.
-- A Storybook story is not a test.
-
-### Next API routes (Jest, node env)
-
-Invoke the real handler with a real `Request`; assert status per branch and that the
-persistence collaborator isn't called on the failure path.
-
-```ts
-/** @jest-environment node */
-const res = await PATCH(createFormDataRequest() as NextRequest);
-expect(res.status).toBe(401);
-expect(mockPersist).not.toHaveBeenCalled();   // no side effect on failure
-```
-
-- Assert `response.status` for each branch (200 / 400 / 401 / 404 / 409) and the
-  response body shape callers depend on.
-
-**Canonical files:**
-- React Query store (mocked-fetch + failure): `apps/tc-app/stores/tests/payment-methods-query.test.ts`
-- React Query store (real-DB): `apps/tc-app/stores/tests/supporter-of-query.test.ts`
-- Component RTL (branches + retry + redirect): `apps/tc-app/components/support/page/PaymentMethodsPage/__tests__/UserPaymentMethodsPage.test.tsx`
-- Next route (status matrix + no-side-effect-on-fail): `apps/tc-app/app/api/user/pledged-schools-banner/dismiss/dismiss.test.ts`
-
----
-
-## Part 5 — clearsnake mobile (RN / Jest+RNTL / Zustand)
-
-### Components (React Native Testing Library)
-
-Render the real component, query by accessibility/role/text/testID, assert behavior
-and the **absence** of the wrong state. Never assert `className`,
-`StyleSheet.flatten(...)`, or numeric layout props.
-
-```tsx
-import { render } from '@testing-library/react-native';
-
-const screen = render(
-  <ConnectionIndicator isConnected={false} isConnecting networkStatus="reachable" />,
-);
-expect(screen.getByLabelText('Connecting to camera')).toBeTruthy();
-expect(screen.queryByText('OFFLINE')).toBeNull();
-```
-
-- Assert the user-facing contract: accessible label/live-region, visible label,
-  state precedence, that the right callback/command fires on interaction.
-- One render+assert per real branch; cover empty/disconnected/error, not just happy.
-- For "does the layout stay stable", assert an **invariant** (a stable container/
-  icon-slot via testID exists in every state) rather than exact `gap`/`width`/`flex`.
-  If the real risk is on-device geometry, send it to Tier-4, not Jest.
-- Drive a derived visual through the component, not its helper: feed `Number.NaN` /
-  `Number.POSITIVE_INFINITY` through the mocked hook and assert the fallback renders.
-
-### Stores (Zustand + AsyncStorage)
-
-The mobile analog of save+reload: write a persisted blob, **rehydrate**, assert the
-rehydrated state — and assert write-back by reading what actually persisted.
-
-```ts
-useClearsnakeStore.setState(useClearsnakeStore.getInitialState(), true);
-await AsyncStorage.setItem('clearsnake-storage', JSON.stringify({ state: { ledDuty: 75 }, version: N }));
-await useClearsnakeStore.persist.rehydrate();
-expect(useClearsnakeStore.getState().ledDuty).toBe(75);
-
-// write-back: act through the store, then assert the persisted projection
-expect(selectPersistedClearsnakeState(useClearsnakeStore.getState())).toMatchObject({ ledDuty: 75 });
-```
-
-- Reset with `useClearsnakeStore.setState(useClearsnakeStore.getInitialState(), true)`,
-  clear the AsyncStorage Jest mock, restore `console.log` spies (per `VERIFICATION.md`).
-- Assert the **exact persisted keys** via `selectPersistedClearsnakeState`, not a
-  whole-store snapshot.
-- Legacy migrations live in `src/lib/clearsnake-store-migrations.ts` so migration
-  behavior is tested without importing the production store.
-
-### Async clients / board fetchers
-
-Run the real fetch/parse/abort/timeout/retry path; mock only `fetch`. Assert the
-parsed contract, the **error classification**, and the timeout/abort behavior.
-
-```ts
-jest.spyOn(globalThis, 'fetch').mockResolvedValue(
-  createResponse({ ok: true, status: 200, body: firmwareReading }),
-);
-await expect(fetchBoardBattery(BATTERY_URL)).resolves.toMatchObject({ percent: 56, state: 'good' });
-
-// failure mode is the high-value half:
-jest.spyOn(globalThis, 'fetch').mockResolvedValue(createJsonRejectingResponse({ ok: true, status: 200 }));
-await expect(fetchBoardBattery(BATTERY_URL)).rejects.toBeInstanceOf(BoardBatteryError);
-```
-
-- Cover the unhappy paths the board actually produces: non-200, invalid JSON,
-  abort/timeout (`*_REQUEST_TIMEOUT_MS`), retry — each is a real device failure mode.
-
-### Pure logic / selectors
-
-Exercise the function for meaningful inputs. **Never** import a constant and assert
-it equals the same constant from the same module.
-
-- Prove behavior like production-vs-dev URL selection by toggling `__DEV__` /
-  `EXPO_PUBLIC_CLEARSNAKE_INTERNAL_TOOLS` and asserting the **selected** value (see
-  `board-urls.test.ts`).
-- The one sanctioned constant-equality test is `board-url-defaults.test.ts`:
-  release-facing default board URLs are themselves the contract.
-
-### Native modules / parsers / transport
-
-Assert the protocol contract and the native-event→store boundary; mock only the
-native bridge edge.
-
-- Parser/transport: assert the parsed terminal-log markers/required fields and the
-  failure classification the host protocol depends on.
-- Native event/status-probe/snapshot/recording: assert the event→store update, the
-  native API call, media-library save/cleanup, and streaming failure modes.
-- Geometry/touch-target/real-board behavior the harness can't represent → document
-  Tier-4 device/manual proof; treat any incidental style assertion as supplemental.
-
-**Stack anti-patterns:** exact `className` string assertions; `StyleSheet.flatten(...)`
-/ numeric layout props (`gap`/`width`/`flex`); a direct helper-export test that
-duplicates rendered behavior (make the helper private); palette/membership-only tests.
-
-**Canonical files:**
-- Component (RNTL, accessible/visible behavior): `mobile/src/components/camera-tab/__tests__/ConnectionIndicator.test.tsx`
-- Store (AsyncStorage rehydrate + write-back): `mobile/src/lib/__tests__/clearsnake-store.test.ts`
-- Store migrations (test without the production store): `mobile/src/lib/__tests__/clearsnake-store-migrations.test.ts`
-- Async client (fetch/parse/timeout/error classification): `mobile/src/lib/__tests__/board-battery.test.ts`
-- Pure selector (runtime-mode behavior, not constant-equality): `mobile/src/lib/__tests__/board-urls.test.ts`
-- Documented constant-equality exception: `mobile/src/lib/__tests__/board-url-defaults.test.ts`
-- Native parser/transport protocol contract: `mobile/src/lib/__tests__/native-mjpeg-perf-runner-host.test.ts`
+The concrete per-stack recipe — the real-operation pattern, code examples, stack
+anti-patterns, and canonical example files — lives in the repo's own testing
+reference, named by the repo shim (typically
+`.agent-workflow/plans/reference/testing-philosophy.md`, or the path the shim
+gives; clearsnake: `plans/reference/testing-philosophy.md`). That doc also names
+the repo's coverage/verification authority, which wins on conflict. Apply
+Parts 1–2 above plus that stack section for the repo you are in.
