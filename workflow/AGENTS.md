@@ -11,8 +11,8 @@ similar host), treat it as workflow bootstrap, not repository policy.
 - Tracked repo/company/security instructions are authoritative over this kernel.
 - If a repo root contains `AGENTS.local.md`, read it before substantive work as
   a local-only workflow adapter.
-- Treat local adapters as additive. If they conflict with tracked repo rules,
-  ignore the conflicting local instruction and follow the tracked rule.
+- Treat local adapters as additive; on conflict with tracked repo rules, the
+  tracked rule wins (see Precedence).
 - Do not commit local workflow adapters, personal paths, credentials, or kernel
   symlinks unless the repo explicitly asks for them.
 - Claude Code delta: also read a repo-root `CLAUDE.md` as the Claude project
@@ -84,8 +84,6 @@ enforceable.
 ## Destructive Action Policy
 
 Every instance of an action below requires fresh, in-session operator approval.
-There is no blanket pre-approval; approving one push, merge, or close does not
-authorize the next.
 
 Hard-to-reverse local/repo state:
 
@@ -185,10 +183,9 @@ Use this when a ticket, issue, bug, or explicit task already exists.
    contract, e2e, visual/manual QA, or local-stack QA when the task touches the
    matching surface or the operator asks for extra confidence; report routing
    (gates run / not selected / blocked) per the Verification Tiers rules.
-9. Hand off for review per "Implementation Completion Handoff" (Review Kickoff
-   prompt in chat before spawning, one spawned reviewer, two approved verdicts
-   before PR handoff by default); patch actionable findings in scope and rerun
-   targeted verification per the Review Loop before continuing.
+9. Hand off for review per "Implementation Completion Handoff"; patch actionable
+   findings in scope and rerun targeted verification per the Review Loop before
+   continuing.
 10. Open/update PR or push only when authorized by the user/team flow.
 11. When a PR is opened, keep detailed review evidence local by default. Include
     review findings in the PR body only when they materially help the reviewer
@@ -297,7 +294,6 @@ A Task is done when:
 - docs impact was checked; authoritative docs were updated when behavior,
   contracts, setup, verification, or user-visible workflow changed, or the
   agent stated `Docs impact: none`
-- PR/review requirements are satisfied
 - the Implementation Completion Handoff contract was met
 - if a PR was opened, the PR body captures the change, validation, and any
   material residual risk; when a separate review-record comment was requested,
@@ -515,11 +511,9 @@ Default review pass:
   the Stance section of REVIEW_RUBRIC.md owns the adversarial checks
 - patch only listed findings unless scope expands
 - rerun targeted verification
-- the default two independent fresh-context reviews (mechanics — who spawns
-  which reviewer, prompt reuse, two approved verdicts before PR handoff — live
-  in "Implementation Completion Handoff") use deliberately different lenses to
-  avoid correlated misses (two same-lens reviewers rubber-stamping the same
-  blind spot), and BOTH still run the shared per-test and swap checks in
+- the default two independent fresh-context reviews (mechanics live in
+  "Implementation Completion Handoff") use deliberately different lenses to avoid
+  correlated misses, and BOTH still run the shared per-test and swap checks in
   REVIEW_RUBRIC.md:
   - Reviewer A (implementer-spawned): primary correctness / regression / contract
     / state / security pass.

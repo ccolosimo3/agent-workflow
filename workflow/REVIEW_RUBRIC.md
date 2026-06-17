@@ -36,9 +36,8 @@ is not acceptable.
 The Context block in the kickoff is the implementer's orientation and CLAIM — it is
 itself part of what you are reviewing. The diff and the repo are the source of
 truth; where the Context and the diff disagree, the diff wins and the discrepancy
-is a finding. Re-open the source issue/spec yourself and re-derive the acceptance
-criteria from it — do not assume the copied bullets are complete or faithful. Treat
-every line — summary, scope, verification numbers, Hot spots, and ESPECIALLY the
+is a finding. Treat every line — summary, scope, verification numbers, Hot spots,
+and ESPECIALLY the
 Test-quality self-report — as a claim to confirm or refute against the changed
 lines you actually read. Assume the most important problem is something the
 implementer did NOT list as a hot spot, including a component/contract/behavior
@@ -83,9 +82,8 @@ drift.
 (b) Read the actual changed lines via `git diff <base>..<tip>` (the range in
     Context section 1). You may not approve a file you did not open.
 (c) For any UI or component change, write the component/element TYPE on each side of
-    the diff (e.g. `Skeleton` -> `Box`) and confirm the type, its accessibility
-    semantics, and its framework contract did not silently change (full identity +
-    masking check below).
+    the diff and confirm the type, its accessibility semantics, and its framework
+    contract did not silently change — the full identity + masking check below.
 (d) Open each new or changed test file yourself and judge it against the
     Test-quality rules below and `~/.agents/workflow/TESTING.md`; do not rely on
     the implementer's self-report.
@@ -148,8 +146,7 @@ component) — those are in-scope refinements, not substitutions.
 
 Also flag tests that would not fail for the intended regression, assert
 implementation shape only, or create false confidence without a behavior-level/
-manual proof. A green suite is SUSPECT, not reassuring, whenever an identifier was
-preserved over a changed implementation — apply the masking check above.
+manual proof.
 
 ## Automated-reviewer awareness
 
