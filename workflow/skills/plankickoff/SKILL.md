@@ -74,7 +74,10 @@ research.
 5. **Hand back.** End with the spec path and status, the decision-required
    items, and the next pipeline step: operator revises → spec goes
    `review-ready` → `/planreview` (then `/planrereview` after findings).
-   Do not auto-run planreview, and do not promote to `final` or to the
+   If research surfaced multiple viable architectures rather than one clear
+   path, or an unproven architectural bet, recommend `/explore` (map & rank the
+   approaches) or `/spike` (prove the bet) instead of forcing a single-path
+   spec. Do not auto-run planreview, and do not promote to `final` or to the
    tracker without the operator.
 
 ## Failure modes to avoid

@@ -10,8 +10,18 @@ kernel's "Implementation Completion Handoff".
 
 ## Ritual → skill index
 
-- Planning kickoff for a tracker issue (research → root cause → spec) →
-  `plankickoff` (then `planreview` / `planrereview` when the spec is ready)
+The planning/build phases form a DAG (not a loop); the operator owns each
+phase transition (those are the direction decisions). Review loops *within* a
+phase are autonomous.
+
+- Planning kickoff for a tracker issue (research the problem → root cause →
+  spec) → `plankickoff`
+- Map & rank candidate approaches for an open question / a working-but-imperfect
+  system → `explore` (hands off to `spike` if the chosen approach carries an
+  unproven bet, else to `planreview`)
+- Prove one chosen approach at the real boundary (GO/NO-GO) → `spike` *(planned)*
+- Then: finalize spec → `planreview` / `planrereview` (autonomous loop) →
+  implement → `cjcreview` / `cjcrereview` (loop) → `secondreview`
 - Implementation review handoff → `cjcreview` (emit + spawn; emit-only mode
   for outer-gate handoffs)
 - Implementation re-review after patches → `cjcrereview`

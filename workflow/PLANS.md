@@ -52,7 +52,7 @@ Every new plan doc starts with YAML frontmatter:
 ```yaml
 ---
 title: <human title>
-status: rough        # rough | review-ready | final | promoted | implemented | closed | deferred | blocked
+status: rough        # rough | review-ready | final | promoted | implemented | reference | closed | deferred | blocked
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 owner: <handle>
@@ -69,7 +69,8 @@ related:
 ## Lifecycle & Update Rules
 
 `rough -> review-ready -> final -> promoted -> implemented` (or `closed` /
-`deferred`).
+`deferred`). Standalone decision/options docs that are not an evolving spec use
+`status: reference`, outside that flow.
 
 - Bump `updated:` when editing any plans file.
 - `review-ready` when coherent enough for fresh-context review; `final` only
