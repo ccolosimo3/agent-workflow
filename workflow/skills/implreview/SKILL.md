@@ -1,20 +1,20 @@
 ---
-name: cjcreview
+name: implreview
 description: Hand off a completed implementation for review. Reads the canonical
   Review Kickoff template from ~/.agents/workflow/KICKOFFS.md, populates every
   placeholder from the current session, emits the populated prompt verbatim in
   chat under a `Review Kickoff Prompt` block, then spawns exactly one
   fresh-context reviewer subagent with that prompt. Use after completing an
-  implementation when the operator says /cjcreview, "hand this off for review",
+  implementation when the operator says /implreview, "hand this off for review",
   "let's review this", or similar.
 ---
 
-# cjcreview
+# implreview
 
 The implementer session's trigger for the kernel's "Implementation Completion
 Handoff". Shared mechanics live in `~/.agents/workflow/HANDOFF.md` — apply
 that protocol with the parameters below; this file adds only the
-cjcreview-specific population rules.
+implreview-specific population rules.
 
 ## Protocol parameters
 
@@ -46,7 +46,7 @@ cjcreview-specific population rules.
 
 ## Emit-only mode
 
-When the operator says `/cjcreview emit-only` (or "emit the kickoff only",
+When the operator says `/implreview emit-only` (or "emit the kickoff only",
 "prepare the second-review prompt"): re-populate from the CURRENT state —
 fresh SHAs, never a reuse of an earlier emitted prompt — and emit without
 spawning. Use after the inner loop converges to hand the outer-gate reviewer a

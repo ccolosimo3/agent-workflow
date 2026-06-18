@@ -1,19 +1,19 @@
 ---
-name: cjcrereview
+name: implrereview
 description: Hand off a patched implementation for a follow-up review after the
   implementer has addressed findings from a prior ACTIONABLE review verdict.
   Reads the canonical Re-Review Kickoff template from
   ~/.agents/workflow/KICKOFFS.md, populates it with the prior findings and
   patch context from the current session, emits it verbatim in chat, and
   spawns one fresh-context reviewer subagent. Use when the operator says
-  /cjcrereview, "re-review this", or after patches land in response to a
+  /implrereview, "re-review this", or after patches land in response to a
   prior review.
 ---
 
-# cjcrereview
+# implrereview
 
 Follow-up review handoff after the implementer patched findings from a prior
-ACTIONABLE verdict. Companion to [[cjcreview]]. Shared mechanics live in
+ACTIONABLE verdict. Companion to [[implreview]]. Shared mechanics live in
 `~/.agents/workflow/HANDOFF.md` — apply that protocol with the parameters
 below; this file adds only the re-review specifics.
 

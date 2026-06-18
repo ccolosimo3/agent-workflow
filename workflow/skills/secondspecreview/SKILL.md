@@ -1,28 +1,28 @@
 ---
-name: secondplanreview
+name: secondspecreview
 description: Run the operator-owned outer-gate second review of their OWN plan /
   spec, in a fresh conversation in the other app/model, after the planning
-  session's planreview ⇄ planrereview loop has converged to APPROVED. Self-
+  session's specreview ⇄ specrereview loop has converged to APPROVED. Self-
   populates the Plan Review Kickoff from the spec file (never from a pasted
   prompt), deliberately ignores prior plan-review findings, and performs a
   holistic whole-plan review itself in this conversation per
   ~/.agents/workflow/REVIEW_RUBRIC.md + the Plan Review Kickoff validation
   categories — verifying the spec's file:line claims against current source —
   then returns a strict verdict for the operator to carry back. Use when the
-  operator says /secondplanreview, "second plan review", "independent fresh pass
+  operator says /secondspecreview, "second plan review", "independent fresh pass
   on the whole spec", or names a converged spec for outer-gate review. Not the
-  planning session's own loop (planreview / planrereview), not a code review
-  (secondreview), not a coworker PR (cjcprreview).
+  planning session's own loop (specreview / specrereview), not a code review
+  (secondreview), not a coworker PR (prreview).
 ---
 
-# secondplanreview
+# secondspecreview
 
 The outer gate of the plan flow — the planning analog of `secondreview`
 (sequencing and independence rules: `~/.agents/workflow/HANDOFF.md`). It runs in
 a FRESH conversation in the app/model that did NOT plan; the conversation itself
 is the fresh-context reviewer, so do the review here in the main thread — do not
-spawn a subagent. It exists because the `planreview` loop converges through
-`planrereview`, which is delta-scoped — so the converged plan never got a cold,
+spawn a subagent. It exists because the `specreview` loop converges through
+`specrereview`, which is delta-scoped — so the converged plan never got a cold,
 holistic whole-artifact read. This gate is that read, from a different model,
 un-anchored by the loop.
 
@@ -31,7 +31,7 @@ un-anchored by the loop.
 1. **Preflight (read-only).** Confirm the spec under review (operator pointer, or
    auto-detect the active work-item folder, e.g.
    `<root>/.agent-workflow/plans/active/<ISSUE>-*/`). Confirm it is **converged** —
-   the `planreview` loop reached APPROVED and the operator advanced `status` to
+   the `specreview` loop reached APPROVED and the operator advanced `status` to
    `final` (or `promoted`). Read that from the spec's `status:` frontmatter or the
    operator's word that the loop converged — NOT from `reviews.md` (the
    independence seal forbids it); if neither signal is available, ask rather than
@@ -46,7 +46,7 @@ un-anchored by the loop.
    verdicts, or prior kickoff prompts — in the folder or in chat. If the operator
    pasted loop findings, set them aside unread; this review must not be anchored
    by what the first lens found. (To re-review *against* prior findings, that is
-   `planrereview` in the planning session, not this skill.)
+   `specrereview` in the planning session, not this skill.)
 4. **Populate the `## Plan Review Kickoff` template** from
    `~/.agents/workflow/KICKOFFS.md` per the HANDOFF.md protocol (fidelity, honest
    population, repo-conventions resolution from the shim) — filled from the spec
@@ -69,8 +69,8 @@ un-anchored by the loop.
      direction decisions `[decision-required]`
    - what you verified clean (claims checked against source, sections traced)
    - one line: paste this into the planning session; autonomous ACTIONABLE
-     findings go through `planrereview` there (the loop handles them), while
-     `[decision-required]`/direction findings stop for the operator (planreview's
+     findings go through `specrereview` there (the loop handles them), while
+     `[decision-required]`/direction findings stop for the operator (specreview's
      disposition). Re-run this gate only if the plan changed materially.
 
 ## Guardrails
@@ -81,7 +81,7 @@ un-anchored by the loop.
 - Strict independent verdict — do not soften it calibrate-review-style, and do
   not count an early read of a non-converged plan as the certifying second
   verdict.
-- One pass only — this gate does not loop. The `planreview` ⇄ `planrereview` loop
+- One pass only — this gate does not loop. The `specreview` ⇄ `specrereview` loop
   in the planning session owns iteration; re-run this gate only if the plan
   changed materially after re-converging.
 

@@ -10,7 +10,7 @@ description: Run the operator-owned outer-gate second review of their OWN
   verified-clean record for the operator to carry back. Use when the operator
   says /secondreview, "second review this branch", or names a work item or
   repo and asks for the outer-gate review. Not for coworker PRs (that is
-  cjcprreview) and not for the implementer session's own loop (cjcreview).
+  prreview) and not for the implementer session's own loop (implreview).
 ---
 
 # secondreview
@@ -38,7 +38,7 @@ gate.
    verdicts, or prior kickoff prompts — in the folder or in chat. If the
    operator pasted inner-loop findings, set them aside unread; this review
    must not be anchored by what the first lens found. (If they explicitly
-   want a re-review against findings, that is `cjcrereview` in the
+   want a re-review against findings, that is `implrereview` in the
    implementer session, not this skill.)
 4. **Compute the live range yourself.** base = `git merge-base` of HEAD with
    the repo's integration branch (named by the repo shim, e.g. `origin/dev`);
@@ -67,7 +67,7 @@ gate.
    - the verified-clean record: what was traced, read, and re-run that came
      back clean
    - one line reminding the operator: paste this into the implementer
-     session; ACTIONABLE findings go through `cjcrereview` there.
+     session; ACTIONABLE findings go through `implrereview` there.
 
 ## Guardrails
 

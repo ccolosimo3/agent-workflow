@@ -1,17 +1,17 @@
 ---
-name: cjcprreview
+name: prreview
 description: Review someone else's PR end to end. Populates the External PR
   Review Kickoff from the PR and its linked issue, emits it verbatim in chat,
   spawns one fresh-context reviewer that runs the strict rubric pass with local
   verification, then calibrates the returned findings via the calibrate-review
   skill into an operator action brief (patch myself / raise with author /
-  discuss / defer). Use when the operator says /cjcprreview, asks to review a
+  discuss / defer). Use when the operator says /prreview, asks to review a
   numbered PR for them, or wants a coworker-PR review with calibrated
   takeaways. Do not use for the operator's own implementation handoff — that
-  is cjcreview.
+  is implreview.
 ---
 
-# cjcprreview
+# prreview
 
 One-command pipeline for a coworker's PR: strict fresh-context review pass,
 then an operator-facing action brief. This skill is a thin orchestrator — the

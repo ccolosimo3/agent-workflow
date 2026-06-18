@@ -1,5 +1,5 @@
 ---
-name: plankickoff
+name: spec
 description: Begin planning and research for a newly assigned tracker issue
   (Linear or GitHub). The invoking session becomes the planning agent and
   orchestrator — it reads the issue and its linked context, spins up read-only
@@ -7,13 +7,13 @@ description: Begin planning and research for a newly assigned tracker issue
   search encouraged for framework/provider questions), and produces the
   work-item folder and living spec per ~/.agents/workflow/PLANS.md and the
   repo shim. Planning only — no code edits, no branch creation, tracker stays
-  read-only. Use when the operator says /plankickoff <issue>, "we've been
+  read-only. Use when the operator says /spec <issue>, "we've been
   assigned <ISSUE-KEY>", "start planning this issue", or pastes an issue URL
   asking for root cause and the best approach. Not for reviewing an existing
-  spec (planreview) or implemented code (cjcreview).
+  spec (specreview) or implemented code (implreview).
 ---
 
-# plankickoff
+# spec
 
 This session IS the planning agent (kernel "Startup Routing" path B). The
 output contract is the `## Planning Kickoff` template in
@@ -73,11 +73,11 @@ research.
 
 5. **Hand back.** End with the spec path and status, the decision-required
    items, and the next pipeline step: operator revises → spec goes
-   `review-ready` → `/planreview` (then `/planrereview` after findings).
+   `review-ready` → `/specreview` (then `/specrereview` after findings).
    If research surfaced multiple viable architectures rather than one clear
    path, or an unproven architectural bet, recommend `/explore` (map & rank the
    approaches) or `/spike` (prove the bet) instead of forcing a single-path
-   spec. Do not auto-run planreview, and do not promote to `final` or to the
+   spec. Do not auto-run specreview, and do not promote to `final` or to the
    tracker without the operator.
 
 ## Failure modes to avoid
@@ -89,5 +89,5 @@ research.
 - Investigator sprawl: a few well-scoped parallel subagents beat many vague
   ones; don't re-run what a subagent already answered.
 - Skipping the repo shim's read-first docs and rediscovering known sharp edges.
-- Drafting straight to `final` — rough → review-ready → `/planreview` is the
+- Drafting straight to `final` — rough → review-ready → `/specreview` is the
   path.

@@ -11,7 +11,7 @@ description: Prove (or reject) one chosen architectural bet at the real boundary
   or provider/hosted mutation; web search encouraged. Use when the operator says
   /spike, "prove <approach> works", "can <mechanism> actually do X", "spike the
   <X> coupling", or after explore recommends proving a bet. Not for mapping
-  approaches (that is explore) or researching a fresh bug (that is plankickoff).
+  approaches (that is explore) or researching a fresh bug (that is spec).
 ---
 
 # spike
@@ -81,7 +81,7 @@ Destructive Action Policy applies to anything beyond that.
    exits 0 while skipping the real work is not proof).
 
 7. **Verdict + hand back.** GO → update/seed the implementation spec with the
-   proven approach and parked contracts, and recommend `/planreview`. NO-GO →
+   proven approach and parked contracts, and recommend `/specreview`. NO-GO →
    recommend the fallback (from `explore` or the spec) and record why. **Narrowed
    GO** — when the core bet holds at the reachable boundary but one piece couldn't
    be proven safely (e.g. the live service call needs bootstrap writes), record
@@ -89,7 +89,7 @@ Destructive Action Policy applies to anything beyond that.
    proof the first gate of the implementation phase (a narrowed GO is honest;
    claiming source-inspection proved the live boundary is not). If the bet did not
    prove out within the box, that itself is a NO-GO/escalate signal — don't keep
-   digging silently. Do NOT auto-invoke planreview or start implementation; the
+   digging silently. Do NOT auto-invoke specreview or start implementation; the
    GO/NO-GO direction is the operator's to act on.
 
 ## Guardrails

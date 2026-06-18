@@ -8,11 +8,11 @@ description: Map and rank the candidate approaches for an open architectural
   version-specific limits), adversarially verifies each one's feasibility, and
   produces a ranked
   options/decision doc with a recommended approach and the next phase (spike if
-  the approach carries an unproven bet, else planreview). Read-only — no code,
+  the approach carries an unproven bet, else specreview). Read-only — no code,
   no branch, tracker untouched. Use when the operator says /explore, "what are
   the alternatives", "is there a better/cleaner/faster way to do X", "I built X,
   explore other versions", or "evaluate approaches for <architectural
-  question>". Not for researching a fresh bug's root cause (that is plankickoff)
+  question>". Not for researching a fresh bug's root cause (that is spec)
   or proving one chosen bet (that is spike).
 ---
 
@@ -20,7 +20,7 @@ description: Map and rank the candidate approaches for an open architectural
 
 The solution-space-mapping phase: you are holding an open question or a
 working-but-imperfect system and want the better versions surfaced, ranked, and
-de-risked before committing. Distinct from `plankickoff` (which researches a
+de-risked before committing. Distinct from `spec` (which researches a
 *problem* → one plan) — explore researches *approaches* → a ranked comparison +
 a recommended bet. Read-only: no code edits, no branch, no Linear/GitHub
 mutations (the Destructive Action Policy applies to any command run).
@@ -70,7 +70,7 @@ mutations (the Destructive Action Policy applies to any command run).
 5. **Decide the next phase (the hand-off).** For the recommended approach, state
    which is true:
    - **Proven / conventional enough** → recommend finalizing the spec and
-     `/planreview`.
+     `/specreview`.
    - **Carries an unproven bet** (unfamiliar tech, "can this mechanism even
      work?", fragile coupling) → recommend `/spike`, naming the *exact* bet to
      prove and its GO/NO-GO question.
@@ -84,8 +84,8 @@ mutations (the Destructive Action Policy applies to any command run).
    items. It is a durable decision record, not an implementation spec.
 
 7. **Hand back to the operator.** End with the recommended approach, the
-   next-phase recommendation (spike vs planreview), and the decision(s) needed.
-   Do NOT auto-invoke spike or planreview — *which approach* and *whether to
+   next-phase recommendation (spike vs specreview), and the decision(s) needed.
+   Do NOT auto-invoke spike or specreview — *which approach* and *whether to
    spike* are direction decisions the operator owns.
 
 ## Guardrails
@@ -110,8 +110,8 @@ mutations (the Destructive Action Policy applies to any command run).
   current approach" when it is already the idiomatic / floor solution; "no better
   approach found" is a valid result.
 - Recommending a bet without saying whether it needs a spike or can go straight
-  to planreview — that next-phase call is the point of the hand-off.
+  to specreview — that next-phase call is the point of the hand-off.
 - Quietly picking a product/policy direction instead of surfacing it.
 - Sliding into implementation, a branch, or a tracker mutation.
 - Re-running a fresh problem investigation — for a new bug's root cause use
-  `plankickoff`; for proving one chosen approach use `spike`.
+  `spec`; for proving one chosen approach use `spike`.

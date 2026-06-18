@@ -15,25 +15,25 @@ phase transition (those are the direction decisions). Review loops *within* a
 phase are autonomous.
 
 - Planning kickoff for a tracker issue (research the problem → root cause →
-  spec) → `plankickoff`
+  spec) → `spec`
 - Map & rank candidate approaches for an open question / a working-but-imperfect
   system → `explore` (hands off to `spike` if the chosen approach carries an
-  unproven bet, else to `planreview`)
+  unproven bet, else to `specreview`)
 - Prove one chosen approach at the real boundary (GO/NO-GO) → `spike` (hands off
-  to `planreview` on GO; recommends the fallback on NO-GO)
-- Then: finalize spec → `planreview` / `planrereview` (autonomous loop), with an
-  optional `secondplanreview` outer gate (other model) on the converged plan →
-  implement → `cjcreview` / `cjcrereview` (loop) → `secondreview` outer gate
-- Implementation review handoff → `cjcreview` (emit + spawn; emit-only mode
+  to `specreview` on GO; recommends the fallback on NO-GO)
+- Then: finalize spec → `specreview` / `specrereview` (autonomous loop), with an
+  optional `secondspecreview` outer gate (other model) on the converged plan →
+  implement → `implreview` / `implrereview` (loop) → `secondreview` outer gate
+- Implementation review handoff → `implreview` (emit + spawn; emit-only mode
   for outer-gate handoffs)
-- Implementation re-review after patches → `cjcrereview`
-- Plan/spec review before promotion → `planreview`
-- Plan re-review after revisions → `planrereview`
+- Implementation re-review after patches → `implrereview`
+- Plan/spec review before promotion → `specreview`
+- Plan re-review after revisions → `specrereview`
 - Outer-gate second review of the operator's own implementation, run in the
   other app/model → `secondreview`
 - Outer-gate second review of the operator's own converged plan/spec, run in the
-  other app/model → `secondplanreview`
-- Coworker PR review + calibration → `cjcprreview` (+ `calibrate-review`)
+  other app/model → `secondspecreview`
+- Coworker PR review + calibration → `prreview` (+ `calibrate-review`)
 
 ## The protocol
 
@@ -75,7 +75,7 @@ phase are autonomous.
 
 ## Sequencing — inner loop, then outer gate
 
-- **Inner loop** (implementer's app): `cjcreview` → patch → `cjcrereview`,
+- **Inner loop** (implementer's app): `implreview` → patch → `implrereview`,
   repeat until APPROVED. Fast, same-app subagents; iterate freely.
 - **Outer gate** (the other app/model): ONE fresh-context review of the FINAL
   tip — via `secondreview`, or via a pasted emit-only kickoff. A different
@@ -87,25 +87,25 @@ phase are autonomous.
   big/risky changes an early outside review may run for directional signal —
   it does NOT count as the certifying second verdict.
 - Outer-gate findings: paste the verdict into the implementer session, patch,
-  and run `cjcrereview` quoting those findings verbatim. The kernel's
+  and run `implrereview` quoting those findings verbatim. The kernel's
   two-verdicts gate is met when both lenses have approved the final tip;
   patches landed after any approval get a re-review.
 
-## Plan review loop (planreview → planrereview)
+## Plan review loop (specreview → specrereview)
 
 Plan review is autonomous and has NO operator-owned outer gate (unlike the
-implementation flow above). `planreview` spawns one reviewer; the planning agent
+implementation flow above). `specreview` spawns one reviewer; the planning agent
 resolves the autonomous findings by tightening the spec and re-runs
-`planrereview` (a fresh reviewer per cycle), looping until APPROVED. It STOPS for
+`specrereview` (a fresh reviewer per cycle), looping until APPROVED. It STOPS for
 the operator only on a plan-DIRECTION finding (`[decision-required]`, or any the
 planner cannot resolve without choosing an approach / scope / tradeoff / policy —
 applied as a self-filter, not just the reviewer's tag) or after a 3-cycle cap.
-Full disposition lives in the `planreview` skill.
+Full disposition lives in the `specreview` skill.
 
 ## Freshness
 
 A kickoff is stale the moment its tip SHA is no longer HEAD. Never hand a
-reviewer a stale kickoff — re-populate and re-emit (`cjcreview` emit-only), or
+reviewer a stale kickoff — re-populate and re-emit (`implreview` emit-only), or
 use `secondreview`, which computes its own range at invocation time.
 
 ## Independence seal

@@ -223,7 +223,7 @@ When Verdict is ACTIONABLE, mark any finding requiring operator input (scope cha
 
 > Planner: this is an autonomous review→revise→re-review loop. Resolve every
 > finding you can by tightening the plan's correctness/clarity, then re-run
-> `planrereview` on the revised spec — repeat until APPROVED. STOP and return to
+> `specrereview` on the revised spec — repeat until APPROVED. STOP and return to
 > the operator only for findings that decide the plan's DIRECTION: anything
 > marked `[decision-required]`, plus anything you cannot resolve without choosing
 > an approach, changing scope, weighing a no-clear-winner tradeoff, or making a
@@ -236,7 +236,7 @@ When Verdict is ACTIONABLE, mark any finding requiring operator input (scope cha
 
 Focus on whether the plan is correct, complete, and self-contained enough to be acted on. Do not write the implementation. Do not propose new scope unless it closes a coverage gap the plan claims to cover.
 
-If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) do one pass. The planning agent then runs the autonomous loop in the directive above, invoking `planrereview` (a fresh reviewer per cycle) until APPROVED, a direction decision, or the 3-cycle cap.
+If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) do one pass. The planning agent then runs the autonomous loop in the directive above, invoking `specrereview` (a fresh reviewer per cycle) until APPROVED, a direction decision, or the 3-cycle cap.
 ```
 
 ## Plan Re-Review Kickoff
@@ -274,7 +274,7 @@ When Verdict is ACTIONABLE, mark any finding requiring operator input with `[dec
 
 > Planner: this is an autonomous review→revise→re-review loop. Resolve every
 > finding you can by tightening the plan's correctness/clarity, then re-run
-> `planrereview` on the revised spec — repeat until APPROVED. STOP and return to
+> `specrereview` on the revised spec — repeat until APPROVED. STOP and return to
 > the operator only for findings that decide the plan's DIRECTION: anything
 > marked `[decision-required]`, plus anything you cannot resolve without choosing
 > an approach, changing scope, weighing a no-clear-winner tradeoff, or making a
@@ -287,7 +287,7 @@ When Verdict is ACTIONABLE, mark any finding requiring operator input with `[dec
 
 Focus on the revisions and the prior findings. Do not perform a fresh broad plan review.
 
-If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) do one pass. The planning agent then runs the autonomous loop in the directive above, invoking `planrereview` (a fresh reviewer per cycle) until APPROVED, a direction decision, or the 3-cycle cap.
+If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) do one pass. The planning agent then runs the autonomous loop in the directive above, invoking `specrereview` (a fresh reviewer per cycle) until APPROVED, a direction decision, or the 3-cycle cap.
 ```
 
 ## Execution Kickoff / Implementation Kickoff
@@ -327,7 +327,7 @@ Enforce these forcing functions ON TOP of Routing A:
   per PR (townchest's squash body concatenates commit messages, so keep subjects
   presentable).
 - Re-review trigger: on an ACTIONABLE verdict, patch + rerun targeted verification +
-  re-review (cjcrereview) when the patch is non-trivial, touches lifecycle/state/
+  re-review (implrereview) when the patch is non-trivial, touches lifecycle/state/
   concurrency, changes acceptance behavior, or rewrites/adds a test for a
   test-quality finding; skip only for a truly trivial patch, stated. A test-quality
   finding is addressed only if the new/edited test exercises the real boundary and
@@ -470,7 +470,7 @@ this reviewer.
 
 For reviewing someone else's PR as a fresh-context strict pass. Findings feed
 the operator's `calibrate-review` step, not the implementation loop. Normally
-populated and spawned by the `cjcprreview` skill; usable manually too.
+populated and spawned by the `prreview` skill; usable manually too.
 
 ```text
 Review external PR <number/url> (author: <login>) against <target branch>, as a

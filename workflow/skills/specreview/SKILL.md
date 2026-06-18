@@ -1,22 +1,22 @@
 ---
-name: planreview
+name: specreview
 description: Hand off a plan or spec for review before promotion
   (e.g. before `gh issue create`, before implementation kickoff). Reads the
   canonical Plan Review Kickoff template from
   ~/.agents/workflow/KICKOFFS.md, populates it from the current session,
   emits the populated prompt verbatim in chat under a
   `Plan Review Kickoff Prompt` block, then spawns exactly one fresh-context
-  reviewer subagent. Use when the operator says /planreview, "review this
+  reviewer subagent. Use when the operator says /specreview, "review this
   spec", "pre-promotion review", "review the final spec before I file the
   issue", or similar.
 ---
 
-# planreview
+# specreview
 
 Pre-promotion review for planning artifacts (rough specs, review-ready specs,
 final specs, plan markdown) — validate scope coverage, file/line claim
 accuracy, label correctness, self-containment, and dependency claims at the
-cheapest possible point. The planning equivalent of [[cjcreview]]. Shared
+cheapest possible point. The planning equivalent of [[implreview]]. Shared
 mechanics live in `~/.agents/workflow/HANDOFF.md` — apply that protocol with
 the parameters below.
 
@@ -52,7 +52,7 @@ what the reviewer should flag.
 
 ## After the verdict (autonomous loop)
 
-planreview is the first pass of an autonomous review→revise→re-review loop, not
+specreview is the first pass of an autonomous review→revise→re-review loop, not
 a one-shot. When the spawned reviewer returns:
 
 - **APPROVED** → report to the operator with a one-line-per-pass changelog; the
@@ -68,9 +68,9 @@ a one-shot. When the spawned reviewer returns:
     acceptance criteria, missing non-goals or verification commands, weak test
     strategy, convention / existing-mechanism gaps. Resolve each by tightening
     the spec's correctness/clarity — never by deleting the flagged element or
-    weakening a criterion to dodge it — then invoke `planrereview` on the
+    weakening a criterion to dodge it — then invoke `specrereview` on the
     revised spec.
-- Loop ACTIONABLE→revise→`planrereview` until APPROVED or a direction finding
+- Loop ACTIONABLE→revise→`specrereview` until APPROVED or a direction finding
   stops it. **Cap at 3 revise→re-review cycles**; if still ACTIONABLE after 3,
   stop and surface the remaining findings. On every stop or APPROVED, give the
   operator a one-line-per-pass changelog of what changed.
@@ -79,4 +79,4 @@ a one-shot. When the spawned reviewer returns:
 
 The shared ones in HANDOFF.md, plus: fabricating scope items, label sets, or
 dependencies; reviewing a non-plan artifact — for implemented code, use
-[[cjcreview]] instead.
+[[implreview]] instead.

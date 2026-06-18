@@ -1,7 +1,7 @@
 ---
 name: calibrate-review
 description: Use only when the operator explicitly asks to calibrate raw review
-  findings for someone else's PR or work. Triage External PR Review, cjcreview,
+  findings for someone else's PR or work. Triage External PR Review, implreview,
   review-pr, CodeRabbit, or human findings against repo standards, team norms,
   merge risk, author effort, and review etiquette; then return a concise action
   brief telling the operator what to patch as a touch-up commit, what to raise
@@ -15,7 +15,7 @@ Convert raw review findings into a concise, evidence-grounded action brief the
 operator can act on — with the reviewing agent and with the PR author.
 
 This skill is a translation layer, not another review pass. Use it after an
-External PR Review pass (`~/.agents/workflow/KICKOFFS.md`), `cjcreview`,
+External PR Review pass (`~/.agents/workflow/KICKOFFS.md`), `implreview`,
 `review-pr`, CodeRabbit, or a human reviewer has already produced findings and
 the operator wants help deciding what to do and say on someone else's PR.
 Do not conduct a fresh review or search for unrelated issues. Read enough
@@ -64,7 +64,7 @@ review, such as:
 - "help me decide what to surface"
 - "this is someone else's PR"
 - "turn these agent findings into a coworker-friendly review"
-- as the calibration stage of a `cjcprreview` run — invoking that skill counts
+- as the calibration stage of a `prreview` run — invoking that skill counts
   as the operator's explicit request
 
 Do not use this skill for the operator's own implementation handoff unless they

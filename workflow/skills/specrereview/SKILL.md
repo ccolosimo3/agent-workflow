@@ -1,19 +1,19 @@
 ---
-name: planrereview
+name: specrereview
 description: Hand off a revised plan or spec for a follow-up
   review after the planner has addressed findings from a prior ACTIONABLE
   plan review. Reads the canonical Plan Re-Review Kickoff template from
   ~/.agents/workflow/KICKOFFS.md, populates it with the prior findings and
   the revisions applied, emits it verbatim in chat, and spawns one
   fresh-context reviewer subagent. Use when the operator says
-  /planrereview, "re-review this spec", or after revisions land in
+  /specrereview, "re-review this spec", or after revisions land in
   response to a prior plan review.
 ---
 
-# planrereview
+# specrereview
 
 Follow-up review handoff after the planner revised a plan in response to
-ACTIONABLE findings. Companion to [[planreview]]. Shared mechanics live in
+ACTIONABLE findings. Companion to [[specreview]]. Shared mechanics live in
 `~/.agents/workflow/HANDOFF.md` — apply that protocol with the parameters
 below; this file adds only the plan-re-review specifics.
 
@@ -42,12 +42,12 @@ below; this file adds only the plan-re-review specifics.
 
 ## After the verdict
 
-This re-review is one cycle of planreview's autonomous loop. Apply the same
+This re-review is one cycle of specreview's autonomous loop. Apply the same
 disposition to its result: **APPROVED** ends the loop (report + changelog); a
 **direction / `[decision-required]`** finding stops it (return the decision to
 the operator — do not pick it); other **autonomous** findings get resolved by
-tightening the spec, then re-run through `planrereview` — until APPROVED or the
-3-cycle cap (counted from the original planreview). See planreview "After the
+tightening the spec, then re-run through `specrereview` — until APPROVED or the
+3-cycle cap (counted from the original specreview). See specreview "After the
 verdict (autonomous loop)".
 
 ## Failure modes

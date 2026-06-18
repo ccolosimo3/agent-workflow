@@ -1,7 +1,7 @@
 # Review Rubric
 
-The standing operating manual for a code-review (cjcreview) or re-review
-(cjcrereview) pass. The Review Kickoff / Re-Review Kickoff in `KICKOFFS.md` carry
+The standing operating manual for a code-review (implreview) or re-review
+(implrereview) pass. The Review Kickoff / Re-Review Kickoff in `KICKOFFS.md` carry
 only the per-task Context and point here, so the emitted prompt stays short. Read
 this in full before issuing any verdict, and return every item in the Output
 contract. This is repo-agnostic; the repo-specific doc paths under "Required
@@ -276,7 +276,7 @@ them:
 If Verdict is ACTIONABLE, return findings and stop. The implementer patches and
 hands back to the operator; no second review cycle from this reviewer.
 
-## Re-review mode (cjcrereview)
+## Re-review mode (implrereview)
 
 When invoked for a re-review — a prior ACTIONABLE verdict whose findings were
 patched — your scope narrows to the changed lines and the prior findings; do NOT
