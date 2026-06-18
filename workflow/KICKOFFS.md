@@ -229,10 +229,16 @@ When Verdict is ACTIONABLE, mark any finding requiring operator input (scope cha
 > an approach, changing scope, weighing a no-clear-winner tradeoff, or making a
 > product/policy/naming call — treat these as decision-required even if unmarked,
 > and never pick the direction yourself. Do not resolve a finding by deleting the
-> flagged element or weakening an acceptance criterion to dodge it. Cap: after 3
-> revise→re-review cycles without APPROVED, stop and surface the remaining
-> findings (non-convergence is itself a signal). On any stop or on APPROVED, give
-> a one-line-per-pass changelog of what you revised.
+> flagged element or weakening an acceptance criterion to dodge it. Minor-only
+> off-ramp: if after revising the ENTIRE remaining batch was mechanical and
+> self-evidently correct (a corrected citation, a typo, a verbatim-added
+> verification command / non-goal / criterion, a label fix) such that a fresh
+> reviewer would add nothing, do NOT re-review — patch, break the loop, and
+> report it as your call (not an APPROVED), noting the operator can re-review or
+> rely on the outer gate; one substantive finding and you re-review instead.
+> Cap: after 3 revise→re-review cycles without APPROVED, stop and surface the
+> remaining findings (non-convergence is itself a signal). On any stop or on
+> APPROVED, give a one-line-per-pass changelog of what you revised.
 
 Focus on whether the plan is correct, complete, and self-contained enough to be acted on. Do not write the implementation. Do not propose new scope unless it closes a coverage gap the plan claims to cover.
 
@@ -280,10 +286,16 @@ When Verdict is ACTIONABLE, mark any finding requiring operator input with `[dec
 > an approach, changing scope, weighing a no-clear-winner tradeoff, or making a
 > product/policy/naming call — treat these as decision-required even if unmarked,
 > and never pick the direction yourself. Do not resolve a finding by deleting the
-> flagged element or weakening an acceptance criterion to dodge it. Cap: after 3
-> revise→re-review cycles without APPROVED, stop and surface the remaining
-> findings (non-convergence is itself a signal). On any stop or on APPROVED, give
-> a one-line-per-pass changelog of what you revised.
+> flagged element or weakening an acceptance criterion to dodge it. Minor-only
+> off-ramp: if after revising the ENTIRE remaining batch was mechanical and
+> self-evidently correct (a corrected citation, a typo, a verbatim-added
+> verification command / non-goal / criterion, a label fix) such that a fresh
+> reviewer would add nothing, do NOT re-review — patch, break the loop, and
+> report it as your call (not an APPROVED), noting the operator can re-review or
+> rely on the outer gate; one substantive finding and you re-review instead.
+> Cap: after 3 revise→re-review cycles without APPROVED, stop and surface the
+> remaining findings (non-convergence is itself a signal). On any stop or on
+> APPROVED, give a one-line-per-pass changelog of what you revised.
 
 Focus on the revisions and the prior findings. Do not perform a fresh broad spec review.
 

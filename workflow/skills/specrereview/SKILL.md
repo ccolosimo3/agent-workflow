@@ -47,8 +47,11 @@ disposition to its result: **APPROVED** ends the loop (report + changelog); a
 **direction / `[decision-required]`** finding stops it (return the decision to
 the operator — do not pick it); other **autonomous** findings get resolved by
 tightening the spec, then re-run through `specrereview` — until APPROVED or the
-3-cycle cap (counted from the original specreview). See specreview "After the
-verdict (autonomous loop)".
+3-cycle cap (counted from the original specreview). If a round's remaining
+findings are ALL minor and self-evidently fixed (the minor-only off-ramp in
+specreview "After the verdict"), patch and break the loop with a report instead
+of re-reviewing — your call, not an APPROVED. See specreview "After the verdict
+(autonomous loop)".
 
 ## Failure modes
 
