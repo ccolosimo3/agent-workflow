@@ -360,24 +360,22 @@ Prefer one evolving spec over parallel rough-spec and issue-draft files.
 
 ## Implementation Completion Handoff
 
-When finishing an implementation, the agent must hand the operator a review
-prompt even if the agent is also spawning a reviewer itself. This is a hard
-output contract: an implementation completion summary is incomplete without a
-dedicated `Review Kickoff Prompt` block.
+When finishing an implementation, the agent hands the implementation off for
+review by spawning the implementer's reviewer.
 
 Required shape:
 
 1. Brief implementation summary.
 2. Verification run and results.
-3. A fenced, copy/paste-ready `Review Kickoff Prompt` populated from the current
-   session using the canonical Review Kickoff template. This must be emitted in
-   chat before spawning any reviewer. Do not wait until the reviewer completes
-   to show it to the operator.
-4. Only after the prompt is visible in chat, spawn exactly one fresh-context
-   reviewer agent from that exact prompt.
-   The second independent review is operator-owned by default: the operator
-   receives the prompt and may paste it into another agent. Do not spawn a
-   second reviewer unless the operator explicitly asks in the current session.
+3. Spawn exactly one fresh-context reviewer, populated from the current session
+   using the canonical Review Kickoff template, and announce the handoff (what is
+   being reviewed + the range). The populated prompt goes to the subagent — the
+   operator opens it to inspect, or it is emitted in chat only when the host
+   cannot spawn a subagent. Do not spawn a second reviewer unless the operator
+   explicitly asks in the current session.
+4. The second independent review is operator-owned by default and self-populates
+   from the work-item folder + live range (`secondreview` / `secondspecreview`) —
+   it does NOT reuse this prompt.
 
 Obtain two independent approved review verdicts before PR handoff by default:
 the implementer owns the one spawned reviewer, and the operator owns the second

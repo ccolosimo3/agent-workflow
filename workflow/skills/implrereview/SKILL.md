@@ -4,8 +4,8 @@ description: Hand off a patched implementation for a follow-up review after the
   implementer has addressed findings from a prior ACTIONABLE review verdict.
   Reads the canonical Re-Review Kickoff template from
   ~/.agents/workflow/KICKOFFS.md, populates it with the prior findings and
-  patch context from the current session, emits it verbatim in chat, and
-  spawns one fresh-context reviewer subagent. Use when the operator says
+  patch context from the current session, and spawns one fresh-context
+  reviewer subagent (announcing the handoff). Use when the operator says
   /implrereview, "re-review this", or after patches land in response to a
   prior review.
 ---

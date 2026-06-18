@@ -2,9 +2,9 @@
 name: implreview
 description: Hand off a completed implementation for review. Reads the canonical
   Review Kickoff template from ~/.agents/workflow/KICKOFFS.md, populates every
-  placeholder from the current session, emits the populated prompt verbatim in
-  chat under a `Review Kickoff Prompt` block, then spawns exactly one
-  fresh-context reviewer subagent with that prompt. Use after completing an
+  placeholder from the current session, then spawns exactly one fresh-context
+  reviewer subagent with it (announcing the handoff; the prompt is emitted in
+  chat only as a no-subagent fallback). Use after completing an
   implementation when the operator says /implreview, "hand this off for review",
   "let's review this", or similar.
 ---

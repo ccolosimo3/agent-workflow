@@ -4,8 +4,8 @@ description: Hand off a revised plan or spec for a follow-up
   review after the planner has addressed findings from a prior ACTIONABLE
   spec review. Reads the canonical Spec Re-Review Kickoff template from
   ~/.agents/workflow/KICKOFFS.md, populates it with the prior findings and
-  the revisions applied, emits it verbatim in chat, and spawns one
-  fresh-context reviewer subagent. Use when the operator says
+  the revisions applied, and spawns one fresh-context reviewer subagent
+  (announcing the handoff). Use when the operator says
   /specrereview, "re-review this spec", or after revisions land in
   response to a prior spec review.
 ---

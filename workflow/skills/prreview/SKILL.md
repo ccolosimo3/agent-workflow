@@ -1,8 +1,8 @@
 ---
 name: prreview
 description: Review someone else's PR end to end. Populates the External PR
-  Review Kickoff from the PR and its linked issue, emits it verbatim in chat,
-  spawns one fresh-context reviewer that runs the strict rubric pass with local
+  Review Kickoff from the PR and its linked issue, spawns one fresh-context
+  reviewer (announcing the handoff) that runs the strict rubric pass with local
   verification, then calibrates the returned findings via the calibrate-review
   skill into an operator action brief (patch myself / raise with author /
   discuss / defer). Use when the operator says /prreview, asks to review a
@@ -53,10 +53,11 @@ coworker-facing calibration (the trigger calibrate-review requires).
    issue linked), use the fallback wording the template itself specifies — do
    not invent acceptance criteria, check results, or intent.
 
-4. **Emit the populated kickoff verbatim in chat** under a
-   `## External PR Review Kickoff Prompt` heading in a ```text fence, BEFORE
-   spawning any reviewer. This is the operator's record, and their handoff if
-   they want an independent second reviewer in another tool.
+4. **Announce the handoff** (the PR + range being reviewed) and pass the full
+   populated External PR Review Kickoff to the subagent — the operator opens the
+   subagent to inspect it. Emit the full prompt in chat under a `## External PR
+   Review Kickoff Prompt` heading only when the host cannot spawn a subagent (for
+   manual launch).
 
 5. **Spawn exactly one fresh-context reviewer** with that prompt verbatim,
    using whatever subagent mechanism the host agent provides. Announce
@@ -94,7 +95,8 @@ coworker-facing calibration (the trigger calibrate-review requires).
 - Paraphrasing the kickoff template instead of copying its shape verbatim.
 - Inlining the rubric or the calibration rules into prompts — the reviewer
   reads the rubric itself; calibration is applied from its own skill file.
-- Spawning the reviewer before the kickoff is visible in chat.
+- Dumping the full kickoff inline instead of just announcing the handoff (the
+  subagent carries the prompt; only the no-subagent fallback emits it).
 - Spawning more than one reviewer.
 - Returning raw `ACTIONABLE` findings as the final answer with no calibration
   stage.

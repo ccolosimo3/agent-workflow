@@ -62,15 +62,18 @@ phase are autonomous.
      path-exclusion globs — excluded surfaces get NO automated coverage and
      the agent reviewer is the sole automated check there.
    - Write `none found` for a doc category only after checking.
-4. **Emit before spawning.** The populated prompt appears verbatim in chat
-   under a `## <Template-name> Prompt` heading in a ```text fence BEFORE any
-   reviewer is spawned. The chat block is the operator's record and their
-   handoff to other tools.
-5. **Spawn exactly one** fresh-context reviewer (when the skill spawns at
-   all), announce it (e.g. `spawning one reviewer`), and never a second one
-   unless the operator explicitly asks. If the host has no subagent
-   capability, emit the prompt and tell the operator to launch the reviewer
-   manually.
+4. **Hand off the populated prompt.**
+   - If the skill SPAWNS a subagent reviewer: pass the full populated kickoff to
+     the subagent and announce a one-line handoff in chat (what is being reviewed
+     + the range/spec). Do NOT emit the full prompt verbatim — the operator opens
+     the subagent to inspect it. Emit the full prompt in chat ONLY when the host
+     has no subagent capability, then tell the operator to launch it manually.
+   - If the skill IS the reviewer (the conversation itself — the outer gates):
+     emit the populated kickoff verbatim in chat under a `## <Template-name>
+     Prompt` heading as the record of what was reviewed (there is no subagent to
+     inspect).
+5. **Exactly one reviewer.** Spawn (or, for an outer gate, run) exactly one
+   fresh-context reviewer; never a second unless the operator explicitly asks.
 6. **The second review is operator-owned** — see sequencing below.
 
 ## Sequencing — inner loop, then outer gate
@@ -119,6 +122,7 @@ the deliberate opposite: they REQUIRE the prior findings, quoted verbatim.
 
 - Paraphrasing the template — downstream agents depend on the exact shape.
 - Inventing placeholder content instead of stopping to ask.
-- Spawning a reviewer before the prompt is visible in chat.
+- Spawning without announcing the handoff; or, for an outer gate, not emitting
+  the record of what was reviewed.
 - Spawning more than one reviewer from a single skill invocation.
 - Handing off a kickoff whose SHAs the tree has since moved past.

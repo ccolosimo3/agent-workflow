@@ -3,10 +3,10 @@ name: specreview
 description: Hand off a plan or spec for review before promotion
   (e.g. before `gh issue create`, before implementation kickoff). Reads the
   canonical Spec Review Kickoff template from
-  ~/.agents/workflow/KICKOFFS.md, populates it from the current session,
-  emits the populated prompt verbatim in chat under a
-  `Spec Review Kickoff Prompt` block, then spawns exactly one fresh-context
-  reviewer subagent. Use when the operator says /specreview, "review this
+  ~/.agents/workflow/KICKOFFS.md, populates it from the current session, then
+  spawns exactly one fresh-context reviewer subagent (announcing the handoff;
+  the prompt is emitted in chat only as a no-subagent fallback). Use when the
+  operator says /specreview, "review this
   spec", "pre-promotion review", "review the final spec before I file the
   issue", or similar.
 ---
