@@ -19,7 +19,8 @@ phase are autonomous.
 - Map & rank candidate approaches for an open question / a working-but-imperfect
   system → `explore` (hands off to `spike` if the chosen approach carries an
   unproven bet, else to `planreview`)
-- Prove one chosen approach at the real boundary (GO/NO-GO) → `spike` *(planned)*
+- Prove one chosen approach at the real boundary (GO/NO-GO) → `spike` (hands off
+  to `planreview` on GO; recommends the fallback on NO-GO)
 - Then: finalize spec → `planreview` / `planrereview` (autonomous loop) →
   implement → `cjcreview` / `cjcrereview` (loop) → `secondreview`
 - Implementation review handoff → `cjcreview` (emit + spawn; emit-only mode
