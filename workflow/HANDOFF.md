@@ -77,6 +77,17 @@ kernel's "Implementation Completion Handoff".
   two-verdicts gate is met when both lenses have approved the final tip;
   patches landed after any approval get a re-review.
 
+## Plan review loop (planreview → planrereview)
+
+Plan review is autonomous and has NO operator-owned outer gate (unlike the
+implementation flow above). `planreview` spawns one reviewer; the planning agent
+resolves the autonomous findings by tightening the spec and re-runs
+`planrereview` (a fresh reviewer per cycle), looping until APPROVED. It STOPS for
+the operator only on a plan-DIRECTION finding (`[decision-required]`, or any the
+planner cannot resolve without choosing an approach / scope / tradeoff / policy —
+applied as a self-filter, not just the reviewer's tag) or after a 3-cycle cap.
+Full disposition lives in the `planreview` skill.
+
 ## Freshness
 
 A kickoff is stale the moment its tip SHA is no longer HEAD. Never hand a

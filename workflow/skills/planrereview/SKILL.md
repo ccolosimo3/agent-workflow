@@ -40,6 +40,16 @@ below; this file adds only the plan-re-review specifics.
    findings verbatim; revisions mapped to findings; diff or before/after
    snippet.
 
+## After the verdict
+
+This re-review is one cycle of planreview's autonomous loop. Apply the same
+disposition to its result: **APPROVED** ends the loop (report + changelog); a
+**direction / `[decision-required]`** finding stops it (return the decision to
+the operator — do not pick it); other **autonomous** findings get resolved by
+tightening the spec, then re-run through `planrereview` — until APPROVED or the
+3-cycle cap (counted from the original planreview). See planreview "After the
+verdict (autonomous loop)".
+
 ## Failure modes
 
 The shared ones in HANDOFF.md, plus: running without prior findings;

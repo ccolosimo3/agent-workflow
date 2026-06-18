@@ -221,11 +221,22 @@ Return:
 
 When Verdict is ACTIONABLE, mark any finding requiring operator input (scope change, contract decision, label policy interpretation) with `[decision-required]` in its required fix. Append this planner directive verbatim at the end of your output so it stays with the findings when the operator forwards them:
 
-> Planner: address every finding autonomously. For any finding marked `[decision-required]`, skip the revision, summarize the decision needed, and return to the operator. Do not block other revisions on those.
+> Planner: this is an autonomous review→revise→re-review loop. Resolve every
+> finding you can by tightening the plan's correctness/clarity, then re-run
+> `planrereview` on the revised spec — repeat until APPROVED. STOP and return to
+> the operator only for findings that decide the plan's DIRECTION: anything
+> marked `[decision-required]`, plus anything you cannot resolve without choosing
+> an approach, changing scope, weighing a no-clear-winner tradeoff, or making a
+> product/policy/naming call — treat these as decision-required even if unmarked,
+> and never pick the direction yourself. Do not resolve a finding by deleting the
+> flagged element or weakening an acceptance criterion to dodge it. Cap: after 3
+> revise→re-review cycles without APPROVED, stop and surface the remaining
+> findings (non-convergence is itself a signal). On any stop or on APPROVED, give
+> a one-line-per-pass changelog of what you revised.
 
 Focus on whether the plan is correct, complete, and self-contained enough to be acted on. Do not write the implementation. Do not propose new scope unless it closes a coverage gap the plan claims to cover.
 
-If Verdict is ACTIONABLE, return findings and stop. The planner revises and hands back to the operator; no second review cycle from this reviewer.
+If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) do one pass. The planning agent then runs the autonomous loop in the directive above, invoking `planrereview` (a fresh reviewer per cycle) until APPROVED, a direction decision, or the 3-cycle cap.
 ```
 
 ## Plan Re-Review Kickoff
@@ -261,11 +272,22 @@ Return:
 
 When Verdict is ACTIONABLE, mark any finding requiring operator input with `[decision-required]` and append the planner directive verbatim:
 
-> Planner: address every finding autonomously. For any finding marked `[decision-required]`, skip the revision, summarize the decision needed, and return to the operator. Do not block other revisions on those.
+> Planner: this is an autonomous review→revise→re-review loop. Resolve every
+> finding you can by tightening the plan's correctness/clarity, then re-run
+> `planrereview` on the revised spec — repeat until APPROVED. STOP and return to
+> the operator only for findings that decide the plan's DIRECTION: anything
+> marked `[decision-required]`, plus anything you cannot resolve without choosing
+> an approach, changing scope, weighing a no-clear-winner tradeoff, or making a
+> product/policy/naming call — treat these as decision-required even if unmarked,
+> and never pick the direction yourself. Do not resolve a finding by deleting the
+> flagged element or weakening an acceptance criterion to dodge it. Cap: after 3
+> revise→re-review cycles without APPROVED, stop and surface the remaining
+> findings (non-convergence is itself a signal). On any stop or on APPROVED, give
+> a one-line-per-pass changelog of what you revised.
 
 Focus on the revisions and the prior findings. Do not perform a fresh broad plan review.
 
-If Verdict is ACTIONABLE, return findings and stop. The planner revises and hands back to the operator; no second review cycle from this reviewer.
+If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) do one pass. The planning agent then runs the autonomous loop in the directive above, invoking `planrereview` (a fresh reviewer per cycle) until APPROVED, a direction decision, or the 3-cycle cap.
 ```
 
 ## Execution Kickoff / Implementation Kickoff

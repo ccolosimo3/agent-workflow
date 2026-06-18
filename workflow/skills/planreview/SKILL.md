@@ -50,6 +50,31 @@ Missing material is signal, not a gap to fill: if the spec lacks explicit
 non-goals, file claims, or dependencies, say so in the kickoff — that is often
 what the reviewer should flag.
 
+## After the verdict (autonomous loop)
+
+planreview is the first pass of an autonomous review→revise→re-review loop, not
+a one-shot. When the spawned reviewer returns:
+
+- **APPROVED** → report to the operator with a one-line-per-pass changelog; the
+  plan is review-clean.
+- **ACTIONABLE** → split the findings:
+  - **Direction findings** — anything tagged `[decision-required]`, plus
+    anything you cannot resolve without choosing an approach, changing scope,
+    weighing a no-clear-winner tradeoff, or making a product/policy/naming call.
+    Apply this filter yourself; do not trust the tag alone. STOP on these:
+    summarize each as a crisp decision for the operator and return. Never pick
+    the direction.
+  - **Autonomous findings** — wrong file:line claims, untestable/unclear
+    acceptance criteria, missing non-goals or verification commands, weak test
+    strategy, convention / existing-mechanism gaps. Resolve each by tightening
+    the spec's correctness/clarity — never by deleting the flagged element or
+    weakening a criterion to dodge it — then invoke `planrereview` on the
+    revised spec.
+- Loop ACTIONABLE→revise→`planrereview` until APPROVED or a direction finding
+  stops it. **Cap at 3 revise→re-review cycles**; if still ACTIONABLE after 3,
+  stop and surface the remaining findings. On every stop or APPROVED, give the
+  operator a one-line-per-pass changelog of what changed.
+
 ## Failure modes
 
 The shared ones in HANDOFF.md, plus: fabricating scope items, label sets, or
