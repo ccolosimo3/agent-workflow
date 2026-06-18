@@ -113,7 +113,7 @@ Conventions:
 - If the spec has local-only notes, move them under `## Planning Notes` and remove that section before publishing, or explicitly mark it as not included in the tracker body.
 ```
 
-## Plan Review Kickoff
+## Spec Review Kickoff
 
 ```text
 Review plan / spec <path or link> for <feature/workstream>.
@@ -239,14 +239,14 @@ Focus on whether the plan is correct, complete, and self-contained enough to be 
 If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) do one pass. The planning agent then runs the autonomous loop in the directive above, invoking `specrereview` (a fresh reviewer per cycle) until APPROVED, a direction decision, or the 3-cycle cap.
 ```
 
-## Plan Re-Review Kickoff
+## Spec Re-Review Kickoff
 
 ```text
-Re-review plan / spec <path> after revisions following a prior ACTIONABLE plan review.
+Re-review plan / spec <path> after revisions following a prior ACTIONABLE spec review.
 
 ## Prior review
 - verdict: ACTIONABLE
-- source kickoff: <pointer to original Plan Review Kickoff if present>
+- source kickoff: <pointer to original Spec Review Kickoff if present>
 - findings (restated verbatim from prior reviewer):
   - [severity] section-or-line | category | issue | required fix
   - ...
@@ -285,7 +285,7 @@ When Verdict is ACTIONABLE, mark any finding requiring operator input with `[dec
 > findings (non-convergence is itself a signal). On any stop or on APPROVED, give
 > a one-line-per-pass changelog of what you revised.
 
-Focus on the revisions and the prior findings. Do not perform a fresh broad plan review.
+Focus on the revisions and the prior findings. Do not perform a fresh broad spec review.
 
 If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) do one pass. The planning agent then runs the autonomous loop in the directive above, invoking `specrereview` (a fresh reviewer per cycle) until APPROVED, a direction decision, or the 3-cycle cap.
 ```
@@ -632,7 +632,7 @@ Constraints:
   resolve them in PR comments).
 - Factual and concise, no marketing tone; prefer "no remaining blocking issues
   found" over absolutes like "approved", "fully safe", or "all issues resolved".
-- Do not mention plan review by default; accepted specs normally pass plan review
+- Do not mention spec review by default; accepted specs normally pass spec review
   before coding.
 - Return the PR body only, no preamble like "here is the summary".
 

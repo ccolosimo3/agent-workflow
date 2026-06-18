@@ -224,7 +224,7 @@ runtime versions, and contracts.
 ## Kickoff Templates
 
 Canonical kickoff prompts live in `~/.agents/workflow/KICKOFFS.md`: Planning,
-Domain Pass, Final Spec Promotion, Plan Review, Plan Re-Review,
+Domain Pass, Final Spec Promotion, Spec Review, Spec Re-Review,
 Execution/Implementation, Review, Re-Review, External PR Review,
 PR Body / Optional Review Notes, Fast Fix, Post-Plan Grill.
 

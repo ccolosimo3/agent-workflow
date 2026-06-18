@@ -2,12 +2,12 @@
 name: specrereview
 description: Hand off a revised plan or spec for a follow-up
   review after the planner has addressed findings from a prior ACTIONABLE
-  plan review. Reads the canonical Plan Re-Review Kickoff template from
+  spec review. Reads the canonical Spec Re-Review Kickoff template from
   ~/.agents/workflow/KICKOFFS.md, populates it with the prior findings and
   the revisions applied, emits it verbatim in chat, and spawns one
   fresh-context reviewer subagent. Use when the operator says
   /specrereview, "re-review this spec", or after revisions land in
-  response to a prior plan review.
+  response to a prior spec review.
 ---
 
 # specrereview
@@ -19,8 +19,8 @@ below; this file adds only the plan-re-review specifics.
 
 ## Protocol parameters
 
-- Template: `## Plan Re-Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
-- Emitted heading: `## Plan Re-Review Kickoff Prompt`
+- Template: `## Spec Re-Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
+- Emitted heading: `## Spec Re-Review Kickoff Prompt`
 - Announce: `spawning one plan re-reviewer`
 - Spawns: yes — one fresh-context reviewer
 
@@ -55,4 +55,4 @@ verdict (autonomous loop)".
 The shared ones in HANDOFF.md, plus: running without prior findings;
 paraphrasing them; asking for a fresh broad review — the scope is "did the
 revisions address the findings, and did they introduce any new issues?", not
-a from-scratch plan review.
+a from-scratch spec review.

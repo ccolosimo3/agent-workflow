@@ -3,13 +3,13 @@ name: secondspecreview
 description: Run the operator-owned outer-gate second review of their OWN plan /
   spec, in a fresh conversation in the other app/model, after the planning
   session's specreview ⇄ specrereview loop has converged to APPROVED. Self-
-  populates the Plan Review Kickoff from the spec file (never from a pasted
-  prompt), deliberately ignores prior plan-review findings, and performs a
+  populates the Spec Review Kickoff from the spec file (never from a pasted
+  prompt), deliberately ignores prior spec-review findings, and performs a
   holistic whole-plan review itself in this conversation per
-  ~/.agents/workflow/REVIEW_RUBRIC.md + the Plan Review Kickoff validation
+  ~/.agents/workflow/REVIEW_RUBRIC.md + the Spec Review Kickoff validation
   categories — verifying the spec's file:line claims against current source —
   then returns a strict verdict for the operator to carry back. Use when the
-  operator says /secondspecreview, "second plan review", "independent fresh pass
+  operator says /secondspecreview, "second spec review", "independent fresh pass
   on the whole spec", or names a converged spec for outer-gate review. Not the
   planning session's own loop (specreview / specrereview), not a code review
   (secondreview), not a coworker PR (prreview).
@@ -42,18 +42,18 @@ un-anchored by the loop.
 2. **Locate the artifact.** Read the living spec (`README.md` or the named spec
    file) and the sibling docs it depends on (`*_OPTIONS.md`, `*_SPIKE.md`,
    `verification.md`) — the spec is what you are reviewing.
-3. **Independence seal (hard rule).** Do NOT read `reviews.md`, prior plan-review
+3. **Independence seal (hard rule).** Do NOT read `reviews.md`, prior spec-review
    verdicts, or prior kickoff prompts — in the folder or in chat. If the operator
    pasted loop findings, set them aside unread; this review must not be anchored
    by what the first lens found. (To re-review *against* prior findings, that is
    `specrereview` in the planning session, not this skill.)
-4. **Populate the `## Plan Review Kickoff` template** from
+4. **Populate the `## Spec Review Kickoff` template** from
    `~/.agents/workflow/KICKOFFS.md` per the HANDOFF.md protocol (fidelity, honest
    population, repo-conventions resolution from the shim) — filled from the spec
-   itself, not session memory. Emit it in chat under `## Plan Review Kickoff
+   itself, not session memory. Emit it in chat under `## Spec Review Kickoff
    Prompt` as the record of what was reviewed.
 5. **Perform the review yourself** in this conversation, per `REVIEW_RUBRIC.md`
-   and the Plan Review Kickoff validation categories — a **holistic whole-plan**
+   and the Spec Review Kickoff validation categories — a **holistic whole-plan**
    pass, not a delta (the cold full read is the entire point of this gate). Verify
    every file:line claim and existing-mechanism (4a) claim against CURRENT source
    yourself — read the cited code; do not trust the spec's claims. Cover scope

@@ -91,9 +91,9 @@ phase are autonomous.
   two-verdicts gate is met when both lenses have approved the final tip;
   patches landed after any approval get a re-review.
 
-## Plan review loop (specreview → specrereview)
+## Spec review loop (specreview → specrereview)
 
-Plan review is autonomous and has NO operator-owned outer gate (unlike the
+Spec review is autonomous and has NO operator-owned outer gate (unlike the
 implementation flow above). `specreview` spawns one reviewer; the planning agent
 resolves the autonomous findings by tightening the spec and re-runs
 `specrereview` (a fresh reviewer per cycle), looping until APPROVED. It STOPS for
