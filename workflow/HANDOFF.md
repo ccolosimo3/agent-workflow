@@ -21,15 +21,18 @@ phase are autonomous.
   unproven bet, else to `planreview`)
 - Prove one chosen approach at the real boundary (GO/NO-GO) → `spike` (hands off
   to `planreview` on GO; recommends the fallback on NO-GO)
-- Then: finalize spec → `planreview` / `planrereview` (autonomous loop) →
-  implement → `cjcreview` / `cjcrereview` (loop) → `secondreview`
+- Then: finalize spec → `planreview` / `planrereview` (autonomous loop), with an
+  optional `secondplanreview` outer gate (other model) on the converged plan →
+  implement → `cjcreview` / `cjcrereview` (loop) → `secondreview` outer gate
 - Implementation review handoff → `cjcreview` (emit + spawn; emit-only mode
   for outer-gate handoffs)
 - Implementation re-review after patches → `cjcrereview`
 - Plan/spec review before promotion → `planreview`
 - Plan re-review after revisions → `planrereview`
-- Outer-gate second review of the operator's own work, run in the other
-  app/model → `secondreview`
+- Outer-gate second review of the operator's own implementation, run in the
+  other app/model → `secondreview`
+- Outer-gate second review of the operator's own converged plan/spec, run in the
+  other app/model → `secondplanreview`
 - Coworker PR review + calibration → `cjcprreview` (+ `calibrate-review`)
 
 ## The protocol
