@@ -1,8 +1,8 @@
 ---
 name: learn
 description: Brief the operator on their OWN work — a PR, commit range, branch,
-  or work-item — so they can talk about it confidently: a plain-language mental
-  model, high-level first (say-it-first pitch, the shape, the why, and a likely
+  or work-item — so they can talk about it confidently. Builds a plain-language
+  mental model, high-level first (say-it-first pitch, the shape, the why, and a likely
   Q&A), then drill into any piece on request. Read-only; grounds the model in the
   real diff/spec so what the operator repeats is accurate. Use when the operator
   says /learn <ref>, "help me understand this PR", "brief me on <work>", "what
