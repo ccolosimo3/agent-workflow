@@ -45,6 +45,30 @@ Do not create a parallel `-issue-draft` file unless the final public tracker
 issue must be split, redacted, or substantially reshaped from the reviewed
 spec.
 
+## Large Work-Item Subfolders
+
+Default work-item folders should stay small. For large issues with multiple
+spikes, slices, or release rehearsals, keep the root focused and move
+task-specific docs into optional subfolders:
+
+- `slices/` — concise specs for completed or in-progress implementation slices.
+- `spikes/` — bounded proof specs and spike writeups.
+- `release/` — rebase ledgers, merge rehearsals, final-review ledgers.
+- `superseded/` — plans kept as fallback/history but not current direction.
+- `future/` — follow-on design notes that are related but not yet their own
+  work item.
+
+Do not fold every slice back into `README.md`. Instead:
+
+- update `README.md` only when the durable feature contract changes;
+- record command results in `verification.md`;
+- record reviewer outcomes in `reviews.md`;
+- keep concise slice/spike specs standalone so agents can work from a small
+  task surface.
+
+If a `future/` item becomes actionable, promote it to its own folder under
+`active/` or `backlog/`.
+
 ## Frontmatter Template
 
 Every new plan doc starts with YAML frontmatter:
