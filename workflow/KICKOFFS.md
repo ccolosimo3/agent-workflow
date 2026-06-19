@@ -312,8 +312,8 @@ Execute Startup Routing A ("Implement Existing Work Item") in AGENTS.md end to e
 read the item + local shim, restate goal/non-goals/AC, scope in/out, spot-check the
 spec's load-bearing file:line claims against the tree before editing (surface any
 conflict instead of coding against a stale claim), branch from a clean tree,
-implement minimally, verify by tier, hand off for review (emit the Review Kickoff in
-chat BEFORE spawning exactly one reviewer; the operator owns the second), then PR.
+implement minimally, verify by tier, hand off for review (spawn exactly one
+reviewer, announcing the handoff; the operator owns the second), then PR.
 Do NOT restate the rules AGENTS.md already owns — follow them: Verification Tiers,
 the Destructive Action Policy (identify every approval-gated command before running
 it), the Review Loop, PR Handoff (PR body in the locked shape below, labels, PR-GO),

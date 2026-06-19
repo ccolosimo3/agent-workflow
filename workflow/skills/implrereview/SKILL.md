@@ -20,7 +20,7 @@ below; this file adds only the re-review specifics.
 ## Protocol parameters
 
 - Template: `## Re-Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
-- Emitted heading: `## Re-Review Kickoff Prompt`
+- Emitted heading (no-subagent fallback): `## Re-Review Kickoff Prompt`
 - Announce: `spawning one re-reviewer`
 - Spawns: yes — one fresh-context reviewer
 

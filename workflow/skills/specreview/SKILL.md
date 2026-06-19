@@ -23,7 +23,7 @@ the parameters below.
 ## Protocol parameters
 
 - Template: `## Spec Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
-- Emitted heading: `## Spec Review Kickoff Prompt`
+- Emitted heading (no-subagent fallback): `## Spec Review Kickoff Prompt`
 - Announce: `spawning one spec reviewer`
 - Spawns: yes — one fresh-context reviewer
 

@@ -24,7 +24,7 @@ phase are autonomous.
 - Then: finalize spec → `specreview` / `specrereview` (autonomous loop), with an
   optional `secondspecreview` outer gate (other model) on the converged plan →
   implement → `implreview` / `implrereview` (loop) → `secondreview` outer gate
-- Implementation review handoff → `implreview` (emit + spawn; emit-only mode
+- Implementation review handoff → `implreview` (announce + spawn; emit-only mode
   for outer-gate handoffs)
 - Implementation re-review after patches → `implrereview`
 - Plan/spec review before promotion → `specreview`

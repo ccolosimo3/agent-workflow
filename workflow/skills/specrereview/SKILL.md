@@ -20,7 +20,7 @@ below; this file adds only the plan-re-review specifics.
 ## Protocol parameters
 
 - Template: `## Spec Re-Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
-- Emitted heading: `## Spec Re-Review Kickoff Prompt`
+- Emitted heading (no-subagent fallback): `## Spec Re-Review Kickoff Prompt`
 - Announce: `spawning one plan re-reviewer`
 - Spawns: yes — one fresh-context reviewer
 

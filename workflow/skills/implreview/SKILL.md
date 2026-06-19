@@ -19,7 +19,7 @@ implreview-specific population rules.
 ## Protocol parameters
 
 - Template: `## Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
-- Emitted heading: `## Review Kickoff Prompt`
+- Emitted heading (no-subagent fallback): `## Review Kickoff Prompt`
 - Announce: `spawning one reviewer`
 - Spawns: yes — one fresh-context reviewer (except emit-only mode below)
 
