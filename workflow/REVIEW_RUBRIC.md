@@ -55,6 +55,10 @@ it did not, resolve them yourself:
   `plans/reference/testing-philosophy.md`), which names the canonical example files
   and coverage authority for that stack. Use the anti-pattern tables and 10-second
   check as your test rubric.
+- frontend/design — for any UI surface in the diff, `~/.agents/workflow/FRONTEND.md`
+  owns the cross-repo principles (the oracle, token-sourced values, the state set,
+  the accessibility contract, layout stability); apply it plus the repo's own
+  design system (resolved via the shim).
 - coding-standards / patterns and verification policy — resolved per repo from
   its shim; the paths below are an illustrative example of shim routing from one
   operator's repos — your repo's shim names its own equivalents. The rule the
@@ -247,8 +251,14 @@ above is about weakness; keep them separate.
    documented naming/placement/style patterns? Flag hand-rolled code that duplicates
    an existing primitive — e.g. a custom shimmer where the repo's Skeleton/loading
    primitive exists — as ACTIONABLE "convention drift", citing the violated rule.
-   Skip this item only when the diff touches no surface a documented primitive
-   covers.
+   For UI surfaces also apply `~/.agents/workflow/FRONTEND.md` — states built and
+   proven, the a11y contract (keyboard + name/role/state), contrast / use-of-color,
+   layout stability — and confirm the visual proof (screenshot or story) the spec
+   named exists; a missing proof or a broken state/a11y/contrast is ACTIONABLE.
+   Skip the primitive-reuse check only when the diff touches no surface a
+   documented primitive covers; still apply the FRONTEND.md half whenever the diff
+   renders UI, even where the repo documents no primitive — the
+   a11y/contrast/state/layout principles are repo-independent.
 7. Residual risk or testing gaps.
 
 ## Decision-required handling

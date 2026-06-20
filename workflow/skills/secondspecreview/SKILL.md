@@ -58,7 +58,8 @@ un-anchored by the loop.
    every file:line claim and existing-mechanism (4a) claim against CURRENT source
    yourself — read the cited code; do not trust the spec's claims. Cover scope
    coverage, self-containment, dependency claims, label correctness, test-strategy
-   quality (per TESTING.md), and over-scope / existing-mechanism reuse. For any
+   quality (per TESTING.md; for UI specs also design-strategy quality per
+   FRONTEND.md), and over-scope / existing-mechanism reuse. For any
    external/library/API/version/deprecation or "current best-practice" claim the
    spec rests on, verify it via web search against official upstream docs (cite
    source + date) and temper "latest" against the repo's pinned major — don't

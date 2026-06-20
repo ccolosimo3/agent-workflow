@@ -199,6 +199,12 @@ Return:
      REVIEW_RUBRIC.md "Surface-specific test bars" at plan time: a spec that
      plans only implementation-shape assertions, or only "add a migration
      test", is a blocking finding.
+   - weak design strategy (UI specs only): if the spec touches a UI surface, open
+     `~/.agents/workflow/FRONTEND.md` and confirm the spec names its
+     tokens/primitives/patterns, the states it renders (incl. empty/error/focus),
+     and the visual proof; a UI spec that gives only vague visual intent, omits
+     the changing-state set, or names no visual proof is ACTIONABLE. Skip for
+     non-UI specs.
    - convention conformance: if any plan step explicitly proposes hand-rolling a
      component, helper, hook, loading state, or style primitive, open the repo's
      patterns doc (the coding-standards / patterns path resolved in "Repo

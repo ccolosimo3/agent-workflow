@@ -66,8 +66,10 @@ research.
    with PLANS.md frontmatter, `status: rough`. The spec carries the ten
    Planning Kickoff deliverables plus: a test strategy per
    `~/.agents/workflow/TESTING.md` (behavior protected, failure mode, real
-   operation boundary); exact verification commands by touched surface from
-   the repo's verification doc; the proposed branch name per the shim's
+   operation boundary); for UI work, a design strategy per
+   `~/.agents/workflow/FRONTEND.md` (the tokens/primitives/patterns it uses,
+   the states it renders, and the visual proof); exact verification commands by
+   touched surface from the repo's verification doc; the proposed branch name per the shim's
    branch rule; and open questions / `[decision-required]` items the operator
    must settle. Update the plans `INDEX.md` when the repo keeps one.
 
