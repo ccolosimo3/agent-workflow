@@ -123,19 +123,13 @@ Shared-state and externally visible actions:
 
 Operating rules:
 
-- State the exact command before running it.
-- Wait for explicit approval in this session ("yes", "approved", "go ahead").
-  Silence, "ok", or prior approvals do not authorize.
-- Authorization is scoped to the exact action and target stated. A push to
-  branch X does not authorize a force push, a push to a different branch, or
-  a later merge.
-- Prepared-packet shorthand approvals: when the operator has already seen or
-  explicitly accepted the prepared packet for one of the bundles below, the
-  named shorthand or a natural-equivalent phrasing covers the stated bundle
-  once. It authorizes the agent to derive the matching `gh` command(s), state
-  them immediately before running them, and run them without asking for a
-  second approval — and no unstated mutation. Ask again if any material part of
-  the packet differs from what was prepared.
+- One explicit in-session approval ("yes"/"approved"/"go ahead") authorizes the
+  action; then state the exact command and run it — stating it is the
+  announcement, not a second ask. Re-ask only if the command materially differs
+  (different target, broader scope, an unstated mutation); "ok"/silence is not yes.
+- Prepared-packet shorthand approvals (the rule above, by a named shorthand):
+  when the operator has seen or accepted the prepared packet for a bundle below,
+  the named shorthand or a natural-equivalent phrase covers that bundle once.
   - `PR-GO` (PR handoff only): one approval may cover the prepared PR
     create/edit/update, label, and any optional PR comment packet. Packet: the
     current PR body draft/file, final label list, repo, target branch for
