@@ -253,8 +253,10 @@ above is about weakness; keep them separate.
    primitive exists — as ACTIONABLE "convention drift", citing the violated rule.
    For UI surfaces also apply `~/.agents/workflow/FRONTEND.md` — states built and
    proven, the a11y contract (keyboard + name/role/state), contrast / use-of-color,
-   layout stability — and confirm the visual proof (screenshot or story) the spec
-   named exists; a missing proof or a broken state/a11y/contrast is ACTIONABLE.
+   layout stability — and a broken state/a11y/contrast is ACTIONABLE. Visual capture
+   (driving a sim/emulator/page) is operator-tier: do NOT flag a missing screenshot
+   as a finding — the operator owns eyeballing visual correctness unless they asked
+   for a capture.
    Skip the primitive-reuse check only when the diff touches no surface a
    documented primitive covers; still apply the FRONTEND.md half whenever the diff
    renders UI, even where the repo documents no primitive — the

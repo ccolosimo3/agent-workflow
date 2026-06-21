@@ -16,8 +16,10 @@ curated design doc, or the tokens/theme in code; a missing doc is not a missing
 system. That system is the oracle.
 
 The **screenshot** (or device/simulator capture) is frontend's "run the test" —
-render the changed states and capture them as the visual proof; where the repo
-wires a visual-regression baseline, diff against it. But a resting screenshot is
+but driving a sim/emulator to capture one is slow, operator-tier work. By default
+name the proof (which screen or story shows it correct) and let the operator
+eyeball it; an agent captures only on operator request, or where the repo wires a
+visual-regression baseline. But a resting screenshot is
 **blind** to keyboard operability, accessible name/role, contrast, and layout
 shift: a broken-a11y or jumping screen looks correct in a still image. The
 Accessibility and Layout rules below exist to cover exactly what the screenshot
