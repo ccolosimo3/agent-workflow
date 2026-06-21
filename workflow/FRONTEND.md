@@ -20,9 +20,10 @@ render the changed states and capture them as the visual proof; where the repo
 wires a visual-regression baseline, diff against it. But a resting screenshot is
 **blind** to keyboard operability, accessible name/role, contrast, and layout
 shift: a broken-a11y or jumping screen looks correct in a still image. The
-Accessibility and Layout rules
-below exist to cover exactly what the screenshot misses — that is why they are
-rules and not polish.
+Accessibility and Layout rules below exist to cover exactly what the screenshot
+misses — so prove those by exercising the UI (a keyboard/interaction pass, or a
+story asserting real geometry), not a still capture; that is why they are rules,
+not polish.
 
 ## Spec a UI work item
 
@@ -57,7 +58,8 @@ Every interactive control is **keyboard-operable** and exposes a programmatic
 RN `accessibilityRole`/`accessibilityLabel`/`accessibilityState`. Defects,
 not nits: an icon-only button with no label, a clickable `<div>`, a custom
 dropdown with no keyboard path, a meaningful `<img>` with no alt (decorative
-images take `alt=""`). Honor `prefers-reduced-motion`.
+images take `alt=""`), a pointer/touch target under ~24×24px with no equivalent
+spacing (inline text links exempt). Honor `prefers-reduced-motion`.
 
 ## Layout must not jump
 
