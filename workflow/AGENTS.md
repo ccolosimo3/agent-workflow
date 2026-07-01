@@ -179,11 +179,10 @@ Use this for feature shaping, final-spec preparation, task splitting, or unclear
 
 1. Read relevant product/docs/code context.
 2. Run a Domain Pass when terminology, lifecycle state, or cross-boundary behavior changes.
-3. Choose mode: `task` by default, or `fast` for low-risk quick fixes.
-4. Produce a reviewable spec that can evolve into the final tracker issue body:
+3. Produce a reviewable spec that can evolve into the final tracker issue body:
    self-contained scope, non-goals, acceptance criteria, exact verification
    commands, labels/branch guidance when relevant, and any approval-gated work.
-5. Do not make code changes during planning unless explicitly asked.
+4. Do not make code changes during planning unless explicitly asked.
 
 ### C) Review PR or Diff
 
@@ -205,7 +204,7 @@ runtime versions, and contracts.
 Canonical kickoff prompts live in `~/.agents/workflow/KICKOFFS.md`: Planning,
 Domain Pass, Final Spec Promotion, Spec Review, Spec Re-Review,
 Execution/Implementation, Review, Re-Review, External PR Review,
-PR Body / Optional Review Notes, Fast Fix, Post-Plan Grill.
+PR Body / Optional Review Notes, Post-Plan Grill.
 
 **Fidelity rule:** When asked to hand off a kickoff to the operator or another
 agent, paste the matching section from KICKOFFS.md verbatim with placeholders
@@ -228,7 +227,6 @@ prompt.
   publishable as the tracker issue body unless it must be split, redacted, or
   substantially reshaped.
 - **Decision**: short decision lock with rationale.
-- **Fast fix**: low-risk direct change when team policy allows it.
 
 Default: one Task -> one branch -> one PR.
 
@@ -364,6 +362,35 @@ converges, with a freshly populated prompt whenever patches have landed since
 emission. Shared handoff mechanics — sequencing, freshness, the independence
 seal, and the ritual→skill index — live in `~/.agents/workflow/HANDOFF.md`.
 
+Review floor — the inner review loop (`implreview` → `implrereview` to
+APPROVED) is NEVER skippable; every implementation gets at least one review, and
+nothing reaches a PR without one. The ONLY thing ever waived is the second /
+outer-gate review (`secondreview`). The outer gate is REQUIRED whenever the diff
+touches ANY canonical risk-surface —
+
+> migration / schema / persisted-state (any change to stored data or a
+> state-machine) · auth · contract / API surface · data-loss paths · security ·
+> provider boundary (Stripe, AvaTax, other external services) · dependency ·
+> toolchain
+
+— OR when the inner review returned ACTIONABLE on any substantive finding at any
+point in the loop. It is operator-waivable ONLY when ALL of:
+
+- (a) the diff touches NONE of the canonical risk-surface list above;
+- (b) the inner review was APPROVED on the FIRST pass with zero substantive
+  findings (no ACTIONABLE cycle at all — a patched-then-clean loop does NOT
+  qualify);
+- (c) the diff is mechanically trivial — NO logic or control-flow change (copy,
+  comment, pure rename, or a purely non-behavioral config value; a config value
+  that changes runtime behavior — a threshold, retry count, rate limit — IS a
+  logic change and does NOT qualify).
+
+The implementer states `outer gate: required | waivable — <one-line why>` at
+handoff; the OPERATOR makes the final waive call. When the outer gate is
+mandatory, do not trim the independence seal, live-range self-computation, or
+the inner loop. (`secondspecreview` is already optional on the spec side, so
+this parity holds there too.)
+
 ## PR Handoff
 
 When the operator asks to open or update a PR for an implemented work item, make
@@ -488,10 +515,9 @@ Default review pass:
   the Stance section of REVIEW_RUBRIC.md owns the adversarial checks
 - patch only listed findings unless scope expands
 - rerun targeted verification
-- the default two independent fresh-context reviews use deliberately different
-  lenses; the A/B split and mechanics live in `~/.agents/workflow/HANDOFF.md`.
-  When only one reviewer runs (common in the solo repo), that reviewer performs
-  BOTH lenses.
+- the default two independent fresh-context reviews both run the full
+  `REVIEW_RUBRIC.md`; the outer-gate review is a fresh independent pass, and its
+  mechanics live in `~/.agents/workflow/HANDOFF.md`
 - automated PR reviewer (e.g. CodeRabbit) path-exclusion handling: see
   "Automated-reviewer awareness" in REVIEW_RUBRIC.md
 - additional review passes are allowed whenever patches after review are

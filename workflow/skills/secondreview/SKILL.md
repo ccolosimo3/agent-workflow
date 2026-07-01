@@ -53,7 +53,7 @@ gate.
    claims (`per implementer log`) — and the live git range. Emit it in chat
    under `## Review Kickoff Prompt` as the record of what was reviewed.
 6. **Perform the review yourself** in this conversation, per
-   `REVIEW_RUBRIC.md`. This is the Reviewer B lens — adversarial test-quality
+   `REVIEW_RUBRIC.md`. This is the outer-gate lens — adversarial test-quality
    + contract-drift: ignore the implementer's test-quality framing, re-derive
    each test's value from the test source, ask "what regression could come
    back and still leave this suite green?" — PLUS the shared per-test and

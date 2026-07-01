@@ -64,6 +64,16 @@ item did not name goes in Hot spots as "approach substitution: <old> -> <new>,
 not explicitly requested", flagging any preserved identifier (testid, route,
 public name) whose implementation changed underneath it.
 
+## After convergence
+
+Disposition is owned by the implementer directive appended to each verdict
+(REVIEW_RUBRIC.md) plus the Execution Kickoff re-review trigger — not by this
+skill. On an inner-loop APPROVED, report the result with a one-line-per-pass
+changelog and note the loop converged. The next step is the operator-owned
+`secondreview` outer gate (required unless waived per the kernel's
+"Implementation Completion Handoff" off-ramp); this skill does NOT auto-invoke
+it.
+
 ## Failure modes
 
 The shared ones in HANDOFF.md, plus: inventing verification numbers, scope

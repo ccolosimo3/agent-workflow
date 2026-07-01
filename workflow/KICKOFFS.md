@@ -9,7 +9,6 @@ paraphrase or restructure.
 ```text
 Run planning kickoff for <feature/workstream> from <source>.
 
-Mode: <task|fast>  # default task
 No code changes.
 
 Deliver:
@@ -26,7 +25,7 @@ Deliver:
    what a file already does, what a contract exempts, "follows pattern X") against
    current source, citing the file:line you checked; mark any claim you could not
    confirm as an open question instead of asserting it from memory. Scale to risk —
-   fast-mode fixes can ground inline.
+   a trivial single-surface fix can ground inline.
 10. Domain Pass decision (one line): per the AGENTS.md "## Domain Pass" triggers,
     state whether this plan needs a Domain Pass and why or why not; if yes, run it
     or flag it as required before the spec goes review-ready.
@@ -286,7 +285,6 @@ Focus on the revisions and the prior findings. Do not perform a fresh broad spec
 
 ```text
 Run execution kickoff for existing work item <id/link>.
-Mode: <task|fast>  # default task; fast per the Fast Fix kickoff.
 
 Execute Startup Routing A ("Implement Existing Work Item") in AGENTS.md end to end.
 Do NOT restate the rules AGENTS.md already owns — follow them: Verification Tiers,
@@ -316,9 +314,10 @@ Enforce these forcing functions ON TOP of Routing A:
 - Re-review trigger: on an ACTIONABLE verdict, patch + rerun targeted verification +
   re-review (implrereview) when the patch is non-trivial, touches lifecycle/state/
   concurrency, changes acceptance behavior, or rewrites/adds a test for a
-  test-quality finding; skip only for a truly trivial patch, stated. A test-quality
-  finding is addressed only if the new/edited test exercises the real boundary and
-  goes RED on revert.
+  test-quality finding; skip only for a truly trivial patch, stated (e.g. a
+  corrected import path or renamed variable in one file, stated as trivial, needs
+  no re-review). A test-quality finding is addressed only if the new/edited test
+  exercises the real boundary and goes RED on revert.
 - Scope-creep guard covers SUBSTITUTION, not only addition (the rule and masking
   check live in REVIEW_RUBRIC.md, Stance / Scope-vs-intent sections): list
   out-of-scope work as "discovered follow-ups"; disclose any unrequested swap in the
@@ -615,21 +614,6 @@ each captured as a separate issue when applicable; residual risk in one or two
 sentences (omit if none). Use neutral labels ("Implementation review", "Second
 independent review", "Operator review") and treat it as a verification record, not
 a certification.
-```
-
-## Fast Fix
-
-```text
-Run fast-fix kickoff for <bug/maintenance item>.
-
-Allowed only if no schema/API/security/dependency/toolchain/state-machine change is
-needed. If scope grows, switch to normal task mode.
-
-Deliver:
-1. tiny scope statement
-2. changed files
-3. targeted verification
-4. PR/commit summary
 ```
 
 ## Post-Plan Grill

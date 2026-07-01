@@ -19,7 +19,7 @@ This session IS the planning agent (kernel "Startup Routing" path B). The
 output contract is the `## Planning Kickoff` template in
 `~/.agents/workflow/KICKOFFS.md`, self-applied with the issue as `<source>` —
 its ten deliverables (problem framing through claim grounding and the Domain
-Pass decision) define what done looks like. Mode defaults to `task`.
+Pass decision) define what done looks like.
 
 Hard role limits: no code edits, no branch creation, no Linear/GitHub
 mutations (reads only; mutations stay approval-gated per the kernel and repo
@@ -71,7 +71,10 @@ research.
    the states it renders, and the visual proof); exact verification commands by
    touched surface from the repo's verification doc; the proposed branch name per the shim's
    branch rule; and open questions / `[decision-required]` items the operator
-   must settle. Update the plans `INDEX.md` when the repo keeps one.
+   must settle. Scale the plan to the change's size/risk — a trivial
+   single-surface fix gets a compact plan (skip the parallel-investigator
+   fan-out and the two-or-three-approach synthesis), not the full treatment.
+   Update the plans `INDEX.md` when the repo keeps one.
 
 5. **Hand back.** End with the spec path and status, the decision-required
    items, and the next pipeline step: operator revises → spec goes
