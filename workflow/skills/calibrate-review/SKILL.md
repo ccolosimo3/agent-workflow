@@ -107,54 +107,31 @@ For each finding classify:
 - **Impact**: customer / internal operator / developer / downstream contract /
   none clear
 - **Author effort**: tiny / small / moderate / large redo
-- **Best action**: patch myself / raise as blocker / raise as question / defer
-  to follow-up / drop
+- **Best action** (the single definition of the action categories):
+  - **patch myself** — mechanical and tiny, author may appreciate unblocking
+    help, patching does not take over design ownership, and team norms allow
+    reviewer commits on the author's branch (otherwise hand over a suggested
+    diff instead)
+  - **raise as blocker** (request changes) — acceptance criteria not met;
+    correctness bug in a real path; security, permission, privacy, data loss,
+    migration, or provider risk; API/schema/generated contract drift that will
+    cause downstream breakage or recurring unrelated churn; or missing
+    verification for risk-bearing behavior with no credible automated/manual
+    proof
+  - **raise as question** — product scope or role behavior is ambiguous; the
+    finding rests on an assumption about how the team uses the feature; the
+    likely fix could expand the PR or require redesign; or the standard is not
+    clearly shared by the team. Also covers a real-but-low-risk nit/small
+    suggestion when the PR is otherwise sound and the author can address it
+    without rethinking the design
+  - **defer to follow-up / drop** — mostly personal preference; nicer but not
+    risky; large churn without a clear team-standard basis; or belongs in a
+    follow-up rather than this PR
 
 Large-redo findings need a high burden of proof. If a finding would ask the
 author to rework a chosen approach, surface it as a question or manager/team
 calibration point unless it clearly breaks requirements, creates real risk, or
 violates an agreed standard.
-
-## Surfacing Rules
-
-Request changes only for:
-
-- acceptance criteria not met
-- correctness bug in a real path
-- security, permission, privacy, data loss, migration, or provider risk
-- API/schema/generated contract drift that will create downstream breakage or
-  recurring unrelated churn
-- missing verification for risk-bearing behavior with no credible automated or
-  manual proof
-
-Ask a question when:
-
-- product scope or role behavior is ambiguous
-- the finding depends on an assumption about how the team uses the feature
-- the likely fix could expand the PR or require redesign
-- the standard is not clearly shared by the team
-
-Use a nit or small suggestion when:
-
-- the issue is real but low risk
-- the fix is tiny
-- the PR is otherwise sound
-- the author can address it without rethinking the design
-
-Patch it in myself (touch-up commit) when:
-
-- the fix is mechanical and tiny
-- the author may appreciate unblocking help
-- patching does not require taking over design ownership
-- team norms allow reviewer commits on the author's branch; otherwise recommend
-  handing the author a suggested diff instead
-
-Defer or drop when:
-
-- the finding is mostly personal preference
-- the code could be nicer but is not risky
-- the fix would cause large churn without a clear team-standard basis
-- the issue belongs in a follow-up rather than this PR
 
 Floor: an item triaged blocker or important must land in a raise-with-author
 group (or be patched and said so) — only its framing is negotiable, never its
@@ -195,12 +172,8 @@ operator's own check backs the claim:
 - "Could you add the manual steps you ran to the PR body?"
 - "Tiny polish: ..."
 
-Avoid:
+Avoid (beyond the no-leak constraint in Core Principle):
 
-- agent names
-- raw verdict labels such as `ACTIONABLE`
-- "the rubric says"
-- exhaustive private ledgers
 - implying optional polish failed the review
 - asking for a rewrite unless the current approach is clearly risky or outside
   scope
@@ -208,22 +181,20 @@ Avoid:
 
 ## Output: Action Brief
 
-No paste-ready review prose. Return one concise brief the operator can read in
-one screen, discuss with you, and act on with the author. One line per item:
+Return one concise brief the operator can read in one screen, discuss with you,
+and act on with the author. One line per item:
 
 `finding | path:line | basis | evidence | confidence`
 
-Group items by action, ordered by merge risk within each group:
+Group items by the Triage "Best action" category (defined under Triage Axes),
+ordered by merge risk within each group:
 
-1. **Patch myself**: mechanical, tiny fixes worth a touch-up commit on the PR
-   branch without taking over design ownership. Note when team norms favor a
-   suggested diff over a push.
-2. **Raise with author — blocking**: items meeting the request-changes bar.
-   Name the rule or risk and the smallest acceptable fix.
-3. **Raise with author — discuss/ask**: scope ambiguities, assumption checks,
-   large-redo concerns. Give the one-sentence question to ask, not a script.
-4. **Defer / drop**: nits, preferences, follow-up candidates, already-posted
-   items — one-word reason each (preference / churn / follow-up /
+1. **Patch myself** — note when team norms favor a suggested diff over a push.
+2. **Raise with author — blocking** — name the rule or risk and the smallest
+   acceptable fix.
+3. **Raise with author — discuss/ask** — give the one-sentence question to ask,
+   not a script.
+4. **Defer / drop** — one-word reason each (preference / churn / follow-up /
    already-posted / stale / unverified).
 
 Close with two lines:

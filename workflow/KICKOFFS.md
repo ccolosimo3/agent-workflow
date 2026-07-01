@@ -1,6 +1,8 @@
 # Portable Kickoffs
 
-Copy these prompts into an agent session when you want a consistent workflow.
+These are the canonical kickoff templates; populate them verbatim. The Fidelity
+Rule applies — paste the matching section with placeholders filled, do not
+paraphrase or restructure.
 
 ## Planning Kickoff
 
@@ -51,7 +53,7 @@ Output: update the same spec file in place so it can land verbatim as the GitHub
 Pre-promotion review (recommended for non-trivial specs): spawn a fresh-context reviewer agent against the spec before publication. The reviewer validates scope coverage, file/line claim accuracy, label correctness against the repo's label set (`gh label list --repo <repo>`), self-containment of the final issue body, and dependency claims. Apply review feedback directly to the spec before marking it final. This catches stale paths, missed scope, mislabeled categories, and assumed-but-wrong code claims at the cheapest possible point.
 
 Publication approval: `gh issue create` / `gh issue edit` follow the kernel's
-Destructive Action Policy, including the `ISSUE-GO` prepared-packet shorthand.
+Destructive Action Policy.
 
 Lifecycle: advance the spec `rough` -> `review-ready` -> `final` -> `promoted`
 -> `implemented` per the statuses and update rules in
@@ -113,6 +115,30 @@ Conventions:
 - If the spec has local-only notes, move them under `## Planning Notes` and remove that section before publishing, or explicitly mark it as not included in the tracker body.
 ```
 
+### Planner directive (shared)
+
+The Spec Review and Spec Re-Review templates both append this verbatim. Its exact
+text is load-bearing (the Fidelity Rule depends on it):
+
+> Planner: this is an autonomous review→revise→re-review loop. Resolve every
+> finding you can by tightening the plan's correctness/clarity, then re-run
+> `specrereview` on the revised spec — repeat until APPROVED. STOP and return to
+> the operator only for findings that decide the plan's DIRECTION: anything
+> marked `[decision-required]`, plus anything you cannot resolve without choosing
+> an approach, changing scope, weighing a no-clear-winner tradeoff, or making a
+> product/policy/naming call — treat these as decision-required even if unmarked,
+> and never pick the direction yourself. Do not resolve a finding by deleting the
+> flagged element or weakening an acceptance criterion to dodge it. Minor-only
+> off-ramp: if after revising the ENTIRE remaining batch was mechanical and
+> self-evidently correct (a corrected citation, a typo, a verbatim-added
+> verification command / non-goal / criterion, a label fix) such that a fresh
+> reviewer would add nothing, do NOT re-review — patch, break the loop, and
+> report it as your call (not an APPROVED), noting the operator can re-review or
+> rely on the outer gate; one substantive finding and you re-review instead.
+> Cap: after 3 revise→re-review cycles without APPROVED, stop and surface the
+> remaining findings (non-convergence is itself a signal). On any stop or on
+> APPROVED, give a one-line-per-pass changelog of what you revised.
+
 ## Spec Review Kickoff
 
 ```text
@@ -165,12 +191,7 @@ or refute. Assume the most important gap is something the planner did NOT list.
    - implementation-shape tests, if any, and why that shape is contractual or supplemental:
    - manual/Tier 4 proof needed when automation cannot represent the failure mode:
 
-7. Repo conventions to enforce (optional — include only when the repo shim names
-   conventions the reviewer must check; real, existing paths in the repo under review)
-   - testing: `~/.agents/workflow/TESTING.md`
-   - coding-standards / patterns: <path, or "none found">
-   - verification policy: <path, or "none found">
-   - local shim: <path, or "none found">
+7. Repo conventions to enforce: resolve per HANDOFF.md step 3.
 
 Return:
 1. Verdict: APPROVED or ACTIONABLE
@@ -225,30 +246,9 @@ Return:
    - local-only/private notes that should not be published
 3. Notes on scope or framing improvements (non-blocking but useful)
 
-When Verdict is ACTIONABLE, mark any finding requiring operator input (scope change, contract decision, label policy interpretation) with `[decision-required]` in its required fix. Append this planner directive verbatim at the end of your output so it stays with the findings when the operator forwards them:
-
-> Planner: this is an autonomous review→revise→re-review loop. Resolve every
-> finding you can by tightening the plan's correctness/clarity, then re-run
-> `specrereview` on the revised spec — repeat until APPROVED. STOP and return to
-> the operator only for findings that decide the plan's DIRECTION: anything
-> marked `[decision-required]`, plus anything you cannot resolve without choosing
-> an approach, changing scope, weighing a no-clear-winner tradeoff, or making a
-> product/policy/naming call — treat these as decision-required even if unmarked,
-> and never pick the direction yourself. Do not resolve a finding by deleting the
-> flagged element or weakening an acceptance criterion to dodge it. Minor-only
-> off-ramp: if after revising the ENTIRE remaining batch was mechanical and
-> self-evidently correct (a corrected citation, a typo, a verbatim-added
-> verification command / non-goal / criterion, a label fix) such that a fresh
-> reviewer would add nothing, do NOT re-review — patch, break the loop, and
-> report it as your call (not an APPROVED), noting the operator can re-review or
-> rely on the outer gate; one substantive finding and you re-review instead.
-> Cap: after 3 revise→re-review cycles without APPROVED, stop and surface the
-> remaining findings (non-convergence is itself a signal). On any stop or on
-> APPROVED, give a one-line-per-pass changelog of what you revised.
+When Verdict is ACTIONABLE, mark any finding requiring operator input (scope change, contract decision, label policy interpretation) with `[decision-required]` in its required fix. Then append the Planner directive (shared) verbatim at the end of your output so it stays with the findings when the operator forwards them.
 
 Focus on whether the plan is correct, complete, and self-contained enough to be acted on. Do not write the implementation. Do not propose new scope unless it closes a coverage gap the plan claims to cover.
-
-If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) do one pass. The planning agent then runs the autonomous loop in the directive above, invoking `specrereview` (a fresh reviewer per cycle) until APPROVED, a direction decision, or the 3-cycle cap.
 ```
 
 ## Spec Re-Review Kickoff
@@ -268,13 +268,8 @@ Re-review plan / spec <path> after revisions following a prior ACTIONABLE spec r
 - summary of revisions: <one or two sentences mapping revisions to findings>
 - diff (if version-controlled): <verbatim output of `git diff <base>..HEAD -- <artifact path>`, or before/after snippet>
 
-## Repo conventions to enforce (optional)
-Include only when the repo shim names conventions the reviewer must check;
-real, existing paths in the repo under review.
-- testing: `~/.agents/workflow/TESTING.md`
-- coding-standards / patterns: <path, or "none found">
-- verification policy: <path, or "none found">
-- local shim: <path, or "none found">
+## Repo conventions to enforce
+Resolve per HANDOFF.md step 3.
 
 ## Verify
 Return:
@@ -282,30 +277,9 @@ Return:
 2. New issues introduced by the revisions (rare but possible — e.g. revisions widened scope, introduced contradictions with non-goals, broke self-containment).
 3. Verdict: APPROVED or ACTIONABLE.
 
-When Verdict is ACTIONABLE, mark any finding requiring operator input with `[decision-required]` and append the planner directive verbatim:
-
-> Planner: this is an autonomous review→revise→re-review loop. Resolve every
-> finding you can by tightening the plan's correctness/clarity, then re-run
-> `specrereview` on the revised spec — repeat until APPROVED. STOP and return to
-> the operator only for findings that decide the plan's DIRECTION: anything
-> marked `[decision-required]`, plus anything you cannot resolve without choosing
-> an approach, changing scope, weighing a no-clear-winner tradeoff, or making a
-> product/policy/naming call — treat these as decision-required even if unmarked,
-> and never pick the direction yourself. Do not resolve a finding by deleting the
-> flagged element or weakening an acceptance criterion to dodge it. Minor-only
-> off-ramp: if after revising the ENTIRE remaining batch was mechanical and
-> self-evidently correct (a corrected citation, a typo, a verbatim-added
-> verification command / non-goal / criterion, a label fix) such that a fresh
-> reviewer would add nothing, do NOT re-review — patch, break the loop, and
-> report it as your call (not an APPROVED), noting the operator can re-review or
-> rely on the outer gate; one substantive finding and you re-review instead.
-> Cap: after 3 revise→re-review cycles without APPROVED, stop and surface the
-> remaining findings (non-convergence is itself a signal). On any stop or on
-> APPROVED, give a one-line-per-pass changelog of what you revised.
+When Verdict is ACTIONABLE, mark any finding requiring operator input with `[decision-required]` and append the Planner directive (shared) verbatim.
 
 Focus on the revisions and the prior findings. Do not perform a fresh broad spec review.
-
-If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) do one pass. The planning agent then runs the autonomous loop in the directive above, invoking `specrereview` (a fresh reviewer per cycle) until APPROVED, a direction decision, or the 3-cycle cap.
 ```
 
 ## Execution Kickoff / Implementation Kickoff
@@ -314,15 +288,10 @@ If Verdict is ACTIONABLE, return the findings and stop — you (this reviewer) d
 Run execution kickoff for existing work item <id/link>.
 Mode: <task|gated|fast>  # default task; gated for high-risk/multi-step work; fast per the Fast Fix kickoff. State the mode and the one risk signal driving it.
 
-Execute Startup Routing A ("Implement Existing Work Item") in AGENTS.md end to end:
-read the item + local shim, restate goal/non-goals/AC, scope in/out, spot-check the
-spec's load-bearing file:line claims against the tree before editing (surface any
-conflict instead of coding against a stale claim), branch from a clean tree,
-implement minimally, verify by tier, hand off for review (spawn exactly one
-reviewer, announcing the handoff; the operator owns the second), then PR.
+Execute Startup Routing A ("Implement Existing Work Item") in AGENTS.md end to end.
 Do NOT restate the rules AGENTS.md already owns — follow them: Verification Tiers,
 the Destructive Action Policy (identify every approval-gated command before running
-it), the Review Loop, PR Handoff (PR body in the locked shape below, labels, PR-GO),
+it), the Review Loop, PR Handoff (PR body in the locked shape below, labels),
 and Definition of Done.
 
 Enforce these forcing functions ON TOP of Routing A:
@@ -429,12 +398,7 @@ Context (per-task):
 8. Tier 4 gate
    - required: yes/no; if yes, what (manual QA / hardware / live provider) + who runs it
 
-9. Repo conventions to enforce (optional — include only when the repo shim names
-   conventions the reviewer must check; real, existing paths in the repo under review)
-   - testing: `~/.agents/workflow/TESTING.md`
-   - coding-standards / patterns: <path, or "none found">
-   - verification policy: <path, or "none found">
-   - local shim: <path, or "none found">
+9. Repo conventions to enforce: resolve per HANDOFF.md step 3.
 ```
 
 ## Re-Review Kickoff
@@ -460,13 +424,8 @@ decision-required rules to what changed.
 - diff stat: <`git diff --stat <base>..<tip>`>
 - implementer notes (if any): <how each finding was patched>
 
-## Repo conventions to enforce (optional)
-Include only when the repo shim names conventions the reviewer must check;
-real, existing paths in the repo under review.
-- testing: `~/.agents/workflow/TESTING.md`
-- coding-standards / patterns: <path, or "none found">
-- verification policy: <path, or "none found">
-- local shim: <path, or "none found">
+## Repo conventions to enforce
+Resolve per HANDOFF.md step 3.
 
 ## Return
 The "addressed" bar, reverse-tautology rule, and OUTSTANDING
@@ -551,11 +510,7 @@ Context (per-task):
    - <customer UI / internal admin / dev-only tool / backend service /
      migration / generated contract / provider-infra>
 
-6. Repo conventions to enforce (real, existing paths in the repo under review)
-   - testing: `~/.agents/workflow/TESTING.md`
-   - coding-standards / patterns: <path, or "none found">
-   - verification policy: <path, or "none found">
-   - local shim: <path, or "none found">
+6. Repo conventions to enforce: resolve per HANDOFF.md step 3.
 
 Return: the rubric Output contract in full (diff- and acceptance-criteria-coverage
 confirmations, per-test ledger, test-quality sub-verdict, verdict, findings with

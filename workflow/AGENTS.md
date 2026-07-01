@@ -76,10 +76,7 @@ opened).
 
 Use the `gh` CLI for all GitHub interactions — issues, PRs, releases, comments,
 reviews, and `gh api` calls. Do not use a GitHub MCP connector when both are
-available. The CLI keeps commands text-visible and copyable for the operator,
-keeps argument shape consistent across sessions, and the Destructive Action
-Policy already enumerates `gh` commands by name — the CLI keeps that policy
-enforceable.
+available.
 
 ## Destructive Action Policy
 
@@ -123,29 +120,15 @@ Shared-state and externally visible actions:
 
 Operating rules:
 
-- One explicit in-session approval ("yes"/"approved"/"go ahead") authorizes the
-  action; then state the exact command and run it — stating it is the
-  announcement, not a second ask. Re-ask only if the command materially differs
-  (different target, broader scope, an unstated mutation); "ok"/silence is not yes.
-- Prepared-packet shorthand approvals (the rule above, by a named shorthand):
-  when the operator has seen or accepted the prepared packet for a bundle below,
-  the named shorthand or a natural-equivalent phrase covers that bundle once.
-  - `PR-GO` (PR handoff only): one approval may cover the prepared PR
-    create/edit/update, label, and any optional PR comment packet. Packet: the
-    current PR body draft/file, final label list, repo, target branch for
-    create or target PR for edit/update, optional comment body, and requested
-    PR action. Natural equivalents: "approved, open the PR", "approved, update
-    the PR", "approved, edit the PR", "approved, post the PR comment". Ask
-    again if the repo, branch, PR body, labels, comment text, target PR, or
-    requested action differs materially.
-  - `ISSUE-GO` (GitHub issue creation or edit from a prepared issue
-    body/update): packet: the issue body or requested edit, labels, repo,
-    target issue when editing, and requested `gh issue create` or `gh issue
-    edit` action. Natural equivalents: "approved, create the issue",
-    "approved, open the issue", "approved, file the issue", "approved, update
-    the issue", "approved, edit the issue". Ask again if the repo, issue
-    target, title, body, labels, milestone, assignee, or edit differs
-    materially.
+- One explicit in-session approval — "yes" / "approved" / "go ahead" / "open
+  the PR" / any natural equivalent — authorizes the action; then state the exact
+  command and run it (stating it IS the announcement, not a second ask). One
+  approval covers that action AND its natural sub-steps: creating a PR includes
+  applying the labels you showed and posting a comment that was part of the plan;
+  opening an issue includes its labels — one approval, not three. Re-ask only if
+  the command materially diverges from what was approved — a different repo or
+  target, broader scope, an unstated mutation, or a body/label/comment the
+  operator has not seen. "ok" / silence is not yes.
 - For destructive local data commands, state the exact data store, volume,
   worktree, cache, or container target and whether data loss is expected before
   asking for approval.
@@ -154,8 +137,7 @@ Operating rules:
   mutation.
 - If a pre-commit hook or CI check fails, never bypass with `--no-verify` or
   similar. Stop and report the failure.
-- If unsure whether an action belongs here, default to asking. The cost of an
-  extra question is far less than the cost of an unwanted destructive action.
+- If unsure whether an action belongs here, default to asking.
 
 ## Startup Routing
 
@@ -169,7 +151,12 @@ Use this when a ticket, issue, bug, or explicit task already exists.
 2. Read the nearest repo/subtree shim for touched files.
 3. Restate goal, non-goals, acceptance criteria, and verification.
 4. Identify files in scope and explicitly risky/out-of-scope areas.
-5. Check current git status before branching or editing; never discard unowned changes. Before editing, spot-check the spec's load-bearing source claims (cited file:line wiring points and referenced symbols) against the current tree; if a claimed path has moved or the code contradicts a spec assumption, surface the conflict and adjust scope instead of coding against the stale claim.
+5. Check current git status before branching or editing; never discard unowned
+   changes.
+5b. Before editing, spot-check the spec's load-bearing source claims (cited
+   file:line wiring points and referenced symbols) against the current tree; if
+   a claimed path has moved or the code contradicts a spec assumption, surface
+   the conflict and adjust scope instead of coding against the stale claim.
 6. Create or switch to the team-standard branch when edits are expected.
 7. Implement minimally.
 8. Select and run tiered verification based on changed surface and risk. Use the
@@ -205,10 +192,8 @@ Use this when asked for review.
 1. Review changed behavior first, not style first.
 2. Focus on correctness, regressions, contract drift, security, data loss, and missing verification.
 3. Lead with findings ordered by severity and file/line.
-4. Return `APPROVED` only when no blocking findings remain. A finding is blocking
-   (medium or higher) per the severity rubric in REVIEW_RUBRIC.md; do
-   not downgrade a blocking finding to a non-blocking note to preserve `APPROVED`.
-5. Return `ACTIONABLE` when concrete fixes are required.
+4. Return `APPROVED` / `ACTIONABLE` per the verdict and blocking semantics owned
+   by REVIEW_RUBRIC.md.
 
 ### D) Docs, Architecture, or Pattern Maintenance
 
@@ -416,7 +401,7 @@ Flow:
    and requested PR action before asking for one bundled approval.
 6. Create/update the PR only when authorized, applying the selected labels
    during `gh pr create` or immediately after with `gh pr edit --add-label`.
-   Approval semantics, including `PR-GO`, follow the Destructive Action Policy.
+   Approval semantics follow the Destructive Action Policy.
 7. If a separate review-record comment was prepared and authorized, post it
    under the PR with `gh pr comment` once the PR number or URL exists.
 
@@ -498,21 +483,13 @@ Rules:
 Default review pass:
 
 - verdict and findings semantics (`APPROVED` / `ACTIONABLE`, blocking rules)
-  are owned by Startup Routing path C and REVIEW_RUBRIC.md
+  are owned by REVIEW_RUBRIC.md
 - review adversarially and approve clean only after naming the checks run —
   the Stance section of REVIEW_RUBRIC.md owns the adversarial checks
 - patch only listed findings unless scope expands
 - rerun targeted verification
-- the default two independent fresh-context reviews (mechanics live in
-  "Implementation Completion Handoff") use deliberately different lenses to avoid
-  correlated misses, and BOTH still run the shared per-test and swap checks in
-  REVIEW_RUBRIC.md:
-  - Reviewer A (implementer-spawned): primary correctness / regression / contract
-    / state / security pass.
-  - Reviewer B (operator-launched, when run): adversarial test-quality +
-    contract-drift pass. Reviewer B ignores the implementer's "Test quality"
-    context block, re-derives each test's value from the test source, and asks
-    "what regression could come back and still leave this suite green?".
+- the default two independent fresh-context reviews use deliberately different
+  lenses; the A/B split and mechanics live in `~/.agents/workflow/HANDOFF.md`.
   When only one reviewer runs (common in the solo repo), that reviewer performs
   BOTH lenses.
 - automated PR reviewer (e.g. CodeRabbit) path-exclusion handling: see

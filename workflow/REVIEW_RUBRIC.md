@@ -14,17 +14,13 @@ this diff before a human reviewer does, not to confirm the implementer's framing
 Run these checks explicitly and cite what you found:
 
 - For each change: what is the cheapest way this is wrong, weak, or out of scope,
-  and did I actually look at the code that would show it? Out-of-scope includes a
-  component, library, or contract swap the work item did not ask for (e.g.
-  replacing one UI component with another, widening a type/column) even when tests
-  still pass.
+  and did I actually look at the code that would show it? Unrequested
+  component/library/contract swaps are out of scope — see the Scope-vs-intent &
+  contract-identity check below.
 - For each new or changed test: try to construct a regression the test would NOT
   catch. If you can name one (revert the fix, narrow it to one column, make the
   down-path lossy, swap the component but keep the testid), the test is weak — call
   it out.
-- For each UI/contract change: would a human reviewer or the operator's boss flag
-  this as unrequested or as a silent behavior/semantics change? A preserved test id
-  or unchanged green suite is not evidence the swap was intended.
 
 Reporting rule: do not invent findings to look thorough. APPROVED with no findings
 is a valid outcome — but only state it after listing the specific adversarial
@@ -69,7 +65,9 @@ it did not, resolve them yourself:
     `.agent-workflow/plans/reference/coding-standards.md`; clearsnake-mobile:
     `mobile/CLAUDE.md`.
   - verification policy — townchest:
-    `.agent-workflow/plans/reference/townchest-pr-checklist.md`;
+    `.agent-workflow/plans/reference/verification.md` (single owner of
+    surface->command routing + false-confidence traps;
+    `townchest-pr-checklist.md` is a secondary PR-readiness doc);
     clearsnake-mobile: `mobile/VERIFICATION.md`.
 
 If you cannot open a doc in this environment, say so explicitly and fall back to
@@ -85,9 +83,8 @@ drift.
     summary as claims to check, not as ground truth.
 (b) Read the actual changed lines via `git diff <base>..<tip>` (the range in
     Context section 1). You may not approve a file you did not open.
-(c) For any UI or component change, write the component/element TYPE on each side of
-    the diff and confirm the type, its accessibility semantics, and its framework
-    contract did not silently change — the full identity + masking check below.
+(c) For any UI or component change, run the full identity + masking check in the
+    Scope-vs-intent & contract-identity section below.
 (d) Open each new or changed test file yourself and judge it against the
     Test-quality rules below and `~/.agents/workflow/TESTING.md`; do not rely on
     the implementer's self-report.
@@ -140,13 +137,11 @@ component) — those are in-scope refinements, not substitutions.
   called is NOT sufficient on its own — supplemental at best, ACTIONABLE as the sole
   proof. Any lossy or narrowing down-migration (USING clauses, type narrowings) MUST
   carry a reload-after-down assertion proving no silent data loss.
-- Component / UI / contract change: if the diff swaps a component, library
-  primitive, or framework contract (one wrapper or element type for another, changed
-  accessibility semantics), confirm the stated work item actually authorized that
-  swap — a polish/intent like "stronger shimmer" does NOT authorize replacing the
-  component. The change MUST be covered by a test that asserts user-visible behavior
-  through a real render+interaction and would fail on the swap; a preserved
-  `data-testid` that lets an existing test still pass does NOT count as coverage.
+- Component / UI / contract change: first run the authorization + masking check in
+  the Scope-vs-intent & contract-identity section. Test bar: the change MUST be
+  covered by a test that asserts user-visible behavior through a real
+  render+interaction and would fail on the swap; a preserved `data-testid` that lets
+  an existing test still pass does NOT count as coverage.
 
 Also flag tests that would not fail for the intended regression, assert
 implementation shape only, or create false confidence without a behavior-level/
@@ -163,25 +158,13 @@ lint findings; this does NOT exempt those surfaces from your correctness,
 contract/intent, and test-quality review. The repo shim names the concrete excluded
 paths.
 
-Do not rerun broad verification already reported green unless the diff makes that
-evidence suspect.
-
 ## Time-sensitive & external claims (verify, don't assert from memory)
 
-Today's date is in your context — treat your training knowledge as potentially stale
-for anything dated. When a finding or recommendation HINGES on an external, dated
-fact — an API/option is deprecated or removed, a pattern is the "current" recommended
-one, a version-specific behavior, or a security advisory/CVE — do not assert it from
-memory. Verify it, in this order, and cite the source + the date you checked:
-1. the repo's pinned version (package.json / lockfile) and the repo-bundled SME/doc
-   skills (e.g. sme-vendure, stripe-best-practices, sme-sentry, expo-docs,
-   claude-api) — authoritative for THIS repo;
-2. official upstream docs / changelog / advisory via WebSearch / WebFetch.
-Temper "latest best practice" against the repo's ACTUAL pinned major: do not flag
-code for missing a pattern its pinned version cannot support, and do not recommend an
-API the pinned version lacks. If you cannot verify a time-sensitive claim, mark it a
-non-blocking note (not a blocking finding) and say it is unverified — never upgrade a
-freshness hunch to ACTIONABLE.
+When a finding HINGES on a dated external fact (deprecation, "current" pattern,
+version-specific behavior, CVE), verify it against the repo's pinned version
+(package.json / lockfile) and the repo-bundled SME/doc skills, then official
+upstream docs/changelog — and cite the source + date you checked. An
+unverifiable dated claim is a non-blocking note, not ACTIONABLE.
 
 ## Output contract (your Return, in order)
 
@@ -244,7 +227,8 @@ above is about weakness; keep them separate.
    - low: maintainability/naming/doc nits with no behavioral or contract impact.
    If unsure whether a finding is medium-or-higher, treat it as blocking. If
    genuinely none, write "none found".
-5. Verification notes.
+5. Verification notes. Do not rerun broad verification already reported green
+   unless the diff makes that evidence suspect.
 6. Convention conformance: for UI/component/loading-state/library/style surfaces in
    the diff (and any surface a documented repo primitive, wrapper, hook, or helper
    plausibly covers), does the change reuse that existing primitive and match
@@ -253,10 +237,9 @@ above is about weakness; keep them separate.
    primitive exists — as ACTIONABLE "convention drift", citing the violated rule.
    For UI surfaces also apply `~/.agents/workflow/FRONTEND.md` — states built and
    proven, the a11y contract (keyboard + name/role/state), contrast / use-of-color,
-   layout stability — and a broken state/a11y/contrast is ACTIONABLE. Visual capture
-   (driving a sim/emulator/page) is operator-tier: do NOT flag a missing screenshot
-   as a finding — the operator owns eyeballing visual correctness unless they asked
-   for a capture.
+   layout stability — and a broken state/a11y/contrast is ACTIONABLE. Per
+   FRONTEND.md, visual capture is operator-tier: do NOT flag a missing screenshot
+   as a finding.
    Skip the primitive-reuse check only when the diff touches no surface a
    documented primitive covers; still apply the FRONTEND.md half whenever the diff
    renders UI, even where the repo documents no primitive — the
