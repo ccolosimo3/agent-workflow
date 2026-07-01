@@ -179,7 +179,7 @@ Use this for feature shaping, final-spec preparation, task splitting, or unclear
 
 1. Read relevant product/docs/code context.
 2. Run a Domain Pass when terminology, lifecycle state, or cross-boundary behavior changes.
-3. Choose mode: `task` by default, `gated` for high-risk multi-step work, `fast` for low-risk quick fixes.
+3. Choose mode: `task` by default, or `fast` for low-risk quick fixes.
 4. Produce a reviewable spec that can evolve into the final tracker issue body:
    self-contained scope, non-goals, acceptance criteria, exact verification
    commands, labels/branch guidance when relevant, and any approval-gated work.

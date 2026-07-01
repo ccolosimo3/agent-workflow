@@ -9,7 +9,7 @@ paraphrase or restructure.
 ```text
 Run planning kickoff for <feature/workstream> from <source>.
 
-Mode: <task|gated|fast>  # default task
+Mode: <task|fast>  # default task
 No code changes.
 
 Deliver:
@@ -286,7 +286,7 @@ Focus on the revisions and the prior findings. Do not perform a fresh broad spec
 
 ```text
 Run execution kickoff for existing work item <id/link>.
-Mode: <task|gated|fast>  # default task; gated for high-risk/multi-step work; fast per the Fast Fix kickoff. State the mode and the one risk signal driving it.
+Mode: <task|fast>  # default task; fast per the Fast Fix kickoff.
 
 Execute Startup Routing A ("Implement Existing Work Item") in AGENTS.md end to end.
 Do NOT restate the rules AGENTS.md already owns — follow them: Verification Tiers,
@@ -328,8 +328,6 @@ Enforce these forcing functions ON TOP of Routing A:
 - One-off verification tests (a static-asset/config/data repair proof with no ongoing
   regression surface) → pocket to the work-item `artifacts/`, don't commit to the
   suite; disclose in the Review Kickoff.
-- If mode=gated: pause for operator review after the restate step and after the first
-  Tier 1 verification.
 ```
 
 ## Review Kickoff
