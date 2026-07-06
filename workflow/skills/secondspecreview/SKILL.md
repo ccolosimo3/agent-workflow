@@ -50,8 +50,10 @@ un-anchored by the loop.
 4. **Populate the `## Spec Review Kickoff` template** from
    `~/.agents/workflow/KICKOFFS.md` per the HANDOFF.md protocol (fidelity, honest
    population, repo-conventions resolution from the shim) — filled from the spec
-   itself, not session memory. Emit it in chat under `## Spec Review Kickoff
-   Prompt` as the record of what was reviewed.
+   itself, not session memory. This is INTERNAL orientation — assemble the
+   context to review against; do NOT print the populated kickoff back to the
+   operator. What was reviewed is recorded concisely by the verdict return
+   (step 6).
 5. **Perform the review yourself** in this conversation, per `REVIEW_RUBRIC.md`
    and the Spec Review Kickoff validation categories — a **holistic whole-plan**
    pass, not a delta (the cold full read is the entire point of this gate). Verify

@@ -50,8 +50,10 @@ gate.
    honest population, repo-conventions resolution from the shim). Sources:
    the spec for acceptance criteria and field 2a (original ask), the folder's
    `verification.md` for the implementer's verification claims — marked as
-   claims (`per implementer log`) — and the live git range. Emit it in chat
-   under `## Review Kickoff Prompt` as the record of what was reviewed.
+   claims (`per implementer log`) — and the live git range. This is INTERNAL
+   orientation — assemble the context to review against; do NOT print the
+   populated kickoff back to the operator. What was reviewed is recorded
+   concisely by the verdict return (step 7).
 6. **Perform the review yourself** in this conversation, per
    `REVIEW_RUBRIC.md`. This is the outer-gate lens — adversarial test-quality
    + contract-drift: ignore the implementer's test-quality framing, re-derive
@@ -62,7 +64,8 @@ gate.
    do not take the implementer's logged numbers as proof of anything you can
    cheaply re-run.
 7. **Return, formatted for carry-back to the implementer session:**
-   - verdict line: `APPROVED` or `ACTIONABLE` + the tip SHA it certifies
+   - verdict line: `APPROVED` or `ACTIONABLE` + the `base..tip` range and tip
+     SHA it certifies
    - findings with severity and path:line (ACTIONABLE only)
    - the verified-clean record: what was traced, read, and re-run that came
      back clean
