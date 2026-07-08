@@ -3,9 +3,10 @@ name: implrereview
 description: Hand off a patched implementation for a follow-up review after the
   implementer has addressed findings from a prior ACTIONABLE review verdict.
   Reads the canonical Re-Review Kickoff template from
-  ~/.agents/workflow/KICKOFFS.md, populates it with the prior findings and
-  patch context from the current session, and spawns one fresh-context
-  reviewer subagent (announcing the handoff). Use when the operator says
+  ~/.agents/workflow/KICKOFFS.md, populates the prior findings + patch context,
+  and REUSES the original reviewer's open session for the follow-up review —
+  falling back to a fresh re-reviewer subagent only if it can't be resumed
+  (announcing the handoff). Use when the operator says
   /implrereview, "re-review this", or after patches land in response to a
   prior review.
 ---
@@ -20,9 +21,13 @@ below; this file adds only the re-review specifics.
 ## Protocol parameters
 
 - Template: `## Re-Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
-- Emitted heading (no-subagent fallback): `## Re-Review Kickoff Prompt`
-- Announce: `spawning one re-reviewer`
-- Spawns: yes — one fresh-context reviewer
+- Reviewer: REUSE the original reviewer's open session per HANDOFF.md §6 — hand it
+  the patch summary (it holds the diff + rubric + prior findings). Spawn a fresh
+  re-reviewer with the full populated kickoff ONLY as the fallback (original not
+  resumable).
+- Announce: `continuing the original reviewer for re-review` (or `spawning a fresh
+  re-reviewer` on the fallback)
+- Emitted heading (last-resort fallback, no subagent at all): `## Re-Review Kickoff Prompt`
 
 ## Re-review specifics
 
@@ -37,9 +42,10 @@ below; this file adds only the re-review specifics.
 3. **Gather the patch context**: `git log --oneline <base>..HEAD`,
    `git diff --stat <base>..HEAD`, and any per-finding resolution summary the
    implementer already posted in chat.
-4. **Populate**: work item / PR / branch / base links; prior verdict + source
-   kickoff pointer; findings verbatim; base/tip SHAs, commit list, diff stat;
-   implementer notes if available.
+4. **Populate** (fresh-fallback path; when reusing the original reviewer, hand it
+   just the findings verbatim + base/tip range + resolution notes): work item / PR
+   / branch / base links; prior verdict + source kickoff pointer; findings
+   verbatim; base/tip SHAs, commit list, diff stat; implementer notes if available.
 
 ## Failure modes
 

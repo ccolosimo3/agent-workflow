@@ -68,13 +68,35 @@ phase are autonomous.
      + the range/spec). Do NOT emit the full prompt verbatim — the operator opens
      the subagent to inspect it. Emit the full prompt in chat ONLY when the host
      has no subagent capability, then tell the operator to launch it manually.
+   - If the skill REUSES the original reviewer (a re-review, per §6): resume its
+     session and hand it only the patch/revision summary + any findings it did not
+     author — do NOT re-pass the full kickoff or re-populate. The full-kickoff
+     spawn is the fallback.
    - If the skill IS the reviewer (the conversation itself — the outer gates):
      emit the populated kickoff verbatim in chat under a `## <Template-name>
      Prompt` heading as the record of what was reviewed (there is no subagent to
      inspect).
 5. **Exactly one reviewer.** Spawn (or, for an outer gate, run) exactly one
-   fresh-context reviewer; never a second unless the operator explicitly asks.
-6. **The second review is operator-owned** — see sequencing below.
+   fresh-context reviewer — except a re-review, which REUSES the original per §6.
+   Never a second reviewer unless the operator explicitly asks.
+6. **Re-reviews reuse, don't re-spawn.** A re-review (`implrereview` /
+   `specrereview`) is a narrow delta check — "were the findings addressed, and did
+   the patch break anything else?" — so leave the ORIGINAL reviewer's session open
+   and hand it the patch/revision summary; it already holds the diff, the rubric,
+   its own findings, and the reasoning, so reuse it (resume that reviewer thread the
+   way your host does — e.g. send it a follow-up message rather than starting a new
+   one) with NO reload of the diff, rubric, or findings. Fall back to a fresh
+   re-reviewer (full populated Re-Review Kickoff) ONLY when the original can't be
+   resumed — a later session, a compacted context, or a host that can't resume
+   subagents. When re-reviewing against findings the reviewer did NOT author
+   (outer-gate findings routed back per Sequencing), reuse the thread but hand it
+   those findings verbatim. Reuse ≠ rubber-stamp: still apply `REVIEW_RUBRIC.md`
+   "Re-review mode" — confirm the fix actually works (the reverse-tautology check),
+   not just that your suggestion was applied. Independence is already secured by the
+   fresh FIRST review and the fresh, different-model OUTER gate; the inner re-review
+   need not re-earn it. The outer gate NEVER reuses (its independence seal forbids
+   prior findings).
+7. **The second review is operator-owned** — see sequencing below.
 
 ## Sequencing — inner loop, then outer gate
 
@@ -99,7 +121,8 @@ phase are autonomous.
 Spec review is autonomous and has NO operator-owned outer gate (unlike the
 implementation flow above). `specreview` spawns one reviewer; the planning agent
 resolves the autonomous findings by tightening the spec and re-runs
-`specrereview` (a fresh reviewer per cycle), looping until APPROVED. It STOPS for
+`specrereview` (reusing the original reviewer across cycles per §6, fresh only as
+fallback), looping until APPROVED. It STOPS for
 the operator only on a plan-DIRECTION finding (`[decision-required]`, or any the
 planner cannot resolve without choosing an approach / scope / tradeoff / policy —
 applied as a self-filter, not just the reviewer's tag) or after a 3-cycle cap.

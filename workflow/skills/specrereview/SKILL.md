@@ -3,9 +3,10 @@ name: specrereview
 description: Hand off a revised plan or spec for a follow-up
   review after the planner has addressed findings from a prior ACTIONABLE
   spec review. Reads the canonical Spec Re-Review Kickoff template from
-  ~/.agents/workflow/KICKOFFS.md, populates it with the prior findings and
-  the revisions applied, and spawns one fresh-context reviewer subagent
-  (announcing the handoff). Use when the operator says
+  ~/.agents/workflow/KICKOFFS.md, populates the prior findings + revisions, and
+  REUSES the original reviewer's open session for the follow-up — falling back to a
+  fresh re-reviewer subagent only if it can't be resumed (announcing the handoff).
+  Use when the operator says
   /specrereview, "re-review this spec", or after revisions land in
   response to a prior spec review.
 ---
@@ -20,9 +21,13 @@ below; this file adds only the plan-re-review specifics.
 ## Protocol parameters
 
 - Template: `## Spec Re-Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
-- Emitted heading (no-subagent fallback): `## Spec Re-Review Kickoff Prompt`
-- Announce: `spawning one plan re-reviewer`
-- Spawns: yes — one fresh-context reviewer
+- Reviewer: REUSE the original reviewer's open session per HANDOFF.md §6 — hand it
+  the revision summary (it holds the spec + rubric + prior findings). Spawn a fresh
+  re-reviewer with the full populated kickoff ONLY as the fallback (original not
+  resumable).
+- Announce: `continuing the original reviewer for re-review` (or `spawning a fresh
+  re-reviewer` on the fallback)
+- Emitted heading (last-resort fallback, no subagent at all): `## Spec Re-Review Kickoff Prompt`
 
 ## Plan-re-review specifics
 
@@ -36,9 +41,10 @@ below; this file adds only the plan-re-review specifics.
 3. **Gather the revision context**: `git diff <base>..HEAD -- <artifact
    path>` when version-controlled, plus any per-finding resolution summary
    already posted in chat.
-4. **Populate**: artifact path; prior verdict + source kickoff pointer;
-   findings verbatim; revisions mapped to findings; diff or before/after
-   snippet.
+4. **Populate** (fresh-fallback path; when reusing the original reviewer, hand it
+   just the findings verbatim + the revisions mapped to them): artifact path; prior
+   verdict + source kickoff pointer; findings verbatim; revisions mapped to
+   findings; diff or before/after snippet.
 
 ## After the verdict
 

@@ -283,9 +283,10 @@ hands back to the operator; no second review cycle from this reviewer.
 
 When invoked for a re-review — a prior ACTIONABLE verdict whose findings were
 patched — your scope narrows to the changed lines and the prior findings; do NOT
-perform a fresh broad review. Still load Required reading and apply the
-test-quality, masking, consumer/orphan-sweep (Required investigation (f)), and
-decision-required rules above to what changed — a patch that renames or removes a
+perform a fresh broad review. Still apply Required reading (a reused reviewer
+already holds it; a fresh fallback loads it first) and the test-quality, masking,
+consumer/orphan-sweep (Required investigation (f)), and decision-required rules
+above to what changed — a patch that renames or removes a
 symbol still needs the reference sweep. Use the
 Re-Review Kickoff's Return shape (per-finding status / regressions / new issues /
 verdict), not the full Output contract. A prior weak/false-confidence-test finding
