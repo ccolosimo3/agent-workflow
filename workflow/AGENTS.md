@@ -439,7 +439,9 @@ Rules:
 - Do not treat optional, nightly-only, or CI-only-by-policy gates as impossible
   to run locally. If the repo exposes a local command and the environment is
   prepared, agents may run it when the task risk justifies it.
-- For user-facing UI, run targeted automated coverage and visual/manual QA.
+- For user-facing UI, run targeted automated coverage and visual/manual QA; apply
+  FRONTEND.md, and for visual-design work capture the surface to verify (per
+  FRONTEND.md's oracle).
   Escalate to e2e-smoke or full e2e when the change touches routing, auth,
   checkout, multi-page workflows, real data integration, or a regression-prone
   path.

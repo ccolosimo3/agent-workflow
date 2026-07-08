@@ -15,11 +15,18 @@ backend contract. Lacking one, spec against whatever system already exists — a
 curated design doc, or the tokens/theme in code; a missing doc is not a missing
 system. That system is the oracle.
 
-The **screenshot** (or device/simulator capture) is frontend's "run the test" —
-but driving a sim/emulator to capture one is slow, operator-tier work. By default
-name the proof (which screen or story shows it correct) and let the operator
-eyeball it; an agent captures only on operator request, or where the repo wires a
-visual-regression baseline. But a resting screenshot is
+The **screenshot** (or device/simulator capture) is frontend's "run the test." For
+genuine **visual-design work** — building or recomposing a screen, dashboard, or a
+component's look — an agent captures it **autonomously** to verify
+hierarchy/states/layout read right, via the host's fast tool: **Claude Code** → the
+Claude Preview MCP (boot the dev server, screenshot across viewports + dark mode,
+inspect computed styles), or browser control where the surface fits that better;
+**Codex** → its in-app browser (primary), or browser control where better for the
+work item; **native** → a sim capture runbook. Where no capture path exists for a
+surface, capture stays operator-tier — name the proof and let the operator eyeball
+it, don't skip it silently. For **incidental UI** — a copy/prop/behavior tweak that
+merely touches a component — don't force a capture: name which screen shows it
+correct and let the operator eyeball it. But a resting screenshot is
 **blind** to keyboard operability, accessible name/role, contrast, and layout
 shift: a broken-a11y or jumping screen looks correct in a still image. The
 Accessibility and Layout rules below exist to cover exactly what the screenshot
@@ -71,6 +78,25 @@ what the user is currently reading when content loads in above it (anchor the
 scroll position). A component owns the spacing **inside** itself; the **parent**
 owns the gap **between** children — prefer a `gap`/spacing container over outer
 margins on the child, so spacing lives in one place and composes predictably.
+
+## Composition, not just correctness
+
+Every state/token/a11y/contrast/layout rule can pass and the screen still read
+clumsy. Judge composition against the rendered surface (capture it to see) — don't
+just assert it:
+- **Hierarchy** — one focal point per view; size/weight/color/position track
+  importance. Everything emphasized reads as nothing emphasized.
+- **Scannability / density** — group related, separate unrelated, hold one rhythm;
+  neither a wall of equal-weight rows nor whitespace islands.
+- **Grid & alignment** — shared edges, consistent gutters, a predictable column
+  structure; nothing floats one-off.
+- **Hostile data** — design the long string, huge number, missing image, 3× the
+  rows, the overflow — not the demo-perfect row; truncate, wrap, or clamp on purpose.
+- **Responsive invariants** — the hierarchy holds narrow and wide; nothing
+  overflows, collides, or reflows into nonsense.
+- **Systemic, not symptom-local** — a width/padding/spacing change is never local:
+  re-check the whole surface and its siblings after, because the nudge that fixes
+  one card usually breaks its neighbors. Never tweak one number in isolation.
 
 ---
 

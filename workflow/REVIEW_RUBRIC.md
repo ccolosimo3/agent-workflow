@@ -237,13 +237,21 @@ above is about weakness; keep them separate.
    primitive exists — as ACTIONABLE "convention drift", citing the violated rule.
    For UI surfaces also apply `~/.agents/workflow/FRONTEND.md` — states built and
    proven, the a11y contract (keyboard + name/role/state), contrast / use-of-color,
-   layout stability — and a broken state/a11y/contrast is ACTIONABLE. Per
-   FRONTEND.md, visual capture is operator-tier: do NOT flag a missing screenshot
-   as a finding.
+   layout stability, and composition (hierarchy/density/alignment/hostile-data/
+   responsive); a broken state/a11y/contrast is ACTIONABLE. Scope visual evidence to
+   the work: for visual-design work (building/recomposing a screen/dashboard/
+   component's look) the reviewer VIEWS the render itself — captures it via the
+   host's fast tool, or reads the geometry story — and JUDGES composition (not a
+   presence check on the implementer's artifact); raise weak composition, an
+   unverified hostile-data/responsive state, or a width/padding/spacing change not
+   re-checked against the WHOLE surface as a challengeable finding: low /
+   non-blocking, exempt from the treat-as-blocking-when-unsure default — don't
+   manufacture taste nits where the surface reads cleanly. For incidental UI (a
+   copy/prop/behavior tweak) do NOT flag a missing screenshot.
    Skip the primitive-reuse check only when the diff touches no surface a
    documented primitive covers; still apply the FRONTEND.md half whenever the diff
    renders UI, even where the repo documents no primitive — the
-   a11y/contrast/state/layout principles are repo-independent.
+   a11y/contrast/state/layout/composition principles are repo-independent.
 7. Residual risk or testing gaps.
 
 ## Decision-required handling

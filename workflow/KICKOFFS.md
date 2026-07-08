@@ -300,6 +300,11 @@ Enforce these forcing functions ON TOP of Routing A:
   routing, auth, contract —
   that gate is REQUIRED; "Tier 1 sufficient" is not a valid record. Name the surface
   you changed and why no surface-triggered gate applies.
+- Visual proof (visual-design work only — building/recomposing a screen or component
+  look, NOT an incidental copy/prop/behavior tweak): inspect the sibling surfaces
+  first, then capture per FRONTEND.md's oracle via the host's fast tool and record it
+  in your verification; where none is wired (e.g. native sim), name the gap.
+  Incidental UI adds no capture ceremony.
 - Honest verification reporting: claim a gate passed only if it actually ran this
   session/branch; report each as a real result/number; mark un-run gates as not-run
   (reason/blocker or CI-owned), never as passing.
