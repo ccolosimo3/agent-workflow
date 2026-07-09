@@ -17,7 +17,7 @@ One-command pipeline for a coworker's PR: strict fresh-context review pass,
 then an operator-facing action brief. This skill is a thin orchestrator — the
 canonical content lives in:
 
-- `~/.agents/workflow/KICKOFFS.md` — "External PR Review Kickoff" template
+- `~/.agents/workflow/kickoffs/external-pr-review.md` — "External PR Review Kickoff" template
 - `~/.agents/workflow/REVIEW_RUBRIC.md` — reviewer manual, read by the spawned
   reviewer itself
 - `~/.agents/workflow/skills/calibrate-review/SKILL.md` — calibration rules and
@@ -46,7 +46,7 @@ coworker-facing calibration (the trigger calibrate-review requires).
      PR head SHA. Do NOT check out the PR branch in this session — the spawned
      reviewer does the checkout per the kickoff.
 
-3. **Populate the External PR Review Kickoff** from KICKOFFS.md. Apply the
+3. **Populate the External PR Review Kickoff** from kickoffs/external-pr-review.md. Apply the
    AGENTS.md Fidelity Rule: verbatim shape, placeholders filled from the PR,
    the linked issue, and the filesystem (repo convention paths resolved by
    checking they exist). Where something genuinely cannot be fetched (e.g. no

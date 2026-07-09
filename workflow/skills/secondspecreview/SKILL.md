@@ -48,7 +48,7 @@ un-anchored by the loop.
    by what the first lens found. (To re-review *against* prior findings, that is
    `specrereview` in the planning session, not this skill.)
 4. **Populate the `## Spec Review Kickoff` template** from
-   `~/.agents/workflow/KICKOFFS.md` per the HANDOFF.md protocol (fidelity, honest
+   `~/.agents/workflow/kickoffs/spec-review.md` per the HANDOFF.md protocol (fidelity, honest
    population, repo-conventions resolution from the shim) — filled from the spec
    itself, not session memory. This is INTERNAL orientation — assemble the
    context to review against; do NOT print the populated kickoff back to the

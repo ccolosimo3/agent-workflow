@@ -46,7 +46,7 @@ gate.
    failure mode this skill exists to kill. If the integration branch is
    ambiguous, ask.
 5. **Populate the `## Review Kickoff` template** from
-   `~/.agents/workflow/KICKOFFS.md` per the HANDOFF.md protocol (fidelity,
+   `~/.agents/workflow/kickoffs/review.md` per the HANDOFF.md protocol (fidelity,
    honest population, repo-conventions resolution from the shim). Sources:
    the spec for acceptance criteria and field 2a (original ask), the folder's
    `verification.md` for the implementer's verification claims — marked as

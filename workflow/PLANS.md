@@ -108,3 +108,23 @@ related:
   stay intact; bulky `artifacts/` may be pruned at operator discretion.
 - If a file has no frontmatter, leave it alone (legacy doc) — do not retrofit
   unless the operator asks.
+
+## Artifact cleanup on land
+
+When the operator says an issue or PR landed, clean local planning artifacts
+before moving on:
+
+- Confirm the issue/PR state with the tracker.
+- Delete obsolete local drafts now represented by the tracker or PR: issue
+  drafts, PR-body drafts, review-note drafts, kickoff prompts, one-off review
+  prompts.
+- After issue creation, advance the same living spec through its lifecycle
+  (above) rather than deleting it by default; delete only transient
+  split/redaction issue drafts or prompts.
+- Archive only durable context (reusable specs, verification/audit reports,
+  ADR-like rationale, cross-issue policy decisions). Move still-actionable future
+  work to `backlog/`, or keep it active only when it has a real next action.
+- Update `INDEX.md` and any active-workstream README when they exist.
+- Report what was deleted, archived, and left active. Do not leave completed
+  issue/PR drafting artifacts in active folders; prefer one evolving spec over
+  parallel rough-spec + issue-draft files.

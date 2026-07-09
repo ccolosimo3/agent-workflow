@@ -1,7 +1,7 @@
 ---
 name: implreview
 description: Hand off a completed implementation for review. Reads the canonical
-  Review Kickoff template from ~/.agents/workflow/KICKOFFS.md, populates every
+  Review Kickoff template from ~/.agents/workflow/kickoffs/review.md, populates every
   placeholder from the current session, then spawns exactly one fresh-context
   reviewer subagent with it (announcing the handoff; the prompt is emitted in
   chat only as a no-subagent fallback). Use after completing an
@@ -18,7 +18,7 @@ implreview-specific population rules.
 
 ## Protocol parameters
 
-- Template: `## Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
+- Template: `## Review Kickoff` in `~/.agents/workflow/kickoffs/review.md`
 - Emitted heading (no-subagent fallback): `## Review Kickoff Prompt`
 - Announce: `spawning one reviewer`
 - Spawns: yes — one fresh-context reviewer (except emit-only mode below)

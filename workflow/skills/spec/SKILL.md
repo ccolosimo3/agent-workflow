@@ -17,7 +17,7 @@ description: Begin planning and research for a newly assigned tracker issue
 
 This session IS the planning agent (kernel "Startup Routing" path B). The
 output contract is the `## Planning Kickoff` template in
-`~/.agents/workflow/KICKOFFS.md`, self-applied with the issue as `<source>` —
+`~/.agents/workflow/kickoffs/planning.md`, self-applied with the issue as `<source>` —
 its ten deliverables (problem framing through claim grounding and the Domain
 Pass decision) define what done looks like.
 

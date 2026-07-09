@@ -3,7 +3,7 @@ name: specrereview
 description: Hand off a revised plan or spec for a follow-up
   review after the planner has addressed findings from a prior ACTIONABLE
   spec review. Reads the canonical Spec Re-Review Kickoff template from
-  ~/.agents/workflow/KICKOFFS.md, populates the prior findings + revisions, and
+  ~/.agents/workflow/kickoffs/spec-re-review.md, populates the prior findings + revisions, and
   REUSES the original reviewer's open session for the follow-up — falling back to a
   fresh re-reviewer subagent only if it can't be resumed (announcing the handoff).
   Use when the operator says
@@ -20,7 +20,7 @@ below; this file adds only the plan-re-review specifics.
 
 ## Protocol parameters
 
-- Template: `## Spec Re-Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
+- Template: `## Spec Re-Review Kickoff` in `~/.agents/workflow/kickoffs/spec-re-review.md`
 - Reviewer: REUSE the original reviewer's open session per HANDOFF.md §6 — hand it
   the revision summary (it holds the spec + rubric + prior findings). Spawn a fresh
   re-reviewer with the full populated kickoff ONLY as the fallback (original not

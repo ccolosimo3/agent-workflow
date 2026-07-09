@@ -1,7 +1,8 @@
 # Review Rubric
 
 The standing operating manual for a code-review (implreview) or re-review
-(implrereview) pass. The Review Kickoff / Re-Review Kickoff in `KICKOFFS.md` carry
+(implrereview) pass. The Review Kickoff / Re-Review Kickoff (`kickoffs/review.md` /
+`kickoffs/re-review.md`) carry
 only the per-task Context and point here, so the emitted prompt stays short. Read
 this in full before issuing any verdict, and return every item in the Output
 contract. This is repo-agnostic; the repo-specific doc paths under "Required

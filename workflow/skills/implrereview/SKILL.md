@@ -3,7 +3,7 @@ name: implrereview
 description: Hand off a patched implementation for a follow-up review after the
   implementer has addressed findings from a prior ACTIONABLE review verdict.
   Reads the canonical Re-Review Kickoff template from
-  ~/.agents/workflow/KICKOFFS.md, populates the prior findings + patch context,
+  ~/.agents/workflow/kickoffs/re-review.md, populates the prior findings + patch context,
   and REUSES the original reviewer's open session for the follow-up review —
   falling back to a fresh re-reviewer subagent only if it can't be resumed
   (announcing the handoff). Use when the operator says
@@ -20,7 +20,7 @@ below; this file adds only the re-review specifics.
 
 ## Protocol parameters
 
-- Template: `## Re-Review Kickoff` in `~/.agents/workflow/KICKOFFS.md`
+- Template: `## Re-Review Kickoff` in `~/.agents/workflow/kickoffs/re-review.md`
 - Reviewer: REUSE the original reviewer's open session per HANDOFF.md §6 — hand it
   the patch summary (it holds the diff + rubric + prior findings). Spawn a fresh
   re-reviewer with the full populated kickoff ONLY as the fallback (original not

@@ -15,7 +15,7 @@ Convert raw review findings into a concise, evidence-grounded action brief the
 operator can act on — with the reviewing agent and with the PR author.
 
 This skill is a translation layer, not another review pass. Use it after an
-External PR Review pass (`~/.agents/workflow/KICKOFFS.md`), `implreview`,
+External PR Review pass (`~/.agents/workflow/kickoffs/external-pr-review.md`), `implreview`,
 `review-pr`, CodeRabbit, or a human reviewer has already produced findings and
 the operator wants help deciding what to do and say on someone else's PR.
 Do not conduct a fresh review or search for unrelated issues. Read enough

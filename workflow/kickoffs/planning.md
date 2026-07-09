@@ -1,0 +1,26 @@
+# Planning Kickoff
+
+```text
+Run planning kickoff for <feature/workstream> from <source>.
+
+No code changes.
+
+Deliver:
+1. problem framing
+2. goal and non-goals
+3. risks and edge cases
+4. 3-5 step implementation plan
+5. testable acceptance criteria
+6. exact verification plan by tier, including any broader local gates selected
+   or intentionally not selected
+7. review-ready spec markdown that can become the final tracker issue body
+8. decision brief: chosen approach, one rejected alternative, tradeoff, assumptions
+9. claim grounding: confirm each load-bearing code claim (where to wire a change,
+   what a file already does, what a contract exempts, "follows pattern X") against
+   current source, citing the file:line you checked; mark any claim you could not
+   confirm as an open question instead of asserting it from memory. Scale to risk —
+   a trivial single-surface fix can ground inline.
+10. Domain Pass decision (one line): per the AGENTS.md "## Domain Pass" triggers,
+    state whether this plan needs a Domain Pass and why or why not; if yes, run it
+    or flag it as required before the spec goes review-ready.
+```

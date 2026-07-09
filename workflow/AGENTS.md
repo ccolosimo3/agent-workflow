@@ -47,30 +47,30 @@ or data-handling policies.
 
 ## Test Quality Floor
 
-- Tests protect behavior, contracts, failure modes, or user/system outcomes. A
-  useful test would fail iff the regression it protects against came back.
-- Before adding or changing a test, identify: the behavior or contract
-  protected, the original or plausible failure mode to catch, the real
-  operation boundary exercised (service method, API route, job, import/export
-  flow, UI interaction, persistence reload, integration boundary, CLI command),
-  and any manual/provider/hardware/local-stack/database proof needed when the
-  meaningful failure mode cannot be represented in the automated harness.
-- Prefer running the real operation the product depends on. For persistence,
-  save and reload through the relevant repository/ORM/service/API/UI boundary
-  before asserting; for integrations, use the smallest deterministic boundary
-  that still exercises the integration logic.
-- Avoid tests whose only value is implementation shape (a config constant's
-  value, generated SQL text, file/class/migration existence, mock call order,
-  a snapshot without a behavioral assertion, a private helper's return) unless
-  that shape is itself the contract or the test is clearly supplemental to a
-  behavior-level test or a documented Tier 4 proof.
-- Do not add automated tests just to increase apparent coverage. If no
-  meaningful automated test is practical, say so and document the
-  manual/provider/local-stack verification instead of inventing weak coverage.
+Digest of `~/.agents/workflow/TESTING.md` (full doctrine there; this is also the
+offline fallback REVIEW_RUBRIC.md uses when TESTING.md can't be opened).
 
-Full doctrine lives in `~/.agents/workflow/TESTING.md`; this digest is the
-offline fallback (REVIEW_RUBRIC.md falls back to it when TESTING.md cannot be
-opened).
+- Tests protect behavior, contracts, failure modes, or user/system outcomes: a
+  useful test fails iff the regression it guards against comes back.
+- Before adding/changing a test, identify the behavior or contract protected, the
+  original or plausible failure mode to catch, the real operation boundary
+  exercised (service method,
+  API route, job, import/export flow, UI interaction, persistence reload,
+  integration boundary, CLI command), and any manual/provider/hardware/
+  local-stack/database proof needed when that failure mode cannot be represented
+  in the automated harness.
+- Prefer running the real operation the product depends on: for persistence, save
+  and reload through the relevant repository/ORM/service/API/UI boundary before
+  asserting; for integrations, use the smallest deterministic boundary that still
+  exercises the integration logic.
+- Avoid tests whose only value is implementation shape (a config constant's value,
+  generated SQL text, file/class/migration existence, mock call order, a snapshot
+  without a behavioral assertion, a private helper's return) unless that shape is
+  itself the contract or the test is clearly supplemental to a behavior-level test
+  or a documented Tier-4 proof.
+- Do not add automated tests just to increase apparent coverage. If no meaningful
+  automated test is practical, say so and document the manual/provider/local-stack
+  verification instead of inventing weak coverage.
 
 ## GitHub CLI
 
@@ -80,150 +80,121 @@ available.
 
 ## Destructive Action Policy
 
-Every instance of an action below requires fresh, in-session operator approval.
+Every instance of an action below needs fresh, in-session operator approval.
 
 Hard-to-reverse local/repo state:
 
-- `git push`, including `--force` and `--force-with-lease`
-- `git reset --hard`, `git checkout --`, `git restore --`, `git clean -f`
-- `git branch -D`, deleting branches local or remote
-- `git commit --amend` on pushed commits, `git rebase` rewriting pushed history
-- `git tag` create/delete, pushing tags
-- Flags that skip hooks or signing: `--no-verify`, `--no-gpg-sign`,
-  `-c commit.gpgsign=false`
-- Editing `.git/`, lockfiles, or `.git/info/exclude`
-- Installing, removing, upgrading, or downgrading dependencies or toolchains
-- `rm -rf`, deleting tracked files outside the work item's stated scope
-- Deleting or recreating local databases, search indexes, containers, volumes,
-  caches, or worktrees, including `docker compose down -v`, `docker volume rm`,
-  `supabase db reset`, `git worktree remove --force`, or repo aliases wrapping
-  those
+- `git push` (incl. `--force`/`--force-with-lease`); `git reset --hard`,
+  `checkout --`, `restore --`, `clean -f`; `git branch -D` / deleting branches;
+  `commit --amend` or `rebase` rewriting pushed history; `git tag` create/delete
+  + pushing tags.
+- Hook/signing bypass flags: `--no-verify`, `--no-gpg-sign`,
+  `-c commit.gpgsign=false`.
+- Editing `.git/`, lockfiles, or `.git/info/exclude`.
+- Installing/removing/upgrading/downgrading dependencies or toolchains.
+- `rm -rf`, or deleting tracked files outside the work item's stated scope.
+- Deleting/recreating local databases, search indexes, containers, volumes,
+  caches, or worktrees (`docker compose down -v`, `docker volume rm`,
+  `supabase db reset`, `git worktree remove --force`, or aliases wrapping those).
 
 Shared-state and externally visible actions:
 
-- `gh pr create` / `edit` / `merge` / `close` / `review`
-- `gh issue create` / `close` / `comment` / `edit`
-- `gh release create` / `delete`, `gh repo edit`
-- `gh api` calls using `POST`, `PATCH`, `PUT`, or `DELETE`
-- Mutating issue tracker objects through Linear, Jira, or similar CLIs,
-  connectors, MCP tools, or APIs
-- Sending messages to Slack, email, webhooks, or external services
-- Modifying CI/CD configuration, secrets, or branch-protection rules
-- Mutating cloud, deployment, database, payment, DNS, monitoring, or
-  infrastructure providers with CLIs, SDKs, MCP tools, or APIs, including `aws`,
+- `gh pr` create/edit/merge/close/review; `gh issue` create/close/comment/edit;
+  `gh release` create/delete; `gh repo edit`; `gh api` POST/PATCH/PUT/DELETE.
+- Mutating tracker objects (Linear, Jira, …) via any CLI/connector/MCP/API.
+- Messages to Slack, email, webhooks, or external services.
+- CI/CD config, secrets, or branch-protection changes.
+- Mutating cloud/deploy/db/payment/DNS/monitoring/infra providers (`aws`,
   `gcloud`, `kubectl`, `terraform`, `pulumi`, `sst`, `vercel`, `supabase`,
-  `stripe`, `fly`, and `railway` when they create, update, delete, deploy,
-  migrate, promote, reindex, change secrets, or touch staging/production data
-- Running migrations, backfills, imports, reindexes, seed loads, or data repair
-  commands against any non-local environment
+  `stripe`, `fly`, `railway`) — create/update/delete/deploy/migrate/promote/
+  reindex/secret-change or touching staging/prod data.
+- Migrations, backfills, imports, reindexes, seed loads, or data-repair against
+  any non-local environment.
 
 Operating rules:
 
-- One explicit in-session approval — "yes" / "approved" / "go ahead" / "open
-  the PR" / any natural equivalent — authorizes the action; then state the exact
-  command and run it (stating it IS the announcement, not a second ask). One
-  approval covers that action AND its natural sub-steps: creating a PR includes
-  applying the labels you showed and posting a comment that was part of the plan;
-  opening an issue includes its labels — one approval, not three. Re-ask only if
-  the command materially diverges from what was approved — a different repo or
-  target, broader scope, an unstated mutation, or a body/label/comment the
-  operator has not seen. "ok" / silence is not yes.
-- For destructive local data commands, state the exact data store, volume,
-  worktree, cache, or container target and whether data loss is expected before
-  asking for approval.
-- For provider or database mutations, prefer a read-only check or dry-run first
-  when supported. A successful dry-run does not authorize the real mutation.
+- One explicit in-session approval ("yes"/"approved"/"go ahead"/"open the PR"/
+  any natural equivalent) authorizes the action; then state the exact command and
+  run it (stating it IS the announcement, not a second ask). One approval covers
+  that action AND its natural sub-steps: a PR includes applying the labels you
+  showed + posting a comment that was part of the plan; an issue includes its
+  labels — one approval, not three. Re-ask only if the command materially
+  diverges — a different repo/target, broader scope, an unstated mutation, or a
+  body/label/comment the operator has not seen. "ok"/silence is not yes.
+- For destructive local-data commands, state the exact store/volume/worktree/
+  cache/container target and whether data loss is expected before asking.
+- For provider/db mutations, prefer a read-only check or dry-run first when
+  supported; a successful dry-run does not authorize the real mutation.
 - If a pre-commit hook or CI check fails, never bypass with `--no-verify` or
-  similar. Stop and report the failure.
+  similar — stop and report.
 - If unsure whether an action belongs here, default to asking.
 
 ## Startup Routing
 
-Choose one path. If the session changes, switch paths.
+Pick one path; switch if the session changes.
 
-### A) Implement Existing Work Item
+**A) Implement an existing work item** (ticket/issue/bug/explicit task):
+1. Read the work item + linked PR/context; read the nearest repo/subtree shim for
+   touched files.
+2. Restate goal, non-goals, acceptance criteria, verification; name in-scope
+   files and risky/out-of-scope areas.
+3. `git status` before branching/editing; never discard unowned changes.
+4. Spot-check the spec's load-bearing source claims (cited file:line wiring
+   points, referenced symbols) against the tree; if a path moved or the code
+   contradicts an assumption, surface it and adjust scope — don't code against a
+   stale claim.
+5. Switch to the team-standard branch when edits are expected; implement
+   minimally.
+6. Select + run tiered verification (Verification Tiers; commands from the shim)
+   and report routing.
+7. Hand off per Implementation Completion Handoff; patch findings + rerun per the
+   Review Loop.
+8. Open/update PR or push only when authorized; on PR open keep review evidence
+   local per PR Handoff.
 
-Use this when a ticket, issue, bug, or explicit task already exists.
+**B) Plan work** (feature shaping, final-spec prep, task splitting, unclear
+scope): read product/docs/code context; run a Domain Pass when
+terminology/lifecycle/cross-boundary behavior changes; produce a reviewable spec
+(self-contained scope, non-goals, acceptance criteria, exact verification
+commands, labels/branch when relevant, any approval-gated work). No code changes
+unless explicitly asked.
 
-1. Read the work item and any linked PR/context first.
-2. Read the nearest repo/subtree shim for touched files.
-3. Restate goal, non-goals, acceptance criteria, and verification.
-4. Identify files in scope and explicitly risky/out-of-scope areas.
-5. Check current git status before branching or editing; never discard unowned
-   changes.
-5b. Before editing, spot-check the spec's load-bearing source claims (cited
-   file:line wiring points and referenced symbols) against the current tree; if
-   a claimed path has moved or the code contradicts a spec assumption, surface
-   the conflict and adjust scope instead of coding against the stale claim.
-6. Create or switch to the team-standard branch when edits are expected.
-7. Implement minimally.
-8. Select and run tiered verification per Verification Tiers (exact commands from
-   the local repo shim); report routing.
-9. Hand off per Implementation Completion Handoff; patch findings and rerun per
-   the Review Loop.
-10. Open/update PR or push only when authorized by the user/team flow.
-11. On PR open, keep review evidence local per PR Handoff.
+**C) Review a PR or diff:** review changed behavior before style; focus on
+correctness, regressions, contract drift, security, data loss, missing
+verification; lead with findings by severity + file:line; return
+`APPROVED`/`ACTIONABLE` per REVIEW_RUBRIC.md.
 
-### B) Plan Work
-
-Use this for feature shaping, final-spec preparation, task splitting, or unclear scope.
-
-1. Read relevant product/docs/code context.
-2. Run a Domain Pass when terminology, lifecycle state, or cross-boundary behavior changes.
-3. Produce a reviewable spec that can evolve into the final tracker issue body:
-   self-contained scope, non-goals, acceptance criteria, exact verification
-   commands, labels/branch guidance when relevant, and any approval-gated work.
-4. Do not make code changes during planning unless explicitly asked.
-
-### C) Review PR or Diff
-
-1. Review changed behavior first, not style first.
-2. Focus on correctness, regressions, contract drift, security, data loss, and missing verification.
-3. Lead with findings ordered by severity and file/line.
-4. Return `APPROVED` / `ACTIONABLE` per REVIEW_RUBRIC.md.
-
-### D) Docs, Architecture, or Pattern Maintenance
-
-Read only docs relevant to the requested scope. Keep docs aligned with actual commands,
-runtime versions, and contracts.
+**D) Docs/architecture/pattern maintenance:** read only docs in scope; keep them
+aligned with actual commands, runtime versions, and contracts.
 
 ## Kickoff Templates
 
-Canonical kickoff prompts live in `~/.agents/workflow/KICKOFFS.md` (Planning,
-Domain Pass, Spec Review, Implementation, Review, External PR Review, PR Body,
-and the rest).
+Canonical kickoff prompts live one-per-file in `~/.agents/workflow/kickoffs/`;
+each handoff skill reads only its own. Index: `planning.md`, `domain-pass.md`,
+`final-spec-promotion.md`, `planner-directive.md` (shared — appended to the spec
+reviews), `spec-review.md`, `spec-re-review.md`, `execution.md`, `review.md`,
+`re-review.md`, `external-pr-review.md`, `pr-body.md`, `post-plan-grill.md`.
 
-**Fidelity rule:** When asked to hand off a kickoff to the operator or another
-agent, paste the matching section from KICKOFFS.md verbatim with placeholders
-filled. Do not paraphrase, summarize, restructure, or invent your own shape.
-The structure is load-bearing for downstream agents. If you cannot read
-KICKOFFS.md in this environment, say so and ask the operator to provide the
-template.
-
-If the kickoff you received looks incomplete or malformed, consult that file
-for the canonical shape and ask the operator to fill the gaps before starting.
+**Fidelity rule:** paste the matching `kickoffs/*.md` template verbatim with
+placeholders filled — do not paraphrase, restructure, or invent your own shape;
+it is load-bearing for downstream agents. If you cannot read it, or the kickoff
+you received looks incomplete, say so and ask the operator rather than guessing.
 
 ## Work Item Model
 
-Use neutral objects so the workflow works with GitHub Issues, Jira, Linear, or a written
-prompt.
+Neutral objects (works with GitHub Issues, Jira, Linear, or a written prompt):
 
-- **Task**: default PR-sized implementation unit.
-- **Spec**: one living planning artifact that evolves from rough to
-  review-ready to final to promoted to implemented. A final spec should be
-  publishable as the tracker issue body unless it must be split, redacted, or
-  substantially reshaped.
-- **Decision**: short decision lock with rationale.
+- **Task** — default PR-sized implementation unit. Default: one Task → one branch
+  → one PR.
+- **Spec** — one living planning artifact evolving rough → review-ready → final →
+  promoted → implemented; a final spec should be publishable as the tracker issue
+  body unless it must be split, redacted, or substantially reshaped.
+- **Decision** — a short decision lock with rationale.
 
-Default: one Task -> one branch -> one PR.
-
-Split work only when it improves delivery or risk control:
-
-- too large to review safely
-- contract or schema change should land separately
-- hardware/manual validation gates later software work
-- migration or state-machine work needs staging
-- independent parts can be reviewed and merged without coordination risk
+Split work only when it improves delivery or risk control: too large to review
+safely; a contract/schema change that should land separately; hardware/manual
+validation gating later software work; migration/state-machine work needing
+staging; or independent parts reviewable/mergeable without coordination risk.
 
 ## Definition Of Ready
 
@@ -256,143 +227,82 @@ A Task is done when:
 
 ## Docs Impact Check
 
-Every implementation must make an explicit docs-impact decision before review
-handoff.
+Every implementation makes an explicit docs-impact decision before review
+handoff. Does the change affect any of: user-visible behavior or product
+terminology; setup/install/build/local-iteration commands; verification
+gates/coverage policy/manual-QA expectations; architecture boundaries, module
+ownership, or route/path maps; board/firmware/simulator/network/API contracts;
+performance-validation policy or durable evidence; release/privacy/app-store/
+distribution evidence?
 
-Check whether the change affects any of: user-visible behavior or product
-terminology; setup/install/build/local iteration commands; verification gates,
-coverage policy, or manual QA expectations; app architecture boundaries, module
-ownership, or route/path maps; board, firmware, simulator, network, or API
-contracts; performance validation policy or durable performance evidence;
-release, privacy, app-store, or distribution evidence.
-
-If yes, update the owning tracked doc in the same PR — prefer the established
-authority over a new doc: root `README.md` (repo front door + doc map); setup
-docs (onboarding/daily commands); verification docs (test, build, coverage,
-manual gates); architecture docs (app maps + cross-boundary contracts);
-runbooks/history docs (repeatable validation + durable evidence); ADRs only for
-decisions that are hard to reverse, surprising without context, and a real
-trade-off.
-
-If no, state `Docs impact: none` in the implementation summary and as the
-one-line PR-body footer (not a standalone section).
+- If yes: update the owning tracked doc in the SAME PR — prefer the established
+  authority over a new doc (root `README.md`; setup docs; verification docs;
+  architecture docs; runbooks/history; ADRs only for hard-to-reverse, surprising,
+  real-trade-off decisions).
+- If no: state `Docs impact: none` in the summary and as the one-line PR-body
+  footer (not a standalone section).
 
 ## Planning Artifact Cleanup
 
-When the operator says an issue or PR has landed, planning agents must clean
-local planning artifacts before moving on.
-
-Required:
-
-- Confirm the issue or PR state with the tracker.
-- Delete obsolete local issue drafts, PR body drafts, review-note drafts,
-  kickoff prompts, and one-off review prompts now represented by the tracker or
-  PR.
-- After issue creation, advance the same living spec through its lifecycle
-  instead of deleting it by default — lifecycle statuses and the
-  plans-directory layout live in `~/.agents/workflow/PLANS.md`. Delete only
-  transient split/redaction issue drafts or prompts at that point.
-- Archive only durable context: reusable specs, verification reports, audit
-  reports, ADR-like rationale, or cross-issue policy decisions.
-- Move still-actionable future work to backlog, or keep it active only when it
-  has a real next action.
-- Update the planning index/dashboard and active workstream README when they
-  exist.
-- Report what was deleted, archived, and left active.
-
-Do not leave completed issue/PR drafting artifacts in active planning folders.
-Prefer one evolving spec over parallel rough-spec and issue-draft files.
+When the operator says an issue or PR landed, clean local planning artifacts
+before moving on — the full sequence lives in `~/.agents/workflow/PLANS.md`
+("Artifact cleanup on land").
 
 ## Implementation Completion Handoff
 
-When finishing an implementation, hand off for review by spawning the
-implementer's reviewer. Include a brief implementation summary and verification
-results, then spawn exactly one fresh-context reviewer (Review Kickoff template)
-and announce the handoff (what + range). Do not spawn a second reviewer unless
-the operator explicitly asks this session.
-
-Obtain two independent approved verdicts before PR handoff by default: the
-implementer owns the one spawned (inner) reviewer; the operator owns the second
-(outer) review, which self-populates from the work-item folder + live range
-(`secondreview` / `secondspecreview`) and runs on the final tip after the
-implementer's loop converges. Shared handoff mechanics — sequencing, freshness,
-the independence seal, and the ritual→skill index — live in
+When finishing an implementation, hand off for review: a brief summary +
+verification results, then spawn exactly one fresh-context reviewer (Review
+Kickoff) and announce the handoff (what + range). No second reviewer unless the
+operator explicitly asks this session. Mechanics — sequencing, freshness, the
+independence seal, re-review reuse, and the ritual→skill index — live in
 `~/.agents/workflow/HANDOFF.md`.
 
-Review floor — the inner review loop (`implreview` → `implrereview` to
-APPROVED) is NEVER skippable; every implementation gets at least one review, and
-nothing reaches a PR without one. The ONLY thing ever waived is the second /
-outer-gate review (`secondreview`). The outer gate is REQUIRED whenever the diff
-touches ANY canonical risk-surface —
+Two independent approved verdicts before PR handoff by default: the implementer
+owns the spawned inner reviewer; the operator owns the outer gate
+(`secondreview` / `secondspecreview`), which self-populates from the work-item
+folder + live range and runs on the final tip after the inner loop converges.
 
-> migration / schema / persisted-state (any change to stored data or a
-> state-machine) · auth · contract / API surface · data-loss paths · security ·
-> provider boundary (Stripe, AvaTax, other external services) · dependency ·
-> toolchain
-
-— OR when the inner review returned ACTIONABLE on any substantive finding at any
-point in the loop. It is operator-waivable ONLY when ALL of:
-
-- (a) the diff touches NONE of the canonical risk-surface list above;
-- (b) the inner review was APPROVED on the FIRST pass with zero substantive
-  findings (no ACTIONABLE cycle at all — a patched-then-clean loop does NOT
-  qualify);
-- (c) the diff is mechanically trivial — NO logic or control-flow change (copy,
-  comment, pure rename, or a purely non-behavioral config value; a config value
-  that changes runtime behavior — a threshold, retry count, rate limit — IS a
-  logic change and does NOT qualify).
-
-The implementer states `outer gate: required | waivable — <one-line why>` at
-handoff; the OPERATOR makes the final waive call. When the outer gate is
-mandatory, do not trim the independence seal, live-range self-computation, or
-the inner loop. (`secondspecreview` is already optional on the spec side, so
-this parity holds there too.)
+Review floor — the inner loop (`implreview` → `implrereview` to APPROVED) is
+NEVER skippable: every implementation gets ≥1 review, and nothing reaches a PR
+without one. Only the outer gate is ever waived. It is REQUIRED whenever the diff
+touches a canonical risk-surface — migration/schema/persisted-state · auth ·
+contract/API · data-loss · security · provider boundary · dependency · toolchain
+— OR the inner review was ever ACTIONABLE on a substantive finding; it is
+operator-waivable ONLY for a first-pass-clean, mechanically-trivial,
+zero-risk-surface change (exact a/b/c conditions in HANDOFF.md "Outer-gate
+waivability"). The implementer states `outer gate: required | waivable — <why>`;
+the OPERATOR makes the waive call.
 
 ## PR Handoff
 
-When the operator asks to open or update a PR, make the review record available
-for handoff without making it default public PR content. Keep the review
-material (prompts, verdicts, findings + resolutions, post-patch verification,
-deferred follow-ups, residual risk / Tier 4 gates) local per PLANS.md.
+When the operator asks to open/update a PR, make the review record available for
+handoff without making it default public PR content — keep prompts, verdicts,
+findings + resolutions, post-patch verification, deferred follow-ups, and
+residual risk / Tier-4 gates local per PLANS.md.
 
-Flow:
-
-1. Prepare a PR body in the "PR Body / Optional Review Notes" shape from
-   KICKOFFS.md. Closing-reference semantics: GitHub `Fixes #<issue>` only when
-   merge fully resolves it, else `Refs` / `Part of`; Linear `Closes <full url>`
-   when fully resolved, else `Part of <url>`.
-2. No standalone `## Review Summary` by default. Mention a review finding in the
-   PR body only when it materially changes reviewer context (patched edge case,
-   deferred follow-up, residual risk).
-3. Prepare a separate review-record comment only when requested; start it with
-   `# Review Notes`.
-4. Determine labels from the source issue and local policy: carry over labels
-   still describing the diff, omit stale ones, and state the final list.
-5. Show the PR body, any comment artifact, the label list, repo, target
-   branch/PR, and requested action before asking for one bundled approval.
-6. Create/update only when authorized, applying labels via `gh pr create` or
-   `gh pr edit --add-label`; if a review-record comment was authorized, post it
-   with `gh pr comment`. All externally visible GitHub mutations here follow the
-   Destructive Action Policy.
+1. Compose the PR body in the `kickoffs/pr-body.md` shape. Closing refs: GitHub
+   `Fixes #<n>` only when merge fully resolves it, else `Refs`/`Part of`; Linear
+   `Closes <full url>` when fully resolved, else `Part of <url>`.
+2. No standalone `## Review Summary` by default; mention a review finding only
+   when it materially changes reviewer context (patched edge case, deferred
+   follow-up, residual risk). A separate review-record comment (starting
+   `# Review Notes`) only when requested.
+3. Determine labels from the source issue + local policy: carry over labels still
+   describing the diff, omit stale ones, state the final list.
+4. Show the PR body, any comment, the labels, repo, target branch/PR, and
+   requested action before asking for one bundled approval. Create/update only
+   when authorized (labels via `gh pr create` / `gh pr edit --add-label`; an
+   authorized review-record comment via `gh pr comment`). All externally visible
+   GitHub mutations follow the Destructive Action Policy.
 
 ## Domain Pass
 
-Run before final-spec promotion or tracker publication when work:
-
-- introduces or overloads a core noun
-- changes lifecycle or state meaning
-- crosses app/service/provider/device boundaries
-- affects user-facing terminology
-- creates a new module or service boundary
-- is high-risk or multi-step
-
-Output:
-
-- canonical terms
-- avoided synonyms, when important
-- unresolved decisions
-- ADR/decision-record need, only if the decision is hard to reverse, surprising, and a real trade-off
-
+Run before final-spec promotion / tracker publication when work introduces or
+overloads a core noun, changes lifecycle or state meaning, crosses
+app/service/provider/device boundaries, affects user-facing terminology, creates
+a new module/service boundary, or is high-risk/multi-step. Output: canonical
+terms; avoided synonyms (when important); unresolved decisions; an ADR/decision
+record only if the decision is hard to reverse, surprising, and a real trade-off.
 Skip for isolated bug fixes, visual polish, small refactors, and dependency
 maintenance with stable terminology.
 
@@ -423,54 +333,44 @@ maintenance with stable terminology.
 
 Rules:
 
-- Prefer repo-provided verify commands.
-- Before implementation handoff and PR handoff, make verification routing
-  explicit: commands run, gates intentionally not selected (each with a short
-  reason — no self-judged "only if a reviewer would ask"), gates blocked, and
-  any Tier 4/operator work remaining.
-- When broader local gates are available, choose intentionally whether to run
-  them based on the changed surface and risk; do not skip or run them only
-  because they are or are not in the default PR CI path.
-- When a change creates, moves, or changes a shared package/module/export for
-  another app or package to consume, verification must prove the exact public
-  import path at that consumer's real build/runtime boundary. A sibling export,
-  internal import, or typecheck-only proof does not count unless that is the
-  actual consumer boundary.
-- Do not treat optional, nightly-only, or CI-only-by-policy gates as impossible
-  to run locally. If the repo exposes a local command and the environment is
-  prepared, agents may run it when the task risk justifies it.
-- For user-facing UI, run targeted automated coverage and visual/manual QA; apply
+- Prefer repo-provided verify commands. Before implementation + PR handoff, make
+  routing explicit: commands run; gates intentionally not selected (each with a
+  short reason — not a self-judged "only if a reviewer would ask"); gates blocked;
+  remaining Tier-4/operator work.
+- Choose broader local gates by changed surface + risk — not by whether they sit
+  in the default PR CI path. Don't treat optional/nightly/CI-only gates as
+  impossible to run locally; run them when task risk justifies and the env is
+  prepared.
+- When a change creates/moves/changes a shared package/module/export for another
+  app or package to consume, verification must prove the exact public import path
+  at that consumer's real build/runtime boundary — a sibling export, internal
+  import, or typecheck-only proof does not count unless that IS the consumer
+  boundary.
+- User-facing UI: run targeted automated coverage + visual/manual QA; apply
   FRONTEND.md, and for visual-design work capture the surface to verify (per
-  FRONTEND.md's oracle).
-  Escalate to e2e-smoke or full e2e when the change touches routing, auth,
-  checkout, multi-page workflows, real data integration, or a regression-prone
-  path.
-- For API/schema/data/integration changes, consider contract tests, builds,
-  local-stack verification, and service e2e in addition to package tests.
-- Do not run live/provider/hardware checks from an agent unless the environment is explicitly prepared.
-- If sandboxing blocks services, hardware, localhost, or network, stop after one diagnostic run and escalate or ask the operator for output.
+  FRONTEND.md's oracle). Escalate to e2e-smoke/full-e2e when the change touches
+  routing, auth, checkout, multi-page workflows, real-data integration, or a
+  regression-prone path.
+- API/schema/data/integration: consider contract tests, builds, local-stack
+  verification, and service e2e in addition to package tests.
+- Don't run live/provider/hardware checks from an agent unless the env is
+  explicitly prepared; if sandboxing blocks services/hardware/localhost/network,
+  stop after one diagnostic run and escalate or ask the operator for output.
 - Final summaries must name commands run and results.
 
 ## Review Loop
 
-Default review pass:
+- Verdict/findings semantics (`APPROVED`/`ACTIONABLE`, blocking rules) and the
+  adversarial checks (its Stance section) are owned by `REVIEW_RUBRIC.md`;
+  approve clean only after naming the checks run.
+- Patch only listed findings unless scope expands; rerun targeted verification.
+- Both default independent fresh-context reviews run the full `REVIEW_RUBRIC.md`;
+  outer-gate mechanics live in `HANDOFF.md`. Automated-reviewer (CodeRabbit)
+  path-exclusion handling: see REVIEW_RUBRIC.md "Automated-reviewer awareness".
+- Extra review passes whenever post-review patches are non-trivial, touch
+  lifecycle/state/concurrency, change acceptance behavior, or the operator asks.
 
-- verdict and findings semantics (`APPROVED` / `ACTIONABLE`, blocking rules)
-  are owned by REVIEW_RUBRIC.md
-- review adversarially and approve clean only after naming the checks run —
-  the Stance section of REVIEW_RUBRIC.md owns the adversarial checks
-- patch only listed findings unless scope expands
-- rerun targeted verification
-- the default two independent fresh-context reviews both run the full
-  `REVIEW_RUBRIC.md`; the outer-gate review is a fresh independent pass, and its
-  mechanics live in `~/.agents/workflow/HANDOFF.md`
-- automated PR reviewer (e.g. CodeRabbit) path-exclusion handling: see
-  "Automated-reviewer awareness" in REVIEW_RUBRIC.md
-- additional review passes are allowed whenever patches after review are
-  non-trivial, touch lifecycle/state/concurrency, change acceptance behavior, or
-  the operator asks for another pass
-
-Reviewer priorities (severity order + full detail): see REVIEW_RUBRIC.md.
+Reviewer priorities + full detail: `REVIEW_RUBRIC.md`.
 
 ## Output Budget
 

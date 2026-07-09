@@ -4,7 +4,7 @@ One protocol for all review/re-review handoffs — and, since the kernel points
 here for it, the full ritual→skill index (which also covers the non-handoff
 planning ritual). The handoff skills parameterize the protocol; in hosts
 without skill support, apply it by hand from this file. Canonical
-templates live in `KICKOFFS.md`; the reviewer manual is `REVIEW_RUBRIC.md`;
+templates live one-per-file in `kickoffs/`; the reviewer manual is `REVIEW_RUBRIC.md`;
 testing doctrine is `TESTING.md`; the handoff requirements themselves are the
 kernel's "Implementation Completion Handoff".
 
@@ -37,8 +37,8 @@ phase are autonomous.
 
 ## The protocol
 
-1. **Template fidelity.** Read the named template section from
-   `~/.agents/workflow/KICKOFFS.md` and paste it verbatim with placeholders
+1. **Template fidelity.** Read the named `~/.agents/workflow/kickoffs/<name>.md`
+   template file and paste it verbatim with placeholders
    filled (kernel Fidelity Rule). Never paraphrase, restructure, reorder, or
    invent a different shape — the structure is load-bearing for downstream
    agents. Do not inline `REVIEW_RUBRIC.md` into the prompt: the reviewer
@@ -115,6 +115,31 @@ phase are autonomous.
   and run `implrereview` quoting those findings verbatim. The kernel's
   two-verdicts gate is met when both lenses have approved the final tip;
   patches landed after any approval get a re-review.
+
+## Outer-gate waivability
+
+The inner review loop is never skippable (kernel review floor). The outer gate
+(`secondreview`) is REQUIRED whenever the diff touches a canonical risk-surface
+(migration/schema/persisted-state (any change to stored data or a state-machine),
+auth, contract/API, data-loss, security, provider boundary (Stripe, AvaTax, other
+external services), dependency, toolchain) OR the inner review returned ACTIONABLE
+on any substantive finding at any point in the loop. It is operator-waivable ONLY
+when ALL of:
+
+- (a) the diff touches NONE of the canonical risk-surface list above;
+- (b) the inner review was APPROVED on the FIRST pass with zero substantive
+  findings (no ACTIONABLE cycle at all — a patched-then-clean loop does NOT
+  qualify);
+- (c) the diff is mechanically trivial — NO logic or control-flow change (copy,
+  comment, pure rename, or a purely non-behavioral config value; a config value
+  that changes runtime behavior — a threshold, retry count, rate limit — IS a
+  logic change and does NOT qualify).
+
+The implementer states `outer gate: required | waivable — <one-line why>` at
+handoff; the OPERATOR makes the final waive call. When the outer gate is
+mandatory, do not trim the independence seal, live-range self-computation, or the
+inner loop. (`secondspecreview` is already optional on the spec side, so this
+parity holds there too.)
 
 ## Spec review loop (specreview → specrereview)
 
