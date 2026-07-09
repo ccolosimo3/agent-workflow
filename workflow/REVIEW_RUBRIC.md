@@ -160,11 +160,15 @@ paths.
 
 ## Time-sensitive & external claims (verify, don't assert from memory)
 
-When a finding HINGES on a dated external fact (deprecation, "current" pattern,
-version-specific behavior, CVE), verify it against the repo's pinned version
-(package.json / lockfile) and the repo-bundled SME/doc skills, then official
-upstream docs/changelog — and cite the source + date you checked. An
-unverifiable dated claim is a non-blocking note, not ACTIONABLE.
+**Web search is available to you — use it.** When a finding hinges on a dated
+external fact (deprecation, a "current"/"best-practice" pattern, version-specific
+behavior, an API/library's present behavior, a CVE) — or when your own review
+angle rests on external or current knowledge — corroborate it before you assert:
+check the repo's pinned version (package.json / lockfile) and repo-bundled SME/doc
+skills, then official upstream docs/changelog via web search, and cite the source +
+date you checked. Don't flag OR clear a dated claim from memory. If your host has
+no web search, say so and treat the dated claim as a non-blocking note, not
+ACTIONABLE.
 
 ## Output contract (your Return, in order)
 

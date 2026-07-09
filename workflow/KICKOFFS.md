@@ -202,10 +202,11 @@ Return:
    - self-containment of an issue body (would this issue be actionable to someone with no prior context)
    - dependency claims (do blocked/ordered-after references point at real issues with the claimed state)
    - time-sensitive / external claims: if the plan picks a library, API, pattern, or
-     version, or asserts something is deprecated / current / best-practice, verify it
-     against the repo's pinned version + bundled SME/doc skills, then official
-     upstream docs via web search (cite source + date) — don't approve or reject a
-     dated claim from memory; temper "latest" against the repo's actual pinned major
+     version, asserts something is deprecated / current / best-practice, or your own
+     review angle rests on current external behavior, verify it against the repo's
+     pinned version + bundled SME/doc skills, then official upstream docs via web
+     search (cite source + date) — don't approve or reject from memory; temper
+     "latest" against the repo's actual pinned major
    - ambiguous terminology or undefined nouns
    - missing or untestable acceptance criteria
    - missing or wrong verification commands
