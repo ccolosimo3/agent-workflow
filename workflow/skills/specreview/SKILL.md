@@ -86,7 +86,7 @@ a one-shot. When the spawned reviewer returns:
   what changed. A minor-only off-ramp is YOUR call, not an independent APPROVED:
   report each patched finding and why it was mechanical, say that no fresh
   reviewer re-confirmed, and note the operator can run `/specrereview` or rely on
-  `/secondspecreview` as the outer gate.
+  `/outerspecreview` as the outer gate.
 
 ## Failure modes
 

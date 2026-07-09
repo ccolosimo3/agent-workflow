@@ -1,5 +1,5 @@
 ---
-name: secondreview
+name: outerreview
 description: Run the operator-owned outer-gate second review of their OWN
   implementation, in a fresh conversation in the other app/model, after the
   implementer session's review + re-review loop has converged. Self-populates
@@ -8,12 +8,12 @@ description: Run the operator-owned outer-gate second review of their OWN
   the review itself in this conversation per
   ~/.agents/workflow/REVIEW_RUBRIC.md, and returns the strict verdict +
   verified-clean record for the operator to carry back. Use when the operator
-  says /secondreview, "second review this branch", or names a work item or
+  says /outerreview, "second review this branch", or names a work item or
   repo and asks for the outer-gate review. Not for coworker PRs (that is
   prreview) and not for the implementer session's own loop (implreview).
 ---
 
-# secondreview
+# outerreview
 
 The outer gate of the two-review flow (sequencing and independence rules:
 `~/.agents/workflow/HANDOFF.md`). This skill runs in a FRESH conversation in

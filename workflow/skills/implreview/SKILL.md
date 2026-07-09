@@ -51,7 +51,7 @@ When the operator says `/implreview emit-only` (or "emit the kickoff only",
 fresh SHAs, never a reuse of an earlier emitted prompt — and emit without
 spawning. Use after the inner loop converges to hand the outer-gate reviewer a
 fresh prompt (HANDOFF.md sequencing + freshness rules). Prefer the
-`secondreview` skill in the other app when available — it self-populates and
+`outerreview` skill in the other app when available — it self-populates and
 needs no paste.
 
 ## Scope guard
@@ -70,7 +70,7 @@ Disposition is owned by the implementer directive appended to each verdict
 (REVIEW_RUBRIC.md) plus the Execution Kickoff re-review trigger — not by this
 skill. On an inner-loop APPROVED, report the result with a one-line-per-pass
 changelog and note the loop converged. The next step is the operator-owned
-`secondreview` outer gate (required unless waived per the kernel's
+`outerreview` outer gate (required unless waived per the kernel's
 "Implementation Completion Handoff" off-ramp); this skill does NOT auto-invoke
 it.
 

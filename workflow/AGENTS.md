@@ -259,7 +259,7 @@ independence seal, re-review reuse, and the ritual→skill index — live in
 
 Two independent approved verdicts before PR handoff by default: the implementer
 owns the spawned inner reviewer; the operator owns the outer gate
-(`secondreview` / `secondspecreview`), which self-populates from the work-item
+(`outerreview` / `outerspecreview`), which self-populates from the work-item
 folder + live range and runs on the final tip after the inner loop converges.
 
 Review floor — the inner loop (`implreview` → `implrereview` to APPROVED) is

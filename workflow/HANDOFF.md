@@ -22,17 +22,17 @@ phase are autonomous.
 - Prove one chosen approach at the real boundary (GO/NO-GO) → `spike` (hands off
   to `specreview` on GO; recommends the fallback on NO-GO)
 - Then: finalize spec → `specreview` / `specrereview` (autonomous loop), with an
-  optional `secondspecreview` outer gate (other model) on the converged plan →
-  implement → `implreview` / `implrereview` (loop) → `secondreview` outer gate
+  optional `outerspecreview` outer gate (other model) on the converged plan →
+  implement → `implreview` / `implrereview` (loop) → `outerreview` outer gate
 - Implementation review handoff → `implreview` (announce + spawn; emit-only mode
   for outer-gate handoffs)
 - Implementation re-review after patches → `implrereview`
 - Plan/spec review before promotion → `specreview`
 - Plan re-review after revisions → `specrereview`
 - Outer-gate second review of the operator's own implementation, run in the
-  other app/model → `secondreview`
+  other app/model → `outerreview`
 - Outer-gate second review of the operator's own converged plan/spec, run in the
-  other app/model → `secondspecreview`
+  other app/model → `outerspecreview`
 - Coworker PR review + calibration → `prreview` (+ `calibrate-review`)
 
 ## The protocol
@@ -103,7 +103,7 @@ phase are autonomous.
 - **Inner loop** (implementer's app): `implreview` → patch → `implrereview`,
   repeat until APPROVED. Fast, same-app subagents; iterate freely.
 - **Outer gate** (the other app/model): ONE fresh-context review of the FINAL
-  tip — via `secondreview`, or via a pasted emit-only kickoff. A different
+  tip — via `outerreview`, or via a pasted emit-only kickoff. A different
   model decorrelates blind spots; this review certifies the candidate that
   will actually be PR'd.
 - Do not run the outer gate in parallel with the inner loop by default: a
@@ -119,7 +119,7 @@ phase are autonomous.
 ## Outer-gate waivability
 
 The inner review loop is never skippable (kernel review floor). The outer gate
-(`secondreview`) is REQUIRED whenever the diff touches a canonical risk-surface
+(`outerreview`) is REQUIRED whenever the diff touches a canonical risk-surface
 (migration/schema/persisted-state (any change to stored data or a state-machine),
 auth, contract/API, data-loss, security, provider boundary (Stripe, AvaTax, other
 external services), dependency, toolchain) OR the inner review returned ACTIONABLE
@@ -138,7 +138,7 @@ when ALL of:
 The implementer states `outer gate: required | waivable — <one-line why>` at
 handoff; the OPERATOR makes the final waive call. When the outer gate is
 mandatory, do not trim the independence seal, live-range self-computation, or the
-inner loop. (`secondspecreview` is already optional on the spec side, so this
+inner loop. (`outerspecreview` is already optional on the spec side, so this
 parity holds there too.)
 
 ## Spec review loop (specreview → specrereview)
@@ -157,11 +157,11 @@ Full disposition lives in the `specreview` skill.
 
 A kickoff is stale the moment its tip SHA is no longer HEAD. Never hand a
 reviewer a stale kickoff — re-populate and re-emit (`implreview` emit-only), or
-use `secondreview`, which computes its own range at invocation time.
+use `outerreview`, which computes its own range at invocation time.
 
 ## Independence seal
 
-The outer-gate reviewer must not see prior findings: `secondreview` never
+The outer-gate reviewer must not see prior findings: `outerreview` never
 reads `reviews.md` or prior verdicts/kickoff prompts, and the operator should
 not paste inner-loop findings into the outer-gate conversation. Re-reviews are
 the deliberate opposite: they REQUIRE the prior findings, quoted verbatim.

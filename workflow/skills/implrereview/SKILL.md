@@ -32,7 +32,7 @@ below; this file adds only the re-review specifics.
 ## Re-review specifics
 
 1. **Locate the prior findings** in chat context — the operator-pasted
-   verdict, this session's reviewer return, or an outer-gate `secondreview`
+   verdict, this session's reviewer return, or an outer-gate `outerreview`
    verdict pasted from the other app. If absent, stop and ask; never invent
    or paraphrase prior findings. Quote them verbatim, severity and path:line
    included.

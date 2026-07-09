@@ -1,5 +1,5 @@
 ---
-name: secondspecreview
+name: outerspecreview
 description: Run the operator-owned outer-gate second review of their OWN plan /
   spec, in a fresh conversation in the other app/model, after the planning
   session's specreview ⇄ specrereview loop has converged to APPROVED. Self-
@@ -9,15 +9,15 @@ description: Run the operator-owned outer-gate second review of their OWN plan /
   ~/.agents/workflow/REVIEW_RUBRIC.md + the Spec Review Kickoff validation
   categories — verifying the spec's file:line claims against current source —
   then returns a strict verdict for the operator to carry back. Use when the
-  operator says /secondspecreview, "second spec review", "independent fresh pass
+  operator says /outerspecreview, "second spec review", "independent fresh pass
   on the whole spec", or names a converged spec for outer-gate review. Not the
   planning session's own loop (specreview / specrereview), not a code review
-  (secondreview), not a coworker PR (prreview).
+  (outerreview), not a coworker PR (prreview).
 ---
 
-# secondspecreview
+# outerspecreview
 
-The outer gate of the plan flow — the planning analog of `secondreview`
+The outer gate of the plan flow — the planning analog of `outerreview`
 (sequencing and independence rules: `~/.agents/workflow/HANDOFF.md`). It runs in
 a FRESH conversation in the app/model that did NOT plan; the conversation itself
 is the fresh-context reviewer, so do the review here in the main thread — do not
