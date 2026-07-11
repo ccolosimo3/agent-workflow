@@ -21,7 +21,7 @@ class CandidateCertificationTests(unittest.TestCase):
             "task_id": "work",
             "checkout": str(path.resolve()),
             "base": "base",
-            "tip": "base",
+            "tip": "final",
             "assignment_generation": 1,
             "topology_revision": 1,
             "commands": [{"command": "smoke", "result": "passed", "exit_code": 0, "output_sha256": hashlib.sha256(b"passed").hexdigest()}],
@@ -29,12 +29,21 @@ class CandidateCertificationTests(unittest.TestCase):
             "dirty_state": "clean",
             "evidence": "temporary checkout",
         }))
-        for verification_id, tip in (("V-good", "final"), ("V-wrong-tip", "old")):
+        append(path, event("P1", "verification_recorded", task_id="work", payload={
+            "id": "V-good",
+            "command": "smoke",
+            "result": "passed",
+            "tip": "final",
+            "assignment_generation": 1,
+            "environment_attestation_id": "E1",
+            "topology_revision": 1,
+        }))
+        with self.assertRaises(LedgerError):
             append(path, event("P1", "verification_recorded", task_id="work", payload={
-                "id": verification_id,
+                "id": "V-environment-mismatch",
                 "command": "smoke",
                 "result": "passed",
-                "tip": tip,
+                "tip": "old",
                 "assignment_generation": 1,
                 "environment_attestation_id": "E1",
                 "topology_revision": 1,
@@ -66,8 +75,6 @@ class CandidateCertificationTests(unittest.TestCase):
             self._setup(path)
             with self.assertRaises(LedgerError):
                 append(path, event("P1", "candidate_recorded", payload={"id": "missing", "tip": "final", "inner_review_id": "R-inner", "state": "awaiting_outer", "verification_ids": ["missing"]}))
-            with self.assertRaises(LedgerError):
-                append(path, event("P1", "candidate_recorded", payload={"id": "wrong-tip", "tip": "final", "inner_review_id": "R-inner", "state": "awaiting_outer", "verification_ids": ["V-wrong-tip"]}))
             append(path, event("P1", "candidate_recorded", payload={"id": "approved", "tip": "final", "inner_review_id": "R-inner", "outer_review_id": "R-outer", "state": "outer_approved", "verification_ids": ["V-good"]}))
             self.assertEqual(replay(load_events(path))["integration_candidates"]["approved"]["state"], "outer_approved")
 

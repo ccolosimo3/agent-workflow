@@ -596,6 +596,7 @@ def apply_event(state: dict[str, Any], event: dict[str, Any]) -> None:
         attestation = state["environment_attestations"].get(payload["environment_attestation_id"])
         _require(attestation and attestation.get("freshness") == "fresh" and attestation.get("task_id") == task_id, "verification environment evidence is missing or stale")
         _require(attestation.get("assignment_generation") == generation, "verification environment assignment is stale")
+        _require(attestation.get("tip") == payload["tip"], "verification environment tip is stale")
         state["verification_records"][payload["id"]] = {**copy.deepcopy(payload), "task_id": task_id, "freshness": "fresh"}
     elif etype in {"decision_recorded", "recovery_recorded"}:
         required = {"decision_recorded": {"id", "decision"}, "recovery_recorded": {"id", "kind"}}[etype]
