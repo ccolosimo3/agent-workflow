@@ -1,0 +1,34 @@
+--- workflow/AGENTS.md.before
++++ workflow/AGENTS.md.after
+@@ -149,3 +149,3 @@
+-A candidate fifth startup path—end-to-end program orchestration—is drafted in
+-`ORCHESTRATOR_MODE.md`. It is not active policy yet; use Startup Routing A-D
+-until the operator reviews and ratifies that mode.
++The fifth startup path—end-to-end program orchestration—is defined in
++`ORCHESTRATOR_MODE.md` and executed through the explicit `/orchestrate` skill.
++It never activates implicitly from an ordinary planning or implementation ask.
+@@ -186,0 +187,20 @@
++**E) Orchestrate an end-to-end program** (explicit `/orchestrate` invocation or
++an unmistakable mandate to coordinate multiple work items through the furthest
++authorized done state):
++1. Read `ORCHESTRATOR_MODE.md`, invoke the `orchestrate` skill, and lock the
++   goal, done definition, authority envelope, delivery topology, ceilings,
++   model/reasoning policy, operator gates, and stop conditions before dispatch.
++2. Maintain the coordinator-owned program, approval, verification, review, and
++   integration ledgers. Existing planning, implementation, review, approval,
++   and verification contracts remain authoritative for every child.
++3. Use fresh user-visible Codex desktop tasks rather than subagents. Keep one
++   implementation writer in V0; read-only tasks may run only within the
++   operator-confirmed ceiling. Worktree-parallel implementation remains off.
++4. Reconcile task handles and evidence, fence stale assignments and leases,
++   reuse the original reviewer for re-review, recover bounded stalls, and keep
++   safe critical-path work moving after informational operator exchanges.
++5. Stop only at the furthest authorized done state, an explicit operator gate
++   or pause, a directional/credential conflict, or a genuine exhausted blocker.
++   Pushes, PRs, provider/live/paid/destructive work, and activation changes keep
++   their existing per-action approval requirements.
++
+@@ -193 +213,2 @@
+-`re-review.md`, `external-pr-review.md`, `pr-body.md`, `post-plan-grill.md`.
++`re-review.md`, `external-pr-review.md`, `pr-body.md`, `post-plan-grill.md`,
++`orchestration.md`, `orchestration-assignment.md`.

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Orchestrate"
+  short_description: "Drive multi-task programs to authorized completion"
+  default_prompt: "Use $orchestrate to coordinate this multi-task program through planning, implementation, verification, review, and the next authorized gate."
+policy:
+  allow_implicit_invocation: false
