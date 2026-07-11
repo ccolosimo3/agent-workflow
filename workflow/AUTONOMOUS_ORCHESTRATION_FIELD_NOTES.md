@@ -644,3 +644,28 @@ with terminal child tasks, a released writer lease, a stale superseded review, a
 inner-approved candidate in `awaiting_outer`, and the activation approval still
 `requested`. Orchestrator Mode and the skill remain inactive pending the
 operator-owned outer gate and explicit activation approval.
+
+### 2026-07-10 — Outer review exposed certification-shaped false greens
+
+The first operator-owned outer implementation review was run in a clean detached
+worktree at committed tip `71be615`. It returned `ACTIONABLE` despite the inner
+loop's approval. Adversarial probes showed four load-bearing gaps: a fenced
+assignment could reacquire a writer lease; review identity was not bound to a
+distinct reconciled reviewer assignment; candidate verification IDs were not
+validated against current exact-tip evidence; and an altered `status.md` still
+reported `CURRENT`.
+
+The remediation binds leases to current unfenced assignments, declared owned
+paths, heartbeat, and expiry; binds review records to distinct worker/reviewer
+tasks and reconciled task handles; requires separate inner/outer roles and
+identities; requires the reviewed task's exact declared verification-command
+set with current assignment/environment/topology/tip evidence; applies explicit
+and topology invalidations; and compares every derived view against replayed
+state. The repair suite now contains seventeen behavioral tests, including
+fenced lease acquisition, self-review/duplicate outer identity, missing and
+wrong-tip verification, topology invalidation, and `status.md` corruption.
+
+Provisional lesson: an event log can be internally consistent while still
+certifying the wrong authority relationship. Recovery, review independence, and
+candidate promotion need adversarial tests that attempt to reuse plausible but
+stale or self-authored evidence—not just happy-path replay tests.

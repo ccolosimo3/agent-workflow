@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from common import add_task, append, event, init_program, run_script
+from common import add_task, append, assign_task, event, init_program, run_script
 from orchestrator_core import LedgerError
 
 
@@ -13,6 +13,7 @@ class RecoveryTests(unittest.TestCase):
             path = Path(td)
             init_program(path)
             add_task(path)
+            add_task(path, "reviewer")
             policy = {"policy_revision": 1, "mode": "auto", "route_classes": {"balanced": {"model": "terra", "max_reasoning": "xhigh"}}}
             append(path, event("P1", "model_policy_confirmed", payload=policy))
             route = {"model_policy_revision": 1, "route_class": "balanced", "model_id": "terra", "reasoning_effort": "high", "risk_class": "routine"}
@@ -23,7 +24,8 @@ class RecoveryTests(unittest.TestCase):
             with self.assertRaises(LedgerError):
                 append(path, event("P1", "dispatch_intent_recorded", task_id="T1", payload={"assignment_generation": 1, "idempotency_key": "K2"}))
             append(path, event("P1", "assignment_started", task_id="T1", payload={"assignment_generation": 1, "assignment_id": "A1", "idempotency_key": "K1", "task_handle": "thread-1", "model_policy_revision": 1, "model_route": {"route_class": "balanced", "model_id": "terra", "reasoning_effort": "high"}}))
-            append(path, event("P1", "review_recorded", task_id="T1", payload={"review_id": "R1", "review_unit": "task", "reviewer_task_id": "thread-1", "assignment_generation": 1, "verdict": "APPROVED", "tip": "one"}))
+            assign_task(path, "reviewer", "reviewer-thread")
+            append(path, event("P1", "review_recorded", task_id="T1", payload={"review_id": "R1", "review_unit": "task", "review_role": "inner", "reviewer_task_id": "reviewer-thread", "reviewer_assignment_task_id": "reviewer", "assignment_generation": 1, "verdict": "APPROVED", "tip": "one"}))
             with self.assertRaises(LedgerError):
                 append(path, event("P1", "assignment_continued", task_id="T1", payload={"assignment_generation": 2, "assignment_id": "stale-policy", "task_handle": "thread-1", "model_policy_revision": 999, "model_route": {"route_class": "balanced", "model_id": "terra", "reasoning_effort": "high"}}))
             with self.assertRaises(LedgerError):
@@ -48,6 +50,9 @@ class RecoveryTests(unittest.TestCase):
             self.assertEqual((rebuilt.returncode, rebuilt.stdout.strip()), (0, "REBUILT"))
             current = run_script("validate_program.py", "--check-views", str(path))
             self.assertEqual((current.returncode, current.stdout.strip()), (0, "CURRENT"))
+            path.joinpath("status.md").write_text("tampered\n")
+            stale_status = run_script("validate_program.py", "--check-views", str(path))
+            self.assertEqual((stale_status.returncode, stale_status.stdout.strip()), (3, "STALE_VIEW"))
 
 
 if __name__ == "__main__":

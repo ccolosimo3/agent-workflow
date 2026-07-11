@@ -21,10 +21,14 @@ state transition, payload, invalidations, and SHA-256 hash.
 - Work item: task state, dependencies, paths, verification, current tip.
 - Assignment: assignment ID/generation, Codex task handle, model route.
 - Approval: exact action, target/effect/cap/expiry, consumption state.
-- Lease: kind/scope/holder/generation/state/heartbeat/expiry.
-- Environment attestation: checkout/base/tools/ignored inputs/smoke/clean state.
-- Verification record: command, result, exact range/environment, freshness.
-- Review record: review unit, reviewer task ID, base/tip, verdict, freshness.
+- Lease: kind/scope/holder/generation/state/heartbeat/expiry; acquisition must
+  match the current unfenced assignment and fall within declared owned paths.
+- Environment attestation: checkout/base/tip/topology/assignment generation,
+  tools/ignored inputs/smoke/clean state, and freshness.
+- Verification record: declared command, passed result, exact tip/environment,
+  assignment/topology binding, task owner, and freshness.
+- Review record: review unit and role, reviewed task, reconciled reviewer
+  assignment/task handle, base/tip, verdict, and freshness.
 - Integration candidate: frozen child tips, merge order, gates, review IDs.
 - Recovery: old/new assignment, fencing, preserved evidence, reason.
 
@@ -61,4 +65,9 @@ explicit retry grant and non-bypassing retry anchor.
 
 Tip, topology, acceptance-contract, environment, route-policy, or assignment-
 generation changes invalidate dependent evidence. A stale review never certifies
-an integration candidate.
+an integration candidate. Candidate certification requires the exact declared
+verification-command set for the reviewed task, passed/current records on the
+candidate tip, an inner reviewer distinct from the implementation task, and—at
+`outer_approved`—a second review record with a distinct outer reviewer identity.
+All three derived views are compared byte-for-semantics against replayed state;
+an anchored but altered JSON view or any changed `status.md` is stale.

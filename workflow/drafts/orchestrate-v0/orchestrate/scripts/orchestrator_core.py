@@ -206,6 +206,40 @@ def _path_overlap(left: str, right: str) -> bool:
     return a == b or a in b.parents or b in a.parents
 
 
+def _thread_id(task: dict[str, Any]) -> str | None:
+    handle = task.get("task_handle")
+    if isinstance(handle, dict):
+        return handle.get("thread_id")
+    return handle if isinstance(handle, str) else None
+
+
+def _mark_stale(record: dict[str, Any], reason: str) -> None:
+    record["freshness"] = "stale"
+    record["invalidation_reason"] = reason
+
+
+def _invalidate_dependencies(state: dict[str, Any], references: list[str], reason: str) -> None:
+    for reference in references:
+        for collection in ("environment_attestations", "verification_records", "review_records"):
+            record = state[collection].get(reference)
+            if record is not None:
+                _mark_stale(record, reason)
+        candidate = state["integration_candidates"].get(reference)
+        if candidate is not None:
+            candidate["state"] = "stale"
+            candidate["invalidation_reason"] = reason
+
+
+def _invalidate_topology(state: dict[str, Any], reason: str) -> None:
+    for collection in ("environment_attestations", "verification_records", "review_records"):
+        for record in state[collection].values():
+            if record.get("freshness") != "stale":
+                _mark_stale(record, reason)
+    for candidate in state["integration_candidates"].values():
+        candidate["state"] = "stale"
+        candidate["invalidation_reason"] = reason
+
+
 def select_route(policy: dict[str, Any], complexity: str, risk_class: str = "routine") -> dict[str, str]:
     """Choose the lowest adequate allowed route from operator-confirmed policy."""
     table = {"low": ("fast", "medium"), "mechanical_multistep": ("fast", "high"), "routine": ("balanced", "high"), "moderate": ("balanced", "high"), "high": ("deep", "high")}
@@ -257,7 +291,7 @@ def apply_event(state: dict[str, Any], event: dict[str, Any]) -> None:
             state["resume_state"] = None
         state["next_action"] = payload.get("next_action", state.get("next_action", ""))
     elif etype == "task_added":
-        _fields(payload, {"title"}, {"title", "deliverable", "next_action", "failure", "dependencies", "risk_class"})
+        _fields(payload, {"title"}, {"title", "deliverable", "next_action", "failure", "dependencies", "risk_class", "role", "owned_paths", "verification_commands"})
         _require(task_id and task_id not in state["tasks"], "duplicate/missing task")
         task = copy.deepcopy(payload)
         task.update({"task_id": task_id, "state": "proposed", "assignment_generation": 0, "model_policy_revision": 0})
@@ -306,7 +340,7 @@ def apply_event(state: dict[str, Any], event: dict[str, Any]) -> None:
         intent["state"] = "reconciled"
         intent["task_handle"] = copy.deepcopy(payload.get("task_handle"))
         for review in state["review_records"].values():
-            if review.get("task_id") == task_id and review.get("freshness") == "fresh":
+            if (review.get("task_id") == task_id or review.get("reviewer_assignment_task_id") == task_id) and review.get("freshness") == "fresh":
                 review["freshness"] = "stale"
                 review["invalidation_reason"] = "assignment generation advanced"
     elif etype == "dispatch_intent_recorded":
@@ -352,7 +386,7 @@ def apply_event(state: dict[str, Any], event: dict[str, Any]) -> None:
         task["model_route"] = copy.deepcopy(proposed_route)
         task.pop("pending_model_route", None)
         for review in state["review_records"].values():
-            if review.get("task_id") == task_id and review.get("freshness") == "fresh":
+            if (review.get("task_id") == task_id or review.get("reviewer_assignment_task_id") == task_id) and review.get("freshness") == "fresh":
                 review["freshness"] = "stale"
                 review["invalidation_reason"] = "assignment generation advanced"
     elif etype == "model_policy_confirmed":
@@ -410,23 +444,58 @@ def apply_event(state: dict[str, Any], event: dict[str, Any]) -> None:
         if approval["consumed_amount"] == cap:
             approval["state"] = "consumed"
     elif etype == "lease_acquired":
-        _fields(payload, {"lease_id", "mode", "scope", "owner", "assignment_generation"}, {"lease_id", "mode", "scope", "owner", "assignment_generation", "expires_at"})
+        _fields(payload, {"lease_id", "mode", "scope", "owner", "assignment_generation", "heartbeat_at", "expires_at"}, {"lease_id", "mode", "scope", "owner", "assignment_generation", "heartbeat_at", "expires_at"})
+        _require(task_id in state["tasks"], "lease owner task is unknown")
+        task = state["tasks"][task_id]
+        generation = int(payload["assignment_generation"])
+        _require(payload["owner"] == task_id, "lease owner does not match scoped task")
+        _require(generation > 0 and generation == int(task.get("assignment_generation", 0)), "lease assignment generation is stale")
+        _require(task.get("fenced_generation") != generation, "fenced assignment cannot acquire a lease")
+        owned_paths = task.get("owned_paths", [])
+        _require(bool(owned_paths) and any(Path(payload["scope"]) == Path(root) or Path(root) in Path(payload["scope"]).parents for root in owned_paths), "lease scope is outside task ownership")
+        heartbeat = datetime.fromisoformat(payload["heartbeat_at"].replace("Z", "+00:00"))
+        occurred = datetime.fromisoformat(event["occurred_at"].replace("Z", "+00:00"))
+        expires = datetime.fromisoformat(payload["expires_at"].replace("Z", "+00:00"))
+        _require(heartbeat <= occurred < expires, "lease heartbeat/expiry window is invalid")
         lid = payload["lease_id"]
         _require(lid not in state["leases"], "duplicate lease")
         if payload.get("mode") == "write":
             for lease in state["leases"].values():
                 _require(not (lease.get("state") == "active" and lease.get("mode") == "write" and _path_overlap(lease.get("scope"), payload.get("scope"))), "overlapping writer lease")
         state["leases"][lid] = {**copy.deepcopy(payload), "state": "active"}
+    elif etype == "lease_heartbeat":
+        _fields(payload, {"lease_id", "assignment_generation", "heartbeat_at", "expires_at"}, {"lease_id", "assignment_generation", "heartbeat_at", "expires_at"})
+        lease = state["leases"].get(payload["lease_id"])
+        _require(lease and lease["state"] == "active", "lease is not active")
+        _require(task_id == lease["owner"] and task_id in state["tasks"], "lease heartbeat owner mismatch")
+        task = state["tasks"][task_id]
+        generation = int(payload["assignment_generation"])
+        _require(generation == int(lease["assignment_generation"]) == int(task.get("assignment_generation", 0)), "lease heartbeat generation is stale")
+        _require(task.get("fenced_generation") != generation, "fenced assignment cannot heartbeat a lease")
+        heartbeat = datetime.fromisoformat(payload["heartbeat_at"].replace("Z", "+00:00"))
+        prior_heartbeat = datetime.fromisoformat(lease["heartbeat_at"].replace("Z", "+00:00"))
+        occurred = datetime.fromisoformat(event["occurred_at"].replace("Z", "+00:00"))
+        expires = datetime.fromisoformat(payload["expires_at"].replace("Z", "+00:00"))
+        _require(prior_heartbeat < heartbeat <= occurred < expires, "lease heartbeat/expiry window is invalid")
+        lease.update({"heartbeat_at": payload["heartbeat_at"], "expires_at": payload["expires_at"]})
     elif etype in {"lease_released", "lease_revoked", "lease_expired"}:
         _fields(payload, {"lease_id"}, {"lease_id", "reason"})
         lease = state["leases"].get(payload["lease_id"])
         _require(lease and lease["state"] == "active", "lease is not active")
         lease["state"] = etype.split("_")[1]
     elif etype == "review_recorded":
-        _fields(payload, {"review_id", "review_unit", "reviewer_task_id", "assignment_generation", "verdict", "tip"}, {"review_id", "review_unit", "reviewer_task_id", "assignment_generation", "verdict", "tip", "base", "resolves", "finding"})
+        _fields(payload, {"review_id", "review_unit", "review_role", "reviewer_task_id", "reviewer_assignment_task_id", "assignment_generation", "verdict", "tip"}, {"review_id", "review_unit", "review_role", "reviewer_task_id", "reviewer_assignment_task_id", "assignment_generation", "verdict", "tip", "base", "resolves", "finding"})
         _require(payload["assignment_generation"] > 0, "review requires active assignment generation")
         _require(task_id in state["tasks"], "review requires scoped task")
-        _require(payload["assignment_generation"] == state["tasks"][task_id]["assignment_generation"], "review assignment generation is stale")
+        reviewer_assignment_task_id = payload["reviewer_assignment_task_id"]
+        _require(reviewer_assignment_task_id in state["tasks"], "reviewer assignment task is unknown")
+        _require(reviewer_assignment_task_id != task_id, "reviewer cannot review its own task")
+        reviewer_task = state["tasks"][reviewer_assignment_task_id]
+        generation = int(payload["assignment_generation"])
+        _require(generation == int(reviewer_task.get("assignment_generation", 0)), "review assignment generation is stale")
+        _require(reviewer_task.get("fenced_generation") != generation, "fenced reviewer assignment cannot record a review")
+        _require(payload["reviewer_task_id"] == _thread_id(reviewer_task), "reviewer identity is not bound to its reconciled task handle")
+        _require(payload["review_role"] in {"inner", "outer"}, "invalid review role")
         _require(payload["verdict"] in {"APPROVED", "ACTIONABLE"}, "invalid review verdict")
         rid = payload["review_id"]
         _require(rid not in state["review_records"], "duplicate review")
@@ -462,29 +531,76 @@ def apply_event(state: dict[str, Any], event: dict[str, Any]) -> None:
             _require(task.get("task_handle", {}).get("thread_id") == payload["thread_id"], "archived handle is not current")
             task["task_handle"]["state"] = "archived"
     elif etype == "environment_attested":
-        _fields(payload, {"id", "task_id", "checkout", "base", "commands", "ready"}, {"id", "task_id", "checkout", "base", "commands", "ready", "evidence", "dirty_state"})
+        _fields(payload, {"id", "task_id", "checkout", "base", "tip", "assignment_generation", "topology_revision", "commands", "ready"}, {"id", "task_id", "checkout", "base", "tip", "assignment_generation", "topology_revision", "commands", "ready", "evidence", "dirty_state"})
         _require(payload["task_id"] in state["tasks"], "environment attestation task is unknown")
+        task = state["tasks"][payload["task_id"]]
+        generation = int(payload["assignment_generation"])
+        _require(generation > 0 and generation == int(task.get("assignment_generation", 0)), "environment assignment generation is stale")
+        _require(task.get("fenced_generation") != generation, "fenced assignment cannot attest an environment")
+        _require(payload["topology_revision"] == state["topology_revision"], "environment topology revision is stale")
+        _require(bool(payload["tip"]), "environment tip binding is missing")
         _require(payload["ready"] is True and bool(payload["commands"]), "environment attestation is not ready")
         _require(all(isinstance(item, dict) and item.get("command") and item.get("result") == "passed" and item.get("exit_code") == 0 and item.get("output_sha256") for item in payload["commands"]), "environment commands lack passed result evidence")
         _require(Path(payload["checkout"]).is_absolute() and Path(payload["checkout"]).is_dir() and bool(payload["base"]), "environment checkout/base evidence is invalid")
         _require(payload.get("dirty_state") in {"clean", "known"} and bool(payload.get("evidence")), "environment clean-state evidence is missing")
-        state["environment_attestations"][payload["id"]] = copy.deepcopy(payload)
+        for attestation in state["environment_attestations"].values():
+            if attestation.get("task_id") == payload["task_id"] and attestation.get("freshness") != "stale":
+                _mark_stale(attestation, "environment claim changed")
+        for collection in ("verification_records", "review_records"):
+            for record in state[collection].values():
+                if record.get("task_id") == payload["task_id"] and record.get("freshness") != "stale":
+                    _mark_stale(record, "environment claim changed")
+        state["environment_attestations"][payload["id"]] = {**copy.deepcopy(payload), "freshness": "fresh"}
     elif etype == "candidate_recorded":
-        _fields(payload, {"id", "tip", "inner_review_id", "state"}, {"id", "tip", "inner_review_id", "outer_review_id", "state", "child_tips", "merge_order", "verification_ids"})
+        _fields(payload, {"id", "tip", "inner_review_id", "state", "verification_ids"}, {"id", "tip", "inner_review_id", "outer_review_id", "state", "child_tips", "merge_order", "verification_ids"})
         review_keys = ("inner_review_id",) if payload["state"] == "awaiting_outer" else ("inner_review_id", "outer_review_id")
         _require(payload["state"] in {"awaiting_outer", "outer_approved"}, "invalid candidate state")
+        _require(bool(payload["verification_ids"]), "candidate requires verification evidence")
         if payload["state"] == "awaiting_outer":
             _require(not payload.get("outer_review_id"), "awaiting_outer candidate cannot claim outer review")
+        reviews = []
         for key in review_keys:
             review = state["review_records"].get(payload[key])
             _require(review and review["verdict"] == "APPROVED" and review["freshness"] == "fresh" and review["tip"] == payload["tip"], f"candidate {key} is not fresh approved exact-tip evidence")
+            reviews.append(review)
+        _require(reviews[0].get("review_role") == "inner", "candidate inner review has wrong role")
+        if payload["state"] == "outer_approved":
+            _require(reviews[1].get("review_role") == "outer", "candidate outer review has wrong role")
+            _require(payload["inner_review_id"] != payload["outer_review_id"], "candidate reviews must be distinct records")
+            _require(reviews[0]["reviewer_task_id"] != reviews[1]["reviewer_task_id"], "candidate reviews require distinct reviewer identities")
+        for verification_id in payload["verification_ids"]:
+            verification = state["verification_records"].get(verification_id)
+            _require(verification and verification.get("result") == "passed" and verification.get("freshness") == "fresh", "candidate verification is missing, failed, or stale")
+            _require(verification.get("tip") == payload["tip"], "candidate verification is for the wrong tip")
+            _require(verification.get("topology_revision") == state["topology_revision"], "candidate verification topology is stale")
+        subject_task_ids = {review["task_id"] for review in reviews}
+        expected_commands = {
+            command
+            for subject_task_id in subject_task_ids
+            for command in state["tasks"][subject_task_id].get("verification_commands", [])
+        }
+        provided_records = [state["verification_records"][verification_id] for verification_id in payload["verification_ids"]]
+        _require(bool(expected_commands), "candidate subject has no declared verification contract")
+        _require({record["command"] for record in provided_records} == expected_commands, "candidate verification set does not match declared commands")
+        _require(all(record["task_id"] in subject_task_ids for record in provided_records), "candidate verification belongs to the wrong task")
         state["integration_candidates"][payload["id"]] = copy.deepcopy(payload)
-    elif etype in {"verification_recorded", "decision_recorded", "recovery_recorded"}:
-        required = {"verification_recorded": {"id", "command", "result", "tip"}, "decision_recorded": {"id", "decision"}, "recovery_recorded": {"id", "kind"}}[etype]
+    elif etype == "verification_recorded":
+        _fields(payload, {"id", "command", "result", "tip", "assignment_generation", "environment_attestation_id", "topology_revision"}, {"id", "command", "result", "tip", "assignment_generation", "environment_attestation_id", "topology_revision"})
+        _require(task_id in state["tasks"], "verification task is unknown")
+        task = state["tasks"][task_id]
+        generation = int(payload["assignment_generation"])
+        _require(generation > 0 and generation == int(task.get("assignment_generation", 0)), "verification assignment generation is stale")
+        _require(task.get("fenced_generation") != generation, "fenced assignment cannot record verification")
+        _require(payload["result"] == "passed", "verification did not pass")
+        _require(payload["topology_revision"] == state["topology_revision"], "verification topology revision is stale")
+        attestation = state["environment_attestations"].get(payload["environment_attestation_id"])
+        _require(attestation and attestation.get("freshness") == "fresh" and attestation.get("task_id") == task_id, "verification environment evidence is missing or stale")
+        _require(attestation.get("assignment_generation") == generation, "verification environment assignment is stale")
+        state["verification_records"][payload["id"]] = {**copy.deepcopy(payload), "task_id": task_id, "freshness": "fresh"}
+    elif etype in {"decision_recorded", "recovery_recorded"}:
+        required = {"decision_recorded": {"id", "decision"}, "recovery_recorded": {"id", "kind"}}[etype]
         _require(not (required - payload.keys()), f"missing fields: {sorted(required - payload.keys())}")
         collection = {
-            "environment_attested": "environment_attestations",
-            "verification_recorded": "verification_records",
             "decision_recorded": "decisions",
             "recovery_recorded": "recoveries",
         }[etype]
@@ -492,6 +608,14 @@ def apply_event(state: dict[str, Any], event: dict[str, Any]) -> None:
         state[collection][key] = copy.deepcopy(payload)
     else:
         raise LedgerError(f"unknown event type: {etype}")
+
+    event_topology = int(event.get("topology_revision", state["topology_revision"]))
+    if event_topology != state["topology_revision"]:
+        _require(event_topology == state["topology_revision"] + 1, "topology revision must increment by one")
+        state["topology_revision"] = event_topology
+        _invalidate_topology(state, "topology revision changed")
+    if event.get("invalidates"):
+        _invalidate_dependencies(state, event["invalidates"], f"invalidated by event {event['event_id']}")
 
     state["last_event_id"] = event["event_id"]
     state["last_event_hash"] = event["event_hash"]
@@ -603,8 +727,16 @@ def append_event(
 def view_status(program_dir: Path) -> str:
     events = load_events(program_dir)
     state = replay(events)
-    expected = (state["last_event_id"], state["last_event_hash"])
-    for name in ("program.json", "approvals.json"):
+    expected_views = {
+        "program.json": {k: v for k, v in state.items() if k != "approvals"},
+        "approvals.json": {
+            "schema_version": SCHEMA_VERSION,
+            "last_event_id": state["last_event_id"],
+            "last_event_hash": state["last_event_hash"],
+            "approvals": state["approvals"],
+        },
+    }
+    for name, expected_view in expected_views.items():
         path = program_dir / name
         if not path.exists():
             return "STALE_VIEW"
@@ -612,9 +744,15 @@ def view_status(program_dir: Path) -> str:
             view = json.loads(path.read_text())
         except (json.JSONDecodeError, OSError):
             return "STALE_VIEW"
-        if (view.get("last_event_id"), view.get("last_event_hash")) != expected:
+        if view != expected_view:
             return "STALE_VIEW"
-    if not (program_dir / "status.md").exists():
+    status_path = program_dir / "status.md"
+    if not status_path.exists():
+        return "STALE_VIEW"
+    try:
+        if status_path.read_text() != render_status(state):
+            return "STALE_VIEW"
+    except OSError:
         return "STALE_VIEW"
     return "CURRENT"
 

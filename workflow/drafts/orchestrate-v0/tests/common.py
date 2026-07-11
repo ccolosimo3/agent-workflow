@@ -26,8 +26,30 @@ def add_task(path: Path, task_id: str = "T1") -> dict:
         "event_type": "task_added",
         "program_id": events[0]["program_id"],
         "task_id": task_id,
-        "payload": {"title": task_id, "deliverable": "result", "next_action": "plan"},
+        "payload": {"title": task_id, "deliverable": "result", "next_action": "plan", "owned_paths": ["src"], "verification_commands": ["smoke"]},
     }, events[-1]["event_hash"], replay(events)["coordinator_generation"])
+
+
+def confirm_policy(path: Path) -> dict:
+    return append(path, event("P1", "model_policy_confirmed", payload={
+        "policy_revision": 1,
+        "mode": "auto",
+        "route_classes": {"balanced": {"model": "terra", "max_reasoning": "xhigh"}},
+    }))
+
+
+def assign_task(path: Path, task_id: str, thread_id: str) -> dict:
+    route = {"model_policy_revision": 1, "route_class": "balanced", "model_id": "terra", "reasoning_effort": "high"}
+    append(path, event("P1", "model_route_selected", task_id=task_id, payload=route))
+    append(path, event("P1", "dispatch_intent_recorded", task_id=task_id, payload={"assignment_generation": 1, "idempotency_key": f"K-{task_id}"}))
+    return append(path, event("P1", "assignment_started", task_id=task_id, payload={
+        "assignment_generation": 1,
+        "assignment_id": f"A-{task_id}",
+        "idempotency_key": f"K-{task_id}",
+        "task_handle": {"thread_id": thread_id},
+        "model_policy_revision": 1,
+        "model_route": {"route_class": "balanced", "model_id": "terra", "reasoning_effort": "high"},
+    }))
 
 
 def append(path: Path, event: dict) -> dict:
