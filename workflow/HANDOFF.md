@@ -159,6 +159,24 @@ A kickoff is stale the moment its tip SHA is no longer HEAD. Never hand a
 reviewer a stale kickoff — re-populate and re-emit (`implreview` emit-only), or
 use `outerreview`, which computes its own range at invocation time.
 
+## Orchestrated Desktop-Task Handoffs (V0 Draft)
+
+This mechanism remains inactive until Orchestrator Mode activation. The
+orchestrator creates exactly one fresh user-visible Codex desktop task for each
+review unit, using the canonical kickoff verbatim plus the orchestration
+assignment block. It records the reviewer task ID and continues that same task
+for re-review. Subagents are not used by Orchestrator V0.
+
+If a reviewer task is unreachable, the coordinator attempts one exact-task
+follow-up, persists the handoff, fences the old assignment generation, and
+creates exactly one replacement. Visibility is not resumability.
+
+A combined delivery with cross-child contracts or integration-owned changes is
+a distinct `integrated_candidate` review unit. Child reviews do not certify that
+candidate. It receives one holistic inner reviewer on the exact candidate tip,
+then the existing operator-owned outer gate. Any changed tip invalidates the
+affected verdict and returns through the normal re-review path.
+
 ## Independence seal
 
 The outer-gate reviewer must not see prior findings: `outerreview` never

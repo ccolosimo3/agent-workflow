@@ -1,0 +1,20 @@
+{
+  "schema_version": 0,
+  "scenario_id": "orchestrator-v0-two-task",
+  "authority": {"mode": "read_only_offline", "writers": 1, "operator_gates": ["outer_gate"]},
+  "routing": {"research": {"class": "balanced", "reasoning": "high"}, "review": {"class": "deep", "reasoning": "high", "escalated_reasoning": "xhigh"}},
+  "tasks": [
+    {"task_id": "research", "class": "balanced", "failure": "environment_blocked"},
+    {"task_id": "review", "class": "deep", "failure": "stale_tip"}
+  ],
+  "injections": [
+    "informational_status",
+    "environment_repair",
+    "stale_review",
+    "controlled_reviewer_replacement",
+    "model_escalation",
+    "outer_gate"
+  ],
+  "expected_operator_gates": ["outer_gate"]
+  ,"expected_mechanisms": ["authority_lock", "dispatch", "writer_lease", "environment_attestation", "verification", "review_invalidation", "assignment_fence", "route_escalation", "replacement_dispatch", "candidate_certification", "operator_gate"]
+}

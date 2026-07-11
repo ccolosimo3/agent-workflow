@@ -1,0 +1,295 @@
+{
+  "authority": {},
+  "coordinator_generation": 1,
+  "decisions": {},
+  "done_definition": [],
+  "environment_attestations": {},
+  "goal": "Reconciled observed desktop task operations under V0 fencing.",
+  "host_operations": {
+    "op-1": {
+      "arguments": {
+        "model": "gpt-5.6-terra",
+        "read_only": true,
+        "task_id": "research",
+        "thinking": "medium"
+      },
+      "linked_event_id": 7,
+      "operation": "create_thread",
+      "operation_id": "op-1",
+      "result": {
+        "accepted": true,
+        "thread_id": "019f4e9a-670d-7fa2-98e3-20638c4b0b17"
+      },
+      "task_id": "research",
+      "thread_id": "019f4e9a-670d-7fa2-98e3-20638c4b0b17"
+    },
+    "op-10": {
+      "arguments": {
+        "archived": true,
+        "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+      },
+      "linked_event_id": 52,
+      "operation": "set_thread_archived",
+      "operation_id": "op-10",
+      "result": {
+        "archived": true
+      },
+      "task_id": "review",
+      "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+    },
+    "op-2": {
+      "arguments": {
+        "thread_id": "019f4e9a-670d-7fa2-98e3-20638c4b0b17"
+      },
+      "linked_event_id": 7,
+      "operation": "read_thread",
+      "operation_id": "op-2",
+      "result": {
+        "marker": "PILOT_RESEARCH_COMPLETE",
+        "status": "completed"
+      },
+      "task_id": "research",
+      "thread_id": "019f4e9a-670d-7fa2-98e3-20638c4b0b17"
+    },
+    "op-3": {
+      "arguments": {
+        "model": "gpt-5.6-sol",
+        "read_only": true,
+        "task_id": "review",
+        "thinking": "high"
+      },
+      "linked_event_id": 10,
+      "operation": "create_thread",
+      "operation_id": "op-3",
+      "result": {
+        "accepted": true,
+        "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+      },
+      "task_id": "review",
+      "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+    },
+    "op-4": {
+      "arguments": {
+        "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+      },
+      "linked_event_id": 12,
+      "operation": "read_thread",
+      "operation_id": "op-4",
+      "result": {
+        "marker": "PILOT_REVIEW_COMPLETE",
+        "status": "completed",
+        "verdict": "APPROVED"
+      },
+      "task_id": "review",
+      "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+    },
+    "op-5": {
+      "arguments": {
+        "assignment_generation": 2,
+        "model": "gpt-5.6-sol",
+        "thinking": "xhigh",
+        "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+      },
+      "linked_event_id": 15,
+      "operation": "send_message_to_thread",
+      "operation_id": "op-5",
+      "result": {
+        "accepted": true,
+        "same_thread": true
+      },
+      "task_id": "review",
+      "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+    },
+    "op-6": {
+      "arguments": {
+        "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+      },
+      "linked_event_id": 16,
+      "operation": "read_thread",
+      "operation_id": "op-6",
+      "result": {
+        "marker": "PILOT_REREVIEW_COMPLETE",
+        "status": "completed",
+        "verdict": "ACTIONABLE"
+      },
+      "task_id": "review",
+      "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+    },
+    "op-7": {
+      "arguments": {
+        "assignment_generation": 3,
+        "model": "gpt-5.6-sol",
+        "thinking": "high",
+        "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+      },
+      "linked_event_id": 19,
+      "operation": "send_message_to_thread",
+      "operation_id": "op-7",
+      "result": {
+        "accepted": true,
+        "same_thread": true
+      },
+      "task_id": "review",
+      "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+    },
+    "op-8": {
+      "arguments": {
+        "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+      },
+      "linked_event_id": 20,
+      "operation": "read_thread",
+      "operation_id": "op-8",
+      "result": {
+        "marker": "PILOT_FIX_REREVIEW_COMPLETE",
+        "status": "completed",
+        "verdict": "APPROVED"
+      },
+      "task_id": "review",
+      "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+    },
+    "op-9": {
+      "arguments": {
+        "archived": true,
+        "thread_id": "019f4e9a-670d-7fa2-98e3-20638c4b0b17"
+      },
+      "linked_event_id": 51,
+      "operation": "set_thread_archived",
+      "operation_id": "op-9",
+      "result": {
+        "archived": true
+      },
+      "task_id": "research",
+      "thread_id": "019f4e9a-670d-7fa2-98e3-20638c4b0b17"
+    }
+  },
+  "integration_candidates": {},
+  "last_event_hash": "51260af48aec1603147ed77509b8c68ab6ba8fabaa628acdfa377d36b3f020a4",
+  "last_event_id": 52,
+  "last_status": {
+    "continued": true,
+    "message_kind": "informational",
+    "next_action": "continue pilot",
+    "operator_message": "what will the classes look like?"
+  },
+  "leases": {},
+  "model_routing": {
+    "mode": "auto",
+    "policy_revision": 1,
+    "route_classes": {
+      "balanced": {
+        "max_reasoning": "xhigh",
+        "model": "gpt-5.6-terra"
+      },
+      "deep": {
+        "max_reasoning": "xhigh",
+        "model": "gpt-5.6-sol"
+      },
+      "fast": {
+        "max_reasoning": "high",
+        "model": "gpt-5.6-luna"
+      }
+    }
+  },
+  "next_action": "reconcile observed operations",
+  "program_id": "ORCH-V0-HOST",
+  "recoveries": {},
+  "repo": {},
+  "resume_state": null,
+  "review_records": {
+    "R1": {
+      "assignment_generation": 1,
+      "freshness": "stale",
+      "invalidation_reason": "assignment generation advanced",
+      "review_id": "R1",
+      "review_unit": "continuity",
+      "reviewer_task_id": "019f4e9a-685e-7f31-8918-739b9ce16474",
+      "task_id": "review",
+      "tip": "v1",
+      "verdict": "APPROVED"
+    },
+    "R2": {
+      "assignment_generation": 2,
+      "freshness": "stale",
+      "invalidation_reason": "assignment generation advanced",
+      "review_id": "R2",
+      "review_unit": "crash-window",
+      "reviewer_task_id": "019f4e9a-685e-7f31-8918-739b9ce16474",
+      "task_id": "review",
+      "tip": "v2",
+      "verdict": "ACTIONABLE"
+    },
+    "R3": {
+      "assignment_generation": 3,
+      "freshness": "fresh",
+      "review_id": "R3",
+      "review_unit": "dispatch-intent-fix",
+      "reviewer_task_id": "019f4e9a-685e-7f31-8918-739b9ce16474",
+      "task_id": "review",
+      "tip": "v3",
+      "verdict": "APPROVED"
+    }
+  },
+  "schema_version": 0,
+  "state": "draft",
+  "tasks": {
+    "research": {
+      "assignment_generation": 1,
+      "assignment_id": "research-1",
+      "dispatch_intent": {
+        "assignment_generation": 1,
+        "idempotency_key": "host:research:1",
+        "state": "reconciled",
+        "task_handle": {
+          "state": "active",
+          "thread_id": "019f4e9a-670d-7fa2-98e3-20638c4b0b17"
+        }
+      },
+      "model_policy_revision": 1,
+      "model_route": {
+        "model_id": "gpt-5.6-terra",
+        "reasoning_effort": "medium",
+        "route_class": "balanced"
+      },
+      "next_action": "complete",
+      "state": "complete",
+      "task_handle": {
+        "state": "archived",
+        "thread_id": "019f4e9a-670d-7fa2-98e3-20638c4b0b17"
+      },
+      "task_id": "research",
+      "title": "Routing research"
+    },
+    "review": {
+      "assignment_generation": 3,
+      "assignment_id": "review-3",
+      "dispatch_intent": {
+        "assignment_generation": 1,
+        "idempotency_key": "host:review:1",
+        "state": "reconciled",
+        "task_handle": {
+          "state": "active",
+          "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+        }
+      },
+      "fenced_generation": 2,
+      "model_policy_revision": 1,
+      "model_route": {
+        "model_id": "gpt-5.6-sol",
+        "reasoning_effort": "high",
+        "route_class": "deep"
+      },
+      "next_action": "complete",
+      "state": "complete",
+      "task_handle": {
+        "state": "archived",
+        "thread_id": "019f4e9a-685e-7f31-8918-739b9ce16474"
+      },
+      "task_id": "review",
+      "title": "Reviewer continuity"
+    }
+  },
+  "title": "Desktop task host pilot",
+  "topology_revision": 1,
+  "updated_at": "2026-07-11T01:20:19.198538Z",
+  "verification_records": {}
+}

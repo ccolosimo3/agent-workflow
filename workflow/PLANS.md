@@ -69,6 +69,31 @@ Do not fold every slice back into `README.md`. Instead:
 If a `future/` item becomes actionable, promote it to its own folder under
 `active/` or `backlog/`.
 
+## Multi-Task Program Folders (Orchestrator V0 Draft)
+
+This is inactive until Orchestrator Mode is activated. A reviewed V0 pilot may
+use one umbrella work-item folder containing the living program spec plus
+coordinator-owned operational state:
+
+```text
+active/<PROGRAM-ID>-<short-name>/
+  README.md
+  events.jsonl
+  program.json
+  approvals.json
+  status.md
+  integration.md
+  verification.md
+  reviews.md
+  tasks/
+  artifacts/
+```
+
+`INDEX.md` remains the roadmap authority and `README.md` remains the living spec.
+`events.jsonl` is the operational source of truth; JSON/Markdown views are
+generated and never become a second roadmap. Only the coordinator writes the
+ledger. Child folders/specs retain their normal PLANS lifecycle.
+
 ## Frontmatter Template
 
 Every new plan doc starts with YAML frontmatter:
