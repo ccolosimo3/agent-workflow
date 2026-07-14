@@ -11,9 +11,8 @@ workflow bootstrap, not repository policy.
 - Tracked repo/company/security instructions are authoritative over this kernel.
 - If a repo root contains `AGENTS.local.md`, read it before substantive work as
   a local-only workflow adapter.
-- Read `~/.agents/workflow/OPERATOR.local.md` if present for operator identity and
-  context (who you're working for, handles, teams); it is git-excluded and
-  local-only — never commit it.
+- Read `~/.agents/workflow/OPERATOR.local.md` for operator identity and context
+  (who you're working for, handles, teams).
 - Local adapters are additive; on conflict with tracked repo rules, the tracked
   rule wins (see Precedence).
 - Do not commit local workflow adapters, personal paths, credentials, or kernel
