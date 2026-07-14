@@ -92,39 +92,14 @@ Destructive Action Policy applies to anything beyond that.
    digging silently. Do NOT auto-invoke specreview or start implementation; the
    GO/NO-GO direction is the operator's to act on.
 
-## Guardrails
+## Guardrails (not already in the steps)
 
-- Disposable & read-only by default: throwaway scaffolding removed after; no
-  production code, branch, tracker mutation, or provider/hosted state. Local-only
-  mutations on disposable local state need an operator OK and a note; hosted/
-  staging/prod reindex, migrate, deploy, or seed are operator-gated, never run by
-  the agent.
-- Local-target is not side-effect-free: even against a local stack, bootstrapping
-  a service or hitting an init path can create keys, write global settings, or
-  mutate local config. Confirm the path is side-effect-free or guard it before any
-  runtime service call; if you can't, narrow the GO to source-proven coupling and
-  defer the live service-call proof to the implementation phase.
-- Prove the riskiest assumption at the real boundary; never let a green mock
-  stand in for the core bet, and name each proof's boundary.
-- The proof must be falsifiable against an oracle — a result that can't fail
-  isn't proof.
-- Honor the box: if it won't prove out in the stated time/scope, call NO-GO or
-  escalate rather than expanding the spike into an implementation.
+The When-invoked procedure above is binding; these are the points it does not
+already make recoverable:
 
-## Failure modes
-
-- Claiming a green mocked/unit suite as proof of the core bet — it proves
-  plumbing, not the live behavior. The riskiest assumption stays unproven.
-- A self-confirming proof: the "oracle" uses the same incomplete constraints as
-  the thing under test, so it can't fail.
-- A green exit that skipped the real work — e.g. a reindex that exits 0 but never
-  touched the live index, or an e2e that passed against a mock. Inspect the output
-  and confirm the boundary actually ran; a zero exit code is not proof.
-- Proving the easy part (delegation, clause construction) and quietly leaving the
-  actual risk (live ordering, coupling, persistence) untested.
-- Leaving durable changes behind: a branch, an uncommitted production edit, or
-  scaffolding not removed.
-- Running a hosted/provider mutation, or a local data mutation, without approval.
-- Digging past the box instead of calling NO-GO; or sliding from proof into
-  implementation.
-- Re-mapping approaches instead of proving the chosen one — that is `explore`.
+- **Local-target is not side-effect-free:** even against a local stack,
+  bootstrapping a service or hitting an init path can create keys, write global
+  settings, or mutate local config. Confirm the path is side-effect-free or guard
+  it before any runtime service call; if you can't, narrow the GO to source-proven
+  coupling and defer the live service-call proof to the implementation phase.
+- Re-mapping approaches instead of proving the chosen one is `explore`, not spike.

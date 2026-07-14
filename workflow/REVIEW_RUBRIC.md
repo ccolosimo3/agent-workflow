@@ -72,7 +72,8 @@ it did not, resolve them yourself:
     clearsnake-mobile: `mobile/VERIFICATION.md`.
 
 If you cannot open a doc in this environment, say so explicitly and fall back to
-the kernel "Test Quality Floor" anti-pattern list — do not silently skip this. Cite
+the kernel "Test Quality Floor" principles (the enumerated anti-pattern table lives
+in TESTING.md Part 2) — do not silently skip this. Cite
 the specific rule (file + section) any conformance or test-quality finding
 violates; if no documented rule covers it, do not raise it as ACTIONABLE convention
 drift.

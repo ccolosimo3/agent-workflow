@@ -42,10 +42,9 @@ below; this file adds only the re-review specifics.
 3. **Gather the patch context**: `git log --oneline <base>..HEAD`,
    `git diff --stat <base>..HEAD`, and any per-finding resolution summary the
    implementer already posted in chat.
-4. **Populate** (fresh-fallback path; when reusing the original reviewer, hand it
-   just the findings verbatim + base/tip range + resolution notes): work item / PR
-   / branch / base links; prior verdict + source kickoff pointer; findings
-   verbatim; base/tip SHAs, commit list, diff stat; implementer notes if available.
+4. **Populate**: on the fresh-fallback path fill the kickoff's placeholders per
+   its own annotations; when reusing the original reviewer, hand it just the
+   findings verbatim + base/tip range + resolution notes.
 
 ## Failure modes
 

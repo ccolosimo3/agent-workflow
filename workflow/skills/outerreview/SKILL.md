@@ -15,46 +15,45 @@ description: Run the operator-owned outer-gate second review of their OWN
 
 # outerreview
 
-The outer gate of the two-review flow (sequencing and independence rules:
-`~/.agents/workflow/HANDOFF.md`). This skill runs in a FRESH conversation in
-the app that did NOT implement — the conversation itself is the fresh-context
-reviewer, so do the review here in the main thread; do not spawn a subagent.
-Its verdict certifies the final tip for the kernel's two-approved-verdicts
-gate.
+The outer gate of the two-review flow. Apply the shared
+`~/.agents/workflow/HANDOFF.md` "Outer-gate protocol" for the mechanics every
+outer gate shares — conversation-is-the-reviewer / no subagent (do the review
+here in the main thread), self-populate from filesystem + live range (never a
+paste; staleness = failure), the independence seal, the populated kickoff is
+INTERNAL orientation you do NOT print, the carry-back return shape, and the
+strict verdict (no softening, an early pre-convergence read never counts). This
+skill keeps only the code-review specifics below. Its verdict certifies the
+final tip for the kernel's two-approved-verdicts gate.
 
 ## When invoked
+
+Everything the outer gates share (independence seal, self-populate-never-paste,
+kickoff-is-internal, carry-back shape, strict verdict) is in HANDOFF.md
+"Outer-gate protocol"; the steps below are only the code-review specifics.
 
 1. **Preflight (read-only).** `git status --short --branch` in the repo root
    (operator-given, or the current working directory). Do not switch branches
    or edit the working tree — it is the implementer's checkout. If the tree
    is dirty or the branch looks like it is mid-loop, stop and ask: this skill
    reviews a converged, committed candidate.
-2. **Locate the work item.** From the operator's pointer, or auto-detect: the
-   branch's issue key → the repo's local plans folder (e.g.
+2. **Auto-detect the work item.** From the operator's pointer, or the branch's
+   issue key → the repo's local plans folder (e.g.
    `<root>/.agent-workflow/plans/active/<ISSUE>-*/`). Read the spec
    (`README.md` acceptance criteria + implementation directions) and the
-   folder's `verification.md` / `PR_BODY.md` if present.
-3. **Independence seal (hard rule).** Do NOT read `reviews.md`, prior
-   verdicts, or prior kickoff prompts — in the folder or in chat. If the
-   operator pasted inner-loop findings, set them aside unread; this review
-   must not be anchored by what the first lens found. (If they explicitly
-   want a re-review against findings, that is `implrereview` in the
-   implementer session, not this skill.)
-4. **Compute the live range yourself.** base = `git merge-base` of HEAD with
-   the repo's integration branch (named by the repo shim, e.g. `origin/dev`);
-   tip = HEAD. Never accept SHAs from a pasted prompt — staleness is the
-   failure mode this skill exists to kill. If the integration branch is
-   ambiguous, ask.
-5. **Populate the `## Review Kickoff` template** from
-   `~/.agents/workflow/kickoffs/review.md` per the HANDOFF.md protocol (fidelity,
-   honest population, repo-conventions resolution from the shim). Sources:
-   the spec for acceptance criteria and field 2a (original ask), the folder's
-   `verification.md` for the implementer's verification claims — marked as
-   claims (`per implementer log`) — and the live git range. This is INTERNAL
-   orientation — assemble the context to review against; do NOT print the
-   populated kickoff back to the operator. What was reviewed is recorded
-   concisely by the verdict return (step 7).
-6. **Perform the review yourself** in this conversation, per
+   folder's `verification.md` / `PR_BODY.md` if present. (The shared
+   independence seal still applies — do not open `reviews.md` or prior
+   verdicts.)
+3. **Compute the live range yourself** (self-populate, never a paste — see the
+   shared protocol). base = `git merge-base` of HEAD with the repo's
+   integration branch (named by the repo shim, e.g. `origin/dev`); tip = HEAD.
+   If the integration branch is ambiguous, ask.
+4. **Populate the `## Review Kickoff` template** from
+   `~/.agents/workflow/kickoffs/review.md` as INTERNAL orientation per the
+   shared protocol — do NOT print it back. Sources: the spec for acceptance
+   criteria and field 2a (original ask), the folder's `verification.md` for the
+   implementer's verification claims — marked as claims (`per implementer log`)
+   — and the live git range.
+5. **Perform the review yourself** in this conversation, per
    `REVIEW_RUBRIC.md`. This is the outer-gate lens — adversarial test-quality
    + contract-drift: ignore the implementer's test-quality framing, re-derive
    each test's value from the test source, ask "what regression could come
@@ -63,7 +62,7 @@ gate.
    verification gates yourself where the rubric/kickoff requires local proof;
    do not take the implementer's logged numbers as proof of anything you can
    cheaply re-run.
-7. **Return, formatted for carry-back to the implementer session:**
+6. **Return** per the shared carry-back shape, with these code specifics:
    - verdict line: `APPROVED` or `ACTIONABLE` + the `base..tip` range and tip
      SHA it certifies
    - findings with severity and path:line (ACTIONABLE only)
@@ -77,13 +76,11 @@ gate.
 - GitHub/Linear stay read-only; no working-tree edits, no commits, no
   branch switches. Gates you run must be non-mutating (build/test/typecheck);
   anything destructive or provider-touching is out of scope here.
-- This verdict is a strict own-work review — do not soften it
-  calibrate-review-style, and do not count a directional early read (run
-  before the inner loop converged) as the certifying verdict.
+- Strict-verdict / no-soften / no-early-read-counts per the shared protocol.
 
 ## Failure modes
 
-The shared ones in HANDOFF.md, plus: reading `reviews.md` or pasted prior
-findings (independence seal); reviewing SHAs from a pasted prompt instead of
-computing the live range; spawning a subagent (this conversation IS the fresh
-context); reviewing a mid-loop dirty tree.
+The shared ones in HANDOFF.md "Outer-gate protocol", plus code specifics:
+reviewing a mid-loop dirty tree instead of a converged committed candidate;
+taking the implementer's logged gate numbers as proof instead of re-running the
+cheap gates yourself.

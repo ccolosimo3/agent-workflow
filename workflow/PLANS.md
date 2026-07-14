@@ -35,11 +35,9 @@ containing:
 - `reviews.md` — review verdicts and actionable findings.
 - `artifacts/` — screenshots, exported logs, proof files when useful.
 
-Specs for implementation work should include a test strategy, not just a list
-of commands: name the behavior or failure mode the tests protect, the real
-operation boundary they exercise, any implementation-shape tests that are only
-supplemental/contractual, and any manual or Tier 4 proof needed because
-automation cannot represent the meaningful failure mode.
+Specs for implementation work should include a test strategy per
+`~/.agents/workflow/TESTING.md` (behavior/boundary, supplemental-shape, Tier-4
+proof), not just a list of commands.
 
 Do not create a parallel `-issue-draft` file unless the final public tracker
 issue must be split, redacted, or substantially reshaped from the reviewed
@@ -68,31 +66,6 @@ Do not fold every slice back into `README.md`. Instead:
 
 If a `future/` item becomes actionable, promote it to its own folder under
 `active/` or `backlog/`.
-
-## Multi-Task Program Folders (Orchestrator V0 Draft)
-
-This is inactive until Orchestrator Mode is activated. A reviewed V0 pilot may
-use one umbrella work-item folder containing the living program spec plus
-coordinator-owned operational state:
-
-```text
-active/<PROGRAM-ID>-<short-name>/
-  README.md
-  events.jsonl
-  program.json
-  approvals.json
-  status.md
-  integration.md
-  verification.md
-  reviews.md
-  tasks/
-  artifacts/
-```
-
-`INDEX.md` remains the roadmap authority and `README.md` remains the living spec.
-`events.jsonl` is the operational source of truth; JSON/Markdown views are
-generated and never become a second roadmap. Only the coordinator writes the
-ledger. Child folders/specs retain their normal PLANS lifecycle.
 
 ## Frontmatter Template
 

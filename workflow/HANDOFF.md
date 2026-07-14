@@ -73,9 +73,9 @@ phase are autonomous.
      author — do NOT re-pass the full kickoff or re-populate. The full-kickoff
      spawn is the fallback.
    - If the skill IS the reviewer (the conversation itself — the outer gates):
-     emit the populated kickoff verbatim in chat under a `## <Template-name>
-     Prompt` heading as the record of what was reviewed (there is no subagent to
-     inspect).
+     follow the "Outer-gate protocol" below — self-populate the kickoff as
+     INTERNAL orientation and do NOT print it back in chat; the verdict return
+     (not the kickoff) is the record of what was reviewed.
 5. **Exactly one reviewer.** Spawn (or, for an outer gate, run) exactly one
    fresh-context reviewer — except a re-review, which REUSES the original per §6.
    Never a second reviewer unless the operator explicitly asks.
@@ -119,12 +119,12 @@ phase are autonomous.
 ## Outer-gate waivability
 
 The inner review loop is never skippable (kernel review floor). The outer gate
-(`outerreview`) is REQUIRED whenever the diff touches a canonical risk-surface
-(migration/schema/persisted-state (any change to stored data or a state-machine),
-auth, contract/API, data-loss, security, provider boundary (Stripe, AvaTax, other
-external services), dependency, toolchain) OR the inner review returned ACTIONABLE
-on any substantive finding at any point in the loop. It is operator-waivable ONLY
-when ALL of:
+(`outerreview`) is REQUIRED whenever the diff touches any item on the canonical
+risk-surface list in the kernel's Implementation Completion Handoff (its single
+owner; there migration/schema/persisted-state covers any change to stored data or
+a state-machine, and provider boundary covers Stripe, AvaTax, and other external
+services) OR the inner review returned ACTIONABLE on any substantive finding at
+any point in the loop. It is operator-waivable ONLY when ALL of:
 
 - (a) the diff touches NONE of the canonical risk-surface list above;
 - (b) the inner review was APPROVED on the FIRST pass with zero substantive
@@ -140,6 +140,35 @@ handoff; the OPERATOR makes the final waive call. When the outer gate is
 mandatory, do not trim the independence seal, live-range self-computation, or the
 inner loop. (`outerspecreview` is already optional on the spec side, so this
 parity holds there too.)
+
+## Outer-gate protocol
+
+The shared procedure both outer-gate skills (`outerreview`, `outerspecreview`)
+run. An outer gate is not a handoff — the conversation itself performs the review
+— so it diverges from the spawn/emit protocol above:
+
+1. **The conversation IS the reviewer.** Do NOT spawn a subagent; review here, in
+   this conversation, per `REVIEW_RUBRIC.md` (and, for `outerspecreview`, the Spec
+   Review Kickoff validation categories).
+2. **Self-populate, never from a paste.** Build the kickoff from the filesystem
+   (the work-item folder / spec file) + the live git range computed at invocation
+   time — NEVER from a prompt pasted by the operator or a prior session. A stale
+   tip is the failure mode: a paste can encode a SHA the tree has moved past, and
+   an outer gate must certify the actual final tip.
+3. **Independence seal.** Never read prior findings, verdicts, kickoff prompts, or
+   `reviews.md`; the operator must not paste inner-loop findings in. Decorrelation
+   is the whole point of the outer lens.
+4. **The populated kickoff is INTERNAL orientation.** Do NOT print it back to the
+   operator (there is no subagent to inspect). The verdict return — not the
+   kickoff — is the record of what was reviewed.
+5. **Carry-back return shape.** Return, for the operator to paste into the
+   implementer/planning session: the strict verdict line; the exact range (or spec
+   section) reviewed; the findings; and a verified-clean record naming the checks
+   actually run.
+6. **Strict verdict.** Emit a strict `APPROVED`/`ACTIONABLE` verdict; do NOT
+   soften it into a calibrate-review-style advisory brief. An early or directional
+   read (the Sequencing deliberate exception) never counts as the certifying
+   verdict.
 
 ## Spec review loop (specreview → specrereview)
 
@@ -159,24 +188,6 @@ A kickoff is stale the moment its tip SHA is no longer HEAD. Never hand a
 reviewer a stale kickoff — re-populate and re-emit (`implreview` emit-only), or
 use `outerreview`, which computes its own range at invocation time.
 
-## Orchestrated Desktop-Task Handoffs (V0 Draft)
-
-This mechanism remains inactive until Orchestrator Mode activation. The
-orchestrator creates exactly one fresh user-visible Codex desktop task for each
-review unit, using the canonical kickoff verbatim plus the orchestration
-assignment block. It records the reviewer task ID and continues that same task
-for re-review. Subagents are not used by Orchestrator V0.
-
-If a reviewer task is unreachable, the coordinator attempts one exact-task
-follow-up, persists the handoff, fences the old assignment generation, and
-creates exactly one replacement. Visibility is not resumability.
-
-A combined delivery with cross-child contracts or integration-owned changes is
-a distinct `integrated_candidate` review unit. Child reviews do not certify that
-candidate. It receives one holistic inner reviewer on the exact candidate tip,
-then the existing operator-owned outer gate. Any changed tip invalidates the
-affected verdict and returns through the normal re-review path.
-
 ## Independence seal
 
 The outer-gate reviewer must not see prior findings: `outerreview` never
@@ -186,7 +197,6 @@ the deliberate opposite: they REQUIRE the prior findings, quoted verbatim.
 
 ## Shared failure modes
 
-- Paraphrasing the template — downstream agents depend on the exact shape.
 - Inventing placeholder content instead of stopping to ask.
 - Spawning without announcing the handoff; or, for an outer gate, not emitting
   the record of what was reviewed.

@@ -39,9 +39,18 @@ or data-handling policies.
 - Do not modify unrelated files.
 - Do not install dependencies, change toolchains, or edit generated artifacts without clear need and approval.
 - Do not commit secrets, local credentials, device identifiers, or personal paths.
-- Prefer existing repo patterns over new abstractions.
+- Prefer existing repo patterns over new abstractions: find and match the nearest exemplar
+  before building custom, and don't generalize until a second real consumer exists.
+- Before replacing an established pattern with a custom implementation, record a deviation
+  note (what's bypassed, why it's insufficient, what you'd do instead, the tradeoff, whether
+  sign-off is needed);
+  block on a human only when one is in the loop.
 - Add tests and verification proportional to risk; broader-gate selection and
   routing reporting follow the rules under Verification Tiers.
+- Verification must follow risk, not create scope. Do not add new tooling,
+  validators, commands, or abstractions solely to make a low-risk change
+  mechanically testable. Prefer existing checks or explicit review/manual proof
+  unless material risk or repeated real failures justify automation.
 - Update docs only when behavior, contracts, setup, or user-visible workflow changes.
 - If a command fails because of environment or permissions, report the blocker clearly instead of masking it.
 
@@ -135,7 +144,9 @@ Pick one path; switch if the session changes.
 
 **A) Implement an existing work item** (ticket/issue/bug/explicit task):
 1. Read the work item + linked PR/context; read the nearest repo/subtree shim for
-   touched files.
+   touched files. Reopen any named spec/plan before edits, after any compaction/resume,
+   and before handoff; treat its direction bullets as requirements unless the operator
+   changes scope.
 2. Restate goal, non-goals, acceptance criteria, verification; name in-scope
    files and risky/out-of-scope areas.
 3. `git status` before branching/editing; never discard unowned changes.
@@ -170,10 +181,7 @@ aligned with actual commands, runtime versions, and contracts.
 ## Kickoff Templates
 
 Canonical kickoff prompts live one-per-file in `~/.agents/workflow/kickoffs/`;
-each handoff skill reads only its own. Index: `planning.md`, `domain-pass.md`,
-`final-spec-promotion.md`, `planner-directive.md` (shared — appended to the spec
-reviews), `spec-review.md`, `spec-re-review.md`, `execution.md`, `review.md`,
-`re-review.md`, `external-pr-review.md`, `pr-body.md`, `post-plan-grill.md`.
+each handoff skill reads only its own.
 
 **Fidelity rule:** paste the matching `kickoffs/*.md` template verbatim with
 placeholders filled — do not paraphrase, restructure, or invent your own shape;
@@ -229,8 +237,8 @@ A Task is done when:
 
 Every implementation makes an explicit docs-impact decision before review
 handoff. Does the change affect any of: user-visible behavior or product
-terminology; setup/install/build/local-iteration commands; verification
-gates/coverage policy/manual-QA expectations; architecture boundaries, module
+terminology; setup/install/build/local-iteration commands; verification gates,
+coverage policy, or manual-QA expectations; architecture boundaries, module
 ownership, or route/path maps; board/firmware/simulator/network/API contracts;
 performance-validation policy or durable evidence; release/privacy/app-store/
 distribution evidence?
@@ -250,9 +258,12 @@ before moving on — the full sequence lives in `~/.agents/workflow/PLANS.md`
 
 ## Implementation Completion Handoff
 
-When finishing an implementation, hand off for review: a brief summary +
-verification results, then spawn exactly one fresh-context reviewer (Review
-Kickoff) and announce the handoff (what + range). No second reviewer unless the
+When finishing an implementation, first run a maintainer-readiness pass over the diff —
+reuse that could replace custom code, summary claims you didn't actually verify, drift from
+the named spec, needless abstractions/comments/checks, scope creep, and — for UI work —
+design-system consistency — then hand off for
+review: a brief summary + verification results, then spawn exactly one fresh-context
+reviewer (Review Kickoff) and announce the handoff (what + range). No second reviewer unless the
 operator explicitly asks this session. Mechanics — sequencing, freshness, the
 independence seal, re-review reuse, and the ritual→skill index — live in
 `~/.agents/workflow/HANDOFF.md`.
@@ -267,10 +278,9 @@ NEVER skippable: every implementation gets ≥1 review, and nothing reaches a PR
 without one. Only the outer gate is ever waived. It is REQUIRED whenever the diff
 touches a canonical risk-surface — migration/schema/persisted-state · auth ·
 contract/API · data-loss · security · provider boundary · dependency · toolchain
-— OR the inner review was ever ACTIONABLE on a substantive finding; it is
-operator-waivable ONLY for a first-pass-clean, mechanically-trivial,
-zero-risk-surface change (exact a/b/c conditions in HANDOFF.md "Outer-gate
-waivability"). The implementer states `outer gate: required | waivable — <why>`;
+— OR the inner review was ever ACTIONABLE on a substantive finding; otherwise it
+is operator-waivable only under the exact conditions in HANDOFF.md "Outer-gate
+waivability". The implementer states `outer gate: required | waivable — <why>`;
 the OPERATOR makes the waive call.
 
 ## PR Handoff
@@ -356,7 +366,9 @@ Rules:
 - Don't run live/provider/hardware checks from an agent unless the env is
   explicitly prepared; if sandboxing blocks services/hardware/localhost/network,
   stop after one diagnostic run and escalate or ask the operator for output.
-- Final summaries must name commands run and results.
+- Never claim a build, check, test, or hardware/manual step passed unless it ran this
+  session or is clearly CI-/operator-owned; if blocked, state the exact blocker. Name the
+  touched surfaces and exact commands run — never a generic "run tests."
 
 ## Review Loop
 

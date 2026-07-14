@@ -3,6 +3,11 @@
 ```text
 Review plan / spec <path or link> for <feature/workstream>.
 
+Apply the Review Rubric in `~/.agents/workflow/REVIEW_RUBRIC.md` IN FULL: read it
+first, and apply its migration test-bar, convention-conformance, and
+time-sensitive rules — plus TESTING.md's anti-patterns and FRONTEND.md's design
+rules — to the PLANNED work below, not to a diff.
+
 Context (filled by the planner as ORIENTATION ONLY — it is the planner's CLAIM,
 not ground truth, and the plan itself is what you are reviewing). The spec, the
 repo, and the real code are the source of truth; where the Context and the
@@ -61,40 +66,36 @@ Return:
    - label correctness against the repo's actual label set
    - self-containment of an issue body (would this issue be actionable to someone with no prior context)
    - dependency claims (do blocked/ordered-after references point at real issues with the claimed state)
-   - time-sensitive / external claims: if the plan picks a library, API, pattern, or
-     version, asserts something is deprecated / current / best-practice, or your own
-     review angle rests on current external behavior, verify it against the repo's
-     pinned version + bundled SME/doc skills, then official upstream docs via web
-     search (cite source + date) — don't approve or reject from memory; temper
-     "latest" against the repo's actual pinned major
+   - time-sensitive / external claims: apply REVIEW_RUBRIC.md's time-sensitive rule
+     to the PLANNED work — if the plan picks a library, API, pattern, or version,
+     asserts something is deprecated / current / best-practice, or your own review
+     angle rests on current external behavior, verify it against the repo's pinned
+     version + upstream docs (cite source + date), not from memory; temper "latest"
+     against the repo's actual pinned major
    - ambiguous terminology or undefined nouns
    - missing or untestable acceptance criteria
    - missing or wrong verification commands
-   - weak test strategy: BEFORE judging, open `~/.agents/workflow/TESTING.md`
-     (Part 1 principles + Part 2 universal anti-patterns) and the repo's testing
-     reference for its stack section, then apply their anti-pattern tables +
-     10-second check to each PLANNED
-     test; flag ACTIONABLE any planned test that, as described, matches an
-     anti-pattern or would still pass if the fix were reverted. For any planned
-     migration/schema/persisted-field change, apply the migration bar in
-     REVIEW_RUBRIC.md "Surface-specific test bars" at plan time: a spec that
-     plans only implementation-shape assertions, or only "add a migration
-     test", is a blocking finding.
-   - weak design strategy (UI specs only): if the spec touches a UI surface, open
-     `~/.agents/workflow/FRONTEND.md` and confirm the spec names its
-     tokens/primitives/patterns, the states it renders (incl. empty/error/focus),
-     and the visual proof; a UI spec that gives only vague visual intent, omits
-     the changing-state set, or names no visual proof is ACTIONABLE. Skip for
-     non-UI specs.
+   - weak test strategy: apply TESTING.md's anti-patterns (Part 1 principles +
+     Part 2 universal anti-patterns) and the repo's testing reference for its
+     stack section to each PLANNED test — flag ACTIONABLE any planned test that,
+     as described, matches an anti-pattern or would still pass if the fix were
+     reverted. For any planned migration/schema/persisted-field change, apply
+     REVIEW_RUBRIC.md's migration test-bar at plan time: a spec that plans only
+     implementation-shape assertions, or only "add a migration test", is a
+     blocking finding.
+   - weak design strategy (UI specs only): apply FRONTEND.md to any UI-surface
+     spec, confirming it names its tokens/primitives/patterns, the states it
+     renders (incl. empty/error/focus), and the visual proof; a UI spec that gives
+     only vague visual intent, omits the changing-state set, or names no visual
+     proof is ACTIONABLE. Skip for non-UI specs.
    - convention conformance: if any plan step explicitly proposes hand-rolling a
      component, helper, hook, loading state, or style primitive, open the repo's
      patterns doc (the coding-standards / patterns path resolved in "Repo
      conventions to enforce" above, or via the repo shim — e.g.
      `.agent-workflow/plans/reference/coding-standards.md`; your repo's shim names
      its own) and flag ACTIONABLE if the repo already has an established primitive
-     for it (e.g. a custom Box/@keyframes shimmer where the repo mandates the
-     existing Skeleton/loading primitive). Do not flag steps that reuse existing
-     primitives or where no repo primitive is documented.
+     for it. Do not flag steps that reuse existing primitives or where no repo
+     primitive is documented.
    - existing-mechanism reuse / over-scope: does the plan invent a new helper,
      policy, query, filter, fallback, branch, state, or UI behavior where the
      codebase already has an adjacent mechanism? Verify the 4a claim by reading

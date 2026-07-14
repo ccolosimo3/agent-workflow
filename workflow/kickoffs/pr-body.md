@@ -10,7 +10,10 @@ Required core, always present: `## Summary`, `## Verification`, and a one-line
 carry real content, in the order shown below — omit an optional section entirely
 rather than writing "None". One shape serves human and agent reviewers alike (both
 want stable headings, claims tied to verifiable specifics, the intent, and the
-noise cut); do not split formats.
+noise cut); do not split formats. For a minor, low-risk change the required core alone —
+a concise `## Summary` with its bullets, a one-line `## Verification`, and the `Docs impact:`
+footer — is a complete body; add optional sections only when they carry real content, never
+as ceremony.
 
 Closing reference — the FIRST line of the body, above `## Summary`:
 - GitHub issue (e.g. clearsnake): `Fixes #<n>` when merge fully resolves it;
@@ -80,6 +83,7 @@ Constraints:
   resolve them in PR comments).
 - Factual and concise, no marketing tone; prefer "no remaining blocking issues
   found" over absolutes like "approved", "fully safe", or "all issues resolved".
+- No personal names or agent names (e.g. Claude, Codex) in durable PR/issue text.
 - Do not mention spec review by default; accepted specs normally pass spec review
   before coding.
 - Return the PR body only, no preamble like "here is the summary".

@@ -25,24 +25,13 @@ implreview-specific population rules.
 
 ## Population specifics
 
-- **Work item**: issue/spec link + acceptance criteria copied inline as
-  `- [ ]` bullets, as they appear in the source issue.
-- **Implementer summary**: 2-3 sentences naming what changed and why.
-- **Review range**: `<base>..<tip>` SHAs (base = merge-base with the target
-  branch, tip = HEAD). The implementation must be committed first.
-- **Scope**: in-scope as a 1-2 sentence summary (do NOT enumerate file paths —
-  the reviewer derives them from `git diff --stat`); out-of-scope items +
-  reason; discovered follow-ups to capture as separate issues.
-- **Verification run**: each command paired with a one-line result including a
-  useful number (e.g. `<typecheck command>: 0 errors across 412 files`,
-  `<test command>: 318 pass / 0 fail`), using the repo's real commands from
-  its shim/verification doc.
-- **Hot spots / known risk**: deviations from spec, assumptions, focus areas.
-- **Tier 4 gate**: yes/no; if yes, name what and who runs it.
-- **Original operator request / intent (field 2a)**: the verbatim or
-  closely-paraphrased ask that triggered the work — the reviewer compares the
-  diff against THIS, not only the acceptance criteria, to catch unrequested
-  approach substitutions.
+Populate every placeholder per the kickoff's own annotations. Skill-specific
+deltas the kickoff can't enforce:
+
+- **Review range**: the implementation must be committed first, so the
+  `<base>..<tip>` SHAs reference real commits.
+- **Verification run**: use the repo's real commands from its shim/verification
+  doc — never invented commands.
 
 ## Emit-only mode
 
