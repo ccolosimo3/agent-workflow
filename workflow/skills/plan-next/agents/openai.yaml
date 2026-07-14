@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Next"
+  short_description: "Catch up on a project and choose what comes next"
+  default_prompt: "Use $plan-next to get current on this project and help me choose the next work item."
