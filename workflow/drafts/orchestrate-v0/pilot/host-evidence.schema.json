@@ -1,4 +1,0 @@
-{
-  "required": ["operation", "arguments", "result", "timestamp", "ledger_event_id"],
-  "task_creation_required": ["task_id", "route_attestation"]
-}
