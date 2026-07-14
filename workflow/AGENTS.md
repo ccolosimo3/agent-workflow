@@ -11,6 +11,9 @@ workflow bootstrap, not repository policy.
 - Tracked repo/company/security instructions are authoritative over this kernel.
 - If a repo root contains `AGENTS.local.md`, read it before substantive work as
   a local-only workflow adapter.
+- Read `~/.agents/workflow/OPERATOR.local.md` if present for operator identity and
+  context (who you're working for, handles, teams); it is git-excluded and
+  local-only — never commit it.
 - Local adapters are additive; on conflict with tracked repo rules, the tracked
   rule wins (see Precedence).
 - Do not commit local workflow adapters, personal paths, credentials, or kernel
@@ -38,7 +41,9 @@ or data-handling policies.
 - Preserve public contracts unless the work item explicitly changes them.
 - Do not modify unrelated files.
 - Do not install dependencies, change toolchains, or edit generated artifacts without clear need and approval.
+- Never hand-edit a generated artifact to make a check pass — fix the source and regenerate.
 - Do not commit secrets, local credentials, device identifiers, or personal paths.
+- Don't prefix branches or PR/commit titles with an agent namespace (`codex/`, `[codex]`, `fix/`, `task/`, `chore/`) unless asked — follow the repo's own convention.
 - Prefer existing repo patterns over new abstractions: find and match the nearest exemplar
   before building custom, and don't generalize until a second real consumer exists.
 - Before replacing an established pattern with a custom implementation, record a deviation
@@ -167,7 +172,7 @@ Pick one path; switch if the session changes.
 scope): read product/docs/code context; run a Domain Pass when
 terminology/lifecycle/cross-boundary behavior changes; produce a reviewable spec
 (self-contained scope, non-goals, acceptance criteria, exact verification
-commands, labels/branch when relevant, any approval-gated work). No code changes
+commands, labels/branch when relevant, any approval-gated work); for UI work, apply FRONTEND.md. No code changes
 unless explicitly asked.
 
 **C) Review a PR or diff:** review changed behavior before style; focus on
@@ -215,7 +220,7 @@ A Task is ready when:
   only manual/Tier 4 proof is meaningful
 - verification tier and any escalation gates are named
 - affected surfaces and owners are known
-- dependencies and manual/hardware requirements are called out
+- dependencies, manual/hardware requirements, and any verification preflight (environment prep) ownership are called out
 - contract changes are explicit
 - domain terms are resolved or open questions are named
 
@@ -325,6 +330,9 @@ maintenance with stable terminology.
 - Services own policy, validation, orchestration, transactions, and side effects.
 - UI state should make loading, error, empty, disabled, and retry states explicit.
 - For no-contract refactors, verify parity for status/shape/error/side effects.
+- For generated migrations, use the tool's generate step — never hand-author the schema
+  DDL; review the semantic delta, not the raw snapshot; and prove safety with a fresh-schema
+  test plus a populated-upgrade test when data or constraints change.
 
 ## Verification Tiers
 

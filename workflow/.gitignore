@@ -1,0 +1,2 @@
+# Local-only operator files — never commit (may contain PII)
+OPERATOR.local.md
