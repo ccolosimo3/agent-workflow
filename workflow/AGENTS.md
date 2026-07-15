@@ -39,6 +39,9 @@ or data-handling policies.
 - Keep changes surgical and scoped to the work item. Capture out-of-scope work as a follow-up rather than expanding the change.
 - Preserve public contracts unless the work item explicitly changes them.
 - Do not modify unrelated files.
+- Don't delete a comment you didn't write; one that looks redundant usually encodes context
+  you lack (a past bug, a subtle constraint). Reword it when the code it describes changes,
+  and remove it only when that code is gone.
 - Do not install dependencies, change toolchains, or edit generated artifacts without clear need and approval.
 - Never hand-edit a generated artifact to make a check pass — fix the source and regenerate.
 - Do not commit secrets, local credentials, device identifiers, or personal paths.
