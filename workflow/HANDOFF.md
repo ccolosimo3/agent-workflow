@@ -114,7 +114,11 @@ phase are autonomous.
 - Outer-gate findings: paste the verdict into the implementer session, patch,
   and run `implrereview` quoting those findings verbatim. The kernel's
   two-verdicts gate is met when both lenses have approved the final tip;
-  patches landed after any approval get a re-review.
+  patches landed after any approval get a re-review — except a nit-only patch (naming,
+  comment, dead code, copy) that changes no logic, contract, or behavior: it keeps the
+  approval and is just noted at handoff. Anything beyond a nit takes the normal
+  re-review path. The carve-out exists so low findings aren't silently dropped to
+  protect a certified tip.
 
 ## Outer-gate waivability
 

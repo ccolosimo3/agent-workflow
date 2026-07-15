@@ -22,6 +22,16 @@ Run these checks explicitly and cite what you found:
   catch. If you can name one (revert the fix, narrow it to one column, make the
   down-path lossy, swap the component but keep the testid), the test is weak — call
   it out.
+- Performance/scale on the surfaces this diff touches: repeated per-item work that
+  should be batched (a query or fetch inside a loop — N+1), a lookup on an unindexed
+  path, or work that grows unbounded with the data (no LIMIT/pagination, a full scan,
+  an unbatched child fetch). Judge against the set's realistic growth, not its size
+  today; say N/A if the diff touches no such surface.
+- Security on the surfaces this diff touches: an authorization/ownership check
+  dropped, narrowed, or moved somewhere the caller controls; a field, endpoint, log
+  line, or error newly exposing more than its caller should see. The severity rubric
+  treats these as critical — this bullet is the instruction to go looking. N/A if the
+  diff touches no such surface.
 
 Reporting rule: do not invent findings to look thorough. APPROVED with no findings
 is a valid outcome — but only state it after listing the specific adversarial
@@ -84,7 +94,10 @@ drift.
     acceptance criteria yourself; treat the copied bullets and the Implementer
     summary as claims to check, not as ground truth.
 (b) Read the actual changed lines via `git diff <base>..<tip>` (the range in
-    Context section 1). You may not approve a file you did not open.
+    Context section 1), then read the FULL file around each change — not just the
+    hunk. The defect is often in what the change now sits inside: an invariant set
+    earlier in the file, an existing contract of the class, a sibling branch the new
+    path bypasses. You may not approve a file you did not open.
 (c) For any UI or component change, run the full identity + masking check in the
     Scope-vs-intent & contract-identity section below.
 (d) Open each new or changed test file yourself and judge it against the
@@ -98,6 +111,10 @@ drift.
     a regression; a symbol with no remaining non-test consumer is dead code to flag
     per the repo's deprecation convention; a type or test that should have moved with
     it is a gap. Reading only the changed file hides all three.
+(g) For any config, env-var, feature-flag, or build-setting change in the diff,
+    confirm it is documented where the repo documents such things (setup docs,
+    `.env.example`, the deploy/ops doc) — a config change that lands undocumented is a
+    finding even when the code is correct.
 
 ## Scope-vs-intent & contract-identity check (run BEFORE issuing any verdict)
 
@@ -231,6 +248,11 @@ above is about weakness; keep them separate.
      only with no real operation boundary; OR a risk-bearing new/changed branch,
      failure path, or persisted field that ships with no test at all.
    - low: maintainability/naming/doc nits with no behavioral or contract impact.
+   Nits: list the low-severity ones you actually noticed under a `Nits` sub-heading —
+   naming, dead code, a stale comment, an inconsistent pattern, a typo in user-facing
+   copy, avoidable complexity. They never change the verdict, so report them freely.
+   The "don't invent findings" rule means don't HUNT for nits or manufacture taste —
+   not that you should swallow the ones you already saw.
    If unsure whether a finding is medium-or-higher, treat it as blocking. If
    genuinely none, write "none found".
 5. Verification notes. Do not rerun broad verification already reported green
@@ -284,6 +306,11 @@ them:
 
 If Verdict is ACTIONABLE, return findings and stop. The implementer patches and
 hands back to the operator; no second review cycle from this reviewer.
+
+If Verdict is APPROVED but carries low/nit findings, they are not free to ignore. The
+implementer dispositions each at handoff — patched / filed as a follow-up / declined with
+a reason — and says which; a silent drop is not a disposition. See HANDOFF.md
+"Sequencing" for when a nit-only patch needs a re-review.
 
 ## Re-review mode (implrereview)
 
