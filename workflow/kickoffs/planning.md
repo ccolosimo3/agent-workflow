@@ -12,7 +12,8 @@ Deliver:
 4. 3-5 step implementation plan
 5. testable acceptance criteria
 6. exact verification plan by tier, including any broader local gates selected
-   or intentionally not selected
+   or intentionally not selected; apply TESTING.md's conditional confidence-proof
+   rule when triggered
 7. review-ready spec markdown that can become the final tracker issue body
 8. decision brief: chosen approach, one rejected alternative, tradeoff, assumptions
 9. claim grounding: confirm each load-bearing code claim (where to wire a change,

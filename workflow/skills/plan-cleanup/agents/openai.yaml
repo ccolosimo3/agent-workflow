@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Cleanup"
+  short_description: "Archive completed plans safely off-device"
+  default_prompt: "Use $plan-cleanup to preview completed plans that are ready for verified external archiving."

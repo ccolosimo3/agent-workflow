@@ -151,9 +151,13 @@ Pick one path; switch if the session changes.
 
 **A) Implement an existing work item** (ticket/issue/bug/explicit task):
 1. Read the work item + linked PR/context; read the nearest repo/subtree shim for
-   touched files. Reopen any named spec/plan before edits, after any compaction/resume,
-   and before handoff; treat its direction bullets as requirements unless the operator
-   changes scope.
+   touched files. Reopen any named spec/plan before edits, after any
+   compaction/resume, and before handoff. Treat explicit requirements and
+   unmarked direction bullets as requirements unless the operator changes scope.
+   Only mechanics the spec explicitly marks recommended or assumption-dependent
+   may adapt when current source or environment disproves them; preserve scope,
+   contracts, acceptance oracles, and proof strength, and return to planning
+   otherwise.
 2. Restate goal, non-goals, acceptance criteria, verification; name in-scope
    files and risky/out-of-scope areas.
 3. `git status` before branching/editing; never discard unowned changes.
@@ -276,9 +280,12 @@ independence seal, re-review reuse, and the ritual→skill index — live in
 `~/.agents/workflow/HANDOFF.md`.
 
 Two independent approved verdicts before PR handoff by default: the implementer
-owns the spawned inner reviewer; the operator owns the outer gate
-(`outerreview` / `outerspecreview`), which self-populates from the work-item
-folder + live range and runs on the final tip after the inner loop converges.
+owns the spawned inner reviewer; the operator owns the implementation outer gate
+(`outerreview`, which routes adaptively, or explicit coordinated
+`large-pr-review`) and the optional plan/spec outer gate (`outerspecreview`). The
+implementation gate self-populates from the work-item folder + live range and
+runs on the final tip after the inner loop converges; the spec gate reads the
+current spec directly.
 
 Review floor — the inner loop (`implreview` → `implrereview` to APPROVED) is
 NEVER skippable: every implementation gets ≥1 review, and nothing reaches a PR

@@ -80,6 +80,8 @@ kickoff-is-internal, carry-back shape, strict verdict) is in HANDOFF.md
 - Read-only: verify the spec's claims by reading current source; no spec/code
   edits, no branch, no tracker mutation. A plan has no code to execute — assess
   the spec's verification plan, don't run an implementation gate.
+- Accidental prior-review exposure is not a stop condition: apply HANDOFF's
+  quarantine rule, disclose it, and still return the strict verdict.
 - Strict-verdict / no-soften / no-early-read-counts per the shared protocol.
 - One pass only — this gate does not loop. The `specreview` ⇄ `specrereview` loop
   in the planning session owns iteration; re-run this gate only if the plan

@@ -11,8 +11,9 @@ The repo's own `plans/README.md`, when present, wins on local specifics.
   one-liners, cleanup reminder. Keep it operational, not archival.
 - `active/` — work items with a real next action (one folder per item).
 - `archive/` — landed, closed, or deferred work-item folders, moved here
-  intact when the PR merges or the issue closes. Local historical record;
-  do not delete archived folders unless the operator asks.
+  intact when the PR merges or the issue closes. Local historical record until
+  the operator explicitly externalizes selected folders; never delete archived
+  work solely because it is old.
 - `backlog/` — scoped future work with a real trigger.
 - `shelf/` — ideas that are real but not actionable yet.
 - `reference/` — reusable workflow notes, checklists, verification routing,
@@ -34,6 +35,10 @@ containing:
 - `verification.md` — commands run, manual proof, skipped gates.
 - `reviews.md` — review verdicts and actionable findings.
 - `artifacts/` — screenshots, exported logs, proof files when useful.
+
+Keep review findings and verdicts only in `reviews.md`; implementation receipts
+and other artifacts may record implementation and verification evidence, but
+must not duplicate review history.
 
 Specs for implementation work should include a test strategy per
 `~/.agents/workflow/TESTING.md` (behavior/boundary, supplemental-shape, Tier-4
@@ -126,3 +131,30 @@ before moving on:
 - Report what was deleted, archived, and left active. Do not leave completed
   issue/PR drafting artifacts in active folders; prefer one evolving spec over
   parallel rough-spec + issue-draft files.
+
+## Periodic external archive cleanup
+
+Use `/plan-cleanup` when completed folders have accumulated enough to distract
+ordinary agent searches. This is separate from cleanup on land: work first
+moves intact to the local `archive/`, then becomes eligible for externalization
+only when its frontmatter is terminal (`implemented`, `closed`, or `deferred`)
+and its `landed:` date (falling back to `updated:`) is at least 30 days old.
+
+- A periodic audit may report candidates without approval. It reads only the
+  local `archive/`; `active/`, `backlog/`, and `reference/` are never automatic
+  candidates.
+- Sync and pruning are operator-driven. Show the exact folders, private remote,
+  destination, and whether pruning is included before requesting one bundled
+  approval for the fast-forward push, recovery verification, and exact prune.
+- Store archived plans as ordinary files under
+  `projects/<project>/<work-item>/`; do not create recurring ZIP snapshots or a
+  persistent archive checkout under any project root.
+- Write a SHA-256 batch manifest, verify the pushed commit through a second
+  fresh clone, and compare every path and byte before removing local sources.
+  Any failure leaves the local copy intact; a remote path conflict blocks rather
+  than overwrites.
+- Leave only a compact retrieval pointer (remote, commit, subtree) in the live
+  project. Restore into a disposable directory first.
+- Keep separate archives for different ownership or confidentiality boundaries.
+  A private Git host is off-device storage, not client-side encryption or an
+  independent disaster-recovery copy.

@@ -58,7 +58,11 @@ research.
    tradeoffs — when an adjacent mechanism exists, the minimal
    route-into-the-existing-path option MUST be one of them; one recommendation
    plus a rejected alternative (the decision brief); the one-line Domain Pass
-   decision per the kernel's triggers.
+   decision per the kernel's triggers. When implementation latitude matters,
+   explicitly mark recommended or assumption-dependent mechanics and the
+   return-to-planning triggers; unmarked direction remains required. Lock scope,
+   contracts, safety, acceptance oracles, and proof strength rather than
+   speculative mechanics.
 
 4. **Write the living spec.** Create or reuse the work-item folder per the
    repo's planning conventions (e.g.
@@ -71,7 +75,8 @@ research.
    the states it renders, and the visual proof); exact verification commands by
    touched surface from the repo's verification doc; the proposed branch name per the shim's
    branch rule; and open questions / `[decision-required]` items the operator
-   must settle. Scale the plan to the change's size/risk — a trivial
+   must settle. Apply TESTING.md's conditional confidence-proof rule when
+   triggered. Scale the plan to the change's size/risk — a trivial
    single-surface fix gets a compact plan (skip the parallel-investigator
    fan-out and the two-or-three-approach synthesis), not the full treatment.
    Update the plans `INDEX.md` when the repo keeps one.

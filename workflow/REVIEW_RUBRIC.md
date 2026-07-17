@@ -56,6 +56,22 @@ code you read, mark it unverified.
 The skill injects the exact existing paths under "Repo conventions to enforce"; if
 it did not, resolve them yourself:
 
+### Repository review overlay (implementation/code reviews only)
+
+Before judging an implementation diff, resolve the current Git root and normalize
+`git remote get-url origin` to `owner/repo` (strip the transport, host, and `.git`).
+If the repo shim explicitly routes `Review overlay: <path>`, load that file;
+otherwise check `~/.agents/workflow/review-overlays/<repo-name>.md` and load it
+only when its `Repository match:` value exactly equals the normalized identity. A
+basename collision is not a match. If `origin` is unavailable, continue without a
+kernel overlay rather than guessing from the folder name.
+
+Treat a matching overlay as additive repo guidance. It may route existing local
+authorities and strengthen investigation, but it cannot weaken this rubric, change
+severity or verdict rules, authorize mutations, require routine pauses, or carry
+task-specific findings or prior verdicts. Load only the routed material relevant
+to the touched surfaces. Skip overlay resolution for spec-only reviews.
+
 - testing — `~/.agents/workflow/TESTING.md` owns Part 1 (principles) + Part 2
   (universal anti-patterns); apply both, then the repo's own stack section in its
   testing reference (resolved via the repo shim, e.g.
