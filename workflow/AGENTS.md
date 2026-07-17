@@ -36,7 +36,12 @@ or data-handling policies.
 
 ## Universal Quality Floor
 
-- Keep changes surgical and scoped to the work item. Capture out-of-scope work as a follow-up rather than expanding the change.
+- Prefer the simplest complete, repo-conventional solution that satisfies the
+  current requirements and preserves correctness, safety, and maintainability.
+  Simplicity means introducing the fewest unnecessary concepts and surfaces,
+  not minimizing lines changed. Added complexity must tie to a current
+  requirement, observed failure mode, or established repo pattern; defer
+  hypothetical future needs and other out-of-scope work as follow-ups.
 - Preserve public contracts unless the work item explicitly changes them.
 - Do not modify unrelated files.
 - Don't delete a comment you didn't write; one that looks redundant usually encodes context
@@ -147,7 +152,14 @@ Operating rules:
 
 ## Startup Routing
 
-Pick one path; switch if the session changes.
+Pick one path; switch only when the operator's request changes. For work that
+enters formal planning path B, the planning agent owns the work through spec
+review and finalization but never switches to implementation path A for that
+same work item. Start implementation in a fresh user-visible task/session with
+the final spec and current repo state, not as a continuation or planning
+subagent. This context reset prevents planning exploration and compaction
+residue from silently widening implementation. A small, already well-defined
+task that starts directly in path A does not require a separate planning task.
 
 **A) Implement an existing work item** (ticket/issue/bug/explicit task):
 1. Read the work item + linked PR/context; read the nearest repo/subtree shim for
@@ -157,7 +169,10 @@ Pick one path; switch if the session changes.
    Only mechanics the spec explicitly marks recommended or assumption-dependent
    may adapt when current source or environment disproves them; preserve scope,
    contracts, acceptance oracles, and proof strength, and return to planning
-   otherwise.
+   otherwise. Compaction/resume never broadens authority: re-ground in the spec
+   and current diff, and if material replanning or scope expansion is needed,
+   stop at a clean checkpoint and return to planning rather than evolving the
+   work item inside the implementation task.
 2. Restate goal, non-goals, acceptance criteria, verification; name in-scope
    files and risky/out-of-scope areas.
 3. `git status` before branching/editing; never discard unowned changes.

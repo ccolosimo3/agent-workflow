@@ -62,7 +62,11 @@ research.
    explicitly mark recommended or assumption-dependent mechanics and the
    return-to-planning triggers; unmarked direction remains required. Lock scope,
    contracts, safety, acceptance oracles, and proof strength rather than
-   speculative mechanics.
+   speculative mechanics. Recommend the simplest complete, repo-conventional
+   solution among the approaches that meet those bars. Do not penalize a better
+   solution merely for being larger, but tie every added abstraction, surface,
+   or mechanism to a current requirement, observed failure, or established repo
+   pattern; move hypothetical hardening to follow-ups.
 
 4. **Write the living spec.** Create or reuse the work-item folder per the
    repo's planning conventions (e.g.
@@ -88,7 +92,9 @@ research.
    path, or an unproven architectural bet, recommend `/explore` (map & rank the
    approaches) or `/spike` (prove the bet) instead of forcing a single-path
    spec. Do not auto-run specreview, and do not promote to `final` or to the
-   tracker without the operator.
+   tracker without the operator. Once the spec is approved and final, hand it
+   to a fresh user-visible implementation task/session; this planning session
+   does not implement the work item or hide the handoff in a subagent.
 
 ## Failure modes to avoid
 
@@ -101,3 +107,5 @@ research.
 - Skipping the repo shim's read-first docs and rediscovering known sharp edges.
 - Drafting straight to `final` — rough → review-ready → `/specreview` is the
   path.
+- Continuing from formal planning into implementation in the same task instead
+  of handing the final spec to a fresh implementation context.

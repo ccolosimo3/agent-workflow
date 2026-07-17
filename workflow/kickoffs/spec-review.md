@@ -103,7 +103,13 @@ Return:
      the missed mechanism is usually adjacent to the cited ones. For bug fixes
      the default is routing the case into the existing path via a narrower
      condition change; a new mechanism with no 4a justification (or a 4a of
-     "none found" the code contradicts) is a blocking finding.
+     "none found" the code contradicts) is a blocking finding. Also flag planned
+     abstractions, tooling, compatibility paths, or cross-surface work that
+     materially expand scope without a concrete current requirement, observed
+     failure mode, or established repo pattern. Do not flag a solution merely
+     for being larger: judge whether it is the simplest complete,
+     repo-conventional option that preserves correctness, safety, and
+     maintainability.
    - local-only/private notes that should not be published
 3. Notes on scope or framing improvements (non-blocking but useful)
 

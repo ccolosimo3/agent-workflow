@@ -156,6 +156,13 @@ drift.
    exported name over a changed component/contract is a MASKED swap, not
    reassurance. Name the existing test that SHOULD have gone red for this change and
    did not, and raise the missing assertion as a `[test quality]` finding.
+4. Proportionality check. For each materially new abstraction, tool, compatibility
+   path, configuration surface, or cross-package/app change, identify its concrete
+   current requirement, observed failure mode, or established repo pattern. If none
+   exists, treat the added maintenance and behavior surface as unjustified scope
+   expansion. Do not flag a solution merely for its size or line count: a larger
+   approach is valid when it is the simplest complete, repo-conventional solution
+   that preserves correctness, safety, and maintainability.
 
 Do not fire on cosmetic in-place edits that preserve the component TYPE, signature,
 and contract (tweaking a prop value, className, or animation duration on the SAME
@@ -262,7 +269,10 @@ above is about weakness; keep them separate.
      high — judge it on correctness and coverage.)
    - medium: a test that fails the 10-second check or asserts implementation shape
      only with no real operation boundary; OR a risk-bearing new/changed branch,
-     failure path, or persisted field that ships with no test at all.
+     failure path, or persisted field that ships with no test at all; OR a new
+     abstraction, tool, compatibility path, configuration surface, or cross-surface
+     change materially expands scope without a concrete current requirement,
+     observed failure mode, or established repo pattern.
    - low: maintainability/naming/doc nits with no behavioral or contract impact.
    Nits: list the low-severity ones you actually noticed under a `Nits` sub-heading —
    naming, dead code, a stale comment, an inconsistent pattern, a typo in user-facing
