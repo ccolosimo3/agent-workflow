@@ -105,26 +105,11 @@ Destructive Action Policy applies to anything beyond that.
   runtime service call; if you can't, narrow the GO to source-proven coupling and
   defer the live service-call proof to the implementation phase.
 - Prove the riskiest assumption at the real boundary; never let a green mock
-  stand in for the core bet, and name each proof's boundary.
+  stand in for the core bet, and name each proof's boundary. A zero exit code is
+  not proof — inspect the output and confirm the boundary actually ran (a reindex
+  can exit 0 without ever touching the live index).
 - The proof must be falsifiable against an oracle — a result that can't fail
   isn't proof.
 - Honor the box: if it won't prove out in the stated time/scope, call NO-GO or
-  escalate rather than expanding the spike into an implementation.
-
-## Failure modes
-
-- Claiming a green mocked/unit suite as proof of the core bet — it proves
-  plumbing, not the live behavior. The riskiest assumption stays unproven.
-- A self-confirming proof: the "oracle" uses the same incomplete constraints as
-  the thing under test, so it can't fail.
-- A green exit that skipped the real work — e.g. a reindex that exits 0 but never
-  touched the live index, or an e2e that passed against a mock. Inspect the output
-  and confirm the boundary actually ran; a zero exit code is not proof.
-- Proving the easy part (delegation, clause construction) and quietly leaving the
-  actual risk (live ordering, coupling, persistence) untested.
-- Leaving durable changes behind: a branch, an uncommitted production edit, or
-  scaffolding not removed.
-- Running a hosted/provider mutation, or a local data mutation, without approval.
-- Digging past the box instead of calling NO-GO; or sliding from proof into
-  implementation.
-- Re-mapping approaches instead of proving the chosen one — that is `explore`.
+  escalate rather than expanding the spike into an implementation. Prove the
+  chosen approach; re-mapping approaches is `explore`, not this skill.

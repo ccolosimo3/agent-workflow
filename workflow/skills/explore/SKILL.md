@@ -99,21 +99,12 @@ mutations (the Destructive Action Policy applies to any command run).
   behavior; never compare approaches from memory or assumption.
 - Attack each candidate (name its tax/failure mode); a one-sided pro-list is not
   an exploration.
+- Seriously rank keeping the current approach — "no better approach found" is a
+  valid, and sometimes correct, result.
 - The rejected list must say *why* — an unexplained rejection invites
   re-litigation.
 - Separate engineering optimizations from product/policy decisions; the latter
   are `[decision-required]`, returned to the operator, not chosen here.
-
-## Failure modes
-
-- Listing approaches without attacking them, or without grounding them in the
-  real code — a comparison only as good as its evidence.
-- Recommending change for its own sake — failing to seriously rank "keep the
-  current approach" when it is already the idiomatic / floor solution; "no better
-  approach found" is a valid result.
-- Recommending a bet without saying whether it needs a spike or can go straight
-  to specreview — that next-phase call is the point of the hand-off.
-- Quietly picking a product/policy direction instead of surfacing it.
-- Sliding into implementation, a branch, or a tracker mutation.
-- Re-running a fresh problem investigation — for a new bug's root cause use
-  `spec`; for proving one chosen approach use `spike`.
+- Recommend the next phase (a spike to prove a bet, else specreview) — that
+  hand-off call is the point of the exploration. Not a fresh bug investigation
+  (that is `spec`) or proving one chosen approach (that is `spike`).
