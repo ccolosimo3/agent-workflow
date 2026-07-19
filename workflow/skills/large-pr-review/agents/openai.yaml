@@ -1,6 +1,0 @@
-interface:
-  display_name: "Large PR Review"
-  short_description: "Run the coordinated outer gate for a large PR"
-  default_prompt: "Use $large-pr-review to run the coordinated outer gate for this large PR."
-policy:
-  allow_implicit_invocation: false

@@ -80,8 +80,8 @@ implementation loop and must not be counted as one.
 Gather only what is needed:
 
 - raw findings from review agents, CodeRabbit, or humans
-- the upstream pass's verified-clean record (see Grounding — required input;
-  ask for it if missing)
+- the upstream pass's verified-clean record: the specific checks, traces, and
+  commands that came back clean (ask for it if missing)
 - review comments already posted on the PR, automated or human
 - PR title/body and linked issue/spec, when available
 - changed surface: customer UI, internal admin/operator UI, dev-only tool,

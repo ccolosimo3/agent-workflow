@@ -87,32 +87,6 @@ mode **once**, at the **lowest-cost boundary that honestly proves it** — then 
 This is the counterweight to the coverage policy, not a contradiction: cover all the
 distinct behaviors — each exactly once, at the right altitude.
 
-### Confidence proofs — residual evidence, not a new tier
-
-After required behavior tests and repo-selected gates are planned, select a
-confidence proof only when a named, material uncertainty could still pass the
-ordinary plan because it cannot be represented honestly at a stable lower-cost
-boundary. The proof still routes through Tier 1–4.
-
-Across the work item, select at most one to three load-bearing scenarios. If more
-appear necessary, strengthen ordinary coverage, narrow or split the scope, or
-return to planning; never omit a material risk merely to satisfy the cap. For
-each selected scenario, name its question, real boundary, oracle/threshold,
-sanitized evidence, and owner/timing/prerequisites/cleanup.
-
-A disposable proof program may live in `artifacts/`, with its invocation and
-result in `verification.md`, but it never replaces required regression coverage.
-Ship a behavior test when a recurring risk has a stable, maintainable automated
-boundary; otherwise record the required recurring manual/Tier-4 proof. Reserve
-`one-off-proof→pocket` for a one-time repair with no ongoing regression surface.
-
-Lock the boundary, oracle, and proof strength. Substitute mechanics only when
-the owning verification authority permits it; record why the equivalent is at
-least as strong, otherwise report blocked or return to planning. Performance
-proofs need representative load plus a baseline/budget; observability proofs
-need an operator-findable signal for a representative outcome, with new
-instrumentation only for a material operational blind spot.
-
 ### Inclusion: should this test ship? (a second axis, separate from PASS/FAIL)
 
 A test can be a 10-second-check **PASS** and still not be worth shipping. Give each

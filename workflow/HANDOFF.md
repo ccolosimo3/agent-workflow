@@ -23,17 +23,14 @@ phase are autonomous.
   to `specreview` on GO; recommends the fallback on NO-GO)
 - Then: finalize spec → `specreview` / `specrereview` (autonomous loop), with an
   optional `outerspecreview` outer gate (other model) on the converged plan →
-  implement → `implreview` / `implrereview` (loop) → adaptive `outerreview` or
-  explicit coordinated `large-pr-review` outer gate
+  implement → `implreview` / `implrereview` (loop) → `outerreview` outer gate
 - Implementation review handoff → `implreview` (announce + spawn; emit-only mode
   for outer-gate handoffs)
 - Implementation re-review after patches → `implrereview`
 - Plan/spec review before promotion → `specreview`
 - Plan re-review after revisions → `specrereview`
 - Outer-gate second review of the operator's own implementation, run in the
-  other app/model → `outerreview` (adaptive serial/coordinated routing)
-- Explicit always-coordinated implementation outer gate for a broad PR/branch →
-  `large-pr-review`
+  other app/model → `outerreview`
 - Outer-gate second review of the operator's own converged plan/spec, run in the
   other app/model → `outerspecreview`
 - Coworker PR review + calibration → `prreview` (+ `calibrate-review`)
@@ -76,14 +73,12 @@ phase are autonomous.
      author — do NOT re-pass the full kickoff or re-populate. The full-kickoff
      spawn is the fallback.
    - If the skill IS the reviewer (the conversation itself — the outer gates):
-     follow the "Outer-gate protocol" below — self-populate the kickoff as
-     INTERNAL orientation and do NOT print it back in chat; the verdict return
-     (not the kickoff) is the record of what was reviewed.
-5. **Exactly one verdict owner.** Spawn (or, for an outer gate, run) exactly one
+     emit the populated kickoff verbatim in chat under a `## <Template-name>
+     Prompt` heading as the record of what was reviewed (there is no subagent to
+     inspect).
+5. **Exactly one reviewer.** Spawn (or, for an outer gate, run) exactly one
    fresh-context reviewer — except a re-review, which REUSES the original per §6.
-   Coordinated implementation outer-review mode may give bounded lanes to direct,
-   read-only evidence scouts; they never issue verdicts and do not count as extra
-   reviewers. Never add a second verdict owner unless the operator explicitly asks.
+   Never a second reviewer unless the operator explicitly asks.
 6. **Re-reviews reuse, don't re-spawn.** A re-review (`implrereview` /
    `specrereview`) is a narrow delta check — "were the findings addressed, and did
    the patch break anything else?" — so leave the ORIGINAL reviewer's session open
@@ -99,42 +94,39 @@ phase are autonomous.
    "Re-review mode" — confirm the fix actually works (the reverse-tautology check),
    not just that your suggestion was applied. Independence is already secured by the
    fresh FIRST review and the fresh, different-model OUTER gate; the inner re-review
-   need not re-earn it. The outer gate NEVER reuses: it independently derives a full
-   review from current first-party sources.
+   need not re-earn it. An outer follow-up re-review also reuses its original
+   conversation when the operator asks it to verify patches from its own verdict;
+   only the first outer pass must begin fresh and blind.
 7. **The second review is operator-owned** — see sequencing below.
 
 ## Sequencing — inner loop, then outer gate
 
 - **Inner loop** (implementer's app): `implreview` → patch → `implrereview`,
   repeat until APPROVED. Fast, same-app subagents; iterate freely.
-- **Outer gate** (the other app/model): ONE fresh-context verdict on the FINAL
-  tip — via adaptive `outerreview`, explicit coordinated `large-pr-review`, or a
-  pasted emit-only kickoff. A different model decorrelates blind spots; this
-  review certifies the candidate that will actually be PR'd.
+- **Outer gate** (the other app/model): ONE fresh-context review of the FINAL
+  tip — via `outerreview`, or via a pasted emit-only kickoff. A different
+  model decorrelates blind spots; this review certifies the candidate that
+  will actually be PR'd.
 - Do not run the outer gate in parallel with the inner loop by default: a
   verdict on a pre-patch tip cannot certify the final tip, so parallel runs
   guarantee stale findings or a repeat review. Deliberate exception: for
   big/risky changes an early outside review may run for directional signal —
   it does NOT count as the certifying second verdict.
 - Outer-gate findings: paste the verdict into the implementer session, patch,
-  and run `implrereview` quoting those findings verbatim. The kernel's
+  and run `implrereview` quoting those findings verbatim, then ask the same
+  outer-review conversation to re-review the patched live tip. The kernel's
   two-verdicts gate is met when both lenses have approved the final tip;
-  patches landed after any approval get a re-review — except a nit-only patch (naming,
-  comment, dead code, copy) that changes no logic, contract, or behavior: it keeps the
-  approval and is just noted at handoff. Anything beyond a nit takes the normal
-  re-review path. The carve-out exists so low findings aren't silently dropped to
-  protect a certified tip.
+  patches landed after any approval get a re-review.
 
 ## Outer-gate waivability
 
-The inner review loop is never skippable (kernel review floor). The outer gate —
-satisfied by adaptive `outerreview` or explicit `large-pr-review` — is REQUIRED
-whenever the diff touches any item on the canonical risk-surface list in the
-kernel's Implementation Completion Handoff (its single owner; there
-migration/schema/persisted-state covers any change to stored data or a
-state-machine, and provider boundary covers Stripe, AvaTax, and other external
-services) OR the inner review returned ACTIONABLE on any substantive finding at
-any point in the loop. It is operator-waivable ONLY when ALL of:
+The inner review loop is never skippable (kernel review floor). The outer gate
+(`outerreview`) is REQUIRED whenever the diff touches a canonical risk-surface
+(migration/schema/persisted-state (any change to stored data or a state-machine),
+auth, contract/API, data-loss, security, provider boundary (Stripe, AvaTax, other
+external services), dependency, toolchain) OR the inner review returned ACTIONABLE
+on any substantive finding at any point in the loop. It is operator-waivable ONLY
+when ALL of:
 
 - (a) the diff touches NONE of the canonical risk-surface list above;
 - (b) the inner review was APPROVED on the FIRST pass with zero substantive
@@ -150,42 +142,6 @@ handoff; the OPERATOR makes the final waive call. When the outer gate is
 mandatory, do not trim the independence seal, live-range self-computation, or the
 inner loop. (`outerspecreview` is already optional on the spec side, so this
 parity holds there too.)
-
-## Outer-gate protocol
-
-The shared procedure the outer-gate skills (`outerreview`, `large-pr-review`, and
-`outerspecreview`) run. An outer gate is not a handoff — the conversation itself
-owns the review — so it diverges from the spawn/emit protocol above:
-
-1. **The conversation IS the verdict owner.** Review here per
-   `REVIEW_RUBRIC.md` (and, for `outerspecreview`, the Spec Review Kickoff
-   validation categories). Serial `outerreview` and `outerspecreview` do not
-   spawn. Coordinated code-review mode may spawn only the bounded, read-only
-   evidence scouts defined by `large-pr-review`; the lead validates their claims
-   and issues the sole verdict.
-2. **Self-populate, never from a paste.** Build the kickoff from the filesystem
-   (the work-item folder / spec file) + the live git range computed at invocation
-   time — NEVER from a prompt pasted by the operator or a prior session. A stale
-   tip is the failure mode: a paste can encode a SHA the tree has moved past, and
-   an outer gate must certify the actual final tip.
-3. **Independence seal.** Do not intentionally seek or rely on prior findings,
-   verdicts, kickoff prompts, or `reviews.md`; the operator must not paste them in.
-   Accidental exposure is recoverable, not a stop condition: stop reading that
-   material, quarantine its claims, continue the full review from first-party
-   sources, independently prove any overlapping finding, and disclose the exposure
-   in the verdict.
-4. **The populated kickoff is INTERNAL orientation.** Do NOT print it back to the
-   operator or pass it to scouts; coordinated scouts receive only their canonical
-   lane kickoff. The lead's verdict return — not the kickoff — is the record of
-   what was reviewed.
-5. **Carry-back return shape.** Return, for the operator to paste into the
-   implementer/planning session: the strict verdict line; the exact range (or spec
-   section) reviewed; the findings; and a verified-clean record naming the checks
-   actually run.
-6. **Strict verdict.** Emit a strict `APPROVED`/`ACTIONABLE` verdict; do NOT
-   soften it into a calibrate-review-style advisory brief. An early or directional
-   read (the Sequencing deliberate exception) never counts as the certifying
-   verdict.
 
 ## Spec review loop (specreview → specrereview)
 
@@ -203,25 +159,22 @@ Full disposition lives in the `specreview` skill.
 
 A kickoff is stale the moment its tip SHA is no longer HEAD. Never hand a
 reviewer a stale kickoff — re-populate and re-emit (`implreview` emit-only), or
-use `outerreview` / `large-pr-review`, which compute their own range at invocation
-time.
+use `outerreview`, which computes its own range at invocation time.
 
 ## Independence seal
 
-The outer-gate reviewer independently derives its verdict from current source,
-tests, spec, and live range. It does not intentionally seek or rely on prior
-findings, verdicts, kickoff prompts, or `reviews.md`, and the operator should not
-paste them into the outer-gate conversation. Accidental exposure does not
-invalidate the gate or require a fresh task; apply the recovery rule above and
-continue. A pristine blind rerun happens only when the operator explicitly asks
-for one. Re-reviews are the deliberate opposite: they REQUIRE the prior findings,
-quoted verbatim.
+The first outer-gate pass must not see prior findings: `outerreview` does not
+read `reviews.md` or prior verdicts/kickoff prompts, and the operator should not
+paste inner-loop findings into that first pass. A follow-up in the same outer
+conversation deliberately retains its own findings and re-reviews the patched
+tip; it must not demand a fresh task. Other re-reviews likewise REQUIRE the
+prior findings, quoted verbatim.
 
 ## Shared failure modes
 
+- Paraphrasing the template — downstream agents depend on the exact shape.
 - Inventing placeholder content instead of stopping to ask.
 - Spawning without announcing the handoff; or, for an outer gate, not emitting
   the record of what was reviewed.
-- Spawning more than one verdict owner, or allowing an evidence scout to issue or
-  determine the verdict.
+- Spawning more than one reviewer from a single skill invocation.
 - Handing off a kickoff whose SHAs the tree has since moved past.

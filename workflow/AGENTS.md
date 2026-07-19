@@ -11,8 +11,6 @@ workflow bootstrap, not repository policy.
 - Tracked repo/company/security instructions are authoritative over this kernel.
 - If a repo root contains `AGENTS.local.md`, read it before substantive work as
   a local-only workflow adapter.
-- Read `~/.agents/workflow/OPERATOR.local.md` for operator identity and context
-  (who you're working for, handles, teams).
 - Local adapters are additive; on conflict with tracked repo rules, the tracked
   rule wins (see Precedence).
 - Do not commit local workflow adapters, personal paths, credentials, or kernel
@@ -36,33 +34,14 @@ or data-handling policies.
 
 ## Universal Quality Floor
 
-- Prefer the simplest complete, repo-conventional solution that satisfies the
-  current requirements and preserves correctness, safety, and maintainability.
-  Simplicity means introducing the fewest unnecessary concepts and surfaces,
-  not minimizing lines changed. Added complexity must tie to a current
-  requirement, observed failure mode, or established repo pattern; defer
-  hypothetical future needs and other out-of-scope work as follow-ups.
+- Keep changes surgical and scoped to the work item. Capture out-of-scope work as a follow-up rather than expanding the change.
 - Preserve public contracts unless the work item explicitly changes them.
 - Do not modify unrelated files.
-- Don't delete a comment you didn't write; one that looks redundant usually encodes context
-  you lack (a past bug, a subtle constraint). Reword it when the code it describes changes,
-  and remove it only when that code is gone.
 - Do not install dependencies, change toolchains, or edit generated artifacts without clear need and approval.
-- Never hand-edit a generated artifact to make a check pass — fix the source and regenerate.
 - Do not commit secrets, local credentials, device identifiers, or personal paths.
-- Don't prefix branches or PR/commit titles with an agent namespace (`codex/`, `[codex]`, `fix/`, `task/`, `chore/`) unless asked — follow the repo's own convention.
-- Prefer existing repo patterns over new abstractions: find and match the nearest exemplar
-  before building custom, and don't generalize until a second real consumer exists.
-- Before replacing an established pattern with a custom implementation, record a deviation
-  note (what's bypassed, why it's insufficient, what you'd do instead, the tradeoff, whether
-  sign-off is needed);
-  block on a human only when one is in the loop.
+- Prefer existing repo patterns over new abstractions.
 - Add tests and verification proportional to risk; broader-gate selection and
   routing reporting follow the rules under Verification Tiers.
-- Verification must follow risk, not create scope. Do not add new tooling,
-  validators, commands, or abstractions solely to make a low-risk change
-  mechanically testable. Prefer existing checks or explicit review/manual proof
-  unless material risk or repeated real failures justify automation.
 - Update docs only when behavior, contracts, setup, or user-visible workflow changes.
 - If a command fails because of environment or permissions, report the blocker clearly instead of masking it.
 
@@ -152,27 +131,11 @@ Operating rules:
 
 ## Startup Routing
 
-Pick one path; switch only when the operator's request changes. For work that
-enters formal planning path B, the planning agent owns the work through spec
-review and finalization but never switches to implementation path A for that
-same work item. Start implementation in a fresh user-visible task/session with
-the final spec and current repo state, not as a continuation or planning
-subagent. This context reset prevents planning exploration and compaction
-residue from silently widening implementation. A small, already well-defined
-task that starts directly in path A does not require a separate planning task.
+Pick one path; switch if the session changes.
 
 **A) Implement an existing work item** (ticket/issue/bug/explicit task):
 1. Read the work item + linked PR/context; read the nearest repo/subtree shim for
-   touched files. Reopen any named spec/plan before edits, after any
-   compaction/resume, and before handoff. Treat explicit requirements and
-   unmarked direction bullets as requirements unless the operator changes scope.
-   Only mechanics the spec explicitly marks recommended or assumption-dependent
-   may adapt when current source or environment disproves them; preserve scope,
-   contracts, acceptance oracles, and proof strength, and return to planning
-   otherwise. Compaction/resume never broadens authority: re-ground in the spec
-   and current diff, and if material replanning or scope expansion is needed,
-   stop at a clean checkpoint and return to planning rather than evolving the
-   work item inside the implementation task.
+   touched files.
 2. Restate goal, non-goals, acceptance criteria, verification; name in-scope
    files and risky/out-of-scope areas.
 3. `git status` before branching/editing; never discard unowned changes.
@@ -193,7 +156,7 @@ task that starts directly in path A does not require a separate planning task.
 scope): read product/docs/code context; run a Domain Pass when
 terminology/lifecycle/cross-boundary behavior changes; produce a reviewable spec
 (self-contained scope, non-goals, acceptance criteria, exact verification
-commands, labels/branch when relevant, any approval-gated work); for UI work, apply FRONTEND.md. No code changes
+commands, labels/branch when relevant, any approval-gated work). No code changes
 unless explicitly asked.
 
 **C) Review a PR or diff:** review changed behavior before style; focus on
@@ -207,7 +170,10 @@ aligned with actual commands, runtime versions, and contracts.
 ## Kickoff Templates
 
 Canonical kickoff prompts live one-per-file in `~/.agents/workflow/kickoffs/`;
-each handoff skill reads only its own.
+each handoff skill reads only its own. Index: `planning.md`, `domain-pass.md`,
+`final-spec-promotion.md`, `planner-directive.md` (shared — appended to the spec
+reviews), `spec-review.md`, `spec-re-review.md`, `execution.md`, `review.md`,
+`re-review.md`, `external-pr-review.md`, `pr-body.md`, `post-plan-grill.md`.
 
 **Fidelity rule:** paste the matching `kickoffs/*.md` template verbatim with
 placeholders filled — do not paraphrase, restructure, or invent your own shape;
@@ -241,7 +207,7 @@ A Task is ready when:
   only manual/Tier 4 proof is meaningful
 - verification tier and any escalation gates are named
 - affected surfaces and owners are known
-- dependencies, manual/hardware requirements, and any verification preflight (environment prep) ownership are called out
+- dependencies and manual/hardware requirements are called out
 - contract changes are explicit
 - domain terms are resolved or open questions are named
 
@@ -263,8 +229,8 @@ A Task is done when:
 
 Every implementation makes an explicit docs-impact decision before review
 handoff. Does the change affect any of: user-visible behavior or product
-terminology; setup/install/build/local-iteration commands; verification gates,
-coverage policy, or manual-QA expectations; architecture boundaries, module
+terminology; setup/install/build/local-iteration commands; verification
+gates/coverage policy/manual-QA expectations; architecture boundaries, module
 ownership, or route/path maps; board/firmware/simulator/network/API contracts;
 performance-validation policy or durable evidence; release/privacy/app-store/
 distribution evidence?
@@ -284,32 +250,27 @@ before moving on — the full sequence lives in `~/.agents/workflow/PLANS.md`
 
 ## Implementation Completion Handoff
 
-When finishing an implementation, first run a maintainer-readiness pass over the diff —
-reuse that could replace custom code, summary claims you didn't actually verify, drift from
-the named spec, needless abstractions/comments/checks, scope creep, and — for UI work —
-design-system consistency — then hand off for
-review: a brief summary + verification results, then spawn exactly one fresh-context
-reviewer (Review Kickoff) and announce the handoff (what + range). No second reviewer unless the
+When finishing an implementation, hand off for review: a brief summary +
+verification results, then spawn exactly one fresh-context reviewer (Review
+Kickoff) and announce the handoff (what + range). No second reviewer unless the
 operator explicitly asks this session. Mechanics — sequencing, freshness, the
 independence seal, re-review reuse, and the ritual→skill index — live in
 `~/.agents/workflow/HANDOFF.md`.
 
 Two independent approved verdicts before PR handoff by default: the implementer
-owns the spawned inner reviewer; the operator owns the implementation outer gate
-(`outerreview`, which routes adaptively, or explicit coordinated
-`large-pr-review`) and the optional plan/spec outer gate (`outerspecreview`). The
-implementation gate self-populates from the work-item folder + live range and
-runs on the final tip after the inner loop converges; the spec gate reads the
-current spec directly.
+owns the spawned inner reviewer; the operator owns the outer gate
+(`outerreview` / `outerspecreview`), which self-populates from the work-item
+folder + live range and runs on the final tip after the inner loop converges.
 
 Review floor — the inner loop (`implreview` → `implrereview` to APPROVED) is
 NEVER skippable: every implementation gets ≥1 review, and nothing reaches a PR
 without one. Only the outer gate is ever waived. It is REQUIRED whenever the diff
 touches a canonical risk-surface — migration/schema/persisted-state · auth ·
 contract/API · data-loss · security · provider boundary · dependency · toolchain
-— OR the inner review was ever ACTIONABLE on a substantive finding; otherwise it
-is operator-waivable only under the exact conditions in HANDOFF.md "Outer-gate
-waivability". The implementer states `outer gate: required | waivable — <why>`;
+— OR the inner review was ever ACTIONABLE on a substantive finding; it is
+operator-waivable ONLY for a first-pass-clean, mechanically-trivial,
+zero-risk-surface change (exact a/b/c conditions in HANDOFF.md "Outer-gate
+waivability"). The implementer states `outer gate: required | waivable — <why>`;
 the OPERATOR makes the waive call.
 
 ## PR Handoff
@@ -354,9 +315,6 @@ maintenance with stable terminology.
 - Services own policy, validation, orchestration, transactions, and side effects.
 - UI state should make loading, error, empty, disabled, and retry states explicit.
 - For no-contract refactors, verify parity for status/shape/error/side effects.
-- For generated migrations, use the tool's generate step — never hand-author the schema
-  DDL; review the semantic delta, not the raw snapshot; and prove safety with a fresh-schema
-  test plus a populated-upgrade test when data or constraints change.
 
 ## Verification Tiers
 
@@ -398,9 +356,7 @@ Rules:
 - Don't run live/provider/hardware checks from an agent unless the env is
   explicitly prepared; if sandboxing blocks services/hardware/localhost/network,
   stop after one diagnostic run and escalate or ask the operator for output.
-- Never claim a build, check, test, or hardware/manual step passed unless it ran this
-  session or is clearly CI-/operator-owned; if blocked, state the exact blocker. Name the
-  touched surfaces and exact commands run — never a generic "run tests."
+- Final summaries must name commands run and results.
 
 ## Review Loop
 

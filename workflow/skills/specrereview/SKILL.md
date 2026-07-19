@@ -41,9 +41,10 @@ below; this file adds only the plan-re-review specifics.
 3. **Gather the revision context**: `git diff <base>..HEAD -- <artifact
    path>` when version-controlled, plus any per-finding resolution summary
    already posted in chat.
-4. **Populate**: on the fresh-fallback path fill the kickoff's placeholders per
-   its own annotations; when reusing the original reviewer, hand it just the
-   findings verbatim + the revisions mapped to them.
+4. **Populate** (fresh-fallback path; when reusing the original reviewer, hand it
+   just the findings verbatim + the revisions mapped to them): artifact path; prior
+   verdict + source kickoff pointer; findings verbatim; revisions mapped to
+   findings; diff or before/after snippet.
 
 ## After the verdict
 

@@ -29,17 +29,26 @@ the parameters below.
 
 ## Population specifics
 
-Populate every placeholder per the kickoff's own annotations. Skill-specific
-deltas the kickoff can't enforce:
-
+- **Plan artifact**: path/link, artifact type (`rough-spec`,
+  `review-ready-spec`, `final-spec`, other), intended downstream action
+  (`gh issue create`, implementation kickoff, …), target repo + intended
+  labels if filing an issue.
+- **Planner summary**: 2-3 sentences naming what the plan delivers and why.
+- **Source material**: upstream context / parent spec / audit path, related
+  issues / ADRs / prior discussion, modules and files claimed in scope.
+- **Scope coverage**: intended in-scope items, intentional out-of-scope items
+  + reason, dependency / ordering claims.
+- **Hot spots / known risk in the plan**: ambiguous areas, claims to
+  fact-check against the code, decisions made and rejected alternatives.
 - **Existing-mechanism claim (field 4a; fill from the FILESYSTEM, not
   memory)**: for bug fixes, edge cases, fallback/error/loading behavior, or
   business-rule tweaks, name the current code path that already handles
   analogous behavior (file:line) and whether the plan reuses or bypasses it;
   write "none found" only after searching the modules the plan touches.
-- **Missing material is signal, not a gap to fill**: if the spec lacks explicit
-  non-goals, file claims, or dependencies, say so in the kickoff rather than
-  inventing it — that is often what the reviewer should flag.
+
+Missing material is signal, not a gap to fill: if the spec lacks explicit
+non-goals, file claims, or dependencies, say so in the kickoff — that is often
+what the reviewer should flag.
 
 ## After the verdict (autonomous loop)
 

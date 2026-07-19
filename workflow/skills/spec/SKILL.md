@@ -58,15 +58,7 @@ research.
    tradeoffs — when an adjacent mechanism exists, the minimal
    route-into-the-existing-path option MUST be one of them; one recommendation
    plus a rejected alternative (the decision brief); the one-line Domain Pass
-   decision per the kernel's triggers. When implementation latitude matters,
-   explicitly mark recommended or assumption-dependent mechanics and the
-   return-to-planning triggers; unmarked direction remains required. Lock scope,
-   contracts, safety, acceptance oracles, and proof strength rather than
-   speculative mechanics. Recommend the simplest complete, repo-conventional
-   solution among the approaches that meet those bars. Do not penalize a better
-   solution merely for being larger, but tie every added abstraction, surface,
-   or mechanism to a current requirement, observed failure, or established repo
-   pattern; move hypothetical hardening to follow-ups.
+   decision per the kernel's triggers.
 
 4. **Write the living spec.** Create or reuse the work-item folder per the
    repo's planning conventions (e.g.
@@ -79,8 +71,7 @@ research.
    the states it renders, and the visual proof); exact verification commands by
    touched surface from the repo's verification doc; the proposed branch name per the shim's
    branch rule; and open questions / `[decision-required]` items the operator
-   must settle. Apply TESTING.md's conditional confidence-proof rule when
-   triggered. Scale the plan to the change's size/risk — a trivial
+   must settle. Scale the plan to the change's size/risk — a trivial
    single-surface fix gets a compact plan (skip the parallel-investigator
    fan-out and the two-or-three-approach synthesis), not the full treatment.
    Update the plans `INDEX.md` when the repo keeps one.
@@ -92,9 +83,7 @@ research.
    path, or an unproven architectural bet, recommend `/explore` (map & rank the
    approaches) or `/spike` (prove the bet) instead of forcing a single-path
    spec. Do not auto-run specreview, and do not promote to `final` or to the
-   tracker without the operator. Once the spec is approved and final, hand it
-   to a fresh user-visible implementation task/session; this planning session
-   does not implement the work item or hide the handoff in a subagent.
+   tracker without the operator.
 
 ## Failure modes to avoid
 
@@ -107,5 +96,3 @@ research.
 - Skipping the repo shim's read-first docs and rediscovering known sharp edges.
 - Drafting straight to `final` — rough → review-ready → `/specreview` is the
   path.
-- Continuing from formal planning into implementation in the same task instead
-  of handing the final spec to a fresh implementation context.

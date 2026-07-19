@@ -88,14 +88,30 @@ mutations (the Destructive Action Policy applies to any command run).
    Do NOT auto-invoke spike or specreview — *which approach* and *whether to
    spike* are direction decisions the operator owns.
 
-## Guardrails (not already in the steps)
+## Guardrails
 
-The When-invoked procedure above is binding; these are the points it does not
-already make recoverable:
+- Read-only exploration: propose, don't build. Even a throwaway probe of a
+  *durable or provider-touching* boundary needs an explicit operator ask (a
+  read-only source/API/local probe to ground a feasibility claim is fine).
+- Ground every candidate and feasibility claim in file:line + real system
+  behavior; never compare approaches from memory or assumption.
+- Attack each candidate (name its tax/failure mode); a one-sided pro-list is not
+  an exploration.
+- The rejected list must say *why* — an unexplained rejection invites
+  re-litigation.
+- Separate engineering optimizations from product/policy decisions; the latter
+  are `[decision-required]`, returned to the operator, not chosen here.
 
-- Even a throwaway probe of a *durable or provider-touching* boundary needs an
-  explicit operator ask (a read-only source/API/local probe to ground a
-  feasibility claim is fine).
-- For a new bug's root-cause investigation use `spec`; for proving one chosen
-  approach use `spike` — explore neither re-investigates a fresh problem nor
-  proves a single bet.
+## Failure modes
+
+- Listing approaches without attacking them, or without grounding them in the
+  real code — a comparison only as good as its evidence.
+- Recommending change for its own sake — failing to seriously rank "keep the
+  current approach" when it is already the idiomatic / floor solution; "no better
+  approach found" is a valid result.
+- Recommending a bet without saying whether it needs a spike or can go straight
+  to specreview — that next-phase call is the point of the hand-off.
+- Quietly picking a product/policy direction instead of surfacing it.
+- Sliding into implementation, a branch, or a tracker mutation.
+- Re-running a fresh problem investigation — for a new bug's root cause use
+  `spec`; for proving one chosen approach use `spike`.
