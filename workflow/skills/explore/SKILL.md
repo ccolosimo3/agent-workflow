@@ -2,18 +2,18 @@
 name: explore
 description: Map and rank the candidate approaches for an open architectural
   question or a working-but-imperfect system — "is there a more correct, more
-  repo-conventional, or more performant version of this?" Fans out read-only
+  repo-conventional, or more performant version of this?" Runs a bounded read-only
   investigation to enumerate viable approaches grounded in the real codebase (web
   search encouraged for current framework/provider/engine behavior and
   version-specific limits), adversarially verifies each one's feasibility, and
   produces a ranked
   options/decision doc with a recommended approach and the next phase (spike if
   the approach carries an unproven bet, else specreview). Read-only — no code,
-  no branch, tracker untouched. Use when the operator says /explore, "what are
-  the alternatives", "is there a better/cleaner/faster way to do X", "I built X,
-  explore other versions", or "evaluate approaches for <architectural
-  question>". Not for researching a fresh bug's root cause (that is spec)
-  or proving one chosen bet (that is spike).
+  no branch, tracker untouched. Use only when the operator explicitly invokes
+  /explore or asks to run a formal explore pass for an architectural question.
+  Do not trigger for casual questions about options or whether a better approach
+  exists; answer those serially. Not for researching a fresh bug's root cause
+  (that is spec) or proving one chosen bet (that is spike).
 ---
 
 # explore
@@ -34,10 +34,12 @@ mutations (the Destructive Action Policy applies to any command run).
    WEB-174's transport layers / exactness / coupling tax). Vague axes produce
    vague comparisons.
 
-2. **Map the solution space — fan out, read-only.** Decompose into independent
-   questions and spawn parallel read-only investigators; scale the fan-out to the
-   question — a big architectural decision warrants a broad multi-agent fan-out
-   (e.g. the 14-agent WEB-174 run), a small one just two or three subagents.
+2. **Map the solution space — bounded fan-out, read-only.** Decompose into
+   independent evidence domains and use two read-only investigators by default.
+   Use three only when the question has three genuinely distinct material domains
+   (for example: repo precedent, current external constraints, and performance
+   evidence); never exceed three. Keep a narrow question serial when splitting it
+   would duplicate reading or coordination.
    Cover: existing repo patterns/precedents that already solve this or something
    adjacent (file:line); the idiomatic approach for the stack; performance/cost
    characteristics; and the **irreducible floor** — what no approach can avoid

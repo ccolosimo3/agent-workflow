@@ -8,26 +8,16 @@ project-agnostic. Local repo shims define stack facts, commands, and local const
 Loaded as global agent guidance (Codex, Claude Code, or similar): treat as
 workflow bootstrap, not repository policy.
 
-- Tracked repo/company/security instructions are authoritative over this kernel.
 - If a repo root contains `AGENTS.local.md`, read it before substantive work as
-  a local-only workflow adapter.
-- Local adapters are additive; on conflict with tracked repo rules, the tracked
-  rule wins (see Precedence).
-- Do not commit local workflow adapters, personal paths, credentials, or kernel
-  symlinks unless the repo explicitly asks for them.
-- Claude Code delta: also read a repo-root `CLAUDE.md` as the Claude project
-  adapter; when it imports or points at `AGENTS.md` and `AGENTS.local.md`,
-  compose those files in the order the adapter describes.
+  a local-only workflow adapter — additive only; on conflict the tracked repo
+  rule wins. Claude Code delta: also read a repo-root `CLAUDE.md`, composing the
+  files in the order that adapter describes.
 
 ## Precedence
 
-When instructions conflict, follow this order:
-
-1. Human instruction in the current session.
-2. Repo or company policy, security rules, and code owner guidance.
-3. Nearest repo/subtree `AGENTS.md` or equivalent local shim.
-4. This portable kernel.
-5. Personal preferences and optional playbooks.
+On conflict: (1) human instruction in the current session, (2) repo/company
+policy, security rules, and code owner guidance, (3) the nearest repo/subtree
+shim, (4) this kernel, (5) personal preferences and optional playbooks.
 
 Do not use this workflow to bypass team review, CI, security controls, licensing rules,
 or data-handling policies.
@@ -38,8 +28,11 @@ or data-handling policies.
 - Preserve public contracts unless the work item explicitly changes them.
 - Do not modify unrelated files.
 - Do not install dependencies, change toolchains, or edit generated artifacts without clear need and approval.
-- Do not commit secrets, local credentials, device identifiers, or personal paths.
-- Prefer existing repo patterns over new abstractions.
+- Do not commit secrets, local credentials, device identifiers, personal paths,
+  local workflow adapters, or kernel symlinks.
+- Prefer existing repo patterns over new abstractions. Keep route/page/entry
+  files thin: persistence layers own persistence, services own policy,
+  validation, orchestration, transactions, and side effects.
 - Add tests and verification proportional to risk; broader-gate selection and
   routing reporting follow the rules under Verification Tiers.
 - Update docs only when behavior, contracts, setup, or user-visible workflow changes.
@@ -74,9 +67,8 @@ offline fallback REVIEW_RUBRIC.md uses when TESTING.md can't be opened).
 
 ## GitHub CLI
 
-Use the `gh` CLI for all GitHub interactions — issues, PRs, releases, comments,
-reviews, and `gh api` calls. Do not use a GitHub MCP connector when both are
-available.
+Use the `gh` CLI for all GitHub interactions. Do not use a GitHub MCP connector
+when both are available.
 
 ## Destructive Action Policy
 
@@ -159,10 +151,7 @@ terminology/lifecycle/cross-boundary behavior changes; produce a reviewable spec
 commands, labels/branch when relevant, any approval-gated work). No code changes
 unless explicitly asked.
 
-**C) Review a PR or diff:** review changed behavior before style; focus on
-correctness, regressions, contract drift, security, data loss, missing
-verification; lead with findings by severity + file:line; return
-`APPROVED`/`ACTIONABLE` per REVIEW_RUBRIC.md.
+**C) Review a PR or diff:** per `REVIEW_RUBRIC.md`.
 
 **D) Docs/architecture/pattern maintenance:** read only docs in scope; keep them
 aligned with actual commands, runtime versions, and contracts.
@@ -170,10 +159,8 @@ aligned with actual commands, runtime versions, and contracts.
 ## Kickoff Templates
 
 Canonical kickoff prompts live one-per-file in `~/.agents/workflow/kickoffs/`;
-each handoff skill reads only its own. Index: `planning.md`, `domain-pass.md`,
-`final-spec-promotion.md`, `planner-directive.md` (shared — appended to the spec
-reviews), `spec-review.md`, `spec-re-review.md`, `execution.md`, `review.md`,
-`re-review.md`, `external-pr-review.md`, `pr-body.md`, `post-plan-grill.md`.
+each handoff skill reads only its own. `planner-directive.md` is shared —
+appended to the spec reviews.
 
 **Fidelity rule:** paste the matching `kickoffs/*.md` template verbatim with
 placeholders filled — do not paraphrase, restructure, or invent your own shape;
@@ -182,62 +169,24 @@ you received looks incomplete, say so and ask the operator rather than guessing.
 
 ## Work Item Model
 
-Neutral objects (works with GitHub Issues, Jira, Linear, or a written prompt):
-
 - **Task** — default PR-sized implementation unit. Default: one Task → one branch
   → one PR.
-- **Spec** — one living planning artifact evolving rough → review-ready → final →
-  promoted → implemented; a final spec should be publishable as the tracker issue
-  body unless it must be split, redacted, or substantially reshaped.
-- **Decision** — a short decision lock with rationale.
 
-Split work only when it improves delivery or risk control: too large to review
-safely; a contract/schema change that should land separately; hardware/manual
-validation gating later software work; migration/state-machine work needing
-staging; or independent parts reviewable/mergeable without coordination risk.
-
-## Definition Of Ready
-
-A Task is ready when:
-
-- goal and non-goals are clear
-- acceptance criteria are testable
-- exact verification commands are listed
-- planned tests identify the behavior/failure mode they protect, or explain why
-  only manual/Tier 4 proof is meaningful
-- verification tier and any escalation gates are named
-- affected surfaces and owners are known
-- dependencies and manual/hardware requirements are called out
-- contract changes are explicit
-- domain terms are resolved or open questions are named
-
-## Definition Of Done
-
-A Task is done when:
-
-- implementation satisfies acceptance criteria
-- selected verification passed, or blockers documented with exact failed commands
-- verification routing reported (see Verification Tiers)
-- tests/docs changed where risk requires it; new tests protect intended behavior,
-  or implementation-shape coverage is justified as supplemental/contractual
-- docs impact checked (see Docs Impact Check), or the agent stated `Docs impact: none`
-- the Implementation Completion Handoff contract was met
-- if a PR was opened, it satisfies PR Handoff
-- follow-up work is explicitly captured, not hidden in prose
+Split work only when it improves delivery or risk control — most often a
+contract/schema change that should land separately, or hardware/manual
+validation gating later software work.
 
 ## Docs Impact Check
 
 Every implementation makes an explicit docs-impact decision before review
-handoff. Does the change affect any of: user-visible behavior or product
-terminology; setup/install/build/local-iteration commands; verification
-gates/coverage policy/manual-QA expectations; architecture boundaries, module
-ownership, or route/path maps; board/firmware/simulator/network/API contracts;
-performance-validation policy or durable evidence; release/privacy/app-store/
+handoff. Does the change affect user-visible behavior or product terminology;
+setup/build/local-iteration commands; verification gates, coverage policy, or
+manual-QA expectations; architecture boundaries, module ownership, or route/path
+maps; board/firmware/simulator/network/API contracts; or release/privacy/
 distribution evidence?
 
 - If yes: update the owning tracked doc in the SAME PR — prefer the established
-  authority over a new doc (root `README.md`; setup docs; verification docs;
-  architecture docs; runbooks/history; ADRs only for hard-to-reverse, surprising,
+  authority over a new doc (ADRs only for hard-to-reverse, surprising,
   real-trade-off decisions).
 - If no: state `Docs impact: none` in the summary and as the one-line PR-body
   footer (not a standalone section).
@@ -280,20 +229,11 @@ handoff without making it default public PR content — keep prompts, verdicts,
 findings + resolutions, post-patch verification, deferred follow-ups, and
 residual risk / Tier-4 gates local per PLANS.md.
 
-1. Compose the PR body in the `kickoffs/pr-body.md` shape. Closing refs: GitHub
-   `Fixes #<n>` only when merge fully resolves it, else `Refs`/`Part of`; Linear
-   `Closes <full url>` when fully resolved, else `Part of <url>`.
-2. No standalone `## Review Summary` by default; mention a review finding only
-   when it materially changes reviewer context (patched edge case, deferred
-   follow-up, residual risk). A separate review-record comment (starting
-   `# Review Notes`) only when requested.
-3. Determine labels from the source issue + local policy: carry over labels still
-   describing the diff, omit stale ones, state the final list.
-4. Show the PR body, any comment, the labels, repo, target branch/PR, and
-   requested action before asking for one bundled approval. Create/update only
-   when authorized (labels via `gh pr create` / `gh pr edit --add-label`; an
-   authorized review-record comment via `gh pr comment`). All externally visible
-   GitHub mutations follow the Destructive Action Policy.
+Compose the PR body in the `kickoffs/pr-body.md` shape, which owns the section
+order, closing-ref rules, and review-summary policy. Determine labels from the
+source issue + local policy: carry over labels still describing the diff, omit
+stale ones, state the final list. All externally visible GitHub mutations follow
+the Destructive Action Policy.
 
 ## Domain Pass
 
@@ -305,16 +245,6 @@ terms; avoided synonyms (when important); unresolved decisions; an ADR/decision
 record only if the decision is hard to reverse, surprising, and a real trade-off.
 Skip for isolated bug fixes, visual polish, small refactors, and dependency
 maintenance with stable terminology.
-
-## Implementation Defaults
-
-- Read code before editing.
-- Prefer structured APIs/parsers over ad hoc text manipulation.
-- Keep route/page/entry files thin; move orchestration to existing service/hook/module layers.
-- Repositories or persistence layers own persistence details only.
-- Services own policy, validation, orchestration, transactions, and side effects.
-- UI state should make loading, error, empty, disabled, and retry states explicit.
-- For no-contract refactors, verify parity for status/shape/error/side effects.
 
 ## Verification Tiers
 
@@ -353,6 +283,7 @@ Rules:
   regression-prone path.
 - API/schema/data/integration: consider contract tests, builds, local-stack
   verification, and service e2e in addition to package tests.
+- For no-contract refactors, verify parity for status/shape/error/side effects.
 - Don't run live/provider/hardware checks from an agent unless the env is
   explicitly prepared; if sandboxing blocks services/hardware/localhost/network,
   stop after one diagnostic run and escalate or ask the operator for output.
@@ -360,31 +291,22 @@ Rules:
 
 ## Review Loop
 
-- Verdict/findings semantics (`APPROVED`/`ACTIONABLE`, blocking rules) and the
-  adversarial checks (its Stance section) are owned by `REVIEW_RUBRIC.md`;
-  approve clean only after naming the checks run.
+- `REVIEW_RUBRIC.md` is the reviewer's manual (verdict semantics, stance, blocking
+  rules); `HANDOFF.md` owns outer-gate mechanics. Approve clean only after naming
+  the checks run.
 - Patch only listed findings unless scope expands; rerun targeted verification.
-- Both default independent fresh-context reviews run the full `REVIEW_RUBRIC.md`;
-  outer-gate mechanics live in `HANDOFF.md`. Automated-reviewer (CodeRabbit)
-  path-exclusion handling: see REVIEW_RUBRIC.md "Automated-reviewer awareness".
 - Extra review passes whenever post-review patches are non-trivial, touch
   lifecycle/state/concurrency, change acceptance behavior, or the operator asks.
 
-Reviewer priorities + full detail: `REVIEW_RUBRIC.md`.
-
 ## Output Budget
 
-- Be concise.
 - Do not restate stable repo rules unless they matter.
-- Show failed command context only when useful.
 - Final summaries should include changed files, intent, verification, and known follow-ups.
 
 ## Local Repo Facts Contract
 
-Each local repo shim should define only facts the kernel cannot know: stack and
-package manager; repo layout; branch/PR/ticket conventions; verification
-commands by tier; manual/hardware gates; forbidden or sensitive files; common
-pitfalls; subtree-specific rules.
-
-Shims should stay small and local-only unless the team wants them committed. Put durable
-domain vocabulary in `CONTEXT.md`, not in every agent instruction file.
+Each local repo shim defines only facts the kernel cannot know: stack, package
+manager, repo layout, branch/PR/ticket conventions, verification commands by
+tier, manual/hardware gates, sensitive files, pitfalls, subtree rules. Shims stay
+small and local-only unless the team wants them committed. Put durable domain
+vocabulary in `CONTEXT.md`, not in every agent instruction file.

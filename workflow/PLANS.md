@@ -50,27 +50,14 @@ spec.
 
 ## Large Work-Item Subfolders
 
-Default work-item folders should stay small. For large issues with multiple
-spikes, slices, or release rehearsals, keep the root focused and move
-task-specific docs into optional subfolders:
+Default work-item folders should stay small. For large issues, keep the root
+focused and move task-specific docs into `slices/` (specs for implementation
+slices) and `spikes/` (bounded proof specs and writeups); add other subfolders
+only if a project actually needs them.
 
-- `slices/` — concise specs for completed or in-progress implementation slices.
-- `spikes/` — bounded proof specs and spike writeups.
-- `release/` — rebase ledgers, merge rehearsals, final-review ledgers.
-- `superseded/` — plans kept as fallback/history but not current direction.
-- `future/` — follow-on design notes that are related but not yet their own
-  work item.
-
-Do not fold every slice back into `README.md`. Instead:
-
-- update `README.md` only when the durable feature contract changes;
-- record command results in `verification.md`;
-- record reviewer outcomes in `reviews.md`;
-- keep concise slice/spike specs standalone so agents can work from a small
-  task surface.
-
-If a `future/` item becomes actionable, promote it to its own folder under
-`active/` or `backlog/`.
+Do not fold every slice back into `README.md` — update it only when the durable
+feature contract changes. Command results go in `verification.md`, reviewer
+outcomes in `reviews.md`.
 
 ## Frontmatter Template
 
@@ -140,21 +127,9 @@ moves intact to the local `archive/`, then becomes eligible for externalization
 only when its frontmatter is terminal (`implemented`, `closed`, or `deferred`)
 and its `landed:` date (falling back to `updated:`) is at least 30 days old.
 
-- A periodic audit may report candidates without approval. It reads only the
-  local `archive/`; `active/`, `backlog/`, and `reference/` are never automatic
-  candidates.
-- Sync and pruning are operator-driven. Show the exact folders, private remote,
-  destination, and whether pruning is included before requesting one bundled
-  approval for the fast-forward push, recovery verification, and exact prune.
-- Store archived plans as ordinary files under
-  `projects/<project>/<work-item>/`; do not create recurring ZIP snapshots or a
-  persistent archive checkout under any project root.
-- Write a SHA-256 batch manifest, verify the pushed commit through a second
-  fresh clone, and compare every path and byte before removing local sources.
-  Any failure leaves the local copy intact; a remote path conflict blocks rather
-  than overwrites.
-- Leave only a compact retrieval pointer (remote, commit, subtree) in the live
-  project. Restore into a disposable directory first.
-- Keep separate archives for different ownership or confidentiality boundaries.
-  A private Git host is off-device storage, not client-side encryption or an
-  independent disaster-recovery copy.
+The `plan-cleanup` skill owns the sync/prune safety envelope (audit scope,
+bundled approval, manifests, fresh-clone verification, retrieval pointers). Two
+things worth knowing before you invoke it: a periodic audit reads only the local
+`archive/` — `active/`, `backlog/`, and `reference/` are never automatic
+candidates — and a private Git host is off-device storage, not encryption and
+not an independent disaster-recovery copy.

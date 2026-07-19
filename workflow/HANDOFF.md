@@ -24,15 +24,6 @@ phase are autonomous.
 - Then: finalize spec → `specreview` / `specrereview` (autonomous loop), with an
   optional `outerspecreview` outer gate (other model) on the converged plan →
   implement → `implreview` / `implrereview` (loop) → `outerreview` outer gate
-- Implementation review handoff → `implreview` (announce + spawn; emit-only mode
-  for outer-gate handoffs)
-- Implementation re-review after patches → `implrereview`
-- Plan/spec review before promotion → `specreview`
-- Plan re-review after revisions → `specrereview`
-- Outer-gate second review of the operator's own implementation, run in the
-  other app/model → `outerreview`
-- Outer-gate second review of the operator's own converged plan/spec, run in the
-  other app/model → `outerspecreview`
 - Coworker PR review + calibration → `prreview` (+ `calibrate-review`)
 
 ## The protocol

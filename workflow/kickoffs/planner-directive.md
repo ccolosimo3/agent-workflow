@@ -1,7 +1,6 @@
 # Planner directive (shared)
 
-The Spec Review and Spec Re-Review templates both append this verbatim. Its exact
-text is load-bearing (the Fidelity Rule depends on it):
+The Spec Review and Spec Re-Review templates both append this verbatim:
 
 > Planner: this is an autonomous review→revise→re-review loop. Resolve every
 > finding you can by tightening the plan's correctness/clarity, then re-run

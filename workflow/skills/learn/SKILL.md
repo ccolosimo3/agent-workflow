@@ -60,8 +60,3 @@ from-scratch tutorial: extract and organize what was actually built. Read-only.
 - Accurate over impressive: what the operator repeats must be correct — ground
   every claim in the diff/spec and flag real uncertainty instead of smoothing it
   into a confident guess.
-- High-level first; never lead with exhaustive detail.
-
-Not this skill: restating the last message → `plain`; mapping approaches before
-building → `explore`; researching a fresh issue → `spec`. `learn` explains work
-that already exists.

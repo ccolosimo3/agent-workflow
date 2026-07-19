@@ -2,12 +2,12 @@
 name: spec
 description: Begin planning and research for a newly assigned tracker issue
   (Linear or GitHub). The invoking session becomes the planning agent and
-  orchestrator — it reads the issue and its linked context, spins up read-only
-  investigation subagents to find the root cause or design constraints (web
-  search encouraged for framework/provider questions), and produces the
-  work-item folder and living spec per ~/.agents/workflow/PLANS.md and the
-  repo shim. Planning only — no code edits, no branch creation, tracker stays
-  read-only. Use when the operator says /spec <issue>, "we've been
+  orchestrator — it reads the issue and its linked context, investigates the
+  root cause or design constraints serially by default, may delegate at most
+  two genuinely independent material unknowns to read-only subagents, and
+  produces the work-item folder and living spec per
+  ~/.agents/workflow/PLANS.md and the repo shim. Planning only — no code edits,
+  no branch creation, tracker stays read-only. Use when the operator says /spec <issue>, "we've been
   assigned <ISSUE-KEY>", "start planning this issue", or pastes an issue URL
   asking for root cause and the best approach. Not for reviewing an existing
   spec (specreview) or implemented code (implreview).
@@ -35,17 +35,19 @@ research.
    non-goals, and acceptance criteria as currently understood, and name the
    unknowns that investigation must resolve.
 
-2. **Investigate — orchestrate, don't wander.** Decompose the unknowns into
+2. **Investigate — stay proportional.** Decompose the unknowns into
    independent questions: reproduction path, root-cause candidates, blast
    radius, existing repo patterns to reuse, prior art in git history and
    merged PRs — and, for bug fixes and edge cases, the adjacent-mechanism
    question: what existing code path already handles analogous behavior (read
    the FULL function/module being modified, not just the lines the issue
    points at), and can the case be routed into it with a narrower condition
-   change before any new helper/filter/policy/state is proposed? Spawn
-   read-only subagents in parallel for independent
-   questions — each scoped to one question with a structured, file:line-cited
-   return. Use web search freely for framework/provider/library behavior,
+   change before any new helper/filter/policy/state is proposed? Investigate
+   serially by default. Spawn read-only subagents only when there are at least
+   two genuinely independent, material unknowns and parallel work will shorten
+   the pass; use at most two, each scoped to one question with a structured,
+   file:line-cited return. Use web
+   search freely for framework/provider/library behavior,
    known upstream issues, and changelogs (prefer primary docs; note the
    source when a decision rests on one), and any repo-connected docs MCP
    (e.g. a Vendure docs server) when relevant. Every load-bearing claim is
@@ -72,8 +74,8 @@ research.
    touched surface from the repo's verification doc; the proposed branch name per the shim's
    branch rule; and open questions / `[decision-required]` items the operator
    must settle. Scale the plan to the change's size/risk — a trivial
-   single-surface fix gets a compact plan (skip the parallel-investigator
-   fan-out and the two-or-three-approach synthesis), not the full treatment.
+   single-surface fix gets a compact plan (skip the two-or-three-approach
+   synthesis), not the full treatment.
    Update the plans `INDEX.md` when the repo keeps one.
 
 5. **Hand back.** End with the spec path and status, the decision-required
@@ -82,8 +84,10 @@ research.
    If research surfaced multiple viable architectures rather than one clear
    path, or an unproven architectural bet, recommend `/explore` (map & rank the
    approaches) or `/spike` (prove the bet) instead of forcing a single-path
-   spec. Do not auto-run specreview, and do not promote to `final` or to the
-   tracker without the operator.
+   spec. Comparing approaches during ordinary synthesis does not authorize an
+   `/explore` pass; recommend it and wait for the operator. Do not auto-run
+   specreview, and do not promote to `final` or to the tracker without the
+   operator.
 
 ## Failure modes to avoid
 
@@ -91,8 +95,8 @@ research.
   throwaway spike needs an explicit operator ask.
 - Mutating the tracker, or creating a branch during planning.
 - Asserting a root cause without file:line evidence from the current tree.
-- Investigator sprawl: a few well-scoped parallel subagents beat many vague
-  ones; don't re-run what a subagent already answered.
+- Investigator sprawl: serial is the default; never exceed two subagents or
+  delegate routine orientation. Don't re-run what a subagent already answered.
 - Skipping the repo shim's read-first docs and rediscovering known sharp edges.
 - Drafting straight to `final` — rough → review-ready → `/specreview` is the
   path.
