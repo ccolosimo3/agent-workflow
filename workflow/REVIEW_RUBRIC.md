@@ -138,11 +138,9 @@ component) — those are in-scope refinements, not substitutions.
   called is NOT sufficient on its own — supplemental at best, ACTIONABLE as the sole
   proof. Any lossy or narrowing down-migration (USING clauses, type narrowings) MUST
   carry a reload-after-down assertion proving no silent data loss.
-- Component / UI / contract change: first run the authorization + masking check in
-  the Scope-vs-intent & contract-identity section. Test bar: the change MUST be
-  covered by a test that asserts user-visible behavior through a real
-  render+interaction and would fail on the swap; a preserved `data-testid` that lets
-  an existing test still pass does NOT count as coverage.
+- Component / UI / contract change: the change MUST be covered by a test that
+  asserts user-visible behavior through a real render+interaction and would fail
+  on the swap.
 
 Also flag tests that would not fail for the intended regression, assert
 implementation shape only, or create false confidence without a behavior-level/
@@ -173,10 +171,8 @@ ACTIONABLE.
 
 ## Output contract (your Return, in order)
 
-0. Coverage confirmations, both REQUIRED:
-   (a) Diff coverage: confirm you ran `git diff <base>..<tip>` and reviewed the full
-       diff; list any changed file you did NOT open and why — normally empty; if you
-       cannot account for every changed file, the review is incomplete, say so.
+0. Coverage:
+   (a) List any changed file you did NOT open, and why — normally empty.
    (b) Acceptance-criteria ledger: one row per AC (re-derived in Required
        investigation (a)) — AC | met / not met / deferred | the diff evidence or the
        gap. A "not met" AC is a `[high]` finding; a silently dropped requirement is
@@ -197,17 +193,11 @@ ACTIONABLE.
    the contract — in that case write the row as PASS and name the complementing
    proof. A FAIL here forces the overall verdict to ACTIONABLE.
 
-Inclusion disposition (a SECOND axis, separate from PASS/FAIL — a test can be a
-10-second-check PASS and still not be worth shipping). For each ledger row, judge
-whether the test belongs in the PR's permanent suite and record one of
-ship / trim / redundant-with-<test> / one-off-proof->pocket; the disposition
-definitions live in `~/.agents/workflow/TESTING.md` ("Inclusion: should this
-test ship?"). Any row whose disposition is not "ship" is a valid-but-marginal
-inclusion call: raise it in Findings as `[decision-required]` (low/medium
-severity, NOT a quality FAIL) with your recommendation, so the OPERATOR makes
-the final include/exclude decision. Do NOT silently delete a working test and
-do NOT auto-FAIL it for worth — disposition is about worth; the sub-verdict
-above is about weakness; keep them separate.
+Inclusion disposition is a SECOND axis, about worth rather than weakness —
+definitions in `~/.agents/workflow/TESTING.md` ("Inclusion: should this test
+ship?"). A row that is not `ship` is a `[decision-required]` finding (low/medium,
+NOT a quality FAIL) for the OPERATOR to settle. Never silently delete a working
+test.
 
 3. Overall verdict: APPROVED or ACTIONABLE (cannot be APPROVED while line 2 is FAIL,
    while a Required-investigation step was skipped, or while an unresolved
@@ -234,29 +224,15 @@ above is about weakness; keep them separate.
    genuinely none, write "none found".
 5. Verification notes. Do not rerun broad verification already reported green
    unless the diff makes that evidence suspect.
-6. Convention conformance: for UI/component/loading-state/library/style surfaces in
-   the diff (and any surface a documented repo primitive, wrapper, hook, or helper
-   plausibly covers), does the change reuse that existing primitive and match
-   documented naming/placement/style patterns? Flag hand-rolled code that duplicates
-   an existing primitive — e.g. a custom shimmer where the repo's Skeleton/loading
-   primitive exists — as ACTIONABLE "convention drift", citing the violated rule.
-   For UI surfaces also apply `~/.agents/workflow/FRONTEND.md` — states built and
-   proven, the a11y contract (keyboard + name/role/state), contrast / use-of-color,
-   layout stability, and composition (hierarchy/density/alignment/hostile-data/
-   responsive); a broken state/a11y/contrast is ACTIONABLE. Scope visual evidence to
-   the work: for visual-design work (building/recomposing a screen/dashboard/
-   component's look) the reviewer VIEWS the render itself — captures it via the
-   host's fast tool, or reads the geometry story — and JUDGES composition (not a
-   presence check on the implementer's artifact); raise weak composition, an
-   unverified hostile-data/responsive state, or a width/padding/spacing change not
-   re-checked against the WHOLE surface as a challengeable finding: low /
-   non-blocking, exempt from the treat-as-blocking-when-unsure default — don't
-   manufacture taste nits where the surface reads cleanly. For incidental UI (a
-   copy/prop/behavior tweak) do NOT flag a missing screenshot.
-   Skip the primitive-reuse check only when the diff touches no surface a
-   documented primitive covers; still apply the FRONTEND.md half whenever the diff
-   renders UI, even where the repo documents no primitive — the
-   a11y/contrast/state/layout/composition principles are repo-independent.
+6. Convention conformance: hand-rolled code that duplicates a documented repo
+   primitive is ACTIONABLE convention drift — cite the violated rule. For any UI
+   surface apply `~/.agents/workflow/FRONTEND.md`; a broken state/a11y/contrast is
+   ACTIONABLE. For visual-design work (building/recomposing a screen or component's
+   look) VIEW the render yourself and JUDGE composition — not a presence check on
+   the implementer's artifact. Composition/responsive/hostile-data findings are
+   low / non-blocking and exempt from the treat-as-blocking-when-unsure default;
+   don't manufacture taste nits where the surface reads cleanly. For incidental UI
+   (a copy/prop/behavior tweak) do NOT flag a missing screenshot.
 7. Residual risk or testing gaps.
 
 ## Decision-required handling

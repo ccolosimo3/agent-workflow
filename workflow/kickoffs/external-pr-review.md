@@ -67,8 +67,8 @@ Context (per-task):
 
 6. Repo conventions to enforce: resolve per HANDOFF.md step 3.
 
-Return: the rubric Output contract in full (diff- and acceptance-criteria-coverage
-confirmations, per-test ledger, test-quality sub-verdict, verdict, findings with
+Return: the rubric Output contract in full (acceptance-criteria coverage,
+per-test ledger, test-quality sub-verdict, verdict, findings with
 severities, verification notes, convention conformance, residual risk), plus:
 
 8. Verified-clean record — bullets of the specific checks that came back CLEAN:
