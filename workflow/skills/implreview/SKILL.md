@@ -97,7 +97,16 @@ Generate the receipt from the final committed tip and current checkout. Prefer
 an absolute local path for `Spec`; use the tracker URL only when no local spec
 exists. Include only commands that actually ran and exact results; never include
 review findings or verdicts. Regenerate the receipt whenever patches move
-`HEAD`. The next step is the
+`HEAD`.
+
+**Receipt fidelity:** reproduce the fenced block exactly as the final block of
+the post-implementation message. Preserve its heading, field labels, order, and
+blank-line grouping; replace placeholders only. Do not convert it to a table,
+rename or omit fields, fold it into the surrounding summary, or drop it because
+the same information appeared earlier. Use the template's explicit `none` form
+when a section has no entries.
+
+The next step is the
 operator-owned `outerreview` outer gate
 (required unless waived per the kernel's "Implementation Completion Handoff"
 off-ramp); this skill does NOT auto-invoke it.
@@ -107,4 +116,5 @@ off-ramp); this skill does NOT auto-invoke it.
 The shared ones in HANDOFF.md, plus: inventing verification numbers, scope
 items, risks, or acceptance criteria — if an operator-supplied placeholder
 cannot be filled honestly from this session, stop and ask first; or ending an
-approved inner-loop handoff without the complete receipt as its final block.
+approved inner-loop handoff without the complete, canonically formatted receipt
+as its final block.
