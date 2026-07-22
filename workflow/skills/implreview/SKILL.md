@@ -70,11 +70,15 @@ Disposition is owned by the implementer directive appended to each verdict
 (REVIEW_RUBRIC.md) plus the Execution Kickoff re-review trigger — not by this
 skill. On an inner-loop APPROVED, report the result with a one-line-per-pass
 changelog and note the loop converged. Then state `Outer gate: required |
-waivable — <reason>` and emit this copyable receipt every time:
+waivable — <reason>` and end the handoff with this copyable receipt every time.
+The handoff is incomplete without it:
 
 ```text
 ## Outer-review verification receipt
 
+Spec: <absolute spec path | tracker URL | `none` + reason>
+Branch: <current branch name>
+Worktree: <absolute repo/worktree root>
 Tip: <full HEAD SHA>
 Working tree: clean
 Environment: <default local | prepared services/data | concise relevant details>
@@ -89,9 +93,11 @@ Remaining Tier 4:
 - <operator/manual/provider check + owner, or `none`>
 ```
 
-Generate the receipt from the final committed tip. Include only commands that
-actually ran and exact results; never include review findings or verdicts.
-Regenerate the receipt whenever patches move `HEAD`. The next step is the
+Generate the receipt from the final committed tip and current checkout. Prefer
+an absolute local path for `Spec`; use the tracker URL only when no local spec
+exists. Include only commands that actually ran and exact results; never include
+review findings or verdicts. Regenerate the receipt whenever patches move
+`HEAD`. The next step is the
 operator-owned `outerreview` outer gate
 (required unless waived per the kernel's "Implementation Completion Handoff"
 off-ramp); this skill does NOT auto-invoke it.
@@ -100,4 +106,5 @@ off-ramp); this skill does NOT auto-invoke it.
 
 The shared ones in HANDOFF.md, plus: inventing verification numbers, scope
 items, risks, or acceptance criteria — if an operator-supplied placeholder
-cannot be filled honestly from this session, stop and ask first.
+cannot be filled honestly from this session, stop and ask first; or ending an
+approved inner-loop handoff without the complete receipt as its final block.

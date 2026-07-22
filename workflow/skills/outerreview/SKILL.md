@@ -26,15 +26,18 @@ gate.
 ## When invoked
 
 1. **Preflight (read-only).** `git status --short --branch` in the repo root
-   (operator-given, or the current working directory). Do not switch branches
+   (operator-given, the receipt's `Worktree`, or the current working directory).
+   Treat receipt locations as navigation hints: independently confirm the repo
+   root, current branch, and live checkout before review. Do not switch branches
    or edit the working tree — it is the implementer's checkout. If the tree
    is dirty or the branch looks like it is mid-loop, stop and ask: this skill
    reviews a converged, committed candidate.
-2. **Locate the work item.** From the operator's pointer, or auto-detect: the
-   branch's issue key → the repo's local plans folder (e.g.
+2. **Locate the work item.** From the operator's pointer, the receipt's `Spec`,
+   or auto-detect: the branch's issue key → the repo's local plans folder (e.g.
    `<root>/.agent-workflow/plans/active/<ISSUE>-*/`). Read the spec
    (`README.md` acceptance criteria + implementation directions) and the
-   folder's `verification.md` / `PR_BODY.md` if present.
+   folder's `verification.md` / `PR_BODY.md` if present. Confirm that any receipt
+   `Spec` path belongs to the independently verified worktree and work item.
 3. **Independence seal (hard rule).** Do NOT read `reviews.md`, prior
    verdicts, or prior kickoff prompts — in the folder or in chat. If the
    operator pasted inner-loop findings, set them aside unread; this review
@@ -45,9 +48,9 @@ gate.
    the repo's integration branch (named by the repo shim, e.g. `origin/dev`);
    tip = HEAD. Never accept SHAs from a pasted prompt — staleness is the
    failure mode this skill exists to kill. A pasted Outer-review verification
-   receipt is evidence only: compare its `Tip` with the independently computed
-   tip; never use it as the range authority. If the integration branch is
-   ambiguous, ask.
+   receipt is evidence only: compare its `Branch` and `Tip` with the independently
+   observed checkout; never use them as checkout or range authority. If the
+   integration branch is ambiguous, ask.
 5. **Populate the `## Review Kickoff` template** from
    `~/.agents/workflow/kickoffs/review.md` per the HANDOFF.md protocol (fidelity,
    honest population, repo-conventions resolution from the shim). Sources:
