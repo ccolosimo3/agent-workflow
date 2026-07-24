@@ -48,6 +48,11 @@ Context (per-task):
 5a. Docs impact (per the kernel Docs Impact Check — a CLAIM to confirm)
    - <`none`, or the owning tracked doc path updated in this change>
 
+5b. Visual evidence (UI work only)
+   - profile: <standard | composition-heavy — reason>
+   - rendered evidence: <path/link, or standard-profile/operator-tier reason>
+   - residual visual checks: <items + owner, or none>
+
 6. Test quality (implementer's CLAIM — do NOT accept; re-derive each test per the
    rubric's Test-quality rules + inclusion-disposition check and
    `~/.agents/workflow/TESTING.md`)

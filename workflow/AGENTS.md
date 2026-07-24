@@ -27,7 +27,9 @@ or data-handling policies.
 - Keep changes surgical and scoped to the work item. Capture out-of-scope work as a follow-up rather than expanding the change.
 - Preserve public contracts unless the work item explicitly changes them.
 - Do not modify unrelated files.
-- Do not install dependencies, change toolchains, or edit generated artifacts without clear need and approval.
+- Do not install dependencies, change toolchains, or edit generated artifacts
+  without clear need and approval, except the isolated-worktree lockfile restore
+  preauthorized below.
 - Do not commit secrets, local credentials, device identifiers, personal paths,
   local workflow adapters, or kernel symlinks.
 - Prefer existing repo patterns over new abstractions. Keep route/page/entry
@@ -83,7 +85,8 @@ Hard-to-reverse local/repo state:
 - Hook/signing bypass flags: `--no-verify`, `--no-gpg-sign`,
   `-c commit.gpgsign=false`.
 - Editing `.git/`, lockfiles, or `.git/info/exclude`.
-- Installing/removing/upgrading/downgrading dependencies or toolchains.
+- Installing/removing/upgrading/downgrading dependencies or toolchains, except
+  the isolated-worktree lockfile restore preauthorization below.
 - `rm -rf`, or deleting tracked files outside the work item's stated scope.
 - Deleting/recreating local databases, search indexes, containers, volumes,
   caches, or worktrees (`docker compose down -v`, `docker volume rm`,
@@ -113,6 +116,16 @@ Operating rules:
   labels — one approval, not three. Re-ask only if the command materially
   diverges — a different repo/target, broader scope, an unstated mutation, or a
   body/label/comment the operator has not seen. "ok"/silence is not yes.
+- **Isolated-worktree lockfile restore is preauthorized.** In a newly created,
+  task-specific git worktree, an agent may announce and run the repository's
+  existing immutable lockfile install without asking again: for example,
+  `pnpm install --frozen-lockfile`, `npm ci`, `yarn install --immutable`,
+  `bun install --frozen-lockfile`, or the exact repo-documented equivalent.
+  This applies only when the dependency manifests and lockfile already match
+  the worktree's checked-out commit. Confirm afterward that the command did not
+  modify them. It does not authorize adding/upgrading/removing packages, a
+  non-immutable install, global installation, or installing/changing the package
+  manager or toolchain; those still require fresh approval.
 - For destructive local-data commands, state the exact store/volume/worktree/
   cache/container target and whether data loss is expected before asking.
 - For provider/db mutations, prefer a read-only check or dry-run first when

@@ -23,4 +23,8 @@ Deliver:
 10. Domain Pass decision (one line): per the AGENTS.md "## Domain Pass" triggers,
     state whether this plan needs a Domain Pass and why or why not; if yes, run it
     or flag it as required before the spec goes review-ready.
+11. UI only: declare `Visual profile: standard | composition-heavy — <reason>`
+    using `~/.agents/workflow/FRONTEND.md`. For `composition-heavy`, separate the
+    locked product contract, design intent, and implementer discretion envelope,
+    and name the early wide/narrow render plus final rendered proof.
 ```

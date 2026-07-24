@@ -40,6 +40,44 @@ Concrete when it names three things: the **tokens/primitives/patterns** it uses,
 the **states it renders**, and the **visual proof** (which screenshot or story
 shows it correct).
 
+### Visual profiles
+
+Every UI work item declares `Visual profile: standard | composition-heavy —
+<reason>`.
+
+Use `composition-heavy` only when the task materially changes hierarchy or
+reading order, repeated geometry, responsive composition, progressive
+disclosure/default visibility, or a substantial multi-state surface. Copy-only,
+isolated styling, accessibility-only remediation, invisible refactors, and
+layout-preserving behavior changes remain `standard`.
+
+A composition-heavy spec separates:
+
+- the **locked product contract** — facts, actions, state, accessibility,
+  required visibility, reading order, responsive semantics, and non-goals;
+- the **design intent** — focal task, scan/inspect/act sequence, hierarchy,
+  density, alignment, and the experience that must survive across widths; and
+- the **implementer discretion envelope** — reversible choices such as grid
+  fractions, spacing from the existing scale, wrapping, dividers, surface
+  weight, text treatment, action alignment, and close breakpoint choices.
+
+During implementation, prefer the live route and representative data. Before
+completing the full behavior/state pass or broad verification, render the
+structural composition once at a primary wide and narrow width, critique it
+against the design intent, and correct material issues inside the discretion
+envelope. After behavior and required states are complete, run one final render
+→ critique → patch → recapture loop. Variants are
+optional and capped at two when materially different compositions remain
+plausible; pause for the operator only when the choice changes product priority,
+visibility, terminology, interaction, or scope.
+
+Handoff carries a compact evidence pointer: widths/themes and states exercised,
+three-to-five critique conclusions and corrections (zero corrections is valid),
+remaining visual uncertainty, the boundary between static capture, browser
+interaction, automated proof, and operator-tier proof, and confirmation that
+temporary fixture/tooling residue is absent. A fixture is exceptional: use one
+only for a required state the live route cannot safely reach, and never ship it.
+
 ## Design values come from tokens
 
 - Every color, font, and brand-spacing value comes from tokens — never a raw

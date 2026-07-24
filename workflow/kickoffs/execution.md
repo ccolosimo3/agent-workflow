@@ -12,7 +12,16 @@ Enforce these forcing functions ON TOP of Routing A:
 
 - Surface-tied verification: if the diff touches a surface the repo's verification
   doc names a gate for, that gate is REQUIRED — "Tier 1 sufficient" is not a valid
-  record. Name the surface you changed, or why no surface-triggered gate applies.
+  final-candidate record. Run it before the first implementation review; after a
+  patch, apply the patch-loop rule below rather than automatically repeating it.
+  Name the surface you changed, or why no surface-triggered gate applies.
+- Patch-loop verification is proportional, not cumulative: after a patch, run the
+  narrowest Tier 2 check that proves the changed behavior. Reuse prior green Tier 3
+  evidence when the inspected delta cannot invalidate it. Rerun the broader gate
+  only when the patch touches its risk surface, changes shared test setup/fixtures/
+  config/infrastructure, makes the earlier result suspect, or no valid broad
+  evidence remains. A single isolated test correction normally reruns that test,
+  not the entire suite.
 - Honest verification reporting: claim a gate passed only if it actually ran this
   session/branch; report each as a real result/number; mark un-run gates as not-run
   (reason/blocker or CI-owned), never as passing.
@@ -31,4 +40,10 @@ Enforce these forcing functions ON TOP of Routing A:
 - One-off verification tests (a static-asset/config/data repair proof with no ongoing
   regression surface) → pocket to the work-item `artifacts/`, don't commit to the
   suite; disclose in the Review Kickoff.
+- Composition-heavy UI: follow the opt-in profile in
+  `~/.agents/workflow/FRONTEND.md`. Prefer the live route; before completing the
+  full behavior/state pass or broad gates, record one wide/narrow structural
+  render and self-critique; after behavior is complete, run one final
+  critique/patch/recapture loop. Hand off only a compact visual-evidence pointer
+  and confirm temporary fixture/tooling residue is zero.
 ```

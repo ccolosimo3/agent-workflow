@@ -29,11 +29,12 @@ phase are autonomous.
 ## The protocol
 
 1. **Template fidelity.** Read the named `~/.agents/workflow/kickoffs/<name>.md`
-   template file and paste it verbatim with placeholders
-   filled (kernel Fidelity Rule). Never paraphrase, restructure, reorder, or
-   invent a different shape — the structure is load-bearing for downstream
-   agents. Do not inline `REVIEW_RUBRIC.md` into the prompt: the reviewer
-   reads it itself; confirm the reviewer can reach that path.
+   template file and populate it verbatim with placeholders filled (kernel
+   Fidelity Rule). Emit or pass it only as step 4 directs. Never paraphrase,
+   restructure, reorder, or invent a different shape — the structure is
+   load-bearing for downstream agents. Do not inline `REVIEW_RUBRIC.md` into
+   the prompt: the reviewer reads it itself; confirm the reviewer can reach that
+   path.
 2. **Populate honestly.** Fill every placeholder from the current session and
    the filesystem. If an OPERATOR-SUPPLIED placeholder cannot be filled
    honestly, stop and ask — never invent verification numbers, scope items,
@@ -64,9 +65,9 @@ phase are autonomous.
      author — do NOT re-pass the full kickoff or re-populate. The full-kickoff
      spawn is the fallback.
    - If the skill IS the reviewer (the conversation itself — the outer gates):
-     emit the populated kickoff verbatim in chat under a `## <Template-name>
-     Prompt` heading as the record of what was reviewed (there is no subagent to
-     inspect).
+     assemble the populated kickoff as internal orientation and do NOT emit it
+     in chat. The outer gate's verdict and verified-clean summary are the concise
+     record of what was reviewed.
 5. **Exactly one reviewer.** Spawn (or, for an outer gate, run) exactly one
    fresh-context reviewer — except a re-review, which REUSES the original per §6.
    Never a second reviewer unless the operator explicitly asks.
@@ -165,7 +166,7 @@ prior findings, quoted verbatim.
 
 - Paraphrasing the template — downstream agents depend on the exact shape.
 - Inventing placeholder content instead of stopping to ask.
-- Spawning without announcing the handoff; or, for an outer gate, not emitting
-  the record of what was reviewed.
+- Spawning without announcing the handoff; or, for an outer gate, not returning
+  the verdict and concise verified-clean record.
 - Spawning more than one reviewer from a single skill invocation.
 - Handing off a kickoff whose SHAs the tree has since moved past.

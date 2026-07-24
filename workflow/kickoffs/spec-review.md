@@ -95,6 +95,15 @@ Return:
      for it (e.g. a custom Box/@keyframes shimmer where the repo mandates the
      existing Skeleton/loading primitive). Do not flag steps that reuse existing
      primitives or where no repo primitive is documented.
+   - minimum-sufficient design: which material mechanism, if any, can be removed
+     without violating the primary outcome, an independently required behavioral
+     acceptance criterion, or a justified safety invariant? Apply the same
+     standard to additions proposed by the reviewer. Do not recommend
+     simplification that weakens correctness, evidence integrity, bounded paid
+     work, approval boundaries, or fail-closed behavior. Treat this as ACTIONABLE
+     only when the mechanism materially expands state, lifecycle, recovery,
+     testing, or operation and the plan supplies no concrete current-boundary
+     justification; preference-level simplification is non-blocking.
    - existing-mechanism reuse / over-scope: does the plan invent a new helper,
      policy, query, filter, fallback, branch, state, or UI behavior where the
      codebase already has an adjacent mechanism? Verify the 4a claim by reading
