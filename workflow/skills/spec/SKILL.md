@@ -60,7 +60,11 @@ research.
    tradeoffs — when an adjacent mechanism exists, the minimal
    route-into-the-existing-path option MUST be one of them; one recommendation
    plus a rejected alternative (the decision brief); the one-line Domain Pass
-   decision per the kernel's triggers.
+   decision per the kernel's triggers. Recommend the simplest complete,
+   repo-conventional approach. Tie every added abstraction, configuration/state
+   surface, tool, compatibility path, or cross-surface mechanism to a current
+   requirement, observed failure, or established repo pattern; defer
+   hypothetical hardening.
 
 4. **Write the living spec.** Create or reuse the work-item folder per the
    repo's planning conventions (e.g.

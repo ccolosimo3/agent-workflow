@@ -122,6 +122,12 @@ drift.
    exported name over a changed component/contract is a MASKED swap, not
    reassurance. Name the existing test that SHOULD have gone red for this change and
    did not, and raise the missing assertion as a `[test quality]` finding.
+4. Proportionality check. For each materially new abstraction, tool, configuration
+   or persisted-state surface, fallback/recovery/compatibility path, or
+   cross-package change, identify its current requirement, observed failure, or
+   established repo pattern. If none exists, it is unjustified scope expansion.
+   Do not flag line count or ordinary local implementation detail; any required
+   fix must itself be the simplest complete correction.
 
 Do not fire on cosmetic in-place edits that preserve the component TYPE, signature,
 and contract (tweaking a prop value, className, or animation duration on the SAME
@@ -218,7 +224,8 @@ test.
      high — judge it on correctness and coverage.)
    - medium: a test that fails the 10-second check or asserts implementation shape
      only with no real operation boundary; OR a risk-bearing new/changed branch,
-     failure path, or persisted field that ships with no test at all.
+     failure path, or persisted field that ships with no test at all; OR a
+     materially new durable surface fails the proportionality check above.
    - low: maintainability/naming/doc nits with no behavioral or contract impact.
    If unsure whether a finding is medium-or-higher, treat it as blocking. If
    genuinely none, write "none found".

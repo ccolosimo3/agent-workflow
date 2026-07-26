@@ -24,7 +24,10 @@ or data-handling policies.
 
 ## Universal Quality Floor
 
-- Keep changes surgical and scoped to the work item. Capture out-of-scope work as a follow-up rather than expanding the change.
+- Prefer the simplest complete, repo-conventional solution that satisfies the
+  current requirements and preserves correctness, safety, and maintainability.
+  Added complexity must trace to a current requirement, observed failure, or
+  established repo pattern; defer hypothetical future needs as follow-ups.
 - Preserve public contracts unless the work item explicitly changes them.
 - Do not modify unrelated files.
 - Do not install dependencies, change toolchains, or edit generated artifacts
@@ -140,7 +143,8 @@ Pick one path; switch if the session changes.
 
 **A) Implement an existing work item** (ticket/issue/bug/explicit task):
 1. Read the work item + linked PR/context; read the nearest repo/subtree shim for
-   touched files.
+   touched files. Reopen any named spec after compaction/resume and before
+   handoff; compaction never broadens scope or authority.
 2. Restate goal, non-goals, acceptance criteria, verification; name in-scope
    files and risky/out-of-scope areas.
 3. `git status` before branching/editing; never discard unowned changes.
