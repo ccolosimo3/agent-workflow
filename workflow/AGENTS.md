@@ -50,6 +50,14 @@ offline fallback REVIEW_RUBRIC.md uses when TESTING.md can't be opened).
 
 - Tests protect behavior, contracts, failure modes, or user/system outcomes: a
   useful test fails iff the regression it guards against comes back.
+- Sensitivity alone is insufficient: that recurrence must be a durable defect.
+  When intentionally removing pure copy/markup/presentation, delete or relax only
+  the obsolete assertion rather than invert it into absence coverage unless
+  a raw ask, owning contract, or concrete continuing risk makes absence durably
+  functional, safety/security/privacy/legal/compliance, accessibility,
+  operational/forbidden-output/policy, or public-contract relevant. Classify by
+  consequence, preserve every other durable assertion, and route ambiguity for
+  decision.
 - Before adding/changing a test, identify the behavior or contract protected, the
   original or plausible failure mode to catch, the real operation boundary
   exercised (service method,

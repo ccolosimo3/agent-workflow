@@ -23,7 +23,7 @@ changing. So drive the service, component, hook, store, parser, client, or devic
 the way the app/board does, and assert the outcome a user or the board actually
 depends on.
 
-### Is a test worth keeping? (all three, or rewrite/delete)
+### Is a test worth keeping? (all four, or rewrite/delete)
 
 1. **Regression-real** — fails if the actual bug comes back, not if a constant,
    class string, or style constant gets refactored.
@@ -35,9 +35,13 @@ depends on.
    reloaded state, HTTP status, rendered text/accessible label, parsed contract,
    classified error, thrown warning, command sent), not className / StyleSheet /
    SQL text / export shape.
+4. **Durable value** — protects a continuing product, contract, safety, or
+   operational requirement/risk, not an incidental preference or an acceptance
+   criterion manufactured by the implementer to justify coverage.
 
-**The 10-second check:** *if this bug came back, does the test go red?* If you can't
-answer yes, it isn't valuable yet.
+**The 10-second check is necessary, not sufficient:** *if this came back, does the
+test go red — and would that recurrence be a durable defect?* If either answer is
+no, the test is not valuable yet.
 
 ### When to test vs skip
 
@@ -50,6 +54,20 @@ PR and name the manual/Tier-4 proof that carries the confidence.
   what renders, what persists, or what command is sent needs a test.
 - A copy-sounding title doesn't either: if a "visual" change grows a pure helper or
   a stateful flag, test that helper/flag.
+- Classification follows consequence, not file type or syntax. Exact text,
+  markup, presence, or absence is not incidental when it carries functional,
+  safety, security, privacy, legal/compliance, accessibility, operational,
+  forbidden-output/policy, or public-contract meaning. A time-bounded requirement
+  remains durable until its explicit retirement condition.
+- Intentionally removing pure copy, markup, or presentation does not by itself
+  create a continuing prohibition. Delete or relax only the obsolete assertion;
+  do not invert it into absence/tombstone coverage unless the raw operator ask,
+  an owning contract, or a concrete continuing risk makes absence durable. An
+  implementer-authored addendum alone cannot create that authority. Preserve all
+  other durable coverage; if authority is ambiguous, mark it
+  `[decision-required]`. Never lower or bypass an enforced coverage gate: replace
+  obsolete coverage with durable behavior proof or surface the gate-vs-quality
+  conflict.
 - **Per-stack defaults:** tc-commerce → test **~always**; tc-app → test when there's
   branching, failure, or persistence logic; clearsnake → Jest when there's behavior,
   a contract, a failure mode, or persistence, and a **Tier-4 device proof** for
@@ -101,11 +119,15 @@ new/changed test a disposition:
 - **one-off-proof→pocket** — a valid verification of a one-time repair with no
   ongoing regression surface; keep it as a local `artifacts/` proof or a Tier-4
   note, not permanent suite coverage.
+- **obsolete-assertion-cleanup** — a deleted/relaxed assertion protected no
+  durable requirement and every other durable assertion remains covered;
+  expected cleanup, not a non-`ship` disposition.
 
-The implementer pockets clear one-off proofs and ships `ship` tests. For any other
+The implementer pockets clear one-off proofs, ships `ship` tests, and records
+`obsolete-assertion-cleanup` when the removal rule applies. For any other
 non-`ship` disposition, surface it with a recommendation and let the **operator**
-make the final include/exclude call — don't silently delete a working test. (This is
-worth, not weakness; it is independent of whether the test is a quality FAIL.)
+make the final include/exclude call — don't silently delete a working test. (This
+is worth, not weakness; it is independent of whether the test is a quality FAIL.)
 
 ### Right-sizing agent output & coverage-gate interaction (hard rules)
 
@@ -151,8 +173,10 @@ systematically over-produce tests to chase a coverage number.
 constant, SQL/source text, a className/style object/layout number, a snapshot, "mock
 was called", or `toBeDefined` as the point; is a backend test with no DB reload or a
 store test with no rehydrate/write-back when persistence matters; offers a Storybook
-story as the test; would still pass if you reverted the fix; or a changed branch has
-no test on either side.
+story as the test; would still pass if you reverted the fix; protects only an
+incidental detail with no durable defect/authority; deletes or relaxes unique
+durable coverage without equivalent proof; or a changed branch has no test on
+either side.
 
 ✅ **Accept** if: it runs the real operation, asserts an observable outcome
 (persisted+reloaded state, HTTP status, accessible label / visible text, parsed

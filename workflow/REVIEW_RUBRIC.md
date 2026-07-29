@@ -18,10 +18,11 @@ Run these checks explicitly and cite what you found:
   and did I actually look at the code that would show it? Unrequested
   component/library/contract swaps are out of scope — see the Scope-vs-intent &
   contract-identity check below.
-- For each new or changed test: try to construct a regression the test would NOT
-  catch. If you can name one (revert the fix, narrow it to one column, make the
-  down-path lossy, swap the component but keep the testid), the test is weak — call
-  it out.
+- For each added or changed current assertion, try to construct a durable
+  regression it would NOT catch. For each deleted or relaxed assertion, try to
+  construct a durable regression no remaining proof catches. If you can name one
+  (revert the fix, narrow it to one column, make the down-path lossy, swap the
+  component but keep the testid), call it out.
 
 Reporting rule: do not invent findings to look thorough. APPROVED with no findings
 is a valid outcome — but only state it after listing the specific adversarial
@@ -86,7 +87,8 @@ drift.
     Context section 1). You may not approve a file you did not open.
 (c) For any UI or component change, run the full identity + masking check in the
     Scope-vs-intent & contract-identity section below.
-(d) Open each new or changed test file yourself and judge it against the
+(d) Open each test file with an added, changed, deleted, or relaxed assertion
+    yourself (use the base version for deletions) and judge it against the
     Test-quality rules below and `~/.agents/workflow/TESTING.md`; do not rely on
     the implementer's self-report.
 (e) For a migration, persistence, data-loss, or contract change, confirm the proof
@@ -183,27 +185,38 @@ ACTIONABLE.
        investigation (a)) — AC | met / not met / deferred | the diff evidence or the
        gap. A "not met" AC is a `[high]` finding; a silently dropped requirement is
        what this ledger exists to surface.
-1. Per-test ledger (REQUIRED — one row for EACH added or changed test that carries
-   an assertion; quote the key assertion you inspected):
+1. Per-test ledger (REQUIRED — one row for EACH test with an added, changed,
+   deleted, or relaxed assertion; quote the key current or removed assertion):
    test name/path | real boundary it drives (service / import / job / API route /
    component render+interaction / hook state machine / store rehydrate / parser / DB
-   save+reload) | the exact regression that turns it RED on revert |
-   10-second-check PASS/FAIL | anti-pattern row matched, if any (else "none") |
-   inclusion disposition (ship / trim / redundant-with-<test> / one-off-proof->pocket)
+   save+reload) | the exact regression it catches/caught + why recurrence is or is
+   not a durable defect (raw ask / owning contract / concrete risk) |
+   10-second + durable-value check PASS/FAIL |
+   anti-pattern row matched, if any (else "none") |
+   inclusion disposition (ship / trim / redundant-with-<test> /
+   one-off-proof->pocket / obsolete-assertion-cleanup)
 2. Test-quality sub-verdict (MANDATORY, separate line): PASS or FAIL. Mark FAIL if
-   any row is a 10-second-check FAIL, matches a "delete on sight" row, or asserts
-   implementation shape (config constant, generated-SQL string, file/class/migration
-   existence, "mock was called", snapshot with no behavioral assertion) AS ITS SOLE
-   PROOF. Do NOT FAIL a shape-only test when the diff or PR explicitly justifies it
-   as clearly-supplemental to a behavior/Tier-4 proof, or when that exact shape IS
+   a current assertion in a ledger row fails the 10-second or durable-value check,
+   matches a "delete on sight" row, or asserts implementation shape (config
+   constant, generated-SQL string, file/class/migration existence, "mock was
+   called", snapshot with no behavioral assertion) AS ITS SOLE PROOF. For a
+   deletion/relaxation, PASS means the removed assertion was
+   obsolete/non-durable or its durable regression remains equivalently covered;
+   FAIL when unique durable coverage was dropped without equivalent proof. Do
+   NOT FAIL a shape-only test when the diff or PR explicitly justifies it as
+   clearly-supplemental to a behavior/Tier-4 proof, or when that exact shape IS
    the contract — in that case write the row as PASS and name the complementing
    proof. A FAIL here forces the overall verdict to ACTIONABLE.
 
 Inclusion disposition is a SECOND axis, about worth rather than weakness —
-definitions in `~/.agents/workflow/TESTING.md` ("Inclusion: should this test
-ship?"). A row that is not `ship` is a `[decision-required]` finding (low/medium,
-NOT a quality FAIL) for the OPERATOR to settle. Never silently delete a working
-test.
+definitions in `~/.agents/workflow/TESTING.md`
+("Inclusion: should this test ship?"). Removing only an assertion proven obsolete
+by TESTING.md's removal rule is recorded as `obsolete-assertion-cleanup`; it is
+expected cleanup, not a non-`ship` disposition. A row with any other disposition
+that is not `ship` is a `[decision-required]` finding (low/medium, NOT a quality
+FAIL) for the OPERATOR to settle. If durable authority is ambiguous, use
+`[decision-required]` rather than defaulting to deletion. Never silently delete a
+working test.
 
 3. Overall verdict: APPROVED or ACTIONABLE (cannot be APPROVED while line 2 is FAIL,
    while a Required-investigation step was skipped, or while an unresolved
@@ -249,10 +262,11 @@ change, contract decision, ambiguous spec interpretation) with `[decision-requir
 in its required fix. `[decision-required]` is a routing tag, not a downgrade: the
 finding keeps its real severity and the verdict stays ACTIONABLE. It may NOT be used
 to park a data-loss, contract-drift, unrequested-component/dependency-swap, or
-failed-10-second-check finding — those stay blocking and are resolved by the
-OPERATOR, not skipped by the implementer. Append this implementer directive verbatim
-at the end of your output so it stays with the findings when the operator forwards
-them:
+confirmed failed 10-second/durable-value finding — those stay blocking and are
+resolved by the OPERATOR, not skipped by the implementer. Ambiguity about durable
+authority remains `[decision-required]` as specified above. Append this implementer
+directive verbatim at the end of your output so it stays with the findings when the
+operator forwards them:
 
 > Implementer: patch every finding autonomously. For any finding marked
 > `[decision-required]`, skip the patch, summarize the decision needed, and return
