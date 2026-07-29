@@ -18,8 +18,7 @@ description: Begin planning and research for a newly assigned tracker issue
 This session IS the planning agent (kernel "Startup Routing" path B). The
 output contract is the `## Planning Kickoff` template in
 `~/.agents/workflow/kickoffs/planning.md`, self-applied with the issue as `<source>` —
-its ten deliverables (problem framing through claim grounding and the Domain
-Pass decision) define what done looks like.
+its deliverables define what done looks like.
 
 Hard role limits: no code edits, no branch creation, no Linear/GitHub
 mutations (reads only; mutations stay approval-gated per the kernel and repo
@@ -65,11 +64,15 @@ research.
    surface, tool, compatibility path, or cross-surface mechanism to a current
    requirement, observed failure, or established repo pattern; defer
    hypothetical hardening.
+   When the destination exceeds one Task, map the sequence but fully specify
+   only the next independently reviewable slice. Each slice must leave a valid
+   state if later work never lands; split independently provable risks, but do
+   not manufacture shape-only scaffolding or coordination ceremony.
 
 4. **Write the living spec.** Create or reuse the work-item folder per the
    repo's planning conventions (e.g.
    `.agent-workflow/plans/active/<ISSUE-ID>-<short-kebab-title>/README.md`)
-   with PLANS.md frontmatter, `status: rough`. The spec carries the ten
+   with PLANS.md frontmatter, `status: rough`. The spec carries the
    Planning Kickoff deliverables plus: a test strategy per
    `~/.agents/workflow/TESTING.md` (behavior protected, failure mode, real
    operation boundary); for UI work, a design strategy per
@@ -82,16 +85,14 @@ research.
    synthesis), not the full treatment.
    Update the plans `INDEX.md` when the repo keeps one.
 
-5. **Hand back.** End with the spec path and status, the decision-required
-   items, and the next pipeline step: operator revises → spec goes
-   `review-ready` → `/specreview` (then `/specrereview` after findings).
-   If research surfaced multiple viable architectures rather than one clear
-   path, or an unproven architectural bet, recommend `/explore` (map & rank the
-   approaches) or `/spike` (prove the bet) instead of forcing a single-path
-   spec. Comparing approaches during ordinary synthesis does not authorize an
-   `/explore` pass; recommend it and wait for the operator. Do not auto-run
-   specreview, and do not promote to `final` or to the tracker without the
-   operator.
+5. **Advance to review.** If no worthwhile direction decision remains, move the
+   spec to `review-ready`, report its path/status, and invoke `/specreview`
+   yourself in the same session; follow its autonomous revise→re-review loop.
+   Pause only for a real approach, scope, product/policy/naming, or
+   no-clear-winner tradeoff decision. If the direction is still open or rests
+   on an unproven architectural bet, recommend `/explore` or `/spike` and wait
+   instead of forcing a single-path spec. Do not promote to `final` or mutate
+   the tracker without the operator.
 
 ## Failure modes to avoid
 
@@ -104,3 +105,6 @@ research.
 - Skipping the repo shim's read-first docs and rediscovering known sharp edges.
 - Drafting straight to `final` — rough → review-ready → `/specreview` is the
   path.
+- Pausing before `/specreview` when no direction decision remains.
+- Treating a broad destination as one implementation Task, or over-slicing it
+  into pieces with no meaningful standalone behavior or proof.

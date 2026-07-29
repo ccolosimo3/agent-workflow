@@ -90,7 +90,8 @@ Hard-to-reverse local/repo state:
 - Editing `.git/`, lockfiles, or `.git/info/exclude`.
 - Installing/removing/upgrading/downgrading dependencies or toolchains, except
   the isolated-worktree lockfile restore preauthorization below.
-- `rm -rf`, or deleting tracked files outside the work item's stated scope.
+- `rm -rf` against any target, or deleting tracked files outside the work item's
+  stated scope.
 - Deleting/recreating local databases, search indexes, containers, volumes,
   caches, or worktrees (`docker compose down -v`, `docker volume rm`,
   `supabase db reset`, `git worktree remove --force`, or aliases wrapping those).
@@ -189,9 +190,13 @@ you received looks incomplete, say so and ask the operator rather than guessing.
 - **Task** — default PR-sized implementation unit. Default: one Task → one branch
   → one PR.
 
-Split work only when it improves delivery or risk control — most often a
-contract/schema change that should land separately, or hardware/manual
-validation gating later software work.
+Plan the broader destination when needed, but keep the current Task
+proportionate: one independently reviewable outcome and risk boundary that
+leaves a valid state if later work never lands. Split only when concerns can be
+reviewed or proven independently; keep them together when splitting would
+create an invalid intermediate state or shape-only ceremony. Downstream Tasks
+may be sketched, but re-ground them against merged predecessors before
+implementation.
 
 ## Docs Impact Check
 
@@ -218,26 +223,29 @@ before moving on — the full sequence lives in `~/.agents/workflow/PLANS.md`
 
 When finishing an implementation, hand off for review: a brief summary +
 verification results, then spawn exactly one fresh-context reviewer (Review
-Kickoff) and announce the handoff (what + range). No second reviewer unless the
-operator explicitly asks this session. Mechanics — sequencing, freshness, the
-independence seal, re-review reuse, and the ritual→skill index — live in
+Kickoff) and announce the handoff (what + range), unless the entire diff
+qualifies for the documentation-only off-ramp in `~/.agents/workflow/HANDOFF.md`.
+No second inner reviewer unless the operator explicitly asks this session.
+Mechanics — sequencing, freshness, the independence seal, re-review reuse, the
+automated Claude outer gate, and the ritual→skill index — live in
 `~/.agents/workflow/HANDOFF.md`.
 
 Two independent approved verdicts before PR handoff by default: the implementer
-owns the spawned inner reviewer; the operator owns the outer gate
-(`outerreview` / `outerspecreview`), which self-populates from the work-item
-folder + live range and runs on the final tip after the inner loop converges.
+owns the spawned inner reviewer and launches a required `outerreview` in a fresh
+Claude Code session after the inner loop converges. The operator owns any waiver
+and the other-app fallback when Claude performed the implementation.
 
-Review floor — the inner loop (`implreview` → `implrereview` to APPROVED) is
-NEVER skippable: every implementation gets ≥1 review, and nothing reaches a PR
-without one. Only the outer gate is ever waived. It is REQUIRED whenever the diff
-touches a canonical risk-surface — migration/schema/persisted-state · auth ·
-contract/API · data-loss · security · provider boundary · dependency · toolchain
-— OR the inner review was ever ACTIONABLE on a substantive finding; it is
-operator-waivable ONLY for a first-pass-clean, mechanically-trivial,
-zero-risk-surface change (exact a/b/c conditions in HANDOFF.md "Outer-gate
-waivability"). The implementer states `outer gate: required | waivable — <why>`;
-the OPERATOR makes the waive call.
+Review floor — every implementation gets ≥1 inner review unless the entire diff
+qualifies for the narrow documentation-only self-check in HANDOFF.md. Nothing
+reaches a PR without either an APPROVED inner review or that recorded off-ramp.
+The outer gate is REQUIRED whenever the diff touches a canonical risk-surface —
+migration/schema/persisted-state · auth · contract/API · data-loss · security ·
+provider boundary · dependency · toolchain — OR the inner review was ever
+ACTIONABLE on a substantive finding; it is operator-waivable ONLY for a
+first-pass-clean, mechanically-trivial, zero-risk-surface change (exact a/b/c
+conditions in HANDOFF.md "Outer-gate waivability"). The implementer states
+`outer gate: required | waivable — <why>`; required gates proceed autonomously,
+while the OPERATOR makes any waive call.
 
 ## PR Handoff
 

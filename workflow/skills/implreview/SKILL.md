@@ -107,9 +107,14 @@ the same information appeared earlier. Use the template's explicit `none` form
 when a section has no entries.
 
 The next step is the
-operator-owned `outerreview` outer gate
-(required unless waived per the kernel's "Implementation Completion Handoff"
-off-ramp); this skill does NOT auto-invoke it.
+`outerreview` outer gate (required unless the operator waives it per the
+kernel's off-ramp). When required and this is not already a Claude implementation
+session, launch Claude Code autonomously after inner convergence using
+HANDOFF.md "Automated Claude outer gate"; keep its session ID and drive the
+patch → `implrereview` → same-session outer re-review loop until both reviewers
+approve the same final tip. If the gate is waivable, stop for the operator's
+waive decision. If Claude implemented the work, hand the receipt to a fresh
+other-model outer-review task instead.
 
 ## Failure modes
 

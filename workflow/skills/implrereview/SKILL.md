@@ -33,9 +33,9 @@ below; this file adds only the re-review specifics.
 
 1. **Locate the prior findings** in chat context — the operator-pasted
    verdict, this session's reviewer return, or an outer-gate `outerreview`
-   verdict pasted from the other app. If absent, stop and ask; never invent
-   or paraphrase prior findings. Quote them verbatim, severity and path:line
-   included.
+   verdict returned by the Claude CLI/other app. If absent, stop and ask; never
+   invent or paraphrase prior findings. Quote them verbatim, severity and
+   path:line included.
 2. **Confirm the patch range**: base = the state the prior reviewer saw
    (the commit at prior kickoff emission, or the one the verdict references);
    tip = current HEAD. If the base is ambiguous, ask — do not guess.

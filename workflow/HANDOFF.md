@@ -89,31 +89,84 @@ phase are autonomous.
    need not re-earn it. An outer follow-up re-review also reuses its original
    conversation when the operator asks it to verify patches from its own verdict;
    only the first outer pass must begin fresh and blind.
-7. **The second review is operator-owned** — see sequencing below.
+7. **Required outer review is autonomous; waivers are operator-owned** — see
+   sequencing below.
+
+## Documentation-only off-ramp
+
+Skip both review loops only when the entire diff contains non-generated,
+non-normative documentation that records established facts, corrects prose, or
+updates links/indexes. It must change no code, config, generated artifact,
+contract, setup/command, verification or security policy, architecture, or
+operating procedure, and must not be bundled with implementation changes.
+
+Before PR handoff, check source fidelity, links/formatting, secrets/private-data
+safety, and `git diff --check`, then record:
+`review: skipped — docs-only self-check; no normative behavior or workflow changed`.
+If any condition is uncertain, use the normal inner loop. Kernel/workflow policy
+docs never qualify.
 
 ## Sequencing — inner loop, then outer gate
 
 - **Inner loop** (implementer's app): `implreview` → patch → `implrereview`,
   repeat until APPROVED. Fast, same-app subagents; iterate freely.
 - **Outer gate** (the other app/model): ONE fresh-context review of the FINAL
-  tip — via `outerreview`, or via a pasted emit-only kickoff. A different
-  model decorrelates blind spots; this review certifies the candidate that
-  will actually be PR'd.
+  tip. After the inner loop converges, a non-Claude implementer launches
+  `outerreview` in Claude Code per "Automated Claude outer gate" below. If
+  Claude implemented the work, use a fresh other-model task instead.
 - Do not run the outer gate in parallel with the inner loop by default: a
   verdict on a pre-patch tip cannot certify the final tip, so parallel runs
   guarantee stale findings or a repeat review. Deliberate exception: for
   big/risky changes an early outside review may run for directional signal —
   it does NOT count as the certifying second verdict.
-- Outer-gate findings: paste the verdict into the implementer session, patch,
-  and run `implrereview` quoting those findings verbatim, then ask the same
-  outer-review conversation to re-review the patched live tip. The kernel's
-  two-verdicts gate is met when both lenses have approved the final tip;
-  patches landed after any approval get a re-review.
+- Outer-gate findings: patch in the implementer session, run `implrereview`
+  quoting those findings verbatim, then resume the same outer-review
+  conversation against the patched live tip. The kernel's two-verdicts gate is
+  met when both lenses have approved the final tip; patches landed after any
+  approval get a re-review.
+
+## Automated Claude outer gate
+
+For a required gate after inner approval, require Claude Code 2.1.219+, confirm
+a clean committed tip and current Outer-review verification receipt, then
+announce Opus 5 and the selected effort:
+
+- `high` — bounded, ordinary work with few interacting contracts;
+- `xhigh` — substantive multi-file/risk-surface work or a substantive inner
+  finding (default for complex implementation);
+- `max` — exceptional large, hard-to-reverse, concurrency, migration, or
+  security work with several interacting invariants. Do not choose it merely
+  because an outer gate is required.
+
+From the implementation worktree, run:
+
+```bash
+claude -p --output-format stream-json --verbose \
+  --model claude-opus-5 --effort <level> \
+  "/outerreview Review <work item>. Worktree: <absolute root>. Spec: <absolute path or URL>. Verification receipt: <absolute path or in-prompt receipt>."
+```
+
+Monitor the event stream without interrupting it and provide concise progress
+updates. Keep the `system/init` event's `session_id` and the final `result`
+message. Pass no inner findings or verdicts on the first run. If ACTIONABLE,
+patch, commit, run targeted verification, converge `implrereview`, then resume
+from the same worktree:
+
+```bash
+claude -p --output-format stream-json --verbose --resume <session_id> \
+  --model claude-opus-5 --effort <same level> \
+  "Re-review the patched live tip. Recompute it and verify your prior findings."
+```
+
+Repeat until both reviewers approve the same final tip. Honor normal Claude
+permissions; never add a bypass flag. Missing CLI/auth/skill access or a
+permission failure is a blocker to report, not a reason to weaken the gate.
 
 ## Outer-gate waivability
 
-The inner review loop is never skippable (kernel review floor). The outer gate
-(`outerreview`) is REQUIRED whenever the diff touches a canonical risk-surface
+Except for the documentation-only off-ramp above, the inner review loop is not
+skippable (kernel review floor). The outer gate (`outerreview`) is REQUIRED
+whenever the diff touches a canonical risk-surface
 (migration/schema/persisted-state (any change to stored data or a state-machine),
 auth, contract/API, data-loss, security, provider boundary (Stripe, AvaTax, other
 external services), dependency, toolchain) OR the inner review returned ACTIONABLE
@@ -130,15 +183,16 @@ when ALL of:
   logic change and does NOT qualify).
 
 The implementer states `outer gate: required | waivable — <one-line why>` at
-handoff; the OPERATOR makes the final waive call. When the outer gate is
-mandatory, do not trim the independence seal, live-range self-computation, or the
-inner loop. (`outerspecreview` is already optional on the spec side, so this
-parity holds there too.)
+handoff. Required gates launch autonomously after inner convergence; the OPERATOR
+makes the final waive call on a waivable gate. When the outer gate is mandatory,
+do not trim the independence seal, live-range self-computation, or the inner
+loop. (`outerspecreview` is already optional on the spec side, so this parity
+holds there too.)
 
 ## Spec review loop (specreview → specrereview)
 
-Spec review is autonomous and has NO operator-owned outer gate (unlike the
-implementation flow above). `specreview` spawns one reviewer; the planning agent
+Spec review is autonomous and has no required implementation-style outer gate.
+`specreview` spawns one reviewer; the planning agent
 resolves the autonomous findings by tightening the spec and re-runs
 `specrereview` (reusing the original reviewer across cycles per §6, fresh only as
 fallback), looping until APPROVED. It STOPS for
@@ -156,8 +210,8 @@ use `outerreview`, which computes its own range at invocation time.
 ## Independence seal
 
 The first outer-gate pass must not see prior findings: `outerreview` does not
-read `reviews.md` or prior verdicts/kickoff prompts, and the operator should not
-paste inner-loop findings into that first pass. A follow-up in the same outer
+read `reviews.md` or prior verdicts/kickoff prompts, and the caller must not pass
+inner-loop findings into that first run. A follow-up in the same outer
 conversation deliberately retains its own findings and re-reviews the patched
 tip; it must not demand a fresh task. Other re-reviews likewise REQUIRE the
 prior findings, quoted verbatim.

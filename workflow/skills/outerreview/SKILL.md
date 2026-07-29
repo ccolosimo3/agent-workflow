@@ -1,27 +1,28 @@
 ---
 name: outerreview
-description: Run the operator-owned outer-gate second review of their OWN
-  implementation, in a fresh conversation in the other app/model, after the
+description: Run the independent outer-gate second review of the operator's OWN
+  implementation, in a fresh conversation in the other app/model or a fresh
+  Claude CLI session launched by the implementer, after the
   implementer session's review + re-review loop has converged. Self-populates
   the Review Kickoff from the work-item folder and the live git range (never
   from a pasted prompt), deliberately ignores prior reviewer findings, performs
   the review itself in this conversation per
   ~/.agents/workflow/REVIEW_RUBRIC.md, and returns the strict verdict +
-  verified-clean record for the operator to carry back. Use when the operator
-  says /outerreview, "second review this branch", or names a work item or
-  repo and asks for the outer-gate review, or asks the same outer reviewer to
-  re-review patches from its verdict. Not for coworker PRs (that is prreview)
-  and not for the implementer session's own loop (implreview).
+  verified-clean record to the calling implementation session or operator. Use
+  when the operator says /outerreview, "second review this branch", or names a
+  work item or repo and asks for the outer-gate review, or asks the same outer
+  reviewer to re-review patches from its verdict. Not for coworker PRs (that is
+  prreview) and not for the implementer session's own loop (implreview).
 ---
 
 # outerreview
 
 The outer gate of the two-review flow (sequencing and independence rules:
 `~/.agents/workflow/HANDOFF.md`). This skill runs in a FRESH conversation in
-the app that did NOT implement — the conversation itself is the fresh-context
-reviewer, so do the review here in the main thread; do not spawn a subagent.
-Its verdict certifies the final tip for the kernel's two-approved-verdicts
-gate.
+the app that did NOT implement, including a fresh Claude CLI session launched
+by a Codex implementer. The conversation itself is the fresh-context reviewer,
+so do the review here in the main thread; do not spawn a subagent. Its verdict
+certifies the final tip for the kernel's two-approved-verdicts gate.
 
 ## When invoked
 
@@ -73,21 +74,21 @@ gate.
    diff makes the result suspect; the changed risk surface lacks proof; or a
    concrete review hypothesis needs a decisive check. Prefer the narrowest check
    that answers that question.
-7. **Return, formatted for carry-back to the implementer session:**
+7. **Return, formatted for the calling implementer/operator:**
    - verdict line: `APPROVED` or `ACTIONABLE` + the `base..tip` range and tip
      SHA it certifies
    - findings with severity and path:line (ACTIONABLE only)
    - the verified-clean record: what was traced and read, which receipt evidence
      was reused, and what was independently re-run
-   - one line reminding the operator: paste this into the implementer
-     session; ACTIONABLE findings go through `implrereview` there, then return
-     here for follow-up re-review.
+   - one line directing ACTIONABLE findings through `implrereview`, followed by
+     a same-session follow-up re-review here.
 
 ## Follow-up re-review
 
-When the operator returns after patches and asks this conversation to re-review,
-do it here — do not require a fresh task. The first pass already established the
-independent outer lens; follow-up deliberately verifies this reviewer's findings.
+When the operator or calling implementation session resumes this conversation
+after patches, re-review here — do not require a fresh task. The first pass
+already established the independent outer lens; follow-up deliberately verifies
+this reviewer's findings.
 
 Preflight the tree, compute the new live tip, and review the complete delta from
 the previously reviewed tip. Mark each prior finding addressed or outstanding,
