@@ -129,22 +129,35 @@ docs never qualify.
 
 For a required gate after inner approval, require Claude Code 2.1.219+, confirm
 a clean committed tip and current Outer-review verification receipt, then
-announce Opus 5 and the selected effort:
+announce the selected review profile:
 
-- `high` — bounded, ordinary work with few interacting contracts;
-- `xhigh` — substantive multi-file/risk-surface work or a substantive inner
-  finding (default for complex implementation);
-- `max` — exceptional large, hard-to-reverse, concurrency, migration, or
-  security work with several interacting invariants. Do not choose it merely
-  because an outer gate is required.
+- **Opus 5 `high`** (`--model claude-opus-5 --effort high`) — bounded,
+  ordinary work with few interacting contracts;
+- **Opus 5 `xhigh`** (`--model claude-opus-5 --effort xhigh`) — substantive
+  multi-file/risk-surface work or a substantive inner finding (default for
+  complex implementation);
+- **Fable 5 `high`** (`--model claude-fable-5 --effort high`) — exceptional
+  large, hard-to-reverse, concurrency, migration, or security work with several
+  interacting invariants. This is the escalation profile; do not choose it
+  merely because an outer gate is required.
 
 From the implementation worktree, run:
 
 ```bash
 claude -p --output-format stream-json --verbose \
-  --model claude-opus-5 --effort <level> \
+  --model <model> --effort <level> \
+  --permission-mode auto \
+  --add-dir <absolute-work-item-folder> \
+  -- \
   "/outerreview Review <work item>. Worktree: <absolute root>. Spec: <absolute path or URL>. Verification receipt: <absolute path or in-prompt receipt>."
 ```
+
+`--add-dir` is required when the local spec or receipt lives outside the
+implementation worktree; omit it only when no external local path is needed.
+Because the flag accepts multiple directories, keep it last and use the
+explicit `--` terminator so it cannot consume the review prompt. The parent
+app's permission mode does not carry into Claude Code: pass `auto` explicitly
+so routine review actions run unattended behind Claude's safety classifier.
 
 Monitor the event stream without interrupting it and provide concise progress
 updates. Keep the `system/init` event's `session_id` and the final `result`
@@ -154,13 +167,18 @@ from the same worktree:
 
 ```bash
 claude -p --output-format stream-json --verbose --resume <session_id> \
-  --model claude-opus-5 --effort <same level> \
+  --model <same model> --effort <same level> \
+  --permission-mode auto \
+  --add-dir <same absolute work-item folder> \
+  -- \
   "Re-review the patched live tip. Recompute it and verify your prior findings."
 ```
 
 Repeat until both reviewers approve the same final tip. Honor normal Claude
-permissions; never add a bypass flag. Missing CLI/auth/skill access or a
-permission failure is a blocker to report, not a reason to weaken the gate.
+permissions; never add a bypass flag. Auto-mode denial, missing CLI/auth/skill
+access, or a permission failure is a blocker to report, not a reason to weaken
+the gate. If Fable is unavailable or its safeguards block the benign review,
+disclose that and use Opus 5 `xhigh`; never substitute silently.
 
 ## Outer-gate waivability
 
