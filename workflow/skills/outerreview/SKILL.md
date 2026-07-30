@@ -42,9 +42,7 @@ certifies the final tip for the kernel's two-approved-verdicts gate.
 3. **Independence seal (hard rule).** Do NOT read `reviews.md`, prior
    verdicts, or prior kickoff prompts — in the folder or in chat. If the
    operator pasted inner-loop findings, set them aside unread; this review
-   must not be anchored by what the first lens found. (If they explicitly
-   want a re-review against findings, that is `implrereview` in the
-   implementer session, not this skill.)
+   must not be anchored by what the first lens found.
 4. **Compute the live range yourself.** base = `git merge-base` of HEAD with
    the repo's integration branch (named by the repo shim, e.g. `origin/dev`);
    tip = HEAD. Never accept SHAs from a pasted prompt — staleness is the
@@ -80,8 +78,9 @@ certifies the final tip for the kernel's two-approved-verdicts gate.
    - findings with severity and path:line (ACTIONABLE only)
    - the verified-clean record: what was traced and read, which receipt evidence
      was reused, and what was independently re-run
-   - one line directing ACTIONABLE findings through `implrereview`, followed by
-     a same-session follow-up re-review here.
+   - one line directing ACTIONABLE findings to a scoped implementer patch +
+     targeted verification, followed by a same-session follow-up re-review here;
+     do not route them through `implrereview`.
 
 ## Follow-up re-review
 
@@ -97,8 +96,9 @@ targeted checks, and issue `APPROVED` or `ACTIONABLE` for the new tip. Previousl
 green broad gates remain reusable when the inspected delta cannot invalidate
 them and current-tip targeted proof covers the patch; rerun them when the patch
 touches their risk surface. If history diverged or the patch expanded scope,
-broaden the review in this conversation and disclose it. Start a fresh blind
-outer review only when the operator asks.
+disclose it. If any patch hunk is not directly required by a prior finding,
+return ACTIONABLE for scope expansion; only the operator may restart the inner
+→ outer sequence. Start a fresh blind outer review only when the operator asks.
 
 ## Guardrails
 

@@ -300,6 +300,20 @@ Rules:
   routing explicit: commands run; gates intentionally not selected (each with a
   short reason — not a self-judged "only if a reviewer would ask"); gates blocked;
   remaining Tier-4/operator work.
+- Verification validity follows causal impact, not commit freshness. Run every
+  repository-required gate for behavior the delta changes or could plausibly
+  affect once before first review. After it is green for the current
+  task/worktree, a new commit, review patch, final-tip handoff, or PR handoff
+  does not by itself invalidate it. Account for every intervening delta and
+  rerun only checks that could fail because of them; for composite gates, use
+  affected constituent checks through the repository's documented
+  standalone/public entry points. Rerun the full gate only when the delta spans
+  surfaces, touches shared/build/test infrastructure, makes prior evidence
+  suspect, or no valid broad evidence remains. If repository policy does not
+  require a rerun and you cannot name a plausible failure path from the delta to
+  the gate, do not rerun it. Report reused evidence with its evidence point and
+  causal rationale; never claim the composite command ran at the current tip
+  unless it did.
 - Choose broader local gates by changed surface + risk — not by whether they sit
   in the default PR CI path. Don't treat optional/nightly/CI-only gates as
   impossible to run locally; run them when task risk justifies and the env is
@@ -330,6 +344,9 @@ Rules:
 - Patch only listed findings unless scope expands; rerun targeted verification.
 - Extra review passes whenever post-review patches are non-trivial, touch
   lifecycle/state/concurrency, change acceptance behavior, or the operator asks.
+  This does not reopen an inner reviewer for an outer-owned implementation or
+  spec patch; HANDOFF.md routes those patches directly back to the same outer
+  reviewer.
 
 ## Output Budget
 

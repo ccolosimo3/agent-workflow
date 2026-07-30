@@ -110,11 +110,13 @@ The next step is the
 `outerreview` outer gate (required unless the operator waives it per the
 kernel's off-ramp). When required and this is not already a Claude implementation
 session, launch Claude Code autonomously after inner convergence using
-HANDOFF.md "Automated Claude outer gate"; keep its session ID and drive the
-patch → `implrereview` → same-session outer re-review loop until both reviewers
-approve the same final tip. If the gate is waivable, stop for the operator's
-waive decision. If Claude implemented the work, hand the receipt to a fresh
-other-model outer-review task instead.
+HANDOFF.md "Automated Claude implementation outer gate"; keep its session ID and
+drive the outer finding → targeted verification → same-session outer re-review
+loop until the outer reviewer approves the final tip. Do not invoke
+`implrereview` for an outer-owned patch; report any unrelated scope for operator
+direction. If the gate is waivable, stop for the operator's waive decision. If
+Claude implemented the work, hand the receipt to a fresh other-model
+outer-review task instead.
 
 ## Failure modes
 

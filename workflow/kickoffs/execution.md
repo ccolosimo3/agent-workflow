@@ -44,7 +44,9 @@ Enforce these forcing functions ON TOP of Routing A:
   concurrency, changes acceptance behavior, or rewrites/adds a test for a
   test-quality finding; skip only for a truly trivial patch, stated (e.g. a
   corrected import path or renamed variable in one file, stated as trivial, needs
-  no re-review).
+  no re-review). Exception: outerreview findings return directly to that same
+  outer reviewer per HANDOFF.md; do not invoke implrereview unless the operator
+  explicitly restarts the inner loop.
 - One-off verification tests (a static-asset/config/data repair proof with no ongoing
   regression surface) → pocket to the work-item `artifacts/`, don't commit to the
   suite; disclose in the Review Kickoff.

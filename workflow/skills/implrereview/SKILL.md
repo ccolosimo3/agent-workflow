@@ -1,22 +1,25 @@
 ---
 name: implrereview
 description: Hand off a patched implementation for a follow-up review after the
-  implementer has addressed findings from a prior ACTIONABLE review verdict.
-  Reads the canonical Re-Review Kickoff template from
+  implementer has addressed findings from an inner ACTIONABLE review verdict,
+  or when the operator explicitly invokes the inner reviewer. Reads the
+  canonical Re-Review Kickoff template from
   ~/.agents/workflow/kickoffs/re-review.md, populates the prior findings + patch context,
   and REUSES the original reviewer's open session for the follow-up review —
   falling back to a fresh re-reviewer subagent only if it can't be resumed
   (announcing the handoff). Use when the operator says
-  /implrereview, "re-review this", or after patches land in response to a
-  prior review.
+  /implrereview, "re-review this", or after patches land in response to an
+  inner review. Do not invoke autonomously for outerreview findings; HANDOFF.md
+  routes those directly back to the same outer reviewer.
 ---
 
 # implrereview
 
 Follow-up review handoff after the implementer patched findings from a prior
-ACTIONABLE verdict. Companion to [[implreview]]. Shared mechanics live in
-`~/.agents/workflow/HANDOFF.md` — apply that protocol with the parameters
-below; this file adds only the re-review specifics.
+inner ACTIONABLE verdict, or when the operator explicitly restarts the inner
+loop. Companion to [[implreview]]. Shared mechanics live in
+`~/.agents/workflow/HANDOFF.md` — apply that protocol with the parameters below;
+this file adds only the re-review specifics.
 
 ## Protocol parameters
 
@@ -33,9 +36,9 @@ below; this file adds only the re-review specifics.
 
 1. **Locate the prior findings** in chat context — the operator-pasted
    verdict, this session's reviewer return, or an outer-gate `outerreview`
-   verdict returned by the Claude CLI/other app. If absent, stop and ask; never
-   invent or paraphrase prior findings. Quote them verbatim, severity and
-   path:line included.
+   verdict returned by the Claude CLI/other app when the operator explicitly
+   restarted the inner loop. If absent, stop and ask; never invent or paraphrase
+   prior findings. Quote them verbatim, severity and path:line included.
 2. **Confirm the patch range**: base = the state the prior reviewer saw
    (the commit at prior kickoff emission, or the one the verdict references);
    tip = current HEAD. If the base is ambiguous, ask — do not guess.
@@ -52,4 +55,5 @@ below; this file adds only the re-review specifics.
 The shared ones in HANDOFF.md, plus: running without prior findings in
 context; paraphrasing the prior findings; asking for a broad fresh review —
 the scope is "did the patches address the findings, and did they break
-anything else?", not a from-scratch walk of the diff.
+anything else?", not a from-scratch walk of the diff; or autonomously routing
+outerreview findings through the inner reviewer.

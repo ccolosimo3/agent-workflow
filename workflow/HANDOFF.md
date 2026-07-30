@@ -80,15 +80,13 @@ phase are autonomous.
    one) with NO reload of the diff, rubric, or findings. Fall back to a fresh
    re-reviewer (full populated Re-Review Kickoff) ONLY when the original can't be
    resumed — a later session, a compacted context, or a host that can't resume
-   subagents. When re-reviewing against findings the reviewer did NOT author
-   (outer-gate findings routed back per Sequencing), reuse the thread but hand it
-   those findings verbatim. Reuse ≠ rubber-stamp: still apply `REVIEW_RUBRIC.md`
-   "Re-review mode" — confirm the fix actually works (the reverse-tautology check),
-   not just that your suggestion was applied. Independence is already secured by the
-   fresh FIRST review and the fresh, different-model OUTER gate; the inner re-review
-   need not re-earn it. An outer follow-up re-review also reuses its original
-   conversation when the operator asks it to verify patches from its own verdict;
-   only the first outer pass must begin fresh and blind.
+   subagents. Re-review findings with the reviewer that authored them:
+   outer-owned patches return only to the original outer conversation per
+   Sequencing; do not route them through `implrereview` or `specrereview`.
+   Reuse ≠ rubber-stamp:
+   still apply `REVIEW_RUBRIC.md` "Re-review mode" — confirm the fix actually
+   works (the reverse-tautology check), not just that your suggestion was
+   applied. Only the first outer pass must begin fresh and blind.
 7. **Required outer review is autonomous; waivers are operator-owned** — see
    sequencing below.
 
@@ -112,31 +110,56 @@ docs never qualify.
   repeat until APPROVED. Fast, same-app subagents; iterate freely.
 - **Outer gate** (the other app/model): ONE fresh-context review of the FINAL
   tip. After the inner loop converges, a non-Claude implementer launches
-  `outerreview` in Claude Code per "Automated Claude outer gate" below. If
+  `outerreview` in Claude Code per "Automated Claude implementation outer gate"
+  below. If
   Claude implemented the work, use a fresh other-model task instead.
 - Do not run the outer gate in parallel with the inner loop by default: a
   verdict on a pre-patch tip cannot certify the final tip, so parallel runs
   guarantee stale findings or a repeat review. Deliberate exception: for
   big/risky changes an early outside review may run for directional signal —
   it does NOT count as the certifying second verdict.
-- Outer-gate findings: patch in the implementer session, run `implrereview`
-  quoting those findings verbatim, then resume the same outer-review
-  conversation against the patched live tip. The kernel's two-verdicts gate is
-  met when both lenses have approved the final tip; patches landed after any
-  approval get a re-review.
+- Outer-gate findings: patch only changes directly required by the listed
+  findings, run targeted verification, then resume the same outer-review
+  conversation. Do not invoke `implrereview`. If any required patch hunk cannot
+  be mapped to a listed outer finding, report scope expansion; only the operator
+  may restart the inner → outer sequence. The inner approval certifies the
+  implementation entering the gate; the outer follow-up certifies the final tip.
 
-## Automated Claude outer gate
+## Shared Claude CLI review launch
 
-For a required gate after inner approval, require Claude Code 2.1.219+, confirm
-a clean committed tip and current Outer-review verification receipt, then
-announce the selected review profile:
+Claude-backed outer reviews share one launcher contract. Require Claude Code
+2.1.219+ and normalize operator profile names exactly:
 
-- **Opus 5 `high`** (`--model claude-opus-5 --effort high`) — bounded,
-  ordinary work with few interacting contracts;
-- **Opus 5 `xhigh`** (`--model claude-opus-5 --effort xhigh`) — substantive
-  multi-file/risk-surface work or a substantive inner finding (default for
-  complex implementation);
-- **Fable 5 `high`** (`--model claude-fable-5 --effort high`) — exceptional
+- **Opus 5 `high`** → `--model claude-opus-5 --effort high`;
+- **Opus 5 `xhigh`** → `--model claude-opus-5 --effort xhigh`;
+- **Fable 5 `high`** → `--model claude-fable-5 --effort high`.
+
+For `outerspecreview`, omitted profile means Opus 5 `high`; an explicit named
+profile overrides it. `outerreview` still selects among these profiles by
+implementation complexity below. Do not silently remap an unsupported or
+unrecognized model/effort request.
+
+All scripted launches use `-p --output-format stream-json --verbose`, pass
+`--permission-mode auto` explicitly, and terminate variadic options with `--`
+before the review prompt. Add `--add-dir <absolute folder>` only when the review
+must read a local path outside the launch working directory; keep it last before
+`--` so it cannot consume the prompt. The parent app's permission mode does not
+carry into Claude Code.
+
+Monitor the event stream without interrupting it. Keep the `system/init`
+`session_id` and final `result`, and relay concise progress plus the complete
+verdict to the calling session/operator. Never add a permission-bypass flag.
+
+## Automated Claude implementation outer gate
+
+For a required `outerreview` after inner approval, apply the shared launcher
+contract above, confirm a clean committed tip and current Outer-review
+verification receipt, then announce the selected review profile:
+
+- **Opus 5 `high`** — bounded, ordinary work with few interacting contracts;
+- **Opus 5 `xhigh`** — substantive multi-file/risk-surface work or a substantive
+  inner finding (default for complex implementation);
+- **Fable 5 `high`** — exceptional
   large, hard-to-reverse, concurrency, migration, or security work with several
   interacting invariants. This is the escalation profile; do not choose it
   merely because an outer gate is required.
@@ -154,16 +177,9 @@ claude -p --output-format stream-json --verbose \
 
 `--add-dir` is required when the local spec or receipt lives outside the
 implementation worktree; omit it only when no external local path is needed.
-Because the flag accepts multiple directories, keep it last and use the
-explicit `--` terminator so it cannot consume the review prompt. The parent
-app's permission mode does not carry into Claude Code: pass `auto` explicitly
-so routine review actions run unattended behind Claude's safety classifier.
-
-Monitor the event stream without interrupting it and provide concise progress
-updates. Keep the `system/init` event's `session_id` and the final `result`
-message. Pass no inner findings or verdicts on the first run. If ACTIONABLE,
-patch, commit, run targeted verification, converge `implrereview`, then resume
-from the same worktree:
+Pass no inner findings or verdicts on the first run. If ACTIONABLE, patch only
+the listed findings, commit, run targeted verification, then resume from the
+same worktree:
 
 ```bash
 claude -p --output-format stream-json --verbose --resume <session_id> \
@@ -174,11 +190,50 @@ claude -p --output-format stream-json --verbose --resume <session_id> \
   "Re-review the patched live tip. Recompute it and verify your prior findings."
 ```
 
-Repeat until both reviewers approve the same final tip. Honor normal Claude
+Repeat until the outer reviewer approves the final tip. Honor normal Claude
 permissions; never add a bypass flag. Auto-mode denial, missing CLI/auth/skill
 access, or a permission failure is a blocker to report, not a reason to weaken
 the gate. If Fable is unavailable or its safeguards block the benign review,
 disclose that and use Opus 5 `xhigh`; never substitute silently.
+
+## Optional Claude spec outer gate
+
+`outerspecreview` remains an operator-invoked optional gate. When a non-Claude
+planning session receives `run outerspecreview` (or `/outerspecreview`), it
+launches a fresh Claude Code review with the shared contract above:
+
+- no profile named → Opus 5 `high`;
+- `Fable 5 high` → Fable 5 `high`;
+- `Opus 5 xhigh` → Opus 5 `xhigh`;
+- `Opus 5 high` → Opus 5 `high`.
+
+From the repository root, after the inner spec-review loop has converged, run:
+
+```bash
+claude -p --output-format stream-json --verbose \
+  --model <mapped model> --effort <mapped level> \
+  --permission-mode auto \
+  --add-dir <absolute spec folder only when outside the repo root> \
+  -- \
+  "/outerspecreview <absolute spec path>"
+```
+
+Omit `--add-dir` when the spec is already inside the repository root. Pass no
+prior findings, verdicts, or populated kickoff. The launched Claude conversation
+performs the skill's read-only holistic review and returns its verdict.
+
+If ACTIONABLE, resolve any operator decisions, patch only changes directly
+required by the listed outer findings, then resume the same Claude session for
+re-review with the same model, effort, and directory access. Do not invoke
+`specrereview` or start another fresh outer pass. If a required revision cannot
+be mapped to a listed finding, report scope expansion; only the operator may
+restart the inner → outer sequence. The inner approval certifies the plan
+entering the gate; the outer follow-up certifies the revised plan.
+
+When the current conversation is already Claude Code/Claude, run
+`outerspecreview` directly here instead of recursively launching another Claude
+process. An explicit operator request to review here likewise bypasses the CLI
+launcher.
 
 ## Outer-gate waivability
 

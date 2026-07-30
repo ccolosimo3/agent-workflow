@@ -1,22 +1,23 @@
 ---
 name: specrereview
 description: Hand off a revised plan or spec for a follow-up
-  review after the planner has addressed findings from a prior ACTIONABLE
+  review after the planner has addressed findings from a prior ACTIONABLE inner
   spec review. Reads the canonical Spec Re-Review Kickoff template from
   ~/.agents/workflow/kickoffs/spec-re-review.md, populates the prior findings + revisions, and
   REUSES the original reviewer's open session for the follow-up — falling back to a
   fresh re-reviewer subagent only if it can't be resumed (announcing the handoff).
-  Use when the operator says
-  /specrereview, "re-review this spec", or after revisions land in
-  response to a prior spec review.
+  Use when the operator says /specrereview or after revisions land in response
+  to a prior inner spec review. Not for outerspecreview findings, which return
+  to the same outer conversation.
 ---
 
 # specrereview
 
 Follow-up review handoff after the planner revised a plan in response to
-ACTIONABLE findings. Companion to [[specreview]]. Shared mechanics live in
-`~/.agents/workflow/HANDOFF.md` — apply that protocol with the parameters
-below; this file adds only the plan-re-review specifics.
+ACTIONABLE inner-review findings. Companion to [[specreview]]; outer-spec
+findings return directly to their original `outerspecreview` conversation.
+Shared mechanics live in `~/.agents/workflow/HANDOFF.md` — apply that protocol
+with the parameters below; this file adds only the plan-re-review specifics.
 
 ## Protocol parameters
 
@@ -64,4 +65,4 @@ of re-reviewing — your call, not an APPROVED. See specreview "After the verdic
 The shared ones in HANDOFF.md, plus: running without prior findings;
 paraphrasing them; asking for a fresh broad review — the scope is "did the
 revisions address the findings, and did they introduce any new issues?", not
-a from-scratch spec review.
+a from-scratch spec review; taking ownership of `outerspecreview` findings.

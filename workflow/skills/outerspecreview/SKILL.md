@@ -1,18 +1,18 @@
 ---
 name: outerspecreview
 description: Run the operator-owned outer-gate second review of their OWN plan /
-  spec, in a fresh conversation in the other app/model, after the planning
-  session's specreview ⇄ specrereview loop has converged to APPROVED. Self-
-  populates the Spec Review Kickoff from the spec file (never from a pasted
-  prompt), deliberately ignores prior spec-review findings, and performs a
-  holistic whole-plan review itself in this conversation per
-  ~/.agents/workflow/REVIEW_RUBRIC.md + the Spec Review Kickoff validation
-  categories — verifying the spec's file:line claims against current source —
-  then returns a strict verdict for the operator to carry back. Use when the
-  operator says /outerspecreview, "second spec review", "independent fresh pass
-  on the whole spec", or names a converged spec for outer-gate review. Not the
-  planning session's own loop (specreview / specrereview), not a code review
-  (outerreview), not a coworker PR (prreview).
+  spec after the planning session's specreview ⇄ specrereview loop has
+  converged. From a non-Claude session, launches a fresh Claude Code review with
+  Opus 5 high by default or an explicit supported Fable/Opus profile override;
+  in a Claude/fresh reviewer conversation, performs the holistic whole-plan
+  review directly. Self-populates the Spec Review Kickoff from the spec file
+  (never from a pasted prompt), ignores prior findings, verifies file:line
+  claims against current source, and returns a strict verdict. Use when the
+  operator says /outerspecreview, "run outerspecreview", "second spec review",
+  "independent fresh pass on the whole spec", optionally followed by Fable 5
+  high, Opus 5 high, or Opus 5 xhigh. Not the planning session's own loop
+  (specreview / specrereview), not a code review (outerreview), not a coworker
+  PR (prreview).
 ---
 
 # outerspecreview
@@ -25,6 +25,16 @@ spawn a subagent. It exists because the `specreview` loop converges through
 `specrereview`, which is delta-scoped — so the converged plan never got a cold,
 holistic whole-artifact read. This gate is that read, from a different model,
 un-anchored by the loop.
+
+## Invocation router
+
+- **Non-Claude caller:** read HANDOFF.md "Shared Claude CLI review launch" and
+  "Optional Claude spec outer gate", resolve the spec path, and launch the fresh
+  Claude review. Default to Opus 5 `high`; honor an explicit supported profile.
+  Monitor and return the verdict to this planning session. Do not perform the
+  review here as well.
+- **Claude Code/Claude or explicit `review here`:** perform the review in this
+  conversation using the steps below. Do not launch another Claude process.
 
 ## When invoked
 
@@ -45,8 +55,8 @@ un-anchored by the loop.
 3. **Independence seal (hard rule).** Do NOT read `reviews.md`, prior spec-review
    verdicts, or prior kickoff prompts — in the folder or in chat. If the operator
    pasted loop findings, set them aside unread; this review must not be anchored
-   by what the first lens found. (To re-review *against* prior findings, that is
-   `specrereview` in the planning session, not this skill.)
+   by what the first lens found. Inner-review findings belong to `specrereview`;
+   this outer conversation may later re-review only its own findings.
 4. **Populate the `## Spec Review Kickoff` template** from
    `~/.agents/workflow/kickoffs/spec-review.md` per the HANDOFF.md protocol (fidelity, honest
    population, repo-conventions resolution from the shim) — filled from the spec
@@ -71,10 +81,10 @@ un-anchored by the loop.
    - findings with severity and section or file:line (ACTIONABLE only); mark
      direction decisions `[decision-required]`
    - what you verified clean (claims checked against source, sections traced)
-   - one line: paste this into the planning session; autonomous ACTIONABLE
-     findings go through `specrereview` there (the loop handles them), while
-     `[decision-required]`/direction findings stop for the operator (specreview's
-     disposition). Re-run this gate only if the plan changed materially.
+   - one line: paste this into the planning session; `[decision-required]` /
+     direction findings stop for the operator, while other ACTIONABLE findings
+     are patched there and returned to this same outer conversation for
+     re-review. Do not route outer findings through `specrereview`.
 
 ## Guardrails
 
@@ -84,9 +94,9 @@ un-anchored by the loop.
 - Strict independent verdict — do not soften it calibrate-review-style, and do
   not count an early read of a non-converged plan as the certifying second
   verdict.
-- One pass only — this gate does not loop. The `specreview` ⇄ `specrereview` loop
-  in the planning session owns iteration; re-run this gate only if the plan
-  changed materially after re-converging.
+- Only the first pass is fresh and blind. After its ACTIONABLE verdict, re-review
+  the mapped revision in this same outer conversation; do not start another
+  inner review or fresh outer pass.
 
 ## Failure modes
 
@@ -94,5 +104,7 @@ The shared ones in HANDOFF.md, plus: reading `reviews.md` or pasted prior
 findings (independence seal); trusting the spec's file:line / 4a claims instead
 of verifying them against current source; delta-reviewing instead of a holistic
 whole-plan pass (the cold full read is the point); reviewing a `rough`/mid-loop
-draft as if certifying it; spawning a subagent (this conversation IS the fresh
-context).
+draft as if certifying it; silently changing an explicit model/effort request;
+recursively launching Claude from a Claude reviewer; spawning a subagent (this
+conversation IS the fresh context); routing this reviewer's findings through
+`specrereview` instead of returning the patch here.
