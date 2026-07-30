@@ -5,12 +5,11 @@ Compose PR handoff text for work item <id/link> / PR <id/link>.
 
 # Locked PR body shape
 
-Required core, always present: `## Summary`, `## Verification`, and a one-line
-`Docs impact:` footer at the very bottom. Optional sections appear ONLY when they
-carry real content, in the order shown below — omit an optional section entirely
-rather than writing "None". One shape serves human and agent reviewers alike (both
-want stable headings, claims tied to verifiable specifics, the intent, and the
-noise cut); do not split formats.
+Required core, always present: `## Summary` and `## Verification`. Optional
+sections appear ONLY when they carry real content, in the order shown below —
+omit an optional section entirely rather than writing "None". One shape serves
+human and agent reviewers alike (both want stable headings, claims tied to
+verifiable specifics, the intent, and the noise cut); do not split formats.
 
 Closing reference — the FIRST line of the body, above `## Summary`:
 - GitHub issue (e.g. clearsnake): `Fixes #<n>` when merge fully resolves it;
@@ -50,6 +49,9 @@ Layout (annotations are not part of the output):
   - <manual / visual / Tier-4 QA, or "none needed">
   - <gate blocked / skipped / CI-owned that affects THIS change> -> <why>   # omit if N/A
 
+  ## Docs impact        (required only when tracked docs changed)
+  - <tracked-doc path> — <one line on what changed>
+
   ## Risks              (optional)
   <residual risk, 1-2 sentences>
 
@@ -59,10 +61,9 @@ Layout (annotations are not part of the output):
   ## Notes              (optional — reviewer-ACTIONABLE caveats only)
   - <rollback / migration / residual risk / a deliberate non-obvious tradeoff>
 
-  Docs impact: none                   # footer LINE at the very bottom, not a section
-  # when docs changed: Docs impact: <tracked-doc path> — <one line on what changed>
-
 Constraints:
+- Omit docs impact entirely when no tracked docs changed; never write
+  `Docs impact: none`.
 - Verification is ONE PR-parity sweep line plus only targeted proofs (the focused
   behavior test, manual/visual/Tier-4 QA). The exhaustive command log lives in the
   work item's verification.md, never the PR. Do NOT list individual gate

@@ -217,9 +217,10 @@ distribution evidence?
 
 - If yes: update the owning tracked doc in the SAME PR — prefer the established
   authority over a new doc (ADRs only for hard-to-reverse, surprising,
-  real-trade-off decisions).
-- If no: state `Docs impact: none` in the summary and as the one-line PR-body
-  footer (not a standalone section).
+  real-trade-off decisions) — and include a `## Docs impact` PR-body section
+  naming what changed.
+- If no: record that decision in the review handoff, but omit docs impact from
+  the PR body entirely.
 
 ## Planning Artifact Cleanup
 
