@@ -128,8 +128,10 @@ Operating rules:
   labels — one approval, not three. Re-ask only if the command materially
   diverges — a different repo/target, broader scope, an unstated mutation, or a
   body/label/comment the operator has not seen. "ok"/silence is not yes.
-- **Isolated-worktree lockfile restore is preauthorized.** In a newly created,
-  task-specific git worktree, an agent may announce and run the repository's
+- **Isolated-worktree bootstrap is preauthorized.** In a newly created,
+  task-specific git worktree, before substantive work: if the worktree lacks
+  `AGENTS.local.md` but the source checkout has one, copy it into the worktree
+  root, read it, and never stage it. Then announce and run the repository's
   existing immutable lockfile install without asking again: for example,
   `pnpm install --frozen-lockfile`, `npm ci`, `yarn install --immutable`,
   `bun install --frozen-lockfile`, or the exact repo-documented equivalent.

@@ -139,16 +139,16 @@ profile overrides it. `outerreview` still selects among these profiles by
 implementation complexity below. Do not silently remap an unsupported or
 unrecognized model/effort request.
 
-All scripted launches use `-p --output-format stream-json --verbose`, pass
+All scripted launches use `-p --output-format json`, pass
 `--permission-mode auto` explicitly, and terminate variadic options with `--`
 before the review prompt. Add `--add-dir <absolute folder>` only when the review
 must read a local path outside the launch working directory; keep it last before
 `--` so it cannot consume the prompt. The parent app's permission mode does not
 carry into Claude Code.
 
-Monitor the event stream without interrupting it. Keep the `system/init`
-`session_id` and final `result`, and relay concise progress plus the complete
-verdict to the calling session/operator. Never add a permission-bypass flag.
+Wait for the process without interrupting it. From the single JSON result, keep
+the `session_id` and final `result`, and relay the complete verdict to the
+calling session/operator. Never add a permission-bypass flag.
 
 ## Automated Claude implementation outer gate
 
@@ -167,7 +167,7 @@ verification receipt, then announce the selected review profile:
 From the implementation worktree, run:
 
 ```bash
-claude -p --output-format stream-json --verbose \
+claude -p --output-format json \
   --model <model> --effort <level> \
   --permission-mode auto \
   --add-dir <absolute-work-item-folder> \
@@ -182,7 +182,7 @@ the listed findings, commit, run targeted verification, then resume from the
 same worktree:
 
 ```bash
-claude -p --output-format stream-json --verbose --resume <session_id> \
+claude -p --output-format json --resume <session_id> \
   --model <same model> --effort <same level> \
   --permission-mode auto \
   --add-dir <same absolute work-item folder> \
@@ -210,7 +210,7 @@ launches a fresh Claude Code review with the shared contract above:
 From the repository root, after the inner spec-review loop has converged, run:
 
 ```bash
-claude -p --output-format stream-json --verbose \
+claude -p --output-format json \
   --model <mapped model> --effort <mapped level> \
   --permission-mode auto \
   --add-dir <absolute spec folder only when outside the repo root> \
