@@ -103,6 +103,10 @@ Hard-to-reverse local/repo state:
 - Deleting/recreating local databases, search indexes, containers, volumes,
   caches, or worktrees (`docker compose down -v`, `docker volume rm`,
   `supabase db reset`, `git worktree remove --force`, or aliases wrapping those).
+  Exception: a repo-documented disposable DB test harness needs no per-run
+  approval when its unchanged command is constrained to loopback/local Docker
+  and a harness-owned test namespace. Any command, target, wrapper, namespace,
+  migration, reset, ingest, or persistent-database difference remains gated.
 
 Shared-state and externally visible actions:
 
