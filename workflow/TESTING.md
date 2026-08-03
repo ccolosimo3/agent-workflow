@@ -68,10 +68,12 @@ PR and name the manual/Tier-4 proof that carries the confidence.
   `[decision-required]`. Never lower or bypass an enforced coverage gate: replace
   obsolete coverage with durable behavior proof or surface the gate-vs-quality
   conflict.
-- **Per-stack defaults:** tc-commerce → test **~always**; tc-app → test when there's
-  branching, failure, or persistence logic; clearsnake → Jest when there's behavior,
-  a contract, a failure mode, or persistence, and a **Tier-4 device proof** for
-  touch/geometry/streaming risks a unit harness can't represent.
+- **Per-stack defaults** (examples from this operator's repos; a repo without
+  its own testing reference applies Parts 1–2 alone): tc-commerce → test
+  **~always**; tc-app → test when there's branching, failure, or persistence
+  logic; clearsnake → Jest when there's behavior, a contract, a failure mode,
+  or persistence, and a **Tier-4 device proof** for touch/geometry/streaming
+  risks a unit harness can't represent.
 
 ### How much — enough, not exhaustive
 

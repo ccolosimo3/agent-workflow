@@ -253,12 +253,10 @@ and the other-app fallback when Claude performed the implementation.
 Review floor — every implementation gets ≥1 inner review unless the entire diff
 qualifies for the narrow documentation-only self-check in HANDOFF.md. Nothing
 reaches a PR without either an APPROVED inner review or that recorded off-ramp.
-The outer gate is REQUIRED whenever the diff touches a canonical risk-surface —
-migration/schema/persisted-state · auth · contract/API · data-loss · security ·
-provider boundary · dependency · toolchain — OR the inner review was ever
-ACTIONABLE on a substantive finding; it is operator-waivable ONLY for a
-first-pass-clean, mechanically-trivial, zero-risk-surface change (exact a/b/c
-conditions in HANDOFF.md "Outer-gate waivability"). The implementer states
+The outer gate is REQUIRED whenever the diff touches a canonical risk-surface
+(list owned by HANDOFF.md "Outer-gate waivability") OR the inner review was
+ever ACTIONABLE on a substantive finding; it is operator-waivable ONLY per the
+exact conditions there. The implementer states
 `outer gate: required | waivable — <why>`; required gates proceed autonomously,
 while the OPERATOR makes any waive call.
 
@@ -350,10 +348,11 @@ Rules:
   the checks run.
 - Patch only listed findings unless scope expands; rerun targeted verification.
 - Extra review passes whenever post-review patches are non-trivial, touch
-  lifecycle/state/concurrency, change acceptance behavior, or the operator asks.
-  This does not reopen an inner reviewer for an outer-owned implementation or
-  spec patch; HANDOFF.md routes those patches directly back to the same outer
-  reviewer.
+  lifecycle/state/concurrency, change acceptance behavior, rewrite or add a
+  test for a test-quality finding, or the operator asks; skip only for a truly
+  trivial stated patch (e.g. a corrected import path in one file). This does
+  not reopen an inner reviewer for an outer-owned implementation or spec patch;
+  HANDOFF.md routes those patches directly back to the same outer reviewer.
 
 ## Output Budget
 

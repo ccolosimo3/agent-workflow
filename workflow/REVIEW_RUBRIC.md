@@ -58,19 +58,10 @@ it did not, resolve them yourself:
   the accessibility contract, layout stability); apply it plus the repo's own
   design system (resolved via the shim).
 - coding-standards / patterns and verification policy — resolved per repo from
-  its shim; the paths below are an illustrative example of shim routing from one
-  operator's repos — your repo's shim names its own equivalents. The rule the
-  patterns doc enforces: hand-rolled code that duplicates a documented repo
-  primitive (e.g. a custom shimmer where the repo mandates the existing loading
-  primitive) is convention drift.
-  - coding-standards / patterns — townchest:
-    `.agent-workflow/plans/reference/coding-standards.md`; clearsnake-mobile:
-    `mobile/CLAUDE.md`.
-  - verification policy — townchest:
-    `.agent-workflow/plans/reference/verification.md` (single owner of
-    surface->command routing + false-confidence traps;
-    `townchest-pr-checklist.md` is a secondary PR-readiness doc);
-    clearsnake-mobile: `mobile/VERIFICATION.md`.
+  its shim (`AGENTS.local.md` or the repo's CLAUDE/AGENTS adapter names them).
+  The rule the patterns doc enforces: hand-rolled code that duplicates a
+  documented repo primitive (e.g. a custom shimmer where the repo mandates the
+  existing loading primitive) is convention drift.
 
 If you cannot open a doc in this environment, say so explicitly and fall back to
 the kernel "Test Quality Floor" anti-pattern list — do not silently skip this. Cite

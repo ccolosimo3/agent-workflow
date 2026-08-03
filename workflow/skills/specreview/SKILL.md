@@ -69,24 +69,16 @@ a one-shot. When the spawned reviewer returns:
     strategy, convention / existing-mechanism gaps. Resolve each by tightening
     the spec's correctness/clarity — never by deleting the flagged element or
     weakening a criterion to dodge it. Then decide whether to re-review:
-    - **Minor-only off-ramp.** If the ENTIRE remaining batch was mechanical and
-      self-evidently correct on inspection — a corrected file:line citation, a
-      typo/wording fix, a missing verification command / non-goal / acceptance
-      criterion added verbatim as the finding specified, a label correction —
-      such that a fresh reviewer would have nothing to add, do NOT re-review:
-      patch, break the loop, and report (below). The bar is whole-batch — one
-      substantive finding (a change to approach / scope / a criterion's meaning,
-      a test-strategy rework, or any fix that could be wrong, debatable, or
-      cascades into the rest of the plan) and you re-review instead.
+    - **Minor-only off-ramp.** Apply it exactly as stated in
+      `~/.agents/workflow/kickoffs/planner-directive.md` (whole-batch
+      mechanical bar; your call, not an APPROVED; one substantive finding →
+      re-review instead).
     - Otherwise invoke `specrereview` on the revised spec.
 - Loop ACTIONABLE→revise→`specrereview` until APPROVED, a direction finding
   stops it, or a minor-only round breaks it. **Cap at 3 revise→re-review
   cycles**; if still ACTIONABLE after 3, stop and surface the remaining findings.
   On every stop or APPROVED, give the operator a one-line-per-pass changelog of
-  what changed. A minor-only off-ramp is YOUR call, not an independent APPROVED:
-  report each patched finding and why it was mechanical, say that no fresh
-  reviewer re-confirmed, and note the operator can run `/specrereview` or rely on
-  `/outerspecreview` as the outer gate.
+  what changed; report a minor-only off-ramp per the planner directive.
 
 ## Failure modes
 
