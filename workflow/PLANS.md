@@ -122,10 +122,13 @@ before moving on:
 ## Periodic external archive cleanup
 
 Use `/plan-cleanup` when completed folders have accumulated enough to distract
-ordinary agent searches. This is separate from cleanup on land: work first
+ordinary agent searches — and run it at each main-project completion, not only
+when clutter is noticed. This is separate from cleanup on land: work first
 moves intact to the local `archive/`, then becomes eligible for externalization
-only when its frontmatter is terminal (`implemented`, `closed`, or `deferred`)
-and its `landed:` date (falling back to `updated:`) is at least 30 days old.
+when its frontmatter is terminal (`implemented`, `closed`, or `deferred`) and
+either its `landed:` date (falling back to `updated:`) is at least 30 days old
+or its parent project/umbrella is complete — a completed main project's
+folders may be externalized immediately with operator-approved scope.
 
 The `plan-cleanup` skill owns the sync/prune safety envelope (audit scope,
 bundled approval, manifests, fresh-clone verification, retrieval pointers). Two
