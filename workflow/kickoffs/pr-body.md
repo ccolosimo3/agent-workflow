@@ -3,6 +3,22 @@
 ```text
 Compose PR handoff text for work item <id/link> / PR <id/link>.
 
+# Public-language standard
+
+Write the PR title, body, and any public review comment for a teammate who
+understands the product and codebase but has not read the planning artifacts.
+Lead with the observable behavior, problem, or risk in ordinary language. Keep
+exact technical identifiers, commands, paths, and contract names when they add
+useful precision, but do not expose internal workflow vocabulary, plan/slice
+codes, review mechanics, or agent shorthand unless directly relevant.
+
+- Title: outcome-first and sentence case; describe what changes for the product
+  or developer rather than leading with an implementation mechanism.
+- Body: explain behavior and motivation first; use technical detail as supporting
+  evidence.
+- Comment: state the concrete scenario and impact before naming the
+  implementation detail or rule involved.
+
 # Locked PR body shape
 
 Required core, always present: `## Summary` and `## Verification`. Optional

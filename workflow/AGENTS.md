@@ -268,10 +268,11 @@ findings + resolutions, post-patch verification, deferred follow-ups, and
 residual risk / Tier-4 gates local per PLANS.md.
 
 Compose the PR body in the `kickoffs/pr-body.md` shape, which owns the section
-order, closing-ref rules, and review-summary policy. Determine labels from the
-source issue + local policy: carry over labels still describing the diff, omit
-stale ones, state the final list. All externally visible GitHub mutations follow
-the Destructive Action Policy.
+order, closing-ref rules, review-summary policy, and teammate-readable language
+for PR titles, bodies, and public comments. Determine labels from the source
+issue + local policy: carry over labels still describing the diff, omit stale
+ones, state the final list. All externally visible GitHub mutations follow the
+Destructive Action Policy.
 
 ## Domain Pass
 

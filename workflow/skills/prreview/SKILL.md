@@ -1,25 +1,25 @@
 ---
 name: prreview
 description: Review someone else's PR end to end. Populates the External PR
-  Review Kickoff from the PR and its linked issue, spawns one fresh-context
-  reviewer (announcing the handoff) that runs the strict rubric pass with local
-  verification, then calibrates the returned findings via the calibrate-review
-  skill into an operator action brief (patch myself / raise with author /
-  discuss / defer). Use when the operator says /prreview, asks to review a
-  numbered PR for them, or wants a coworker-PR review with calibrated
-  takeaways. Do not use for the operator's own implementation handoff — that
-  is implreview.
+  Review Kickoff from the PR and its linked issue, performs the strict rubric
+  pass with local verification directly in the invoking conversation, then
+  calibrates the findings via the calibrate-review skill into an operator
+  action brief (patch myself / raise with author / discuss / defer). May use
+  bounded evidence subagents only for genuinely independent surfaces in a
+  large PR. Use when the operator says /prreview, asks to review a numbered PR
+  for them, or wants a coworker-PR review with calibrated takeaways. Do not use
+  for the operator's own implementation handoff — that is implreview.
 ---
 
 # prreview
 
-One-command pipeline for a coworker's PR: strict fresh-context review pass,
-then an operator-facing action brief. This skill is a thin orchestrator — the
-canonical content lives in:
+One-command pipeline for a coworker's PR: strict review pass in this
+conversation, then an operator-facing action brief. The invoking task is
+already the fresh-context reviewer; do not spawn a subagent merely to create
+another fresh context. Canonical content lives in:
 
 - `~/.agents/workflow/kickoffs/external-pr-review.md` — "External PR Review Kickoff" template
-- `~/.agents/workflow/REVIEW_RUBRIC.md` — reviewer manual, read by the spawned
-  reviewer itself
+- `~/.agents/workflow/REVIEW_RUBRIC.md` — reviewer manual
 - `~/.agents/workflow/skills/calibrate-review/SKILL.md` — calibration rules and
   the Action Brief output contract
 
@@ -40,43 +40,60 @@ coworker-facing calibration (the trigger calibrate-review requires).
      acceptance criteria and the original ask
    - existing review threads, including automated reviewer comments
    - `.coderabbit.yaml` path exclusions, if the file exists
-   - review range: fetch refs without checking out
+   - review range: fetch refs
      (`git fetch origin <baseRefName>` and `git fetch origin pull/<n>/head`),
      then base = `git merge-base` of the PR head with the target branch, tip =
-     PR head SHA. Do NOT check out the PR branch in this session — the spawned
-     reviewer does the checkout per the kickoff.
+     PR head SHA.
 
-3. **Populate the External PR Review Kickoff** from kickoffs/external-pr-review.md. Apply the
+3. **Prepare and check out.** Populate the External PR Review Kickoff from
+   `kickoffs/external-pr-review.md` as internal working context. Apply the
    AGENTS.md Fidelity Rule: verbatim shape, placeholders filled from the PR,
-   the linked issue, and the filesystem (repo convention paths resolved by
-   checking they exist). Where something genuinely cannot be fetched (e.g. no
-   issue linked), use the fallback wording the template itself specifies — do
-   not invent acceptance criteria, check results, or intent.
+   linked issue, and filesystem. Where something genuinely cannot be fetched,
+   use the template's fallback wording; do not invent acceptance criteria,
+   results, or intent. Check out the PR branch only after the clean-tree
+   preflight (use a separate clean worktree when the current checkout is
+   occupied). Do not print the populated kickoff.
 
-4. **Announce the handoff** (the PR + range being reviewed) and pass the full
-   populated External PR Review Kickoff to the subagent — the operator opens the
-   subagent to inspect it. Emit the full prompt in chat under a `## External PR
-   Review Kickoff Prompt` heading only when the host cannot spawn a subagent (for
-   manual launch).
+4. **Choose review topology.** Review serially in this conversation by default.
+   Delegate only when the PR contains at least two materially independent risk
+   surfaces whose deeper investigation can be partitioned without duplicating
+   the whole review. File count or diff size alone is insufficient; many files
+   implementing one end-to-end feature remain one surface.
 
-5. **Spawn exactly one fresh-context reviewer** with that prompt verbatim,
-   using whatever subagent mechanism the host agent provides. Announce
-   `spawning one reviewer`. The reviewer checks out the PR branch, runs the
-   kickoff's local gates, and returns the rubric output plus the Verified-clean
-   record. Do not edit files in this session while it runs — the working tree
-   is shared.
+   When delegation is justified, announce it and use at most two read-only
+   evidence subagents unless the operator requests broader fanout. Give each
+   one a single non-overlapping surface or investigation question. They return
+   evidence, candidate findings, and verified-clean traces only — no verdict or
+   calibration, no branch switch, and no duplicate broad verification. The
+   invoking reviewer still owns the complete diff, opens every changed file,
+   validates every candidate finding, and issues the final result.
 
-6. **Calibrate.** Apply the calibrate-review skill to the reviewer's findings,
-   the Verified-clean record, existing posted comments, and the PR context.
-   Calibration happens in this session, not in the reviewer's, because it needs
-   operator/team context the fresh reviewer must not see.
+5. **Review directly.** Apply `REVIEW_RUBRIC.md` in full, run proportionate
+   local verification, and complete the raw rubric output plus Verified-clean
+   record before calibrating. Do not soften the investigation in anticipation
+   of calibration.
 
-7. **Return to the operator, in order:**
+6. **Confirm proposed blockers.** Before classifying a finding as blocking,
+   challenge it once: identify the concrete runtime failure and affected
+   user/system outcome; determine whether it fails open or closed; and confirm
+   it on the current PR head through code tracing or the narrowest decisive
+   local check. Distinguish a demonstrated defect, a credible uncovered risk,
+   missing ideal proof, and a rollout prerequisite. If no merge-time failure
+   can be demonstrated and the system fails safely, route the item as a
+   question or follow-up unless a tracked repo rule explicitly requires the
+   missing proof. Do not rerun broad verification merely for more confidence.
+
+7. **Calibrate.** Apply the calibrate-review skill to the raw findings,
+   Verified-clean record, existing posted comments, and PR context. Calibration
+   may change the recommended action or framing; it must not hide a confirmed
+   blocker.
+
+8. **Return to the operator, in order:**
    - the Action Brief (calibrate-review's output contract)
-   - a compact appendix: the reviewer's verdict line, raw findings, and the
+   - a compact appendix: the strict verdict line, raw findings, and the
      Verified-clean record — operator-facing only, never pasted into the PR
-   - branch restore: if the reviewer switched the working tree, state and run
-     the plain checkout back to the recorded branch.
+   - branch restore: state and run the plain checkout back to the recorded
+     branch, unless the operator asked to leave the PR branch checked out.
 
 ## Guardrails
 
@@ -86,20 +103,19 @@ coworker-facing calibration (the trigger calibrate-review requires).
   fresh approval under the Destructive Action Policy.
 - The output is not an implementation-loop verdict. It does not count toward
   the two-approved-verdicts rule for the operator's own work.
-- If the reviewer cannot complete (blocked environment, gates fail to run),
-  report the exact blocker and stop. Do not substitute a fresh review of your
-  own — that is the reviewer's job, in fresh context.
+- If the review cannot complete (blocked environment, gates fail to run),
+  report the exact blocker and stop.
 
 ## Failure modes to avoid
 
-- Paraphrasing the kickoff template instead of copying its shape verbatim.
-- Inlining the rubric or the calibration rules into prompts — the reviewer
-  reads the rubric itself; calibration is applied from its own skill file.
-- Dumping the full kickoff inline instead of just announcing the handoff (the
-  subagent carries the prompt; only the no-subagent fallback emits it).
-- Spawning more than one reviewer.
+- Spawning a reviewer for an ordinary PR instead of reviewing directly.
+- Treating file count alone as justification for delegation.
+- Asking evidence subagents to review the whole PR, issue verdicts, switch the
+  branch, or rerun the same broad gates.
+- Skipping direct validation of a delegated candidate finding.
 - Returning raw `ACTIONABLE` findings as the final answer with no calibration
   stage.
-- Checking out the PR branch in the main session, or over a dirty tree.
-- Letting calibration concerns leak into the reviewer's prompt — the strict
-  pass must not know its findings will be softened.
+- Checking out the PR branch over a dirty tree.
+- Calling a missing ideal proof a blocker without tracing the actual failure
+  mode and tracked repository requirement.
+- Letting calibration soften or omit a confirmed correctness or safety defect.
