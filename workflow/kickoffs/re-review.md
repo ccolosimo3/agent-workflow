@@ -31,11 +31,11 @@ The "addressed" bar, reverse-tautology rule, and OUTSTANDING
    "OUTSTANDING" (unresolved `[decision-required]`) with `path:line` evidence.
 2. Regressions: any behavior the patches broke that worked under the prior reviewed
    state.
-3. New issues in the changed lines — apply the rubric's test-quality, masking/swap,
-   and contract checks (Stance section of REVIEW_RUBRIC.md) plus missing docs.
+3. New issues in the changed lines — apply the rubric's Behavior-proof and
+   Contract-propagation audits, Scope-vs-intent check, plus missing docs.
 4. Verdict: APPROVED or ACTIONABLE. When ACTIONABLE, mark operator-input findings
    `[decision-required]` and append the rubric's implementer directive.
 
-If Verdict is ACTIONABLE, return findings and stop; no second review cycle from
-this reviewer.
+If Verdict is ACTIONABLE, return findings and end this invocation. Any further
+patch returns to this same reviewer per `HANDOFF.md` re-review reuse.
 ```

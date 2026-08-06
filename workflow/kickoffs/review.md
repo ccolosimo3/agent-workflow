@@ -5,7 +5,8 @@ Review work item <id/link> / PR <id/link> / branch <branch> against <base>.
 
 Apply the Review Rubric in `~/.agents/workflow/REVIEW_RUBRIC.md` IN FULL: read it
 first, run its Required investigation against the diff, and return per its Output
-contract (per-test ledger, a separate Test-quality PASS/FAIL sub-verdict, the
+contract (grouped test-quality summary with exception rows, a separate
+Test-quality PASS/FAIL sub-verdict, the
 overall verdict, and findings with the severity rubric). The Context below is the
 implementer's CLAIM and orientation only — the diff and the repo are the source of
 truth, and the Context is itself part of what you review.
@@ -26,8 +27,7 @@ Context (per-task):
    <what changed and why>
 
 2a. Original operator request / intent (verbatim or close paraphrase — the
-    rubric's "Scope-vs-intent & contract-identity check" and Stance checks
-    compare the diff against THIS)
+    rubric's Scope-vs-intent check compares the diff against THIS)
    <the exact ask that triggered this work; if broader than the AC, say so>
 
 3. Scope
@@ -54,7 +54,7 @@ Context (per-task):
    - residual visual checks: <items + owner, or none>
 
 6. Test quality (implementer's CLAIM — do NOT accept; re-derive each test per the
-   rubric's Test-quality rules + inclusion-disposition check and
+   rubric's Behavior-proof audit + inclusion-disposition check and
    `~/.agents/workflow/TESTING.md`)
    - behavior/failure mode each new or changed test protects + real boundary
      exercised + any implementation-shape test (why contractual/supplemental) +

@@ -4,9 +4,9 @@ description: Use only when the operator explicitly asks to calibrate raw review
   findings for someone else's PR or work. Triage External PR Review, implreview,
   review-pr, CodeRabbit, or human findings against repo standards, team norms,
   merge risk, author effort, and review etiquette; then return a concise action
-  brief telling the operator what to patch as a touch-up commit, what to raise
-  with the author as blocking or as a question, and what to defer or drop. Do
-  not auto-run after ordinary implementation review handoffs.
+  brief separating request-changes blockers, author discussions, suggestions,
+  nits, and attached residual verification while preserving a private raw-to-final
+  audit trail. Do not auto-run after ordinary implementation review handoffs.
 ---
 
 # calibrate-review
@@ -53,6 +53,10 @@ owns each claim the moment they relay it to the author.
 - Check what is already posted on the PR (automated reviewers, humans). Do not
   re-raise an already-posted finding as new; mark it `already-posted` and note
   agreement only when it materially changes the merge decision.
+- Map every raw non-clean item to a final action or an explicit evidence-based
+  rejection reason. Calibration may change framing, route, or merge recommendation;
+  it may not silently lose a confirmed defect, unmet criterion, applicable
+  required-proof gap, test-quality failure, or tracked shared-policy violation.
 
 ## Trigger Boundary
 
@@ -96,46 +100,61 @@ If a finding depends on a repo standard, cite the standard if known. If the
 standard is only local or personal, treat it as a question or a defer/drop item
 unless the operator says the team has adopted it.
 
+When deciding that a path is unsupported, apply `REVIEW_RUBRIC.md`'s candidate-
+admission rule; absence from current CI or tests is not affirmative authority.
+
 ## Triage Axes
 
 For each finding classify:
 
 - **Confidence**: confirmed / likely / speculative
+- **PR relevance**: introduced / newly exposed or worsened / unmet requirement /
+  unaffected or pre-existing
 - **Basis**: tracked repo rule or CI / shared team convention / general best
   practice / local preference
 - **Merge risk**: blocker / important / minor / note
 - **Impact**: customer / internal operator / developer / downstream contract /
   none clear
 - **Author effort**: tiny / small / moderate / large redo
-- **Best action** (the single definition of the action categories):
-  - **patch myself** — mechanical and tiny, author may appreciate unblocking
-    help, patching does not take over design ownership, and team norms allow
-    reviewer commits on the author's branch (otherwise hand over a suggested
-    diff instead)
-  - **raise as blocker** (request changes) — acceptance criteria not met;
+- **Merge action** (the single definition of the visible action categories):
+  - **request changes — blocking** — acceptance criteria not met;
     correctness bug in a real path; security, permission, privacy, data loss,
     migration, or provider risk; API/schema/generated contract drift that will
     cause downstream breakage or recurring unrelated churn; or missing
-    verification for risk-bearing behavior with no credible automated/manual
-    proof
-  - **raise as question** — product scope or role behavior is ambiguous; the
-    finding rests on an assumption about how the team uses the feature; the
-    likely fix could expand the PR or require redesign; or the standard is not
-    clearly shared by the team. Also covers a real-but-low-risk nit/small
-    suggestion when the PR is otherwise sound and the author can address it
-    without rethinking the design
-  - **defer to follow-up / drop** — mostly personal preference; nicer but not
-    risky; large churn without a clear team-standard basis; or belongs in a
-    follow-up rather than this PR
+    verification required by an acceptance criterion/tracked rule, or a credible
+    unmitigated fail-open material risk
+  - **discuss with author** — a genuine product, intent, usage, or team-policy
+    ambiguity, or an important concern whose best resolution needs author context;
+    mark it `hold for answer` or `non-blocking`. When blocker status depends on an
+    unresolved intent or scope fact, keep it here as a conditional blocker with
+    both outcomes; do not call it confirmed request changes until that fact is
+    resolved. A clearly applicable written criterion is not ambiguous merely
+    because the reviewer disagrees with it
+  - **suggestion** — an objective improvement when current behavior is correct and
+    safe and no applicable authority is violated
+  - **nit** — a confirmed, objective, introduced, low-consequence detail with no
+    behavior or contract impact; never personal taste or mechanical-tool output
 
-Large-redo findings need a high burden of proof. If a finding would ask the
-author to rework a chosen approach, surface it as a question or manager/team
-calibration point unless it clearly breaks requirements, creates real risk, or
-violates an agreed standard.
+Attach **residual verification** to the blocking proof request or non-blocking
+follow-up it informs; it is not a standalone merge action. Record unrelated
+pre-existing defects, speculation without a concrete mechanism, authorized
+behavior, stale/duplicate reports, and personal preference only in the private
+audit as rejected candidates.
 
-Floor: an item triaged blocker or important must land in a raise-with-author
-group (or be patched and said so) — only its framing is negotiable, never its
-visibility. Defer/drop is for minor and note-level items only.
+`patch myself` is an optional resolution route attached to an item when the patch
+is mechanical and tiny, does not take over design ownership, and team norms allow
+reviewer commits. Otherwise offer a suggested diff. It is not a severity or merge
+action and still requires separate operator authorization.
+
+Large-redo findings need a high burden of proof. If a finding would ask the author
+to rework a chosen approach, discuss it unless it clearly breaks requirements,
+creates real risk, or violates an agreed standard.
+
+Floor: a confirmed material defect, unmet criterion, applicable required-proof
+gap, test-quality failure, or tracked shared-policy violation remains visible and
+cannot be demoted below its governing authority. Uncertainty alone does not set
+severity; preserve a concrete material mechanism as a named proof request or
+residual check instead of silently dropping it.
 
 ## Surface Calibration
 
@@ -179,35 +198,44 @@ Avoid (beyond the no-leak constraint in Core Principle):
   scope
 - verification claims nothing in the record supports
 
-## Output: Action Brief
+## Output
 
-Return one concise brief the operator can read in one screen, discuss with you,
-and act on with the author. One line per item:
+Return the concise Action Brief first. Keep it to one screen when possible, with
+one line per item:
 
 `finding | path:line | basis | evidence | confidence`
 
-Group items by the Triage "Best action" category (defined under Triage Axes),
-ordered by merge risk within each group:
+Group items by merge action, ordered by risk:
 
-1. **Patch myself** — note when team norms favor a suggested diff over a push.
-2. **Raise with author — blocking** — name the rule or risk and the smallest
-   acceptable fix.
-3. **Raise with author — discuss/ask** — give the one-sentence question to ask,
-   not a script.
-4. **Defer / drop** — one-word reason each (preference / churn / follow-up /
-   already-posted / stale / unverified).
+1. **Request changes — blocking** — name the rule/risk and smallest acceptable fix.
+2. **Discuss with author** — mark `hold for answer` or `non-blocking` and give the
+   one-sentence question.
+3. **Suggestions** — objective optional improvements only.
+4. **Nits** — omit the heading when none.
+
+Attach any residual verification and optional `patch myself` resolution route to
+the item they belong to.
 
 Close with two lines:
 
-- **Stance**: approve / comment / request changes / hold for operator decision,
+- **Stance**: approve / comment / request changes / hold for named answer or proof,
   naming the evidence basis (e.g. "based on External PR Review pass +
   CodeRabbit; affected tests rerun locally"). A stance built on thin coverage
   must say so.
 - **Manager calibration**: only when a finding exposes an unclear team policy
   or a repeated review-standard mismatch; otherwise omit.
 
-If every item is defer/drop, say so in one line and stop — do not formalize a
-routine PR.
+Then append an operator-only audit containing:
+
+- every raw non-clean item -> final action or explicit rejection reason;
+- the strict verdict and acceptance-criteria exceptions;
+- the grouped test-quality summary, exception rows, and Test-quality PASS/FAIL;
+- verification commands/results and routing;
+- the verified-clean record; and
+- remaining residual/Tier-4 checks.
+
+If every raw item is rejected, say the review found no issue worth raising and keep
+the appendix compact. Do not manufacture a formal public concern for a routine PR.
 
 Recommend only. Do not post, submit, approve, request changes, or comment on
 the PR, and do not commit or push to the author's branch, unless the operator

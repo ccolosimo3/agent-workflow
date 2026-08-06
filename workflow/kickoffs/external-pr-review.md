@@ -1,13 +1,13 @@
 # External PR Review Kickoff
 
-For reviewing someone else's PR as a fresh-context strict pass. Findings feed
-the operator's `calibrate-review` step, not the implementation loop. Normally
-populated and spawned by the `prreview` skill; usable manually too.
+For reviewing someone else's PR through the `prreview` process. Findings feed the
+operator's `calibrate-review` step, not the implementation loop. Normally populated
+as the invoking lead reviewer's internal context; usable manually too. Never give
+this full kickoff to the challenger or specialists.
 
 ```text
-Review external PR <number/url> (author: <login>) against <target branch>, as a
-fresh-context reviewer. The PR author is a coworker, not this session's
-implementer.
+Review external PR <number/url> (author: <login>) against <target branch>. You are
+the lead reviewer; the PR author is a coworker, not this session's implementer.
 
 Apply the Review Rubric in `~/.agents/workflow/REVIEW_RUBRIC.md` IN FULL — read
 it first, run its Required investigation against the diff, and return per its
@@ -16,14 +16,16 @@ Output contract — with these external-PR deltas:
 - There is no implementer session. The PR title/body and the linked issue are
   the author's CLAIM; the Context below is the populator's reading of them. The
   diff and the repo are the source of truth.
-- Verify locally; do not trust stated results. Before `gh pr checkout <number>`,
-  run `git status --short` — if the tree is dirty, stop and ask (or use a
-  separate worktree) rather than switching over local changes. Then run the
-  Context item 4 gates yourself on the checked-out branch.
+- Verify locally; do not trust stated results. Use the exact frozen-head checkout
+  or worktree already prepared by `prreview`, confirm `HEAD` equals Context item
+  1's tip SHA, and never run a second `gh pr checkout` or otherwise follow the
+  moving PR ref after the range is frozen. Run Context item 4 there.
 - GitHub is read-only for you: fetch, check out, and read threads, but post no
   comment, review, or approval.
-- Read review comments already posted on the PR (automated + human) first. Do
-  not re-litigate them; note material agreement or disagreement only.
+- Inspect automated-reviewer configuration before discovery, but defer the content
+  of already-posted automated and human comments until the lead–challenger evidence
+  exchange has converged. Then deduplicate, confirm current status, and note
+  material agreement or disagreement.
 - Do NOT append the rubric's implementer directive. Findings return to the
   OPERATOR for calibration and author conversation (calibrate-review skill) —
   never address the author directly. `[decision-required]` marks decisions for
@@ -39,10 +41,14 @@ Context (per-task):
    - review range: `<base sha>..<tip sha>` (base = merge-base with the target
      branch; tip = PR head). Run `git diff <base>..<tip>` and `git diff --stat
      <base>..<tip>` yourself — they are NOT pasted into this prompt.
+   - review checkout: <absolute path prepared at the exact frozen tip; confirm
+     `HEAD == <tip sha>` before verification>
    - acceptance criteria (populator's reading of the linked issue — re-derive
      them yourself; if no issue is linked, the narrowest reasonable reading of
      the PR body is the authorized scope):
      - [ ] <AC bullet>
+
+   - review profile: <compact / standard / large, with one-line reason>
 
 2. Author's stated summary (from the PR body — a CLAIM)
    <what the PR says it does and why>
@@ -54,7 +60,8 @@ Context (per-task):
 3. CI / existing review state
    - checks: <gh pr checks rollup: pass / fail / pending>
    - author-stated manual verification (a CLAIM): <quote, or "none stated">
-   - already-posted review comments: <automated + human threads, or "none">
+   - already-posted review state before discovery: <counts/status only; content
+     deferred, or "none">
    - automated-reviewer exclusions: <.coderabbit.yaml path_filters, or "no file">
 
 4. Local verification to run (on the checked-out PR branch; record each
@@ -67,9 +74,14 @@ Context (per-task):
 
 6. Repo conventions to enforce: resolve per HANDOFF.md step 3.
 
-Return: the rubric Output contract in full (acceptance-criteria coverage,
-per-test ledger, test-quality sub-verdict, verdict, findings with
-severities, verification notes, convention conformance, residual risk), plus:
+The `prreview` skill owns convergence-update timing and operator steering. At
+finalization, apply `calibrate-review` and return its one-screen Action Brief first, then a
+mandatory operator-only appendix containing the rubric Output contract in full
+(acceptance-criteria coverage, grouped test-quality summary with exception rows,
+test-quality sub-verdict, verdict,
+findings with severities, verification notes, convention conformance, residual
+risk), every raw non-clean item mapped to its final action or explicit rejection
+reason, and:
 
 8. Verified-clean record — bullets of the specific checks that came back CLEAN:
    files read, traces followed (X -> Y), commands run with results, contracts
