@@ -156,6 +156,17 @@ Operating rules:
 
 Pick one path; switch if the session changes.
 
+Use the least process that fully covers the changed risk. **Fast mode** applies
+when the requested outcome is already clear, the change is narrow/localized,
+no architecture or product decision remains, no canonical outer-gate risk
+surface is touched, and one focused verification path can falsify it. Fast mode
+skips formal `spec` / `explore`, not implementation review: implement directly,
+run targeted verification, and use the normal inner review loop. If choosing a
+heavier path, name the concrete disqualifying risk; "more review might help" is
+not one. Do not activate `spec` or `explore` from a casual status, options, or
+explanation question — those formal skills require explicit invocation or an
+explicit request for their named workflow.
+
 **A) Implement an existing work item** (ticket/issue/bug/explicit task):
 1. Read the work item + linked PR/context; read the nearest repo/subtree shim for
    touched files. Reopen any named spec after compaction/resume and before
@@ -180,7 +191,9 @@ Pick one path; switch if the session changes.
 scope): read product/docs/code context; run a Domain Pass when
 terminology/lifecycle/cross-boundary behavior changes; produce a reviewable spec
 (self-contained scope, non-goals, acceptance criteria, exact verification
-commands, labels/branch when relevant, any approval-gated work). No code changes
+commands, labels/branch when relevant, any approval-gated work). After the inner
+spec-review loop converges, apply HANDOFF.md's compact-spec off-ramp; run the
+outer spec gate automatically when the plan does not qualify. No code changes
 unless explicitly asked.
 
 **C) Review a PR or diff:** per `REVIEW_RUBRIC.md`.
@@ -245,20 +258,13 @@ Mechanics — sequencing, freshness, the independence seal, re-review reuse, the
 automated Claude outer gate, and the ritual→skill index — live in
 `~/.agents/workflow/HANDOFF.md`.
 
-Two independent approved verdicts before PR handoff by default: the implementer
-owns the spawned inner reviewer and launches a required `outerreview` in a fresh
-Claude Code session after the inner loop converges. The operator owns any waiver
-and the other-app fallback when Claude performed the implementation.
-
 Review floor — every implementation gets ≥1 inner review unless the entire diff
 qualifies for the narrow documentation-only self-check in HANDOFF.md. Nothing
 reaches a PR without either an APPROVED inner review or that recorded off-ramp.
-The outer gate is REQUIRED whenever the diff touches a canonical risk-surface
-(list owned by HANDOFF.md "Outer-gate waivability") OR the inner review was
-ever ACTIONABLE on a substantive finding; it is operator-waivable ONLY per the
-exact conditions there. The implementer states
-`outer gate: required | waivable — <why>`; required gates proceed autonomously,
-while the OPERATOR makes any waive call.
+The risk-triggered outer gate is REQUIRED only by HANDOFF.md "Outer-gate
+requirements"; otherwise it is skipped automatically unless the operator asks
+for one. The implementer states `outer gate: required | skipped — <why>` and
+launches required gates autonomously after inner convergence.
 
 ## PR Handoff
 

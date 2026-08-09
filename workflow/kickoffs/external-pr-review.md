@@ -76,12 +76,11 @@ Context (per-task):
 
 The `prreview` skill owns convergence-update timing and operator steering. At
 finalization, apply `calibrate-review` and return its one-screen Action Brief first, then a
-mandatory operator-only appendix containing the rubric Output contract in full
-(acceptance-criteria coverage, grouped test-quality summary with exception rows,
-test-quality sub-verdict, verdict,
-findings with severities, verification notes, convention conformance, residual
-risk), every raw non-clean item mapped to its final action or explicit rejection
-reason, and:
+compact operator-only appendix containing the strict verdict, only AC/test
+exceptions, grouped clean test coverage + test-quality sub-verdict, findings,
+verification/convention notes, material verified-clean surfaces, residual risk,
+and every raw non-clean item mapped to its final action or explicit rejection
+reason. Do not print full clean AC or per-test ledgers. Also include:
 
 8. Verified-clean record — bullets of the specific checks that came back CLEAN:
    files read, traces followed (X -> Y), commands run with results, contracts

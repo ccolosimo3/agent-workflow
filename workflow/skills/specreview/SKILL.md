@@ -55,8 +55,8 @@ what the reviewer should flag.
 specreview is the first pass of an autonomous review→revise→re-review loop, not
 a one-shot. When the spawned reviewer returns:
 
-- **APPROVED** → report to the operator with a one-line-per-pass changelog; the
-  plan is review-clean.
+- **APPROVED** → report with a one-line-per-pass changelog; the plan is
+  review-clean.
 - **ACTIONABLE** → split the findings:
   - **Direction findings** — anything tagged `[decision-required]`, plus
     anything you cannot resolve without choosing an approach, changing scope,
@@ -79,6 +79,8 @@ a one-shot. When the spawned reviewer returns:
   cycles**; if still ACTIONABLE after 3, stop and surface the remaining findings.
   On every stop or APPROVED, give the operator a one-line-per-pass changelog of
   what changed; report a minor-only off-ramp per the planner directive.
+  On APPROVED or a minor-only off-ramp, apply HANDOFF.md's compact-spec off-ramp
+  and launch `outerspecreview` when required.
 
 ## Failure modes
 

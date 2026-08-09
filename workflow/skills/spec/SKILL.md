@@ -1,16 +1,17 @@
 ---
 name: spec
-description: Begin planning and research for a newly assigned tracker issue
-  (Linear or GitHub). The invoking session becomes the planning agent and
-  orchestrator — it reads the issue and its linked context, investigates the
+description: Formally plan and research one selected tracker issue (Linear or
+  GitHub). The invoking session becomes its planning agent — it reads the issue
+  and linked context, investigates the
   root cause or design constraints serially by default, may delegate at most
   two genuinely independent material unknowns to read-only subagents, and
   produces the work-item folder and living spec per
   ~/.agents/workflow/PLANS.md and the repo shim. Planning only — no code edits,
-  no branch creation, tracker stays read-only. Use when the operator says /spec <issue>, "we've been
-  assigned <ISSUE-KEY>", "start planning this issue", or pastes an issue URL
-  asking for root cause and the best approach. Not for reviewing an existing
-  spec (specreview) or implemented code (implreview).
+  no branch creation, tracker stays read-only. Use only when the operator invokes
+  /spec or explicitly asks for a formal implementation-ready plan for the issue.
+  Do not trigger from a pasted issue, assignment notice, status question, or
+  casual request for options. Not for reviewing an existing spec (specreview) or
+  implemented code (implreview).
 ---
 
 # spec
@@ -33,6 +34,8 @@ research.
    its shim (e.g. `CONTEXT.md`, coding-standards). Restate the goal,
    non-goals, and acceptance criteria as currently understood, and name the
    unknowns that investigation must resolve.
+   If the repo adapter points to a planning-only reference, read it now; do not
+   load such references in unrelated implementation/review sessions.
 
 2. **Investigate — stay proportional.** Decompose the unknowns into
    independent questions: reproduction path, root-cause candidates, blast
@@ -45,7 +48,9 @@ research.
    serially by default. Spawn read-only subagents only when there are at least
    two genuinely independent, material unknowns and parallel work will shorten
    the pass; use at most two, each scoped to one question with a structured,
-   file:line-cited return. Use web
+   file:line-cited return. When model selection is available, use GPT-5.6 Terra
+   `high` for these bounded evidence investigators; reserve the parent/stronger
+   model for load-bearing synthesis. Use web
    search freely for framework/provider/library behavior,
    known upstream issues, and changelogs (prefer primary docs; note the
    source when a decision rests on one), and any repo-connected docs MCP
@@ -88,6 +93,8 @@ research.
 5. **Advance to review.** If no worthwhile direction decision remains, move the
    spec to `review-ready`, report its path/status, and invoke `/specreview`
    yourself in the same session; follow its autonomous revise→re-review loop.
+   After convergence, apply HANDOFF.md's compact-spec off-ramp: launch
+   `/outerspecreview` automatically when required, otherwise report the skip.
    Pause only for a real approach, scope, product/policy/naming, or
    no-clear-winner tradeoff decision. If the direction is still open or rests
    on an unproven architectural bet, recommend `/explore` or `/spike` and wait
@@ -106,5 +113,7 @@ research.
 - Drafting straight to `final` — rough → review-ready → `/specreview` is the
   path.
 - Pausing before `/specreview` when no direction decision remains.
+- Pausing to ask whether to run a required outer spec gate, or running one after
+  every compact spec without applying the off-ramp.
 - Treating a broad destination as one implementation Task, or over-slicing it
   into pieces with no meaningful standalone behavior or proof.

@@ -70,11 +70,11 @@ Disposition is owned by the implementer directive appended to each verdict
 (REVIEW_RUBRIC.md) plus the Execution Kickoff re-review trigger — not by this
 skill. On an inner-loop APPROVED, report the result with a one-line-per-pass
 changelog and note the loop converged. Then state `Outer gate: required |
-waivable — <reason>` and end the handoff with this copyable receipt every time.
-The handoff is incomplete without it:
+skipped — <reason>`. When the gate is required or the operator requests a
+receipt, end the handoff with this copyable block:
 
 ```text
-## Outer-review verification receipt
+## Outer-review receipt — <work item ID/title>
 
 Spec: <absolute spec path | tracker URL | `none` + reason>
 Branch: <current branch name>
@@ -83,8 +83,11 @@ Tip: <full HEAD SHA>
 Working tree: clean
 Environment: <default local | prepared services/data | concise relevant details>
 
-Verification passed:
+Verification:
 - `<exact command>` — <useful result>
+
+Reused evidence:
+- <evidence point + causal reason, or `none`>
 
 Not selected or blocked:
 - <`<gate>` — <reason>, or `none`>
@@ -99,29 +102,22 @@ exists. Include only commands that actually ran and exact results; never include
 review findings or verdicts. Regenerate the receipt whenever patches move
 `HEAD`.
 
-**Receipt fidelity:** reproduce the fenced block exactly as the final block of
-the post-implementation message. Preserve its heading, field labels, order, and
-blank-line grouping; replace placeholders only. Do not convert it to a table,
-rename or omit fields, fold it into the surrounding summary, or drop it because
-the same information appeared earlier. Use the template's explicit `none` form
-when a section has no entries.
+Use the exact heading and field order so the work item is recognizable at a
+glance; replace placeholders and use the explicit `none` form for empty
+sections. Do not convert it to a table or include findings/verdicts.
 
-The next step is the
-`outerreview` outer gate (required unless the operator waives it per the
-kernel's off-ramp). When required and this is not already a Claude implementation
+When `outerreview` is required and this is not already a Claude implementation
 session, launch Claude Code autonomously after inner convergence using
 HANDOFF.md "Automated Claude implementation outer gate"; keep its session ID and
 drive the outer finding → targeted verification → same-session outer re-review
 loop until the outer reviewer approves the final tip. Do not invoke
 `implrereview` for an outer-owned patch; report any unrelated scope for operator
-direction. If the gate is waivable, stop for the operator's waive decision. If
-Claude implemented the work, hand the receipt to a fresh other-model
+direction. If Claude implemented the work, hand the receipt to a fresh other-model
 outer-review task instead.
 
 ## Failure modes
 
 The shared ones in HANDOFF.md, plus: inventing verification numbers, scope
 items, risks, or acceptance criteria — if an operator-supplied placeholder
-cannot be filled honestly from this session, stop and ask first; or ending an
-approved inner-loop handoff without the complete, canonically formatted receipt
-as its final block.
+cannot be filled honestly from this session, stop and ask first; or launching a
+required outer gate without the current receipt.

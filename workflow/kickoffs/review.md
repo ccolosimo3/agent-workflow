@@ -56,9 +56,8 @@ Context (per-task):
 6. Test quality (implementer's CLAIM — do NOT accept; re-derive each test per the
    rubric's Behavior-proof audit + inclusion-disposition check and
    `~/.agents/workflow/TESTING.md`)
-   - behavior/failure mode each new or changed test protects + real boundary
-     exercised + any implementation-shape test (why contractual/supplemental) +
-     manual/Tier-4 proof
+   - <`assertions unchanged`, or grouped behavior/failure modes protected + real
+     boundaries exercised + manual/Tier-4 proof>
    - tests written but pocketed/excluded as one-off proof, or that you consider
      marginal to ship (redundant / over-weight): <list + why, or "none">
 

@@ -164,10 +164,11 @@ systematically over-produce tests to chase a coverage number.
   splitting by behavior/concern aids comprehension — never to make bloat look
   smaller.
 
-- **Disposition reporting is a hard handoff output.** Every implementation handoff
-  names, for new/changed tests: total count, each non-`ship` disposition with a
-  one-line reason, and confirmation the suite was trimmed to behaviors. A handoff
-  without this is incomplete.
+- **Disposition reporting is exception-only.** When assertions are unchanged,
+  say so once. Otherwise group ordinary `ship` coverage by behavior/boundary and
+  list each non-`ship` disposition with a one-line reason; do not emit a clean
+  row per test. This changes reporting only — the full quality and inclusion
+  audit still applies.
 
 ### Reviewer quick-check (for agent output)
 

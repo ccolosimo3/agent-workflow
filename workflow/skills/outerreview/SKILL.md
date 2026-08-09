@@ -17,12 +17,12 @@ description: Run the independent outer-gate second review of the operator's OWN
 
 # outerreview
 
-The outer gate of the two-review flow (sequencing and independence rules:
+The risk-triggered or operator-requested outer gate (sequencing and independence rules:
 `~/.agents/workflow/HANDOFF.md`). This skill runs in a FRESH conversation in
 the app that did NOT implement, including a fresh Claude CLI session launched
 by a Codex implementer. The conversation itself is the fresh-context reviewer,
 so do the review here in the main thread; do not spawn a subagent. Its verdict
-certifies the final tip for the kernel's two-approved-verdicts gate.
+certifies the final tip for the outer gate.
 
 ## When invoked
 
@@ -54,7 +54,7 @@ certifies the final tip for the kernel's two-approved-verdicts gate.
    `~/.agents/workflow/kickoffs/review.md` per the HANDOFF.md protocol (fidelity,
    honest population, repo-conventions resolution from the shim). Sources:
    the spec for acceptance criteria and field 2a (original ask), the folder's
-   `verification.md` or an operator-pasted Outer-review verification receipt for
+   `verification.md` or an operator-pasted Outer-review receipt for
    the implementer's verification claims — marked as claims (`per implementer
    receipt`) — and the live git range. The receipt must contain no prior findings
    or verdicts. This is INTERNAL orientation — assemble the context to review

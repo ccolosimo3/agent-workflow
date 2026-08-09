@@ -240,12 +240,10 @@ ACTIONABLE.
 
 ## Output contract (your Return, in order)
 
-0. Coverage:
-   (a) List any changed file you did NOT open, and why — normally empty.
-   (b) Acceptance-criteria ledger: one row per AC (re-derived in Required
-       investigation (a)) — AC | met / not met / deferred | the diff evidence or the
-       gap. A "not met" AC is a `[high]` finding; a silently dropped requirement is
-       what this ledger exists to surface.
+0. Coverage: list any changed file you did NOT open and why (normally empty),
+   then state `all acceptance criteria met` or list only each not-met/deferred AC
+   with its evidence/gap. Re-derive and account for every AC internally; do not
+   print one clean row per AC. A not-met AC is a `[high]` finding.
 1. Test-quality summary (REQUIRED). Evaluate every added, changed, deleted, or
    relaxed assertion under the Behavior-proof audit, but do not enumerate clean
    tests assertion by assertion. Group clean coverage concisely by behavior/file
@@ -256,7 +254,9 @@ ACTIONABLE.
    quality + inclusion disposition
    Deleted/relaxed assertions may be grouped when they exclusively protect the
    same retired behavior; name the files/family and why no retained contract loses
-   coverage.
+   coverage. When no assertion changed, state that once and judge whether the
+   changed behavior still has sufficient durable proof; do not manufacture a
+   ledger.
 2. Test-quality sub-verdict (MANDATORY, separate line): PASS or FAIL, derived from
    the Behavior-proof audit across every affected assertion, including grouped
    clean coverage. Any quality FAIL forces the overall verdict to ACTIONABLE.
@@ -329,8 +329,7 @@ operator forwards them:
 > `[decision-required]`, skip the patch, summarize the decision needed, and return
 > to the operator. An unresolved `[decision-required]` finding is an open ACTIONABLE
 > item — it blocks PR handoff under the kernel's "Implementation Completion
-> Handoff" requirement (two independent approved review verdicts before PR
-> handoff by default) until the operator resolves it. Do not block other
+> Handoff" review floor until the operator resolves it. Do not block other
 > patches on those.
 
 ## After the verdict

@@ -150,11 +150,11 @@ Large-redo findings need a high burden of proof. If a finding would ask the auth
 to rework a chosen approach, discuss it unless it clearly breaks requirements,
 creates real risk, or violates an agreed standard.
 
-Floor: a confirmed material defect, unmet criterion, applicable required-proof
-gap, test-quality failure, or tracked shared-policy violation remains visible and
-cannot be demoted below its governing authority. Uncertainty alone does not set
-severity; preserve a concrete material mechanism as a named proof request or
-residual check instead of silently dropping it.
+Floor: every confirmed material defect, unmet criterion, applicable
+required-proof gap, test-quality failure, or tracked shared-policy violation
+remains mapped in the private audit. Public routing may differ only under the
+Tests rule below and must preserve any governing shared authority or credible
+material merge risk; calibration cannot turn either into an optional suggestion.
 
 ## Surface Calibration
 
@@ -165,11 +165,18 @@ residual check instead of silently dropping it.
   unless the surface is reused by non-developers or affects reliability.
 - Generated/API/schema surfaces: contract consistency is important even when
   the immediate PR consumer does not use the generated artifact.
-- Tests: prefer asking for the smallest proof that covers the real risk. If the
-  author already ran manual verification, ask them to record reproducible steps
-  before demanding a new automated harness — except where a tracked repo
-  standard mandates a specific proof (e.g. a migration save/reload bar); then
-  cite the standard and hold that line.
+- **Tests:** name the durable regression and consequence first. Request changes
+  when missing proof violates an applicable shared criterion or rule, removes
+  the sole durable protection, or leaves a credible material ongoing regression
+  surface unprotected. A one-off execution can prove the reviewed tip, but does
+  not by itself replace durable coverage for a changed material failure path,
+  security/permission/data/migration/contract/deployment invariant, or other
+  ongoing risk-bearing behavior. When existing durable coverage already closes
+  the same risk—or automation is impractical and an owned, policy-permitted
+  manual/Tier-4 proof honestly covers it—make additional coverage a suggestion
+  or omit it. Ask for the smallest proportionate proof and accept an equivalent
+  boundary; do not prescribe a particular harness unless shared policy requires
+  it.
 
 Do not call an internal admin/operator feature "dev-only" merely because it is a
 debug or maintenance affordance. Decide based on who can actually reach and use
@@ -225,13 +232,13 @@ Close with two lines:
 - **Manager calibration**: only when a finding exposes an unclear team policy
   or a repeated review-standard mismatch; otherwise omit.
 
-Then append an operator-only audit containing:
+Then append a compact operator-only audit containing:
 
 - every raw non-clean item -> final action or explicit rejection reason;
-- the strict verdict and acceptance-criteria exceptions;
+- the strict verdict and acceptance-criteria exceptions (never a clean AC ledger);
 - the grouped test-quality summary, exception rows, and Test-quality PASS/FAIL;
 - verification commands/results and routing;
-- the verified-clean record; and
+- material verified-clean surfaces; and
 - remaining residual/Tier-4 checks.
 
 If every raw item is rejected, say the review found no issue worth raising and keep

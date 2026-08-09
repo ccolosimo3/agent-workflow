@@ -192,10 +192,11 @@ or required-proof gap.
 Return, in order:
 
 1. the one-screen Action Brief from `calibrate-review`;
-2. a mandatory operator-only appendix with the strict result, every raw non-clean
-   item mapped to its final action/rejection reason, AC exceptions, grouped
-   test-quality summary and exception rows, Test-quality verdict, verification/
-   routing, verified-clean record, and residual/Tier-4 checks; and
+2. a compact operator-only appendix with the strict result, every raw non-clean
+   item mapped to its final action/rejection reason, AC/test exceptions, grouped
+   clean test coverage + Test-quality verdict, verification/routing, material
+   verified-clean surfaces, and residual/Tier-4 checks — never full clean AC or
+   per-test ledgers; and
 3. restore the recorded branch if the original checkout was switched; if a worktree
    was used, leave the original checkout untouched and report its path.
 
@@ -208,8 +209,8 @@ tip, new evidence, or a named unanswered question—not another broad reread.
 
 - GitHub stays read-only: no comments, reviews, approvals, labels, commits, or
   pushes without a separate operator request and fresh approval.
-- This result is not an implementation-loop verdict and does not count toward the
-  operator's two-review rule.
+- This result is not an implementation-loop verdict and does not satisfy an
+  own-work implementation gate.
 - If an environment blocks one check, route the exact residual check; do not abandon
   the review when code/history still permit useful progress.
 

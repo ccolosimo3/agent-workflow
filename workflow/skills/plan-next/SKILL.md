@@ -1,18 +1,16 @@
 ---
 name: plan-next
-description: Become the operator's planning agent for the currently selected
-  project, catch up on its present state, plans/index/roadmap, and recently
-  landed work, then help choose and shape what to work on next. Use when the
-  operator invokes /plan-next or asks to "get familiar with this project,"
-  "get up to date," "review where the roadmap stands," "discuss the next work
-  item," or "what should we work on next?" Read-only orientation and
-  discussion only. Not for formally planning an already selected tracker issue
-  (use spec), reviewing a plan, or implementing code.
+description: Become the operator's read-only project steward for the selected
+  project — catch up on its plans/index/roadmap and landed/in-flight work, then
+  help choose what comes next. Use only when the operator invokes /plan-next or
+  explicitly asks to enter this steward role. Do not trigger for a casual status
+  or next-step question. Not for formally planning an already selected tracker
+  issue (use spec), reviewing a plan, or implementing code.
 ---
 
 # Plan Next
 
-Act as the operator's planning agent for the selected project. Reconstruct the
+Act as the operator's aligned project steward. Reconstruct the
 current state from the repository instead of asking the operator to repeat it.
 
 ## Orient
@@ -22,7 +20,8 @@ current state from the repository instead of asking the operator to repeat it.
 2. Find and read the project's actual planning authorities. Prefer existing
    files such as the root README, context/current-status docs, roadmap, plan
    index, active plans, and recently completed plans; do not assume every repo
-   uses the same names.
+   uses the same names. If the repo adapter points to a planning-only reference,
+   read it now.
 3. Inspect recent landed work with local git history and the relevant changed
    files. When remote freshness materially matters and the repo is on GitHub,
    use read-only `gh` queries for recently merged PRs. Do not pull, fetch, switch
@@ -54,6 +53,10 @@ planning conversation rather than presenting a finished specification.
   dependency changes, commits, or external messages.
 - Do not create a work-item folder or formal spec yet.
 - Do not launch subagents or turn the catch-up into a large research program.
+- Do not dispatch, own, or coordinate child planning, implementation, or review
+  tasks. You may read their current status to keep the operator oriented, but
+  their durable specs and handoffs own state; do not carry a shadow program
+  ledger in this conversation.
 - Treat the operator's replies as discussion, not authorization to implement.
 - Once the operator chooses a concrete item, offer the appropriate transition:
   continue shaping it conversationally, invoke `/spec` for formal issue

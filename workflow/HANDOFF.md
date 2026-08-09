@@ -21,8 +21,8 @@ phase are autonomous.
   unproven bet, else to `specreview`)
 - Prove one chosen approach at the real boundary (GO/NO-GO) → `spike` (hands off
   to `specreview` on GO; recommends the fallback on NO-GO)
-- Then: finalize spec → `specreview` / `specrereview` (autonomous loop), with an
-  optional `outerspecreview` outer gate (other model) on the converged plan →
+- Then: finalize spec → `specreview` / `specrereview` (autonomous loop), with a
+  risk-routed `outerspecreview` outer gate (other model) on the converged plan →
   implement → `implreview` / `implrereview` (loop) → `outerreview` outer gate
 - Coworker PR review + calibration → `prreview` (+ `calibrate-review`)
 
@@ -87,8 +87,8 @@ phase are autonomous.
    still apply `REVIEW_RUBRIC.md` "Re-review mode" — confirm the fix actually
    works (the reverse-tautology check), not just that your suggestion was
    applied. Only the first outer pass must begin fresh and blind.
-7. **Required outer review is autonomous; waivers are operator-owned** — see
-   sequencing below.
+7. **Required outer review is autonomous; otherwise skip it unless requested**
+   — see sequencing below.
 
 ## Documentation-only off-ramp
 
@@ -108,11 +108,11 @@ docs never qualify.
 
 - **Inner loop** (implementer's app): `implreview` → patch → `implrereview`,
   repeat until APPROVED. Fast, same-app subagents; iterate freely.
-- **Outer gate** (the other app/model): ONE fresh-context review of the FINAL
-  tip. After the inner loop converges, a non-Claude implementer launches
-  `outerreview` in Claude Code per "Automated Claude implementation outer gate"
-  below. If
-  Claude implemented the work, use a fresh other-model task instead.
+- **Required outer gate** (the other app/model): ONE fresh-context review of the
+  FINAL tip. When "Outer-gate requirements" selects it, a non-Claude implementer
+  launches `outerreview` in Claude Code per "Automated Claude implementation
+  outer gate" below. If Claude implemented the work, use a fresh other-model task
+  instead.
 - Do not run the outer gate in parallel with the inner loop by default: a
   verdict on a pre-patch tip cannot certify the final tip, so parallel runs
   guarantee stale findings or a repeat review. Deliberate exception: for
@@ -196,11 +196,11 @@ access, or a permission failure is a blocker to report, not a reason to weaken
 the gate. If Fable is unavailable or its safeguards block the benign review,
 disclose that and use Opus 5 `xhigh`; never substitute silently.
 
-## Optional Claude spec outer gate
+## Claude spec outer gate
 
-`outerspecreview` remains an operator-invoked optional gate. When a non-Claude
-planning session receives `run outerspecreview` (or `/outerspecreview`), it
-launches a fresh Claude Code review with the shared contract above:
+When "Spec review loop" below requires `outerspecreview`, or the operator asks
+for it explicitly, a non-Claude planning session launches a fresh Claude Code
+review with the shared contract above:
 
 - no profile named → Opus 5 `high`;
 - `Fable 5 high` → Fable 5 `high`;
@@ -215,7 +215,7 @@ claude -p --output-format json \
   --permission-mode auto \
   --add-dir <absolute spec folder only when outside the repo root> \
   -- \
-  "/outerspecreview <absolute spec path>"
+  "/outerspecreview <absolute spec path> — inner spec-review loop converged"
 ```
 
 Omit `--add-dir` when the spec is already inside the repository root. Pass no
@@ -235,37 +235,30 @@ When the current conversation is already Claude Code/Claude, run
 process. An explicit operator request to review here likewise bypasses the CLI
 launcher.
 
-## Outer-gate waivability
+## Outer-gate requirements
 
 Except for the documentation-only off-ramp above, the inner review loop is not
-skippable (kernel review floor). The outer gate (`outerreview`) is REQUIRED
-whenever the diff touches a canonical risk-surface
-(migration/schema/persisted-state (any change to stored data or a state-machine),
-auth, contract/API, data-loss, security, provider boundary (Stripe, AvaTax, other
-external services), dependency, toolchain) OR the inner review returned ACTIONABLE
-on any substantive finding at any point in the loop. It is operator-waivable ONLY
-when ALL of:
+skippable (kernel review floor). The outer gate (`outerreview`) is REQUIRED when:
 
-- (a) the diff touches NONE of the canonical risk-surface list above;
-- (b) the inner review was APPROVED on the FIRST pass with zero substantive
-  findings (no ACTIONABLE cycle at all — a patched-then-clean loop does NOT
-  qualify);
-- (c) the diff is mechanically trivial — NO logic or control-flow change (copy,
-  comment, pure rename, or a purely non-behavioral config value; a config value
-  that changes runtime behavior — a threshold, retry count, rate limit — IS a
-  logic change and does NOT qualify).
+- the diff touches migration/schema/persisted state (including a state-machine),
+  auth, contract/API, data-loss, security, a provider boundary (Stripe, AvaTax,
+  other external services), dependency, or toolchain; or
+- an inner finding establishes a production-correctness, public/contract,
+  persistence, security, or data-loss defect; or
+- a test-quality finding requires a production behavior/contract patch because
+  that behavior was not previously proven.
 
-The implementer states `outer gate: required | waivable — <one-line why>` at
-handoff. Required gates launch autonomously after inner convergence; the OPERATOR
-makes the final waive call on a waivable gate. When the outer gate is mandatory,
-do not trim the independence seal, live-range self-computation, or the inner
-loop. (`outerspecreview` is already optional on the spec side, so this parity
-holds there too.)
+A receipt, documentation, assertion-only, redundant-test, or process finding
+does not trigger the outer gate unless the diff independently touches a
+canonical risk surface above. Otherwise skip the outer gate automatically; do
+not stop for a waiver decision. The implementer states `outer gate: required |
+skipped — <one-line why>` at handoff. The operator may still request an outer
+review. When required, preserve the independence seal, live-range
+self-computation, and inner loop.
 
 ## Spec review loop (specreview → specrereview)
 
-Spec review is autonomous and has no required implementation-style outer gate.
-`specreview` spawns one reviewer; the planning agent
+Spec review is autonomous. `specreview` spawns one reviewer; the planning agent
 resolves the autonomous findings by tightening the spec and re-runs
 `specrereview` (reusing the original reviewer across cycles per §6, fresh only as
 fallback), looping until APPROVED. It STOPS for
@@ -273,6 +266,23 @@ the operator only on a plan-DIRECTION finding (`[decision-required]`, or any the
 planner cannot resolve without choosing an approach / scope / tradeoff / policy —
 applied as a self-filter, not just the reviewer's tag) or after a 3-cycle cap.
 Full disposition lives in the `specreview` skill.
+
+After inner convergence (APPROVED or the documented minor-only off-ramp), run
+`outerspecreview` unless **every** compact-spec off-ramp condition holds:
+
+- one localized, repo-conventional outcome within one surface;
+- no new or changed architecture/product-policy choice, contract/API/schema,
+  persisted-state/lifecycle/migration, auth/security, provider, dependency, or
+  toolchain boundary;
+- no cross-system coordination, rollout/cutover, unproven bet, or unresolved
+  direction decision; and
+- acceptance criteria and exact verification are straightforward and covered by
+  known repository paths.
+
+If all hold, skip automatically; otherwise launch the outer gate automatically
+without pausing for a waiver decision. Report `outer spec gate: required |
+skipped — <one-line reason>`. The operator may request it even when the compact
+off-ramp applies.
 
 ## Freshness
 

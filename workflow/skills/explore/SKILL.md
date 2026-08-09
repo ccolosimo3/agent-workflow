@@ -32,14 +32,15 @@ mutations (the Destructive Action Policy applies to any command run).
    what "better" means *here*: more correct, more repo-conventional, more
    performant, simpler, less coupled. Name the **evaluation axes** up front (e.g.
    WEB-174's transport layers / exactness / coupling tax). Vague axes produce
-   vague comparisons.
+   vague comparisons. If the repo adapter points to a planning-only reference,
+   read it now.
 
-2. **Map the solution space — bounded fan-out, read-only.** Decompose into
-   independent evidence domains and use two read-only investigators by default.
-   Use three only when the question has three genuinely distinct material domains
-   (for example: repo precedent, current external constraints, and performance
-   evidence); never exceed three. Keep a narrow question serial when splitting it
-   would duplicate reading or coordination.
+2. **Map the solution space — bounded fan-out, read-only.** Investigate serially
+   by default. Use one read-only investigator for one separable material evidence
+   domain; use two only for two named independent domains whose parallel work
+   shortens the pass. Never exceed two. When model selection is available, use
+   GPT-5.6 Terra `high` for evidence investigators; reserve the parent/stronger
+   model for load-bearing synthesis.
    Cover: existing repo patterns/precedents that already solve this or something
    adjacent (file:line); the idiomatic approach for the stack; performance/cost
    characteristics; and the **irreducible floor** — what no approach can avoid

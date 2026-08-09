@@ -1,14 +1,16 @@
 ---
 name: outerspecreview
-description: Run the operator-owned outer-gate second review of their OWN plan /
-  spec after the planning session's specreview ⇄ specrereview loop has
-  converged. From a non-Claude session, launches a fresh Claude Code review with
+description: Run the outer-gate second review of the operator's OWN plan / spec
+  after the planning session's specreview ⇄ specrereview loop has converged.
+  Use when HANDOFF.md routes a substantive converged spec to an automatic outer
+  gate, or when the operator explicitly requests /outerspecreview. From a
+  non-Claude session, launches a fresh Claude Code review with
   Opus 5 high by default or an explicit supported Fable/Opus profile override;
   in a Claude/fresh reviewer conversation, performs the holistic whole-plan
   review directly. Self-populates the Spec Review Kickoff from the spec file
   (never from a pasted prompt), ignores prior findings, verifies file:line
-  claims against current source, and returns a strict verdict. Use when the
-  operator says /outerspecreview, "run outerspecreview", "second spec review",
+  claims against current source, and returns a strict verdict. Explicit requests
+  include /outerspecreview, "run outerspecreview", "second spec review",
   "independent fresh pass on the whole spec", optionally followed by Fable 5
   high, Opus 5 high, or Opus 5 xhigh. Not the planning session's own loop
   (specreview / specrereview), not a code review (outerreview), not a coworker
@@ -25,11 +27,13 @@ spawn a subagent. It exists because the `specreview` loop converges through
 `specrereview`, which is delta-scoped — so the converged plan never got a cold,
 holistic whole-artifact read. This gate is that read, from a different model,
 un-anchored by the loop.
+It may be launched automatically by the planning session after inner convergence
+under HANDOFF.md's routing, or explicitly by the operator.
 
 ## Invocation router
 
 - **Non-Claude caller:** read HANDOFF.md "Shared Claude CLI review launch" and
-  "Optional Claude spec outer gate", resolve the spec path, and launch the fresh
+  "Claude spec outer gate", resolve the spec path, and launch the fresh
   Claude review. Default to Opus 5 `high`; honor an explicit supported profile.
   Monitor and return the verdict to this planning session. Do not perform the
   review here as well.
@@ -41,14 +45,12 @@ un-anchored by the loop.
 1. **Preflight (read-only).** Confirm the spec under review (operator pointer, or
    auto-detect the active work-item folder, e.g.
    `<root>/.agent-workflow/plans/active/<ISSUE>-*/`). Confirm it is **converged** —
-   the `specreview` loop reached APPROVED and the operator advanced `status` to
-   `final` (or `promoted`). Read that from the spec's `status:` frontmatter or the
-   operator's word that the loop converged — NOT from `reviews.md` (the
-   independence seal forbids it); if neither signal is available, ask rather than
-   opening `reviews.md`. `review-ready` means the loop has not necessarily run
-   yet, so if `status` is `review-ready` or `rough`, say so and treat this as a
-   directional early read, not the certifying second verdict. Read-only: no edits
-   to the spec, no branch, no tracker mutation.
+   the `specreview` loop reached APPROVED. Accept `final`/`promoted` frontmatter,
+   the operator's word, or the calling planning session's explicit convergence
+   assertion; do NOT open `reviews.md` to prove it. `review-ready` alone is not
+   proof, but it is valid with that caller assertion because operator promotion
+   happens later. If no signal exists, ask. Read-only: no edits to the spec, no
+   branch, no tracker mutation.
 2. **Locate the artifact.** Read the living spec (`README.md` or the named spec
    file) and the sibling docs it depends on (`*_OPTIONS.md`, `*_SPIKE.md`,
    `verification.md`) — the spec is what you are reviewing.
