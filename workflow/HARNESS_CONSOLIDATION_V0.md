@@ -57,6 +57,11 @@ skill or task document. Townchest begins with roughly 757 lines.
 
 ### Structural evidence
 
+All line citations in this subsection describe the frozen pre-change files at
+workflow base `8ac50ad85327f32e8113eb22ffa6d9077d55dab7` and the adapter baselines
+recorded under Task A4; they are evidence for the consolidation, not current-tip
+navigation.
+
 - The global kernel carries both a full test-quality digest and routing to the
   canonical doctrine (`workflow/AGENTS.md:46-79`), detailed review sequencing
   plus routing to `HANDOFF.md` (`workflow/AGENTS.md:250-267`), and a long
@@ -498,14 +503,16 @@ retired in Task A; only duplicate wording and examples are deleted.
 | Kernel test examples and test-selection detail | Preserved in `TESTING.md`; the kernel retains the real-boundary, durable-regression, anti-shape-test fallback. |
 | Kernel implementation, planning, and review steps | Preserved in the named skills, `PLANS.md`, `HANDOFF.md`, and `REVIEW_RUBRIC.md`; the kernel retains route selection and floors. |
 | Kernel verification examples and handoff mechanics | Preserved in repo verification owners and `HANDOFF.md`; the kernel retains tiers, causal reuse, and consumer-boundary proof. |
+| Kernel provider/paid-operation approval detail | Preserved in the kernel: all provider mutations remain gated, with only the named disposable-DB harness exception; paid runs require an exact provider, scope, and cap. |
+| Kernel no-contract refactor proof | Preserved compactly in the kernel as status/shape/error/side-effect parity across the changed boundary. |
 | Vendor Intelligence workflow-mode list | Deleted as a duplicate of kernel startup routing. |
 | Vendor Intelligence umbrella/slice/archive procedure | Relocated to `.agent-workflow/plans/README.md`. |
 | Vendor Intelligence Linear body and plan-code procedure | Relocated to `.agent-workflow/PLANNING.md`. |
 | Vendor Intelligence docs classification and source-probe procedure | Routed to tracked `docs/README.md` and `docs/workflows/`; tracked `AGENTS.md` retains the probe safety edges. |
 | Vendor Intelligence reviewer, command, verification, and migration detail | Routed to tracked `AGENTS.md`, `docs/CODE_MAP.md`, `docs/COMMANDS.md`, and `docs/VERIFICATION.md`; unique disposable-DB, long-lived-DB, Drizzle, runtime, export, and PR-title deltas remain in the local adapter. |
 | Townchest generic task, plan, review, and PR-body procedure | Deleted as duplicate or routed to the kernel, `HANDOFF.md`, local plans README, and `reference/pr-body-style.md`. |
-| Townchest setup, local-data, migration, provider, CI/deploy, and codegen detail | Routed to tracked `AGENTS.md`, `docs/onboarding/SETUP.md`, `docs/agent-rubrics/domain-risks.md`, `docs/deployment/developer-agent-ops.md`, and `docs/tooling/graphql-schema-strategy.md`; unique local approval deltas and TARS prohibition remain. |
-| Townchest command catalog, Biome workaround, testing/frontend, and E2E detail | Routed to the section-addressed private verification/testing/coding owners and `FRONTEND.md`; the local adapter retains the never-miss route and short local exceptions. |
+| Townchest setup, local-data, migration, provider, CI/deploy, and codegen detail | Routed to tracked `AGENTS.md`, `docs/onboarding/SETUP.md`, `docs/agent-rubrics/domain-risks.md`, `docs/deployment/developer-agent-ops.md`, and `docs/tooling/graphql-schema-strategy.md`; unique local approval, TARS, and server-runtime/preview deltas remain in the adapter. |
+| Townchest command catalog, Biome workaround, testing/frontend, and E2E detail | Routed to the section-addressed private verification/testing/coding owners and `FRONTEND.md`; the executable Biome guard plus manual a11y/layout, focus, reduced-motion, visual-baseline, and E2E exceptions remain in the adapter. |
 
 Deferred dispositions: none in Task A.
 

@@ -84,7 +84,10 @@ Shared or externally visible state:
 - changing CI/CD configuration, secrets, or branch protection;
 - mutating cloud, deployment, database, payment, DNS, monitoring, or other
   provider state, including migrations, backfills, imports, reindexes, seeds,
-  repairs, deploys, and promotions outside a local disposable environment.
+  repairs, deploys, and promotions. Only the repo-documented disposable DB test
+  harness exception above is preauthorized;
+- running a paid model/API call or paid live probe unless the current request
+  explicitly authorizes that exact provider, input scope, and cap.
 
 Operating rules:
 
@@ -92,8 +95,9 @@ Operating rules:
   PR” authorizes the stated action and its shown natural substeps. Re-ask only
   when the repo/target, scope, side effect, body/label/comment, provider, input,
   or cap materially changes. “ok” or silence is not approval.
-- State the exact target and command before destructive local-data or provider
-  work. Prefer read-only checks/dry-runs first; they do not authorize mutation.
+- Before asking, state the exact action/command, target, and relevant side
+  effects; for destructive local data, say whether data loss is expected.
+  Prefer read-only checks/dry-runs first; they do not authorize mutation.
 - Never bypass a failed hook or CI check.
 - If uncertain whether an action is gated, ask.
 
@@ -203,6 +207,8 @@ Rules:
 - A changed shared export must be proven through the exact consumer import at
   its real build/runtime boundary; a sibling import or typecheck-only proof is
   insufficient unless that is the actual consumer boundary.
+- For a no-contract refactor, prove parity for status, shape, errors, and side
+  effects across the changed boundary.
 - UI changes need targeted automated proof plus rendered/manual QA; API/schema/
   data/integration changes consider contracts, builds, local-stack, and e2e.
 - Do not run live/provider/hardware checks unless the environment is explicitly
@@ -233,9 +239,8 @@ labels, and follow the approval boundary for every GitHub mutation.
 
 ## Output budget
 
-Do not restate stable rules unless they affect the task. Lead with outcome,
-readiness/blocker, and any decision. Final summaries name changed files, intent,
-verification, and known follow-ups; detailed receipts stay in their owner.
+Do not restate stable rules unless they affect the task. Final summaries include
+changed files, intent, verification, and known follow-ups.
 
 ## Local repo facts contract
 
