@@ -21,6 +21,11 @@ detailed procedures.
   defer hypothetical future needs.
 - Preserve public contracts unless the work item changes them. Do not modify
   unrelated files or discard unowned work.
+- Treat untrusted object data as `unknown` until narrowed or parsed; after
+  validation—or when the repo owns a stable/versioned contract—preserve a named
+  domain type through serialization, persistence, and generic helpers, using
+  open records only for genuinely dynamic keys. Treat production double-casts
+  into open records as a review prompt, not an automatic violation.
 - Prefer existing patterns over new abstractions. Route/page/entry files stay
   thin; persistence owns persistence and services own policy, validation,
   orchestration, transactions, and side effects.
