@@ -15,7 +15,7 @@ Deliver:
 5. testable acceptance criteria
 6. exact verification plan by tier, including any broader local gates selected
    or intentionally not selected
-7. review-ready spec markdown that can become the final tracker issue body
+7. review-ready living spec that can drive implementation and a concise tracker summary
 8. decision brief: chosen approach, one rejected alternative, tradeoff, assumptions
 9. claim grounding: confirm each load-bearing code claim (where to wire a change,
    what a file already does, what a contract exempts, "follows pattern X") against

@@ -35,7 +35,9 @@ the parameters below.
   + reason, dependency / ordering claims.
 - **Hot spots / known risk in the plan**: ambiguous areas, claims to
   fact-check against the code, decisions made and rejected alternatives.
-- **Existing-mechanism claim (field 4a; fill from the FILESYSTEM, not
+- **Proof strategy**: exact verification, behavior/failure mode + real test
+  boundary, Tier-4/manual proof, and UI design/visual proof when applicable.
+- **Adjacent-mechanism claim (field 3a; fill from the FILESYSTEM, not
   memory)**: for bug fixes, edge cases, fallback/error/loading behavior, or
   business-rule tweaks, name the current code path that already handles
   analogous behavior (file:line) and whether the plan reuses or bypasses it;
@@ -74,8 +76,8 @@ a one-shot. When the spawned reviewer returns:
   cycles**; if still ACTIONABLE after 3, stop and surface the remaining findings.
   On every stop or APPROVED, give the operator a one-line-per-pass changelog of
   what changed; report a minor-only off-ramp per the planner directive.
-  On APPROVED or a minor-only off-ramp, apply HANDOFF.md's compact-spec off-ramp
-  and launch `outerspecreview` when required.
+  On APPROVED or a minor-only off-ramp, apply HANDOFF.md's positive outer-spec
+  risk selector and launch `outerspecreview` when required.
 
 ## Failure modes
 

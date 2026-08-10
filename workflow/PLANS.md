@@ -26,19 +26,18 @@ source of truth.
 
 ## Work-Item Folders
 
-One folder per tracker issue: `active/<ISSUE-ID>-<short-kebab-title>/`,
-containing:
+One folder per tracker issue: `active/<ISSUE-ID>-<short-kebab-title>/`. Its only
+default file is `README.md`, the living spec/plan. Create no empty placeholders.
+Add an optional file only when it carries durable content that would make the
+living spec or normal handoff noisy:
 
-- `README.md` — the one living spec/plan (lifecycle statuses below; prefer one
-  evolving spec over parallel draft files).
-- `PR_BODY.md` — PR body draft.
-- `verification.md` — commands run, manual proof, skipped gates.
-- `reviews.md` — review verdicts and actionable findings.
-- `artifacts/` — screenshots, exported logs, proof files when useful.
+- `PR_BODY.md` — a materially distinct PR draft;
+- `verification.md` — reusable or detailed proof beyond the concise receipt;
+- `reviews.md` — durable findings/resolutions when chat is not enough;
+- `artifacts/` — screenshots, logs, or disposable proof worth retaining.
 
-Keep review findings and verdicts only in `reviews.md`; implementation receipts
-and other artifacts may record implementation and verification evidence, but
-must not duplicate review history.
+When `reviews.md` exists, it is the sole local owner of review history; do not
+duplicate that history in receipts or other artifacts.
 
 Specs for implementation work should include a test strategy per
 `~/.agents/workflow/TESTING.md` (behavior/boundary, supplemental-shape, Tier-4
@@ -56,8 +55,8 @@ slices) and `spikes/` (bounded proof specs and writeups); add other subfolders
 only if a project actually needs them.
 
 Do not fold every slice back into `README.md` — update it only when the durable
-feature contract changes. Command results go in `verification.md`, reviewer
-outcomes in `reviews.md`.
+feature contract changes. Put detailed command results or reviewer history in
+their optional owners only when they are worth retaining.
 
 ## Frontmatter Template
 
@@ -99,15 +98,19 @@ related:
 - If a file has no frontmatter, leave it alone (legacy doc) — do not retrofit
   unless the operator asks.
 
+When a named main planning session is active, it alone updates shared
+`INDEX.md` and umbrella lifecycle state; dispatched tasks update their own
+work-item folder and return one concise reconciliation note. Without a named
+main planner, the finishing task performs the normal shared-state update.
+
 ## Artifact cleanup on land
 
 When the operator says an issue or PR landed, clean local planning artifacts
 before moving on:
 
 - Confirm the issue/PR state with the tracker.
-- Delete obsolete local drafts now represented by the tracker or PR: issue
-  drafts, PR-body drafts, review-note drafts, kickoff prompts, one-off review
-  prompts.
+- Delete any obsolete local drafts that were actually created and are now
+  represented by the tracker or PR.
 - After issue creation, advance the same living spec through its lifecycle
   (above) rather than deleting it by default; delete only transient
   split/redaction issue drafts or prompts.

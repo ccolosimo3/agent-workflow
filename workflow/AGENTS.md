@@ -239,8 +239,9 @@ labels, and follow the approval boundary for every GitHub mutation.
 
 ## Output budget
 
-Do not restate stable rules unless they affect the task. Final summaries include
-changed files, intent, verification, and known follow-ups.
+Do not restate stable rules unless they affect the task. Lead operator-facing
+summaries with what changed, why it matters, readiness/blocker, and any decision;
+keep detailed evidence in its receipt or owner unless requested.
 
 ## Local repo facts contract
 

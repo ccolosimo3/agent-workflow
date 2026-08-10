@@ -54,7 +54,7 @@ findings are ALL minor and self-evidently fixed (the minor-only off-ramp in
 specreview "After the verdict"), patch and break the loop with a report instead
 of re-reviewing — your call, not an APPROVED. See specreview "After the verdict
 (autonomous loop)". On APPROVED or a minor-only off-ramp, apply HANDOFF.md's
-compact-spec off-ramp and launch `outerspecreview` when required.
+positive outer-spec risk selector and launch `outerspecreview` when required.
 
 ## Failure modes
 

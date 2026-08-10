@@ -16,6 +16,9 @@ by a Codex implementer. The conversation itself is the fresh-context reviewer,
 so do the review here in the main thread; do not spawn a subagent. Its verdict
 certifies the final tip for the outer gate.
 
+When a non-Claude implementer launches this reviewer through Claude Code,
+`~/.agents/workflow/OUTER_REVIEW_LAUNCHER.md` is the sole launcher contract.
+
 ## When invoked
 
 1. **Preflight (read-only).** `git status --short --branch` in the repo root

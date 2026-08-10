@@ -68,7 +68,8 @@ Disposition is owned by the implementer directive appended to each verdict
 skill. On an inner-loop APPROVED, report the result with a one-line-per-pass
 changelog and note the loop converged. Then state `Outer gate: required |
 skipped — <reason>`. When the gate is required or the operator requests a
-receipt, end the handoff with this copyable block:
+receipt, lead with HANDOFF.md's concise operator summary, then append this
+copyable block:
 
 ```text
 ## Outer-review receipt — <work item ID/title>
@@ -105,9 +106,9 @@ sections. Do not convert it to a table or include findings/verdicts.
 
 When `outerreview` is required and this is not already a Claude implementation
 session, launch Claude Code autonomously after inner convergence using
-HANDOFF.md "Automated Claude implementation outer gate"; keep its session ID and
-drive the outer finding → targeted verification → same-session outer re-review
-loop until the outer reviewer approves the final tip. Do not invoke
+`~/.agents/workflow/OUTER_REVIEW_LAUNCHER.md`; keep its session ID and drive the
+outer finding → targeted verification → same-session outer re-review loop until
+the outer reviewer approves the final tip. Do not invoke
 `implrereview` for an outer-owned patch; report any unrelated scope for operator
 direction. If Claude implemented the work, hand the receipt to a fresh other-model
 outer-review task instead.

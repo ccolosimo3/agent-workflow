@@ -338,7 +338,9 @@ dispatched tasks maintain their own work-item artifact and report results.
 
 ## Task B — reduce procedural ceremony
 
-Begin only after Task A is piloted and its routing is stable.
+Operator-approved to begin on 2026-08-10 after the reviewed Task A reductions
+were judged net beneficial. Fresh-task fixtures and representative pilots remain
+required validation before V0 promotion, but no longer block Task B editing.
 
 ### B1. Make planning artifacts content-driven
 
@@ -593,7 +595,8 @@ solely to manufacture evidence.
    and Townchest planning repo separately; never use one cross-repo verdict.
 3. Preserve the pre-change local-adapter versions in their private nested repos;
    do not overwrite unrelated dirty changes.
-4. Pilot Task A before starting Task B.
+4. Run the fresh-task fixtures and representative pilots before V0 promotion;
+   the operator explicitly authorized Task B implementation before that pilot.
 5. Commit Task B separately from Task A and preserve the same repository
    boundaries.
 6. If routing regresses, revert only the failing repository-scoped patch and retain the measured
@@ -649,3 +652,7 @@ Deferred:
 - Proposed implementation branch: `workflow-harness-consolidation-v0`.
 - No tracker issue or public artifact is required unless the operator later
   chooses to create one.
+- Phase B activation: operator-approved on 2026-08-10 based on the reviewed
+  Phase A reductions; preserve the pilot as the promotion gate. Keep the rare
+  reviewer-capacity parking rule to one concise `plan-next` instruction rather
+  than introducing general queue machinery.

@@ -58,15 +58,23 @@ planning conversation rather than presenting a finished specification.
    current / in-flight / blocked / next rollup. While this main planner is
    active, it owns shared `INDEX.md` and umbrella state; dispatched tasks update
    only their own work-item artifacts and return a concise reconciliation note.
+   Another task blocks dispatch only when it owns the same active behavioral
+   seam or would make the intended intermediate state false; a shared file alone
+   is later reconciliation work.
 3. When work is ready to execute, prepare its canonical kickoff. After an
    explicit operator instruction to start, spin up, or dispatch it, create a
    **fresh user-visible Codex task** in the correct project/environment and hand
    it the bounded scope, authority, spec, and verification/review expectations.
+   Name this session as the active main planner so the task returns shared-state
+   reconciliation instead of editing `INDEX.md` or umbrella state itself.
    Honor any requested model, reasoning level, or worktree; otherwise use the
    host defaults.
 4. Record the task ID, inspect its progress/results as coordination requires,
    relay operator-approved corrections or handoffs, and reconcile completed work
-   back into the project sequence. Bring only genuine direction, authority, or
+   back into the project sequence. Batch related shared-state reconciliation,
+   but never leave completed work active. If reviewer capacity is unavailable,
+   park one ready handoff at its current range/artifact; resume it later—never
+   poll or interrupt other tasks. Bring only genuine direction, authority, or
    blocker decisions to the operator.
 
 ## Boundaries
