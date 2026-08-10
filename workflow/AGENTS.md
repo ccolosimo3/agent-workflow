@@ -96,6 +96,13 @@ Shared or externally visible state:
 
 Operating rules:
 
+- Read-only public web search, ordinary public-page lookup, and official
+  documentation research are distinct from live source probes, authenticated
+  traffic, API/provider traffic, paid calls, and external mutations; they remain
+  allowed unless the task explicitly says local-only/no-web. In delegated
+  prompts, do not use “no network” or “no provider/network” as shorthand for a
+  live/provider ban—state the public-research allowance and exact prohibited
+  live/authenticated/paid/provider traffic separately.
 - Natural approval language such as “yes,” “approved,” “go ahead,” or “open the
   PR” authorizes the stated action and its shown natural substeps. Re-ask only
   when the repo/target, scope, side effect, body/label/comment, provider, input,
