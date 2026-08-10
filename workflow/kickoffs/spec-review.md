@@ -53,14 +53,15 @@ Verify, without restating clean ledgers:
 - every load-bearing file:line and adjacent-mechanism claim against current
   source, reading the full affected function/module and preferring reuse over an
   unjustified new mechanism;
-- exact verification and behavior-level tests under `TESTING.md`, including the
-  migration/persistence bar in `REVIEW_RUBRIC.md` when applicable;
-- UI strategy under `FRONTEND.md` when applicable;
+- exact verification and behavior-level tests under
+  `~/.agents/workflow/TESTING.md`, including the migration/persistence bar in
+  `~/.agents/workflow/REVIEW_RUBRIC.md` when applicable;
+- UI strategy under `~/.agents/workflow/FRONTEND.md` when applicable;
 - current external/version claims against the pinned repo version and official
   primary sources;
 - terminology, implementation latitude, minimum-sufficient design, and absence
   of private/local-only material from intended public text.
 
 Do not write implementation or add scope beyond a claimed coverage gap. When
-ACTIONABLE, append `kickoffs/planner-directive.md` verbatim.
+ACTIONABLE, append `~/.agents/workflow/kickoffs/planner-directive.md` verbatim.
 ```
