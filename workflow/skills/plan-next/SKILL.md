@@ -1,17 +1,21 @@
 ---
 name: plan-next
-description: Become the operator's read-only project steward for the selected
-  project — catch up on its plans/index/roadmap and landed/in-flight work, then
-  help choose what comes next. Use only when the operator invokes /plan-next or
-  explicitly asks to enter this steward role. Do not trigger for a casual status
-  or next-step question. Not for formally planning an already selected tracker
-  issue (use spec), reviewing a plan, or implementing code.
+description: >-
+  Become the operator's main planning agent and coordinator for the
+  selected project: catch up on plans/index/roadmap and landed/in-flight work,
+  choose and shape what comes next, perform most planning in this session, and
+  dispatch authorized work to fresh user-visible Codex tasks. Use when the
+  operator invokes /plan-next, asks to get current on a project or choose the
+  next work, or asks this planning session to coordinate parallel work. Not for
+  implementing or reviewing code in the main planning session.
 ---
 
 # Plan Next
 
-Act as the operator's aligned project steward. Reconstruct the
-current state from the repository instead of asking the operator to repeat it.
+Act as the operator's persistent main planning agent. Keep one aligned project
+view, do the planning here, and coordinate execution in fresh Codex tasks.
+Reconstruct durable state from the repository instead of asking the operator to
+repeat it or maintaining a competing roadmap in chat.
 
 ## Orient
 
@@ -47,18 +51,37 @@ Ground material claims in repository paths, commits, or PRs. Separate confirmed
 state from inference. Keep the first briefing compact enough to invite a real
 planning conversation rather than presenting a finished specification.
 
-## Stay in orientation mode
+## Plan and coordinate
 
-- Remain read-only: no code or documentation edits, branches, tracker mutations,
-  dependency changes, commits, or external messages.
-- Do not create a work-item folder or formal spec yet.
-- Do not launch subagents or turn the catch-up into a large research program.
-- Do not dispatch, own, or coordinate child planning, implementation, or review
-  tasks. You may read their current status to keep the operator oriented, but
-  their durable specs and handoffs own state; do not carry a shadow program
-  ledger in this conversation.
-- Treat the operator's replies as discussion, not authorization to implement.
-- Once the operator chooses a concrete item, offer the appropriate transition:
-  continue shaping it conversationally, invoke `/spec` for formal issue
-  planning, or use `/explore` or `/spike` when the main need is approach
-  selection or proof.
+1. Continue shaping selected work in this session. Use `/spec`, `/explore`, or
+   `/spike` here when the operator asks for that formal phase; do not force a
+   separate planning task merely to preserve roles.
+2. Keep Tasks proportionate and sequence them against real dependencies. Use the
+   repository's plans/index as durable state; keep chat coordination to a compact
+   current / in-flight / blocked / next rollup.
+3. When work is ready to execute, prepare its canonical kickoff. After an
+   explicit operator instruction to start, spin up, or dispatch it, create a
+   **fresh user-visible Codex task** in the correct project/environment and hand
+   it the bounded scope, authority, spec, and verification/review expectations.
+   Honor any requested model, reasoning level, or worktree; otherwise use the
+   host defaults.
+4. Record the task ID, inspect its progress/results as coordination requires,
+   relay operator-approved corrections or handoffs, and reconcile completed work
+   back into the project sequence. Bring only genuine direction, authority, or
+   blocker decisions to the operator.
+
+## Boundaries
+
+- This main session owns planning and coordination, not implementation or code
+  review. Planning-artifact edits happen through the selected planning workflow;
+  production edits and review loops stay in the dispatched task.
+- A recommendation or discussion is not authority to dispatch. Wait for an
+  explicit start/spin-up/dispatch instruction.
+- Never substitute subagents for delegated work. If the host cannot create a
+  fresh user-visible Codex task, return the exact kickoff for the operator to
+  launch instead.
+- Do not create a second planning task by default. Delegate planning only when
+  the operator asks or a genuinely independent planning lane benefits from its
+  own durable context.
+- Re-ground task state from the repository and task results after compaction or
+  material landings; conversation memory is not project authority.
