@@ -59,8 +59,8 @@ Verify, without restating clean ledgers:
 - UI strategy under `~/.agents/workflow/FRONTEND.md` when applicable;
 - current external/version claims against the pinned repo version and official
   primary sources;
-- terminology, implementation latitude, minimum-sufficient design, and absence
-  of private/local-only material from intended public text.
+- terminology, implementation latitude, the kernel's Minimum-sufficient shape
+  rule, and absence of private/local-only material from intended public text.
 
 Do not write implementation or add scope beyond a claimed coverage gap. When
 ACTIONABLE, append `~/.agents/workflow/kickoffs/planner-directive.md` verbatim.

@@ -57,11 +57,9 @@ research.
    tradeoffs — when an adjacent mechanism exists, the minimal
    route-into-the-existing-path option MUST be one of them; one recommendation
    plus a rejected alternative (the decision brief); the one-line Domain Pass
-   decision per the kernel's triggers. Recommend the simplest complete,
-   repo-conventional approach. Tie every added abstraction, configuration/state
-   surface, tool, compatibility path, or cross-surface mechanism to a current
-   requirement, observed failure, or established repo pattern; defer
-   hypothetical hardening.
+   decision per the kernel's triggers. Apply the kernel's Minimum-sufficient
+   shape rule before choosing the recommendation; simplify autonomously when
+   doing so preserves operator-owned direction and scope.
    When the destination exceeds one Task, map the sequence but fully specify
    only the next independently reviewable slice. Each slice must leave a valid
    state if later work never lands; split independently provable risks, but do
