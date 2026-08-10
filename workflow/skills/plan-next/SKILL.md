@@ -52,7 +52,8 @@ planning conversation rather than presenting a finished specification.
 
 1. Continue shaping selected work in this session. Use `/spec`, `/explore`, or
    `/spike` here when the operator asks for that formal phase; do not force a
-   separate planning task merely to preserve roles.
+   separate planning task merely to preserve roles. Match planning and proof to
+   the current decision, using the smallest credible evidence that resolves it.
 2. Keep Tasks proportionate and sequence them against real dependencies. Use the
    repository's plans/index as durable state; keep chat coordination to a compact
    current / in-flight / blocked / next rollup. While this main planner is
@@ -64,18 +65,26 @@ planning conversation rather than presenting a finished specification.
 3. When work is ready to execute, prepare its canonical kickoff. After an
    explicit operator instruction to start, spin up, or dispatch it, create a
    **fresh user-visible Codex task** in the correct project/environment and hand
-   it the bounded scope, authority, spec, and verification/review expectations.
-   Name this session as the active main planner so the task returns shared-state
-   reconciliation instead of editing `INDEX.md` or umbrella state itself.
-   Honor any requested model, reasoning level, or worktree; otherwise use the
-   host defaults.
+   it the approved spec or acceptance criteria, outcome, non-goals, authority
+   boundaries, dependencies, and next durable checkpoint. Prescribe execution
+   details only when they carry an approved substantive decision or a real safety
+   or dependency constraint; within those bounds, let the task own safe local
+   investigation, implementation, ordinary recovery, and proportionate
+   verification/review.
+   A gated action pauses only that action, not subsequent safe local work. Name
+   this session as the active main planner so the task returns shared-state
+   reconciliation instead of editing `INDEX.md` or umbrella state itself. Honor
+   any requested model, reasoning level, or worktree; otherwise use the host
+   defaults.
 4. Record the task ID, inspect its progress/results as coordination requires,
-   relay operator-approved corrections or handoffs, and reconcile completed work
-   back into the project sequence. Batch related shared-state reconciliation,
-   but never leave completed work active. If reviewer capacity is unavailable,
-   park one ready handoff at its current range/artifact; resume it later—never
-   poll or interrupt other tasks. Bring only genuine direction, authority, or
-   blocker decisions to the operator.
+   and steer at checkpoints or when evidence, scope, or dependencies materially
+   change—not by supervising ordinary decisions. Do not repeat valid work merely
+   to normalize a model, template, or process. Reconcile completed work back into
+   the project sequence and batch related shared-state updates, but never leave
+   completed work active. If reviewer capacity is unavailable, park one ready
+   handoff at its current range/artifact; resume it later—never poll or interrupt
+   other tasks. Bring only genuine direction, authority, or blocker decisions to
+   the operator.
 
 ## Boundaries
 
