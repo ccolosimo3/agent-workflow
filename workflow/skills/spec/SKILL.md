@@ -1,17 +1,10 @@
 ---
 name: spec
-description: Formally plan and research one selected tracker issue (Linear or
-  GitHub). The invoking session becomes its planning agent — it reads the issue
-  and linked context, investigates the
-  root cause or design constraints serially by default, may delegate at most
-  two genuinely independent material unknowns to read-only subagents, and
-  produces the work-item folder and living spec per
-  ~/.agents/workflow/PLANS.md and the repo shim. Planning only — no code edits,
-  no branch creation, tracker stays read-only. Use only when the operator invokes
-  /spec or explicitly asks for a formal implementation-ready plan for the issue.
-  Do not trigger from a pasted issue, assignment notice, status question, or
-  casual request for options. Not for reviewing an existing spec (specreview) or
-  implemented code (implreview).
+description: >-
+  Research one selected tracker issue and produce its formal implementation-ready
+  living spec, serially by default and without code or tracker mutation. Use only
+  for /spec or an explicit formal-spec request. Do not trigger from a pasted
+  issue, assignment, status question, or casual options discussion; not review.
 ---
 
 # spec
@@ -88,13 +81,15 @@ research.
    must settle. Scale the plan to the change's size/risk — a trivial
    single-surface fix gets a compact plan (skip the two-or-three-approach
    synthesis), not the full treatment.
-   Update the plans `INDEX.md` when the repo keeps one.
+   If a named main planner is active, update only this work-item folder and
+   return a concise reconciliation note; that planner owns shared `INDEX.md` and
+   umbrella state. Otherwise perform the repo's normal shared-state update.
 
 5. **Advance to review.** If no worthwhile direction decision remains, move the
    spec to `review-ready`, report its path/status, and invoke `/specreview`
    yourself in the same session; follow its autonomous revise→re-review loop.
-   After convergence, apply HANDOFF.md's compact-spec off-ramp: launch
-   `/outerspecreview` automatically when required, otherwise report the skip.
+   After convergence, apply HANDOFF.md's positive outer-spec risk selector:
+   launch `/outerspecreview` when required, otherwise report the skip.
    Pause only for a real approach, scope, product/policy/naming, or
    no-clear-winner tradeoff decision. If the direction is still open or rests
    on an unproven architectural bet, recommend `/explore` or `/spike` and wait
@@ -113,7 +108,7 @@ research.
 - Drafting straight to `final` — rough → review-ready → `/specreview` is the
   path.
 - Pausing before `/specreview` when no direction decision remains.
-- Pausing to ask whether to run a required outer spec gate, or running one after
-  every compact spec without applying the off-ramp.
+- Pausing to ask whether to run a required outer spec gate, or running one when
+  no positive outer-spec risk trigger applies.
 - Treating a broad destination as one implementation Task, or over-slicing it
   into pieces with no meaningful standalone behavior or proof.

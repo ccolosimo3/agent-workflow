@@ -1,12 +1,10 @@
 ---
 name: plan-cleanup
-description: Preview and safely externalize completed local planning folders to
-  the operator's private plan-archive repository, with exact scope approval,
-  integrity manifests, fresh-clone verification, and optional verified pruning.
-  Use when the operator invokes /plan-cleanup, asks to clean old or completed
-  plans out of a project, wants a periodic plan-archive audit, or wants to move
-  archived plans off the local machine. Not for ordinary cleanup immediately
-  after one issue lands; follow PLANS.md "Artifact cleanup on land" first.
+description: >-
+  Preview and safely externalize completed local plan folders to the private
+  archive with scoped approval and integrity verification. Use for
+  /plan-cleanup, periodic archive cleanup, or moving completed plans off-device.
+  Not for ordinary cleanup immediately after one item lands.
 ---
 
 # Plan Cleanup

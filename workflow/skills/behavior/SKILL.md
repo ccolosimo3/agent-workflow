@@ -1,11 +1,10 @@
 ---
 name: behavior
-description: Give the operator a concise, source-grounded summary of the behavior
-  planned in a spec or delivered by an implemented work item, including the
-  load-bearing design decisions and why they were made. Use when the operator
-  explicitly invokes /behavior or asks for a focused behavior summary of a
-  spec, current branch, PR, commit range, or work item. Not for restating the
-  last response (plain), a deep briefing with Q&A (learn), or reviewing the work.
+description: >-
+  Concisely explain the core behavior planned or built and the load-bearing
+  decisions behind it. Use for /behavior or a focused behavior summary of a
+  spec, branch, PR, range, or work item. Not for plain restatement, a deep
+  briefing, or review.
 ---
 
 # behavior

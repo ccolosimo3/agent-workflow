@@ -1,17 +1,18 @@
 ---
 name: plan-next
-description: Become the operator's read-only project steward for the selected
-  project — catch up on its plans/index/roadmap and landed/in-flight work, then
-  help choose what comes next. Use only when the operator invokes /plan-next or
-  explicitly asks to enter this steward role. Do not trigger for a casual status
-  or next-step question. Not for formally planning an already selected tracker
-  issue (use spec), reviewing a plan, or implementing code.
+description: >-
+  Act as the project's main planning agent: get current, shape and sequence next
+  work, and dispatch authorized execution to fresh user-visible Codex tasks.
+  Use for /plan-next or requests to coordinate project planning and next work.
+  The main session does not implement or review code.
 ---
 
 # Plan Next
 
-Act as the operator's aligned project steward. Reconstruct the
-current state from the repository instead of asking the operator to repeat it.
+Act as the operator's persistent main planning agent. Keep one aligned project
+view, do the planning here, and coordinate execution in fresh Codex tasks.
+Reconstruct durable state from the repository instead of asking the operator to
+repeat it or maintaining a competing roadmap in chat.
 
 ## Orient
 
@@ -47,18 +48,56 @@ Ground material claims in repository paths, commits, or PRs. Separate confirmed
 state from inference. Keep the first briefing compact enough to invite a real
 planning conversation rather than presenting a finished specification.
 
-## Stay in orientation mode
+## Plan and coordinate
 
-- Remain read-only: no code or documentation edits, branches, tracker mutations,
-  dependency changes, commits, or external messages.
-- Do not create a work-item folder or formal spec yet.
-- Do not launch subagents or turn the catch-up into a large research program.
-- Do not dispatch, own, or coordinate child planning, implementation, or review
-  tasks. You may read their current status to keep the operator oriented, but
-  their durable specs and handoffs own state; do not carry a shadow program
-  ledger in this conversation.
-- Treat the operator's replies as discussion, not authorization to implement.
-- Once the operator chooses a concrete item, offer the appropriate transition:
-  continue shaping it conversationally, invoke `/spec` for formal issue
-  planning, or use `/explore` or `/spike` when the main need is approach
-  selection or proof.
+1. Continue shaping selected work in this session. Use `/spec`, `/explore`, or
+   `/spike` here when the operator asks for that formal phase; do not force a
+   separate planning task merely to preserve roles. Match planning and proof to
+   the current decision, using the smallest credible evidence that resolves it.
+2. Keep Tasks proportionate and sequence them against real dependencies. Use the
+   repository's plans/index as durable state; keep chat coordination to a compact
+   current / in-flight / blocked / next rollup. While this main planner is
+   active, it owns shared `INDEX.md` and umbrella state; dispatched tasks update
+   only their own work-item artifacts and return a concise reconciliation note.
+   Another task blocks dispatch only when it owns the same active behavioral
+   seam or would make the intended intermediate state false; a shared file alone
+   is later reconciliation work.
+3. When work is ready to execute, prepare its canonical kickoff. After an
+   explicit operator instruction to start, spin up, or dispatch it, create a
+   **fresh user-visible Codex task** in the correct project/environment and hand
+   it the approved spec or acceptance criteria, outcome, non-goals, authority
+   boundaries, dependencies, and next durable checkpoint. Prescribe execution
+   details only when they carry an approved substantive decision or a real safety
+   or dependency constraint; within those bounds, let the task own safe local
+   investigation, implementation, ordinary recovery, and proportionate
+   verification/review.
+   A gated action pauses only that action, not subsequent safe local work. Name
+   this session as the active main planner so the task returns shared-state
+   reconciliation instead of editing `INDEX.md` or umbrella state itself. Honor
+   any requested model, reasoning level, or worktree; otherwise use the host
+   defaults.
+4. Record the task ID, inspect its progress/results as coordination requires,
+   and steer at checkpoints or when evidence, scope, or dependencies materially
+   change—not by supervising ordinary decisions. Do not repeat valid work merely
+   to normalize a model, template, or process. Reconcile completed work back into
+   the project sequence and batch related shared-state updates, but never leave
+   completed work active. If reviewer capacity is unavailable, park one ready
+   handoff at its current range/artifact; resume it later—never poll or interrupt
+   other tasks. Bring only genuine direction, authority, or blocker decisions to
+   the operator.
+
+## Boundaries
+
+- This main session owns planning and coordination, not implementation or code
+  review. Planning-artifact edits happen through the selected planning workflow;
+  production edits and review loops stay in the dispatched task.
+- A recommendation or discussion is not authority to dispatch. Wait for an
+  explicit start/spin-up/dispatch instruction.
+- Never substitute subagents for delegated work. If the host cannot create a
+  fresh user-visible Codex task, return the exact kickoff for the operator to
+  launch instead.
+- Do not create a second planning task by default. Delegate planning only when
+  the operator asks or a genuinely independent planning lane benefits from its
+  own durable context.
+- Re-ground task state from the repository and task results after compaction or
+  material landings; conversation memory is not project authority.

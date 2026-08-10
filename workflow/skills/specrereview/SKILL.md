@@ -1,14 +1,9 @@
 ---
 name: specrereview
-description: Hand off a revised plan or spec for a follow-up
-  review after the planner has addressed findings from a prior ACTIONABLE inner
-  spec review. Reads the canonical Spec Re-Review Kickoff template from
-  ~/.agents/workflow/kickoffs/spec-re-review.md, populates the prior findings + revisions, and
-  REUSES the original reviewer's open session for the follow-up — falling back to a
-  fresh re-reviewer subagent only if it can't be resumed (announcing the handoff).
-  Use when the operator says /specrereview or after revisions land in response
-  to a prior inner spec review. Not for outerspecreview findings, which return
-  to the same outer conversation.
+description: >-
+  Reuse the original inner spec reviewer to verify revisions for its ACTIONABLE
+  findings. Use for /specrereview or after an inner spec-review revision. Do not
+  use for outer-spec findings; they return to the same outer conversation.
 ---
 
 # specrereview
@@ -59,7 +54,7 @@ findings are ALL minor and self-evidently fixed (the minor-only off-ramp in
 specreview "After the verdict"), patch and break the loop with a report instead
 of re-reviewing — your call, not an APPROVED. See specreview "After the verdict
 (autonomous loop)". On APPROVED or a minor-only off-ramp, apply HANDOFF.md's
-compact-spec off-ramp and launch `outerspecreview` when required.
+positive outer-spec risk selector and launch `outerspecreview` when required.
 
 ## Failure modes
 

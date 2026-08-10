@@ -110,9 +110,8 @@ docs never qualify.
   repeat until APPROVED. Fast, same-app subagents; iterate freely.
 - **Required outer gate** (the other app/model): ONE fresh-context review of the
   FINAL tip. When "Outer-gate requirements" selects it, a non-Claude implementer
-  launches `outerreview` in Claude Code per "Automated Claude implementation
-  outer gate" below. If Claude implemented the work, use a fresh other-model task
-  instead.
+  launches `outerreview` per `OUTER_REVIEW_LAUNCHER.md`. If Claude implemented
+  the work, use a fresh other-model task instead.
 - Do not run the outer gate in parallel with the inner loop by default: a
   verdict on a pre-patch tip cannot certify the final tip, so parallel runs
   guarantee stale findings or a repeat review. Deliberate exception: for
@@ -125,115 +124,17 @@ docs never qualify.
   may restart the inner → outer sequence. The inner approval certifies the
   implementation entering the gate; the outer follow-up certifies the final tip.
 
-## Shared Claude CLI review launch
+Operator-facing completion starts with what changed, why it matters,
+readiness/blocker, and any decision. Put detailed verification/review evidence
+after that in the existing receipt or local owner, only when required or useful.
 
-Claude-backed outer reviews share one launcher contract. Require Claude Code
-2.1.219+ and normalize operator profile names exactly:
+## Claude outer-review launcher
 
-- **Opus 5 `high`** → `--model claude-opus-5 --effort high`;
-- **Opus 5 `xhigh`** → `--model claude-opus-5 --effort xhigh`;
-- **Fable 5 `high`** → `--model claude-fable-5 --effort high`.
-
-For `outerspecreview`, omitted profile means Opus 5 `high`; an explicit named
-profile overrides it. `outerreview` still selects among these profiles by
-implementation complexity below. Do not silently remap an unsupported or
-unrecognized model/effort request.
-
-All scripted launches use `-p --output-format json`, pass
-`--permission-mode auto` explicitly, and terminate variadic options with `--`
-before the review prompt. Add `--add-dir <absolute folder>` only when the review
-must read a local path outside the launch working directory; keep it last before
-`--` so it cannot consume the prompt. The parent app's permission mode does not
-carry into Claude Code.
-
-Wait for the process without interrupting it. From the single JSON result, keep
-the `session_id` and final `result`, and relay the complete verdict to the
-calling session/operator. Never add a permission-bypass flag.
-
-## Automated Claude implementation outer gate
-
-For a required `outerreview` after inner approval, apply the shared launcher
-contract above, confirm a clean committed tip and current Outer-review
-verification receipt, then announce the selected review profile:
-
-- **Opus 5 `high`** — bounded, ordinary work with few interacting contracts;
-- **Opus 5 `xhigh`** — substantive multi-file/risk-surface work or a substantive
-  inner finding (default for complex implementation);
-- **Fable 5 `high`** — exceptional
-  large, hard-to-reverse, concurrency, migration, or security work with several
-  interacting invariants. This is the escalation profile; do not choose it
-  merely because an outer gate is required.
-
-From the implementation worktree, run:
-
-```bash
-claude -p --output-format json \
-  --model <model> --effort <level> \
-  --permission-mode auto \
-  --add-dir <absolute-work-item-folder> \
-  -- \
-  "/outerreview Review <work item>. Worktree: <absolute root>. Spec: <absolute path or URL>. Verification receipt: <absolute path or in-prompt receipt>."
-```
-
-`--add-dir` is required when the local spec or receipt lives outside the
-implementation worktree; omit it only when no external local path is needed.
-Pass no inner findings or verdicts on the first run. If ACTIONABLE, patch only
-the listed findings, commit, run targeted verification, then resume from the
-same worktree:
-
-```bash
-claude -p --output-format json --resume <session_id> \
-  --model <same model> --effort <same level> \
-  --permission-mode auto \
-  --add-dir <same absolute work-item folder> \
-  -- \
-  "Re-review the patched live tip. Recompute it and verify your prior findings."
-```
-
-Repeat until the outer reviewer approves the final tip. Honor normal Claude
-permissions; never add a bypass flag. Auto-mode denial, missing CLI/auth/skill
-access, or a permission failure is a blocker to report, not a reason to weaken
-the gate. If Fable is unavailable or its safeguards block the benign review,
-disclose that and use Opus 5 `xhigh`; never substitute silently.
-
-## Claude spec outer gate
-
-When "Spec review loop" below requires `outerspecreview`, or the operator asks
-for it explicitly, a non-Claude planning session launches a fresh Claude Code
-review with the shared contract above:
-
-- no profile named → Opus 5 `high`;
-- `Fable 5 high` → Fable 5 `high`;
-- `Opus 5 xhigh` → Opus 5 `xhigh`;
-- `Opus 5 high` → Opus 5 `high`.
-
-From the repository root, after the inner spec-review loop has converged, run:
-
-```bash
-claude -p --output-format json \
-  --model <mapped model> --effort <mapped level> \
-  --permission-mode auto \
-  --add-dir <absolute spec folder only when outside the repo root> \
-  -- \
-  "/outerspecreview <absolute spec path> — inner spec-review loop converged"
-```
-
-Omit `--add-dir` when the spec is already inside the repository root. Pass no
-prior findings, verdicts, or populated kickoff. The launched Claude conversation
-performs the skill's read-only holistic review and returns its verdict.
-
-If ACTIONABLE, resolve any operator decisions, patch only changes directly
-required by the listed outer findings, then resume the same Claude session for
-re-review with the same model, effort, and directory access. Do not invoke
-`specrereview` or start another fresh outer pass. If a required revision cannot
-be mapped to a listed finding, report scope expansion; only the operator may
-restart the inner → outer sequence. The inner approval certifies the plan
-entering the gate; the outer follow-up certifies the revised plan.
-
-When the current conversation is already Claude Code/Claude, run
-`outerspecreview` directly here instead of recursively launching another Claude
-process. An explicit operator request to review here likewise bypasses the CLI
-launcher.
+For a Claude-backed implementation or spec outer gate, read
+`~/.agents/workflow/OUTER_REVIEW_LAUNCHER.md` in full. It owns supported
+model/effort profiles, CLI flags, directory access, JSON/session handling,
+launch syntax, failure behavior, and same-session resume. This file continues
+to own whether and when the gate runs, independence, and patch routing.
 
 ## Outer-gate requirements
 
@@ -267,22 +168,13 @@ planner cannot resolve without choosing an approach / scope / tradeoff / policy 
 applied as a self-filter, not just the reviewer's tag) or after a 3-cycle cap.
 Full disposition lives in the `specreview` skill.
 
-After inner convergence (APPROVED or the documented minor-only off-ramp), run
-`outerspecreview` unless **every** compact-spec off-ramp condition holds:
-
-- one localized, repo-conventional outcome within one surface;
-- no new or changed architecture/product-policy choice, contract/API/schema,
-  persisted-state/lifecycle/migration, auth/security, provider, dependency, or
-  toolchain boundary;
-- no cross-system coordination, rollout/cutover, unproven bet, or unresolved
-  direction decision; and
-- acceptance criteria and exact verification are straightforward and covered by
-  known repository paths.
-
-If all hold, skip automatically; otherwise launch the outer gate automatically
-without pausing for a waiver decision. Report `outer spec gate: required |
-skipped — <one-line reason>`. The operator may request it even when the compact
-off-ramp applies.
+After inner convergence (APPROVED or the documented minor-only off-ramp), require
+`outerspecreview` only when the plan adds or changes architecture/product policy,
+a contract/API/schema, persisted-state/lifecycle/migration, auth/security, a
+provider/dependency/toolchain boundary, cross-system rollout/cutover, or a
+material unproven bet. Otherwise skip automatically without asking for a waiver;
+the operator may still request it. Report `outer spec gate: required | skipped —
+<one-line reason>`.
 
 ## Freshness
 

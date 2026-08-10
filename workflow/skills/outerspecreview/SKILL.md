@@ -1,20 +1,10 @@
 ---
 name: outerspecreview
-description: Run the outer-gate second review of the operator's OWN plan / spec
-  after the planning session's specreview ⇄ specrereview loop has converged.
-  Use when HANDOFF.md routes a substantive converged spec to an automatic outer
-  gate, or when the operator explicitly requests /outerspecreview. From a
-  non-Claude session, launches a fresh Claude Code review with
-  Opus 5 high by default or an explicit supported Fable/Opus profile override;
-  in a Claude/fresh reviewer conversation, performs the holistic whole-plan
-  review directly. Self-populates the Spec Review Kickoff from the spec file
-  (never from a pasted prompt), ignores prior findings, verifies file:line
-  claims against current source, and returns a strict verdict. Explicit requests
-  include /outerspecreview, "run outerspecreview", "second spec review",
-  "independent fresh pass on the whole spec", optionally followed by Fable 5
-  high, Opus 5 high, or Opus 5 xhigh. Not the planning session's own loop
-  (specreview / specrereview), not a code review (outerreview), not a coworker
-  PR (prreview).
+description: >-
+  Run the fresh outer gate for the operator's own converged plan/spec when
+  HANDOFF routes it or the operator requests /outerspecreview or a second spec
+  review. Supports the skill's documented model override. Not for inner spec
+  review, code review, or coworker PRs.
 ---
 
 # outerspecreview
@@ -32,11 +22,10 @@ under HANDOFF.md's routing, or explicitly by the operator.
 
 ## Invocation router
 
-- **Non-Claude caller:** read HANDOFF.md "Shared Claude CLI review launch" and
-  "Claude spec outer gate", resolve the spec path, and launch the fresh
-  Claude review. Default to Opus 5 `high`; honor an explicit supported profile.
-  Monitor and return the verdict to this planning session. Do not perform the
-  review here as well.
+- **Non-Claude caller:** read
+  `~/.agents/workflow/OUTER_REVIEW_LAUNCHER.md` in full, resolve the spec path,
+  and launch the fresh Claude review. Default to Opus 5 `high`; honor an explicit
+  supported profile. Monitor and return the verdict here; do not also review it.
 - **Claude Code/Claude or explicit `review here`:** perform the review in this
   conversation using the steps below. Do not launch another Claude process.
 
@@ -69,7 +58,7 @@ under HANDOFF.md's routing, or explicitly by the operator.
 5. **Perform the review yourself** in this conversation, per `REVIEW_RUBRIC.md`
    and the Spec Review Kickoff validation categories — a **holistic whole-plan**
    pass, not a delta (the cold full read is the entire point of this gate). Verify
-   every file:line claim and existing-mechanism (4a) claim against CURRENT source
+   every file:line claim and adjacent-mechanism (3a) claim against CURRENT source
    yourself — read the cited code; do not trust the spec's claims. Cover scope
    coverage, self-containment, dependency claims, label correctness, test-strategy
    quality (per TESTING.md; for UI specs also design-strategy quality per
@@ -103,7 +92,7 @@ under HANDOFF.md's routing, or explicitly by the operator.
 ## Failure modes
 
 The shared ones in HANDOFF.md, plus: reading `reviews.md` or pasted prior
-findings (independence seal); trusting the spec's file:line / 4a claims instead
+findings (independence seal); trusting the spec's file:line / 3a claims instead
 of verifying them against current source; delta-reviewing instead of a holistic
 whole-plan pass (the cold full read is the point); reviewing a `rough`/mid-loop
 draft as if certifying it; silently changing an explicit model/effort request;

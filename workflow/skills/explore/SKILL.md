@@ -1,19 +1,10 @@
 ---
 name: explore
-description: Map and rank the candidate approaches for an open architectural
-  question or a working-but-imperfect system — "is there a more correct, more
-  repo-conventional, or more performant version of this?" Runs a bounded read-only
-  investigation to enumerate viable approaches grounded in the real codebase (web
-  search encouraged for current framework/provider/engine behavior and
-  version-specific limits), adversarially verifies each one's feasibility, and
-  produces a ranked
-  options/decision doc with a recommended approach and the next phase (spike if
-  the approach carries an unproven bet, else specreview). Read-only — no code,
-  no branch, tracker untouched. Use only when the operator explicitly invokes
-  /explore or asks to run a formal explore pass for an architectural question.
-  Do not trigger for casual questions about options or whether a better approach
-  exists; answer those serially. Not for researching a fresh bug's root cause
-  (that is spec) or proving one chosen bet (that is spike).
+description: >-
+  Run a bounded read-only architecture pass that maps, verifies, and ranks
+  candidate approaches and recommends the next phase. Use only for /explore or
+  an explicit formal explore request. Casual option questions stay serial; use
+  spec for a fresh bug and spike to prove one chosen bet.
 ---
 
 # explore
