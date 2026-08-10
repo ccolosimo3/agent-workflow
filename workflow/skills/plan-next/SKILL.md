@@ -1,13 +1,10 @@
 ---
 name: plan-next
 description: >-
-  Become the operator's main planning agent and coordinator for the
-  selected project: catch up on plans/index/roadmap and landed/in-flight work,
-  choose and shape what comes next, perform most planning in this session, and
-  dispatch authorized work to fresh user-visible Codex tasks. Use when the
-  operator invokes /plan-next, asks to get current on a project or choose the
-  next work, or asks this planning session to coordinate parallel work. Not for
-  implementing or reviewing code in the main planning session.
+  Act as the project's main planning agent: get current, shape and sequence next
+  work, and dispatch authorized execution to fresh user-visible Codex tasks.
+  Use for /plan-next or requests to coordinate project planning and next work.
+  The main session does not implement or review code.
 ---
 
 # Plan Next
@@ -58,7 +55,9 @@ planning conversation rather than presenting a finished specification.
    separate planning task merely to preserve roles.
 2. Keep Tasks proportionate and sequence them against real dependencies. Use the
    repository's plans/index as durable state; keep chat coordination to a compact
-   current / in-flight / blocked / next rollup.
+   current / in-flight / blocked / next rollup. While this main planner is
+   active, it owns shared `INDEX.md` and umbrella state; dispatched tasks update
+   only their own work-item artifacts and return a concise reconciliation note.
 3. When work is ready to execute, prepare its canonical kickoff. After an
    explicit operator instruction to start, spin up, or dispatch it, create a
    **fresh user-visible Codex task** in the correct project/environment and hand

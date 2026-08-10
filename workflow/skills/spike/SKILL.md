@@ -1,17 +1,10 @@
 ---
 name: spike
-description: Prove (or reject) one chosen architectural bet at the real boundary
-  before committing to it — read-only, disposable, GO/NO-GO. Frames the single
-  sharp question + go/no-go criteria up front, writes a bounded spike spec, runs
-  the proof against the RISKIEST assumption at the REAL boundary (never a green
-  mock standing in for the core bet), verifies falsifiably against an oracle,
-  adversarially tries to refute it, and writes proof notes with a verdict that
-  feeds the plan (GO → seed the implementation spec; NO-GO → recommend the
-  fallback). Disposable by default — no production code, no branch, no tracker
-  or provider/hosted mutation; web search encouraged. Use when the operator says
-  /spike, "prove <approach> works", "can <mechanism> actually do X", "spike the
-  <X> coupling", or after explore recommends proving a bet. Not for mapping
-  approaches (that is explore) or researching a fresh bug (that is spec).
+description: >-
+  Run a disposable read-only GO/NO-GO proof of one chosen architectural bet at
+  its riskiest real boundary. Use for /spike, an explicit request to prove an
+  approach, or an explore handoff. Not for mapping candidate approaches or
+  diagnosing a fresh bug.
 ---
 
 # spike

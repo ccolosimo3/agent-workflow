@@ -1,16 +1,10 @@
 ---
 name: implrereview
-description: Hand off a patched implementation for a follow-up review after the
-  implementer has addressed findings from an inner ACTIONABLE review verdict,
-  or when the operator explicitly invokes the inner reviewer. Reads the
-  canonical Re-Review Kickoff template from
-  ~/.agents/workflow/kickoffs/re-review.md, populates the prior findings + patch context,
-  and REUSES the original reviewer's open session for the follow-up review —
-  falling back to a fresh re-reviewer subagent only if it can't be resumed
-  (announcing the handoff). Use when the operator says
-  /implrereview, "re-review this", or after patches land in response to an
-  inner review. Do not invoke autonomously for outerreview findings; HANDOFF.md
-  routes those directly back to the same outer reviewer.
+description: >-
+  Reuse the original inner implementation reviewer to verify patches for its
+  ACTIONABLE findings. Use for /implrereview, an inner “re-review,” or after an
+  inner-review patch. Do not use for outerreview findings; they return directly
+  to the same outer reviewer.
 ---
 
 # implrereview

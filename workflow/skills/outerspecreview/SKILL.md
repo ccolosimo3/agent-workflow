@@ -1,20 +1,10 @@
 ---
 name: outerspecreview
-description: Run the outer-gate second review of the operator's OWN plan / spec
-  after the planning session's specreview ⇄ specrereview loop has converged.
-  Use when HANDOFF.md routes a substantive converged spec to an automatic outer
-  gate, or when the operator explicitly requests /outerspecreview. From a
-  non-Claude session, launches a fresh Claude Code review with
-  Opus 5 high by default or an explicit supported Fable/Opus profile override;
-  in a Claude/fresh reviewer conversation, performs the holistic whole-plan
-  review directly. Self-populates the Spec Review Kickoff from the spec file
-  (never from a pasted prompt), ignores prior findings, verifies file:line
-  claims against current source, and returns a strict verdict. Explicit requests
-  include /outerspecreview, "run outerspecreview", "second spec review",
-  "independent fresh pass on the whole spec", optionally followed by Fable 5
-  high, Opus 5 high, or Opus 5 xhigh. Not the planning session's own loop
-  (specreview / specrereview), not a code review (outerreview), not a coworker
-  PR (prreview).
+description: >-
+  Run the fresh outer gate for the operator's own converged plan/spec when
+  HANDOFF routes it or the operator requests /outerspecreview or a second spec
+  review. Supports the skill's documented model override. Not for inner spec
+  review, code review, or coworker PRs.
 ---
 
 # outerspecreview

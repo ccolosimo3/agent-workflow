@@ -1,14 +1,10 @@
 ---
 name: prreview
-description: Review someone else's PR end to end through a proportionate,
-  internally convergent process. Freeze and map the PR; review compact changes
-  directly; for standard or large changes, run one blind challenger and reconcile
-  evidence until material conclusions stabilize; emit a non-blocking progress
-  update; then calibrate one final operator action brief. Large reviews may use up
-  to two additional bounded specialists. Use when the operator says /prreview,
-  asks to review a numbered coworker PR, or steers an active review with zoom out,
-  drill into, shift, or challenge. Do not use for the operator's own implementation
-  handoff — that is implreview.
+description: >-
+  Review someone else's PR through proportionate discovery, challenger
+  convergence when warranted, and final operator calibration. Use for /prreview,
+  a numbered coworker PR, or steering an active PR review. Not for the
+  operator's own implementation handoff.
 ---
 
 # prreview

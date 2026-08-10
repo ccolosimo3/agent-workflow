@@ -1,17 +1,10 @@
 ---
 name: spec
-description: Formally plan and research one selected tracker issue (Linear or
-  GitHub). The invoking session becomes its planning agent — it reads the issue
-  and linked context, investigates the
-  root cause or design constraints serially by default, may delegate at most
-  two genuinely independent material unknowns to read-only subagents, and
-  produces the work-item folder and living spec per
-  ~/.agents/workflow/PLANS.md and the repo shim. Planning only — no code edits,
-  no branch creation, tracker stays read-only. Use only when the operator invokes
-  /spec or explicitly asks for a formal implementation-ready plan for the issue.
-  Do not trigger from a pasted issue, assignment notice, status question, or
-  casual request for options. Not for reviewing an existing spec (specreview) or
-  implemented code (implreview).
+description: >-
+  Research one selected tracker issue and produce its formal implementation-ready
+  living spec, serially by default and without code or tracker mutation. Use only
+  for /spec or an explicit formal-spec request. Do not trigger from a pasted
+  issue, assignment, status question, or casual options discussion; not review.
 ---
 
 # spec

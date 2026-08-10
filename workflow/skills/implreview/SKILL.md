@@ -1,12 +1,9 @@
 ---
 name: implreview
-description: Hand off a completed implementation for review. Reads the canonical
-  Review Kickoff template from ~/.agents/workflow/kickoffs/review.md, populates every
-  placeholder from the current session, then spawns exactly one fresh-context
-  reviewer subagent with it (announcing the handoff; the prompt is emitted in
-  chat only as a no-subagent fallback). Use after completing an
-  implementation when the operator says /implreview, "hand this off for review",
-  "let's review this", or similar.
+description: >-
+  Hand a completed implementation to one fresh-context inner reviewer using the
+  canonical kickoff. Use for /implreview or a request to review or hand off the
+  implementation. Not for spec review or coworker PRs.
 ---
 
 # implreview

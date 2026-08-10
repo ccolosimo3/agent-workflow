@@ -1,12 +1,10 @@
 ---
 name: calibrate-review
-description: Use only when the operator explicitly asks to calibrate raw review
-  findings for someone else's PR or work. Triage External PR Review, implreview,
-  review-pr, CodeRabbit, or human findings against repo standards, team norms,
-  merge risk, author effort, and review etiquette; then return a concise action
-  brief separating request-changes blockers, author discussions, suggestions,
-  nits, and attached residual verification while preserving a private raw-to-final
-  audit trail. Do not auto-run after ordinary implementation review handoffs.
+description: >-
+  Calibrate raw findings for someone else's PR into blockers, discussions,
+  suggestions, nits, and residual verification using repo and team standards.
+  Use only when the operator explicitly asks to calibrate review findings. Never
+  auto-run after an ordinary implementation review.
 ---
 
 # calibrate-review

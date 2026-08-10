@@ -1,375 +1,246 @@
-# AGENTS.md Kernel - Portable Agentic Workflow
+# AGENTS.md Kernel — Portable Agent Workflow
 
-This is the portable operating kernel for coding agents. It is intentionally
-project-agnostic. Local repo shims define stack facts, commands, and local constraints.
+Small, project-agnostic operating kernel for coding agents. Repo instructions
+own project facts, commands, and constraints; on-demand workflow files own the
+detailed procedures.
 
-## Startup Adapters
+## Startup and precedence
 
-Loaded as global agent guidance (Codex, Claude Code, or similar): treat as
-workflow bootstrap, not repository policy.
+- If the repo root has `AGENTS.local.md`, read it before substantive work as an
+  additive local adapter. Claude also reads the repo-root `CLAUDE.md` in the
+  order that adapter defines.
+- Precedence: current-session human instruction; repo/company/security/code-owner
+  policy; nearest repo/subtree instructions; this kernel; optional preferences.
+- Never use this workflow to bypass team review, CI, security, licensing, or
+  data-handling policy.
 
-- If a repo root contains `AGENTS.local.md`, read it before substantive work as
-  a local-only workflow adapter — additive only; on conflict the tracked repo
-  rule wins. Claude Code delta: also read a repo-root `CLAUDE.md`, composing the
-  files in the order that adapter describes.
+## Universal quality floor
 
-## Precedence
-
-On conflict: (1) human instruction in the current session, (2) repo/company
-policy, security rules, and code owner guidance, (3) the nearest repo/subtree
-shim, (4) this kernel, (5) personal preferences and optional playbooks.
-
-Do not use this workflow to bypass team review, CI, security controls, licensing rules,
-or data-handling policies.
-
-## Universal Quality Floor
-
-- Prefer the simplest complete, repo-conventional solution that satisfies the
-  current requirements and preserves correctness, safety, and maintainability.
-  Added complexity must trace to a current requirement, observed failure, or
-  established repo pattern; defer hypothetical future needs as follow-ups.
-- Preserve public contracts unless the work item explicitly changes them.
-- Do not modify unrelated files.
+- Prefer the simplest complete, repo-conventional solution. Added complexity
+  must trace to a current requirement, observed failure, or established pattern;
+  defer hypothetical future needs.
+- Preserve public contracts unless the work item changes them. Do not modify
+  unrelated files or discard unowned work.
+- Prefer existing patterns over new abstractions. Route/page/entry files stay
+  thin; persistence owns persistence and services own policy, validation,
+  orchestration, transactions, and side effects.
 - Do not install dependencies, change toolchains, or edit generated artifacts
-  without clear need and approval, except the isolated-worktree lockfile restore
-  preauthorized below.
-- Do not commit secrets, local credentials, device identifiers, personal paths,
-  local workflow adapters, or kernel symlinks.
-- Prefer existing repo patterns over new abstractions. Keep route/page/entry
-  files thin: persistence layers own persistence, services own policy,
-  validation, orchestration, transactions, and side effects.
-- Add tests and verification proportional to risk; broader-gate selection and
-  routing reporting follow the rules under Verification Tiers.
-- Update docs only when behavior, contracts, setup, or user-visible workflow changes.
-- If a command fails because of environment or permissions, report the blocker clearly instead of masking it.
+  without clear need and approval, except the immutable worktree bootstrap below.
+- Never commit secrets, credentials, device identifiers, personal paths, local
+  workflow adapters, or kernel symlinks.
+- Test and verify in proportion to changed risk. Update owning docs only when
+  behavior, contracts, setup, architecture, or user/operator workflow changes.
+- Report environmental or permission blockers; never mask them.
 
-## Test Quality Floor
+## Test quality fallback
 
-Digest of `~/.agents/workflow/TESTING.md` (full doctrine there; this is also the
-offline fallback REVIEW_RUBRIC.md uses when TESTING.md can't be opened).
+`~/.agents/workflow/TESTING.md` is canonical. If it cannot be opened:
 
-- Tests protect behavior, contracts, failure modes, or user/system outcomes: a
-  useful test fails iff the regression it guards against comes back.
-- Sensitivity alone is insufficient: that recurrence must be a durable defect.
-  When intentionally removing pure copy/markup/presentation, delete or relax only
-  the obsolete assertion rather than invert it into absence coverage unless
-  a raw ask, owning contract, or concrete continuing risk makes absence durably
-  functional, safety/security/privacy/legal/compliance, accessibility,
-  operational/forbidden-output/policy, or public-contract relevant. Classify by
-  consequence, preserve every other durable assertion, and route ambiguity for
-  decision.
-- Before adding/changing a test, identify the behavior or contract protected, the
-  original or plausible failure mode to catch, the real operation boundary
-  exercised (service method,
-  API route, job, import/export flow, UI interaction, persistence reload,
-  integration boundary, CLI command), and any manual/provider/hardware/
-  local-stack/database proof needed when that failure mode cannot be represented
-  in the automated harness.
-- Prefer running the real operation the product depends on: for persistence, save
-  and reload through the relevant repository/ORM/service/API/UI boundary before
-  asserting; for integrations, use the smallest deterministic boundary that still
-  exercises the integration logic.
-- Avoid tests whose only value is implementation shape (a config constant's value,
-  generated SQL text, file/class/migration existence, mock call order, a snapshot
-  without a behavioral assertion, a private helper's return) unless that shape is
-  itself the contract or the test is clearly supplemental to a behavior-level test
-  or a documented Tier-4 proof.
-- Do not add automated tests just to increase apparent coverage. If no meaningful
-  automated test is practical, say so and document the manual/provider/local-stack
-  verification instead of inventing weak coverage.
+- A useful test protects a durable behavior, contract, failure mode, or outcome
+  and fails when that regression returns.
+- Exercise the smallest real operation boundary that proves the behavior. For
+  persistence, save and reload; for integrations, cross the actual integration
+  seam.
+- Do not ship tests whose value is implementation shape, mock call order,
+  source text, existence, or coverage percentage unless that shape is itself a
+  contract or is supplemental to a named real-boundary proof.
+- Removing incidental copy/markup does not create a durable absence contract.
+  Relax only the obsolete assertion unless continuing functional, safety,
+  accessibility, policy, legal, privacy, or public-contract authority requires
+  absence coverage.
+- If meaningful automation is impractical, record the manual/provider/local
+  proof instead of inventing weak coverage.
 
 ## GitHub CLI
 
-Use the `gh` CLI for all GitHub interactions. Do not use a GitHub MCP connector
-when both are available.
+Use `gh` for GitHub interactions when available; do not substitute a GitHub MCP
+connector.
 
-## Destructive Action Policy
+## Approval boundaries
 
-Every instance of an action below needs fresh, in-session operator approval.
+Every action below requires fresh, explicit in-session operator approval.
 
-Hard-to-reverse local/repo state:
+Hard-to-reverse local or repository state:
 
-- `git push` (incl. `--force`/`--force-with-lease`); `git reset --hard`,
-  `checkout --`, `restore --`, `clean -f`; `git branch -D` / deleting branches;
-  `commit --amend` or `rebase` rewriting pushed history; `git tag` create/delete
-  + pushing tags.
-- Hook/signing bypass flags: `--no-verify`, `--no-gpg-sign`,
-  `-c commit.gpgsign=false`.
-- Editing `.git/`, lockfiles, or `.git/info/exclude`.
-- Installing/removing/upgrading/downgrading dependencies or toolchains, except
-  the isolated-worktree lockfile restore preauthorization below.
-- `rm -rf` against any target, or deleting tracked files outside the work item's
-  stated scope.
-- Deleting/recreating local databases, search indexes, containers, volumes,
-  caches, or worktrees (`docker compose down -v`, `docker volume rm`,
-  `supabase db reset`, `git worktree remove --force`, or aliases wrapping those).
-  Exception: a repo-documented disposable DB test harness needs no per-run
-  approval when its unchanged command is constrained to loopback/local Docker
-  and a harness-owned test namespace. Any command, target, wrapper, namespace,
-  migration, reset, ingest, or persistent-database difference remains gated.
+- `git push` (including force variants); `git reset --hard`, `checkout --`,
+  `restore --`, `clean -f`; deleting branches; rewriting pushed history;
+  creating/deleting or pushing tags;
+- bypassing hooks/signing (`--no-verify`, `--no-gpg-sign`, or equivalents);
+- editing `.git/`, lockfiles, or `.git/info/exclude`;
+- adding/removing/upgrading/downgrading dependencies or toolchains;
+- any `rm -rf`, or deleting tracked files outside the stated scope;
+- deleting/recreating databases, indexes, containers, volumes, caches, or
+  worktrees. A repo-documented disposable DB test harness is exempt only when
+  its unchanged command is confined to loopback/local Docker and its own test
+  namespace; any target, wrapper, migration, reset, ingest, or persistent-store
+  difference remains gated.
 
-Shared-state and externally visible actions:
+Shared or externally visible state:
 
-- `gh pr` create/edit/merge/close/review; `gh issue` create/close/comment/edit;
-  `gh release` create/delete; `gh repo edit`; `gh api` POST/PATCH/PUT/DELETE.
-- Mutating tracker objects (Linear, Jira, …) via any CLI/connector/MCP/API.
-- Messages to Slack, email, webhooks, or external services.
-- CI/CD config, secrets, or branch-protection changes.
-- Mutating cloud/deploy/db/payment/DNS/monitoring/infra providers (`aws`,
-  `gcloud`, `kubectl`, `terraform`, `pulumi`, `sst`, `vercel`, `supabase`,
-  `stripe`, `fly`, `railway`) — create/update/delete/deploy/migrate/promote/
-  reindex/secret-change or touching staging/prod data.
-- Migrations, backfills, imports, reindexes, seed loads, or data-repair against
-  any non-local environment.
+- creating/editing/merging/closing/reviewing PRs, issues, releases, repositories,
+  or other mutating `gh api` calls;
+- mutating tracker objects or sending Slack, email, webhook, or other external
+  messages;
+- changing CI/CD configuration, secrets, or branch protection;
+- mutating cloud, deployment, database, payment, DNS, monitoring, or other
+  provider state, including migrations, backfills, imports, reindexes, seeds,
+  repairs, deploys, and promotions outside a local disposable environment.
 
 Operating rules:
 
-- One explicit in-session approval ("yes"/"approved"/"go ahead"/"open the PR"/
-  any natural equivalent) authorizes the action; then state the exact command and
-  run it (stating it IS the announcement, not a second ask). One approval covers
-  that action AND its natural sub-steps: a PR includes applying the labels you
-  showed + posting a comment that was part of the plan; an issue includes its
-  labels — one approval, not three. Re-ask only if the command materially
-  diverges — a different repo/target, broader scope, an unstated mutation, or a
-  body/label/comment the operator has not seen. "ok"/silence is not yes.
-- **Isolated-worktree bootstrap is preauthorized.** In a newly created,
-  task-specific git worktree, before substantive work: if the worktree lacks
-  `AGENTS.local.md` but the source checkout has one, copy it into the worktree
-  root, read it, and never stage it. Then announce and run the repository's
-  existing immutable lockfile install without asking again: for example,
-  `pnpm install --frozen-lockfile`, `npm ci`, `yarn install --immutable`,
-  `bun install --frozen-lockfile`, or the exact repo-documented equivalent.
-  This applies only when the dependency manifests and lockfile already match
-  the worktree's checked-out commit. Confirm afterward that the command did not
-  modify them. It does not authorize adding/upgrading/removing packages, a
-  non-immutable install, global installation, or installing/changing the package
-  manager or toolchain; those still require fresh approval.
-- For destructive local-data commands, state the exact store/volume/worktree/
-  cache/container target and whether data loss is expected before asking.
-- For provider/db mutations, prefer a read-only check or dry-run first when
-  supported; a successful dry-run does not authorize the real mutation.
-- If a pre-commit hook or CI check fails, never bypass with `--no-verify` or
-  similar — stop and report.
-- If unsure whether an action belongs here, default to asking.
+- Natural approval language such as “yes,” “approved,” “go ahead,” or “open the
+  PR” authorizes the stated action and its shown natural substeps. Re-ask only
+  when the repo/target, scope, side effect, body/label/comment, provider, input,
+  or cap materially changes. “ok” or silence is not approval.
+- State the exact target and command before destructive local-data or provider
+  work. Prefer read-only checks/dry-runs first; they do not authorize mutation.
+- Never bypass a failed hook or CI check.
+- If uncertain whether an action is gated, ask.
 
-## Startup Routing
+### Isolated-worktree bootstrap (preauthorized)
 
-Pick one path; switch if the session changes.
+In a new task-specific worktree, if `AGENTS.local.md` exists in the source
+checkout but not the worktree, copy it to the worktree root, read it, and never
+stage it. Then announce and run the repo's existing immutable install (`pnpm
+install --frozen-lockfile`, `npm ci`, `yarn install --immutable`, or documented
+equivalent) without asking again, only when manifests and lockfile already match
+the checked-out commit. Confirm they remain unchanged. This does not authorize
+dependency/toolchain changes, non-immutable/global installs, or package-manager
+installation.
 
-Use the least process that fully covers the changed risk. **Fast mode** applies
-when the requested outcome is already clear, the change is narrow/localized,
-no architecture or product decision remains, no canonical outer-gate risk
-surface is touched, and one focused verification path can falsify it. Fast mode
-skips formal `spec` / `explore`, not implementation review: implement directly,
-run targeted verification, and use the normal inner review loop. If choosing a
-heavier path, name the concrete disqualifying risk; "more review might help" is
-not one. Do not activate `spec` or `explore` from a casual status, options, or
-explanation question — those formal skills require explicit invocation or an
-explicit request for their named workflow.
+## Choose the least sufficient workflow
 
-**A) Implement an existing work item** (ticket/issue/bug/explicit task):
-1. Read the work item + linked PR/context; read the nearest repo/subtree shim for
-   touched files. Reopen any named spec after compaction/resume and before
-   handoff; compaction never broadens scope or authority.
-2. Restate goal, non-goals, acceptance criteria, verification; name in-scope
-   files and risky/out-of-scope areas.
-3. `git status` before branching/editing; never discard unowned changes.
-4. Spot-check the spec's load-bearing source claims (cited file:line wiring
-   points, referenced symbols) against the tree; if a path moved or the code
-   contradicts an assumption, surface it and adjust scope — don't code against a
-   stale claim.
-5. Switch to the team-standard branch when edits are expected; implement
-   minimally.
-6. Select + run tiered verification (Verification Tiers; commands from the shim)
-   and report routing.
-7. Hand off per Implementation Completion Handoff; patch findings + rerun per the
-   Review Loop.
-8. Open/update PR or push only when authorized; on PR open keep review evidence
-   local per PR Handoff.
+Use one route and switch only if the task changes.
 
-**B) Plan work** (feature shaping, final-spec prep, task splitting, unclear
-scope): read product/docs/code context; run a Domain Pass when
-terminology/lifecycle/cross-boundary behavior changes; produce a reviewable spec
-(self-contained scope, non-goals, acceptance criteria, exact verification
-commands, labels/branch when relevant, any approval-gated work). After the inner
-spec-review loop converges, apply HANDOFF.md's compact-spec off-ramp; run the
-outer spec gate automatically when the plan does not qualify. No code changes
-unless explicitly asked.
+### Fast implementation
 
-**C) Review a PR or diff:** per `REVIEW_RUBRIC.md`.
+Use when the outcome is clear, the change is narrow/local, no architecture or
+product decision remains, no canonical outer-gate risk surface is touched, and
+one focused proof can falsify it. Skip formal `spec`/`explore`; implement,
+verify proportionally, and use the normal inner review. A heavier route must name
+the disqualifying risk—“more review might help” is not one.
 
-**D) Docs/architecture/pattern maintenance:** read only docs in scope; keep them
-aligned with actual commands, runtime versions, and contracts.
+### Normal implementation
 
-## Kickoff Templates
+1. Read the work item, linked context/spec, and nearest instructions. Restate
+   goal, non-goals, acceptance criteria, scope, and verification; re-open a
+   named spec after compaction.
+2. Inspect `git status` before branching or editing. Spot-check load-bearing
+   source claims and adjust stale assumptions rather than coding against them.
+3. Use the repo-standard branch, implement minimally, and document any real
+   behavior/setup/architecture impact.
+4. Run risk-selected verification, then hand off through the Review Loop below.
+5. Commit, push, or mutate external state only within the approval boundary.
 
-Canonical kickoff prompts live one-per-file in `~/.agents/workflow/kickoffs/`;
-each handoff skill reads only its own. `planner-directive.md` is shared —
-appended to the spec reviews.
+### Formal planning
 
-**Fidelity rule:** paste the matching `kickoffs/*.md` template verbatim with
-placeholders filled — do not paraphrase, restructure, or invent your own shape;
-it is load-bearing for downstream agents. If you cannot read it, or the kickoff
-you received looks incomplete, say so and ask the operator rather than guessing.
+Use `spec` only when the operator explicitly invokes it or asks for a formal
+implementation-ready plan. Use `explore` only when explicitly invoked for an
+architectural options pass. Casual questions, status requests, and ordinary
+option discussions stay serial and do not start either workflow.
 
-## Work Item Model
+A formal spec is self-contained: goal/non-goals, evidence-grounded scope,
+testable acceptance criteria, exact verification, approval-gated work, and a
+proportionate Task. Follow the inner spec-review loop and HANDOFF.md's current
+outer-spec routing. Planning does not authorize code or tracker mutation.
 
-- **Task** — default PR-sized implementation unit. Default: one Task → one branch
-  → one PR.
+### Review
 
-Plan the broader destination when needed, but keep the current Task
-proportionate: one independently reviewable outcome and risk boundary that
-leaves a valid state if later work never lands. Split only when concerns can be
-reviewed or proven independently; keep them together when splitting would
-create an invalid intermediate state or shape-only ceremony. Downstream Tasks
-may be sketched, but re-ground them against merged predecessors before
-implementation.
+- Own implementation: `implreview` / `implrereview`, then any required
+  `outerreview` per `~/.agents/workflow/HANDOFF.md`.
+- Coworker PR: `prreview`.
+- Reviewer judgment and verdicts: `~/.agents/workflow/REVIEW_RUBRIC.md`.
 
-## Docs Impact Check
+## Work-item model
 
-Every implementation makes an explicit docs-impact decision before review
-handoff. Does the change affect user-visible behavior or product terminology;
-setup/build/local-iteration commands; verification gates, coverage policy, or
-manual-QA expectations; architecture boundaries, module ownership, or route/path
-maps; board/firmware/simulator/network/API contracts; or release/privacy/
-distribution evidence?
+Default to one independently reviewable Task, branch, and PR. Map a broader
+destination when useful, but fully specify only the next risk boundary. Every
+slice must remain valid if later work never lands. Split independently provable
+risks; keep together work whose split creates an invalid intermediate state or
+shape-only ceremony. Re-ground downstream Tasks after predecessors merge.
 
-- If yes: update the owning tracked doc in the SAME PR — prefer the established
-  authority over a new doc (ADRs only for hard-to-reverse, surprising,
-  real-trade-off decisions) — and include a `## Docs impact` PR-body section
-  naming what changed.
-- If no: record that decision in the review handoff, but omit docs impact from
-  the PR body entirely.
+## Domain pass
 
-## Planning Artifact Cleanup
+Before final-spec promotion, run a domain pass when work changes a core noun,
+lifecycle/state meaning, user-facing terminology, module/service boundary, or a
+cross-app/provider/device contract. Record canonical terms and real unresolved
+decisions; create an ADR only for hard-to-reverse, surprising tradeoffs. Skip
+isolated fixes, visual polish, small refactors, and stable dependency work.
 
-When the operator says an issue or PR landed, clean local planning artifacts
-before moving on — the full sequence lives in `~/.agents/workflow/PLANS.md`
-("Artifact cleanup on land").
+## Documentation impact
 
-## Implementation Completion Handoff
+Every implementation decides whether it changes user-visible behavior or terms;
+setup/build/local iteration; verification/manual QA; architecture/ownership;
+API/device/provider contracts; or release/privacy/distribution evidence.
 
-When finishing an implementation, hand off for review: a brief summary +
-verification results, then spawn exactly one fresh-context reviewer (Review
-Kickoff) and announce the handoff (what + range), unless the entire diff
-qualifies for the documentation-only off-ramp in `~/.agents/workflow/HANDOFF.md`.
-No second inner reviewer unless the operator explicitly asks this session.
-Mechanics — sequencing, freshness, the independence seal, re-review reuse, the
-automated Claude outer gate, and the ritual→skill index — live in
-`~/.agents/workflow/HANDOFF.md`.
+- If yes, update the existing owning doc in the same change and include a
+  `## Docs impact` PR-body section.
+- If no, record that in the review handoff and omit the PR-body section.
 
-Review floor — every implementation gets ≥1 inner review unless the entire diff
-qualifies for the narrow documentation-only self-check in HANDOFF.md. Nothing
-reaches a PR without either an APPROVED inner review or that recorded off-ramp.
-The risk-triggered outer gate is REQUIRED only by HANDOFF.md "Outer-gate
-requirements"; otherwise it is skipped automatically unless the operator asks
-for one. The implementer states `outer gate: required | skipped — <why>` and
-launches required gates autonomously after inner convergence.
+Planning lifecycle and cleanup are owned by `~/.agents/workflow/PLANS.md`.
 
-## PR Handoff
+## Verification tiers
 
-When the operator asks to open/update a PR, make the review record available for
-handoff without making it default public PR content — keep prompts, verdicts,
-findings + resolutions, post-patch verification, deferred follow-ups, and
-residual risk / Tier-4 gates local per PLANS.md.
-
-Compose the PR body in the `kickoffs/pr-body.md` shape, which owns the section
-order, closing-ref rules, review-summary policy, and teammate-readable language
-for PR titles, bodies, and public comments. Determine labels from the source
-issue + local policy: carry over labels still describing the diff, omit stale
-ones, state the final list. All externally visible GitHub mutations follow the
-Destructive Action Policy.
-
-## Domain Pass
-
-Run before final-spec promotion / tracker publication when work introduces or
-overloads a core noun, changes lifecycle or state meaning, crosses
-app/service/provider/device boundaries, affects user-facing terminology, creates
-a new module/service boundary, or is high-risk/multi-step. Output: canonical
-terms; avoided synonyms (when important); unresolved decisions; an ADR/decision
-record only if the decision is hard to reverse, surprising, and a real trade-off.
-Skip for isolated bug fixes, visual polish, small refactors, and dependency
-maintenance with stable terminology.
-
-## Verification Tiers
-
-- **Tier 1 - Loop**: smallest local checks proving changed behavior, such as a
-  focused unit/component test, story/play test, lint/typecheck for the touched
-  package, or a narrow manual repro.
-- **Tier 2 - Patch**: targeted reruns after review findings or non-trivial
-  patches.
-- **Tier 3 - Gate**: broader repo or surface verification before final/PR, such
-  as affected lint/typecheck/test, coverage-producing suites, build, boundary,
-  contract, e2e-smoke, full e2e, or other repo-provided PR-parity gates selected
-  for the changed surface.
-- **Tier 4 - Operator**: manual, hardware, live-provider, destructive,
-  local-data-reset, expensive, or environment-sensitive checks that need an
-  operator-prepared environment or fresh approval.
+- **Tier 1 — Loop:** smallest local proof of changed behavior.
+- **Tier 2 — Patch:** targeted reruns after non-trivial/review patches.
+- **Tier 3 — Gate:** affected repo/surface builds, lint, typecheck, tests,
+  contracts, boundaries, or e2e selected by changed risk.
+- **Tier 4 — Operator:** manual, hardware, live-provider, destructive, expensive,
+  or environment-sensitive proof requiring preparation or approval.
 
 Rules:
 
-- Prefer repo-provided verify commands. Before implementation + PR handoff, make
-  routing explicit: commands run; gates intentionally not selected (each with a
-  short reason — not a self-judged "only if a reviewer would ask"); gates blocked;
-  remaining Tier-4/operator work.
-- Verification validity follows causal impact, not commit freshness. Run every
-  repository-required gate for behavior the delta changes or could plausibly
-  affect once before first review. After it is green for the current
-  task/worktree, a new commit, review patch, final-tip handoff, or PR handoff
-  does not by itself invalidate it. Account for every intervening delta and
-  rerun only checks that could fail because of them; for composite gates, use
-  affected constituent checks through the repository's documented
-  standalone/public entry points. Rerun the full gate only when the delta spans
-  surfaces, touches shared/build/test infrastructure, makes prior evidence
-  suspect, or no valid broad evidence remains. If repository policy does not
-  require a rerun and you cannot name a plausible failure path from the delta to
-  the gate, do not rerun it. Report reused evidence with its evidence point and
-  causal rationale; never claim the composite command ran at the current tip
-  unless it did.
-- Choose broader local gates by changed surface + risk — not by whether they sit
-  in the default PR CI path. Don't treat optional/nightly/CI-only gates as
-  impossible to run locally; run them when task risk justifies and the env is
-  prepared.
-- When a change creates/moves/changes a shared package/module/export for another
-  app or package to consume, verification must prove the exact public import path
-  at that consumer's real build/runtime boundary — a sibling export, internal
-  import, or typecheck-only proof does not count unless that IS the consumer
-  boundary.
-- User-facing UI: run targeted automated coverage + visual/manual QA; apply
-  FRONTEND.md, and for visual-design work capture the surface to verify (per
-  FRONTEND.md's oracle). Escalate to e2e-smoke/full-e2e when the change touches
-  routing, auth, checkout, multi-page workflows, real-data integration, or a
-  regression-prone path.
-- API/schema/data/integration: consider contract tests, builds, local-stack
-  verification, and service e2e in addition to package tests.
-- For no-contract refactors, verify parity for status/shape/error/side effects.
-- Don't run live/provider/hardware checks from an agent unless the env is
-  explicitly prepared; if sandboxing blocks services/hardware/localhost/network,
-  stop after one diagnostic run and escalate or ask the operator for output.
-- Final summaries must name commands run and results.
+- Use repo verification routes and record commands run, gates intentionally not
+  selected with causal reasons, blocked gates, reused evidence, and remaining
+  Tier 4 work.
+- Run every required gate for behavior the delta changes or plausibly affects
+  once before first review. A new commit or handoff does not invalidate green
+  evidence by itself. Rerun only checks with a plausible failure path from the
+  intervening delta; rerun a full composite gate when shared/build/test
+  infrastructure changed, surfaces span broadly, prior evidence is suspect, or
+  no valid constituent proof remains.
+- Select risk-relevant optional/local gates even when CI does not require them.
+- A changed shared export must be proven through the exact consumer import at
+  its real build/runtime boundary; a sibling import or typecheck-only proof is
+  insufficient unless that is the actual consumer boundary.
+- UI changes need targeted automated proof plus rendered/manual QA; API/schema/
+  data/integration changes consider contracts, builds, local-stack, and e2e.
+- Do not run live/provider/hardware checks unless the environment is explicitly
+  prepared. After one blocked diagnostic, escalate rather than looping.
 
-## Review Loop
+## Review loop and completion
 
-- `REVIEW_RUBRIC.md` is the reviewer's manual (verdict semantics, stance, blocking
-  rules); `HANDOFF.md` owns outer-gate mechanics. Approve clean only after naming
-  the checks run.
-- Patch only listed findings unless scope expands; rerun targeted verification.
-- Extra review passes whenever post-review patches are non-trivial, touch
-  lifecycle/state/concurrency, change acceptance behavior, rewrite or add a
-  test for a test-quality finding, or the operator asks; skip only for a truly
-  trivial stated patch (e.g. a corrected import path in one file). This does
-  not reopen an inner reviewer for an outer-owned implementation or spec patch;
-  HANDOFF.md routes those patches directly back to the same outer reviewer.
+- Every implementation gets one fresh inner review unless the entire diff meets
+  HANDOFF.md's narrow non-normative documentation-only self-check. Workflow/
+  policy docs never qualify. No second inner reviewer unless the operator asks.
+- Patch listed findings only, rerun causally affected verification, and reuse the
+  same reviewer for re-review. Extra review is required for non-trivial patches,
+  lifecycle/state/concurrency, acceptance behavior, test-quality rewrites, or an
+  operator request; a truly trivial stated correction may keep approval.
+- Required outer gates are selected only by HANDOFF.md. Otherwise skip them
+  automatically unless requested. Outer-owned patches return directly to the
+  same outer reviewer, not through the inner loop.
+- Completion handoff: brief outcome and verification, docs-impact decision,
+  review result, `outer gate: required | skipped — <why>`, and remaining Tier 4.
+  HANDOFF.md owns kickoff fidelity, freshness, independence, and reuse.
 
-## Output Budget
+## PR handoff
 
-- Do not restate stable repo rules unless they matter.
-- Final summaries should include changed files, intent, verification, and known follow-ups.
+Keep review prompts, findings/resolutions, detailed verification, and residual
+risk local unless public context needs them. Compose the PR body from
+`kickoffs/pr-body.md`, use teammate-readable language, carry only accurate issue
+labels, and follow the approval boundary for every GitHub mutation.
 
-## Local Repo Facts Contract
+## Output budget
 
-Each local repo shim defines only facts the kernel cannot know: stack, package
-manager, repo layout, branch/PR/ticket conventions, verification commands by
-tier, manual/hardware gates, sensitive files, pitfalls, subtree rules. Shims stay
-small and local-only unless the team wants them committed. Put durable domain
-vocabulary in `CONTEXT.md`, not in every agent instruction file.
+Do not restate stable rules unless they affect the task. Lead with outcome,
+readiness/blocker, and any decision. Final summaries name changed files, intent,
+verification, and known follow-ups; detailed receipts stay in their owner.
+
+## Local repo facts contract
+
+Local adapters contain only facts the kernel cannot know: stack/package manager,
+layout, branch/PR/ticket conventions, verification routes, manual/hardware
+gates, sensitive files, and non-obvious pitfalls. Put durable vocabulary in the
+repo's context/glossary and detailed procedures in their owning docs; route to
+them instead of copying them into the adapter.

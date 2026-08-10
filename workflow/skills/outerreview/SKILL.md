@@ -1,18 +1,10 @@
 ---
 name: outerreview
-description: Run the independent outer-gate second review of the operator's OWN
-  implementation, in a fresh conversation in the other app/model or a fresh
-  Claude CLI session launched by the implementer, after the
-  implementer session's review + re-review loop has converged. Self-populates
-  the Review Kickoff from the work-item folder and the live git range (never
-  from a pasted prompt), deliberately ignores prior reviewer findings, performs
-  the review itself in this conversation per
-  ~/.agents/workflow/REVIEW_RUBRIC.md, and returns the strict verdict +
-  verified-clean record to the calling implementation session or operator. Use
-  when the operator says /outerreview, "second review this branch", or names a
-  work item or repo and asks for the outer-gate review, or asks the same outer
-  reviewer to re-review patches from its verdict. Not for coworker PRs (that is
-  prreview) and not for the implementer session's own loop (implreview).
+description: >-
+  Run the independent outer gate for the operator's own implementation after
+  inner convergence, including same-session re-review of its patches. Use for
+  /outerreview or a request for a second review of the operator's branch/work
+  item. Not for coworker PRs or the implementer's inner loop.
 ---
 
 # outerreview
