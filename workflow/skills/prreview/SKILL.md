@@ -185,6 +185,9 @@ current comments, and PR context. Calibration may change framing or action only
 with explicit evidence-based reconciliation; it may not hide a confirmed blocker
 or required-proof gap.
 
+Use local adapters to operate safely and locate tracked owners, not as
+author-facing authority unless the repository or team has adopted the rule.
+
 Return, in order:
 
 1. the one-screen Action Brief from `calibrate-review`;

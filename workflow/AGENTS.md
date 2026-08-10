@@ -104,6 +104,11 @@ Shared or externally visible state:
 
 Operating rules:
 
+- These boundaries govern actions performed by agents. They do not, by
+  themselves, create implementation requirements or review findings; missing
+  code-level enforcement is actionable only when the work item, tracked
+  repository/team policy, or a concrete defect on a supported path independently
+  requires it.
 - Read-only public web search, ordinary public-page lookup, and official
   documentation research are distinct from live source probes, authenticated
   traffic, API/provider traffic, paid calls, and external mutations; they remain
