@@ -13,9 +13,9 @@ Enforce these forcing functions ON TOP of Routing A:
 - Shape and scope control: apply the kernel's Minimum-sufficient shape rule
   before investing in a material mechanism. Simplify or reuse and continue when
   the outcome and approved contracts remain intact; return to the operator or
-  planning task only when the correction changes approved scope, substantive
-  design, a contract, or acceptance behavior. Before handoff, remove or disclose
-  work that cannot be traced to the ask/spec.
+  planning task only when the correction changes approved scope, an
+  operator-owned direction, a contract, or acceptance behavior. Before handoff,
+  remove or disclose work that cannot be traced to the ask/spec.
 - Surface-tied verification: if the diff touches a surface the repo's verification
   doc names a gate for, that gate is REQUIRED — "Tier 1 sufficient" is not a valid
   final-candidate record. Run it before the first implementation review; after a
