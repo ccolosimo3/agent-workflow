@@ -81,8 +81,10 @@ Thoroughness has a stopping point. Once a behavior is protected, another test fo
 adds maintenance cost, not protection. Cover every distinct behavior and failure
 mode **once**, at the **lowest-cost boundary that honestly proves it** — then stop.
 
-- **One mechanism, one proof.** When several flows share a mechanism, prove it
-  end-to-end once; assert the other call sites *fire* it at the seam level.
+- **Shared policy, distinct boundaries.** Test a shared input or policy matrix
+  exhaustively once at its canonical owner. Each consumer retains the smallest
+  proof for every distinct outcome, failure timing, side effect, persisted
+  state, contract, version, environment, concurrency, or lifecycle condition.
 - **Match weight to what only that test can prove.** Reserve heavy real-client /
   integration / native tests for behavior you can *only* prove that way — cache
   isolation, persistence reload, a cross-boundary race, a native event→store path.
@@ -91,9 +93,9 @@ mode **once**, at the **lowest-cost boundary that honestly proves it** — then 
 - **Test what *this* change changed.** Don't back-fill exhaustive coverage of
   pre-existing untested behavior; note the gap as a follow-up instead of inflating
   the diff.
-- **Redundancy check.** Before adding a test: would it go red for a regression no
-  existing test already catches? If another test already fails for that bug, drop or
-  merge.
+- **Redundancy check.** Before adding a test: does a named retained automated
+  test catch the same defect at an equally or more faithful boundary under the
+  same relevant conditions? If yes, drop or merge it.
 - **Brittleness is a cost on the ledger.** Big mock surfaces (deferred promises,
   multi-step UI, native-module mocks, fake timers) false-fail on unrelated
   refactors. Fewer, well-placed heavy tests beat a wall of them.
@@ -112,8 +114,9 @@ distinct behaviors — each exactly once, at the right altitude.
 A test can be a 10-second-check **PASS** and still not be worth shipping. Give each
 new/changed test a disposition:
 
-- **ship** — protects an ongoing regression surface this change introduced or
-  touched (the default for real behavior tests).
+- **ship** — protects a distinct ongoing regression this change introduced or
+  touched at the lowest-cost honest boundary, and no retained automated test
+  already catches the same defect under the same relevant conditions.
 - **trim** — valid but over-weight (heavy harness/dependency for trivial logic) or
   brittle; lighten it to the lowest boundary that proves the behavior.
 - **redundant-with-`<test>`** — an existing/other test already goes RED for this
@@ -126,10 +129,15 @@ new/changed test a disposition:
   expected cleanup, not a non-`ship` disposition.
 
 The implementer pockets clear one-off proofs, ships `ship` tests, and records
-`obsolete-assertion-cleanup` when the removal rule applies. For any other
-non-`ship` disposition, surface it with a recommendation and let the **operator**
-make the final include/exclude call — don't silently delete a working test. (This
-is worth, not weakness; it is independent of whether the test is a quality FAIL.)
+`obsolete-assertion-cleanup` when the removal rule applies. For a test case first
+introduced in the current work item, the implementer may merge or remove a clear
+`trim` or `redundant-with-<test>` case when the named retained automated test
+catches the same regression at an equally or more faithful boundary. This never
+authorizes weakening pre-existing tests, setup, fixtures, required checks, or
+distinct risk coverage. Surface any uncertainty or other non-`ship` disposition
+with a recommendation and let the **operator** make the final include/exclude
+call. (This is worth, not weakness; it is independent of whether the test is a
+quality FAIL.)
 
 ### Right-sizing agent output & coverage-gate interaction (hard rules)
 

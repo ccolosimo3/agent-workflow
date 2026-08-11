@@ -16,9 +16,17 @@ detailed procedures.
 
 ## Universal quality floor
 
-- Prefer the simplest complete, repo-conventional solution. Added complexity
-  must trace to a current requirement, observed failure, or established pattern;
-  defer hypothetical future needs.
+- **Minimum-sufficient shape.** Prefer the simplest complete,
+  repo-conventional shape. Before a plan becomes review-ready and again before
+  implementation commits to a materially larger shape, compare it with the
+  nearest complete repo pattern, if one exists, using the intended outcome,
+  non-goals, and irreducible correctness/safety constraints. Judge added
+  responsibilities, persistent state/artifacts, operator steps, and reuse—not
+  line count; anything materially beyond that shape must serve a current
+  requirement, observed failure, established pattern, or second real consumer.
+  Otherwise simplify and continue autonomously; a larger design is valid when
+  those constraints require it or it demonstrably reduces operational
+  complexity.
 - Preserve public contracts unless the work item changes them. Do not modify
   unrelated files or discard unowned work.
 - Treat untrusted object data as `unknown` until narrowed or parsed; after
@@ -92,10 +100,20 @@ Shared or externally visible state:
   repairs, deploys, and promotions. Only the repo-documented disposable DB test
   harness exception above is preauthorized;
 - running a paid model/API call or paid live probe unless the current request
-  explicitly authorizes that exact provider, input scope, and cap.
+  explicitly authorizes that exact provider, input scope, and cap, or the call
+  is covered by the canonical outer-review exception below.
 
 Operating rules:
 
+- These boundaries govern actions performed by agents. They do not, by
+  themselves, create implementation requirements or review findings; missing
+  code-level enforcement is actionable only when the work item, tracked
+  repository/team policy, or a concrete defect on a supported path independently
+  requires it.
+- One `HANDOFF.md`-required or operator-requested `outerreview` /
+  `outerspecreview` and its same-session re-reviews are preauthorized; do not
+  request separate paid-call approval. Extra, duplicate, or early reviews and
+  reviewer-triggered paid activity remain gated.
 - Read-only public web search, ordinary public-page lookup, and official
   documentation research are distinct from live source probes, authenticated
   traffic, API/provider traffic, paid calls, and external mutations; they remain

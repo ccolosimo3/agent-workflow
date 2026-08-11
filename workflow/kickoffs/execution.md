@@ -10,14 +10,12 @@ it), the Review Loop, and PR Handoff (PR body in the locked shape below, labels)
 
 Enforce these forcing functions ON TOP of Routing A:
 
-- Scope control: before adding a material mechanism not named by the work item
-  (public abstraction, dependency/tool, configuration or persisted state,
-  fallback/retry/recovery/compatibility path, or cross-package change), name the
-  current requirement, observed failure, or established repo pattern requiring
-  it. If it changes scope, contracts, acceptance behavior, or proof strength,
-  stop at a clean checkpoint and return to the operator/planning task. Before
-  handoff, compare the diff to the ask/spec and remove or disclose anything that
-  cannot be traced back. Do not future-proof for hypothetical needs.
+- Shape and scope control: apply the kernel's Minimum-sufficient shape rule
+  before investing in a material mechanism. Simplify or reuse and continue when
+  the outcome and approved contracts remain intact; return to the operator or
+  planning task only when the correction changes approved scope, an
+  operator-owned direction, a contract, or acceptance behavior. Before handoff,
+  remove or disclose work that cannot be traced to the ask/spec.
 - Surface-tied verification: if the diff touches a surface the repo's verification
   doc names a gate for, that gate is REQUIRED — "Tier 1 sufficient" is not a valid
   final-candidate record. Run it before the first implementation review; after a

@@ -6,6 +6,10 @@ and re-review reuse; this file owns only CLI profiles, flags, launch, and resume
 
 ## Shared contract
 
+A `HANDOFF.md`-required or operator-requested outer gate and its same-session
+re-reviews are preauthorized; do not request separate paid-call approval. Other
+paid activity remains governed by `AGENTS.md`.
+
 Require Claude Code 2.1.219+ and map supported profiles exactly:
 
 - **Opus 5 `high`** → `--model claude-opus-5 --effort high`

@@ -98,5 +98,5 @@ app:
 > Identify the loaded portable kernel and list the private workflow skills you
 > can discover. Do not modify any files.
 
-Then invoke `/plain` or `/plan-next` in an appropriate project. Filesystem
+Then invoke `/bro` or `/plan-next` in an appropriate project. Filesystem
 verification proves the links; this smoke test proves app discovery.
