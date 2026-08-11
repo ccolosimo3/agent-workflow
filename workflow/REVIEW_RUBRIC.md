@@ -165,8 +165,9 @@ When coverage is removed, confirm equivalent durable proof remains.
 
 Apply `~/.agents/workflow/TESTING.md`'s anti-patterns, 10-second/durable-value
 check, and independent inclusion axis. Preserve operator routing for every
-non-`ship` disposition and use `[decision-required]` when durable authority or
-inclusion is ambiguous; never silently delete a working test.
+non-`ship` disposition except its narrow same-work-item `trim` / `redundant-with`
+off-ramp, and use `[decision-required]` when durable authority or inclusion is
+ambiguous; never silently delete pre-existing coverage.
 
 ## Surface-specific test bars (ACTIONABLE if a bar is unmet)
 
@@ -266,10 +267,13 @@ definitions in `~/.agents/workflow/TESTING.md`
 ("Inclusion: should this test ship?"). Removing only an assertion proven obsolete
 by TESTING.md's removal rule is recorded as `obsolete-assertion-cleanup`; it is
 expected cleanup, not a non-`ship` disposition. Any other disposition that is not
-`ship` requires an exception row and is a `[decision-required]` finding
-(low/medium, NOT a quality FAIL) for the OPERATOR to settle. If durable authority
-is ambiguous, use `[decision-required]` rather than defaulting to deletion. Never
-silently delete a working test.
+`ship` requires an exception row. A clear `trim` or `redundant-with` case first
+introduced in the current work item does not require operator direction when the
+row names a retained automated test that catches the same regression at an
+equally or more faithful boundary. Every other non-`ship` case is a
+`[decision-required]` finding (low/medium, NOT a quality FAIL) for the OPERATOR to
+settle. If durable authority is ambiguous, use `[decision-required]` rather than
+defaulting to deletion. Never silently weaken pre-existing coverage.
 
 3. Overall verdict: APPROVED or ACTIONABLE (cannot be APPROVED while line 2 is FAIL,
    while a Required-investigation step was skipped, or while an unresolved
