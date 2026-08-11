@@ -22,8 +22,12 @@ detailed procedures.
   nearest complete repo pattern, if one exists, using the intended outcome,
   non-goals, and irreducible correctness/safety constraints. Judge added
   responsibilities, persistent state/artifacts, operator steps, and reuse—not
-  line count; anything materially beyond that shape must serve a current
-  requirement, observed failure, established pattern, or second real consumer.
+  line count; anything materially beyond that shape must trace to the operator's
+  stated outcome, a tracked requirement, an observed failure, an established
+  pattern, or a second real consumer. A planner-authored invariant is not
+  independent authority: before adding durable state or recovery to avoid an
+  exceptional retry or manual fallback, compare the cost of handling that
+  exception through the existing path.
   Otherwise simplify and continue autonomously; a larger design is valid when
   those constraints require it or it demonstrably reduces operational
   complexity.
