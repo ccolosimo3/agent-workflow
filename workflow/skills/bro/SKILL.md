@@ -1,9 +1,8 @@
 ---
 name: bro
 description: Restate the last response in plain, high-level human language — no
-  jargon, no internal term-of-art names. ONLY when the operator explicitly
-  invokes it (/bro, "bro it down", "say that plainly", "restate that simply",
-  or "what's the gist"). Never auto-invoke or offer it unprompted.
+  jargon or internal term-of-art names. Use only when the operator invokes
+  /bro. Never auto-invoke or offer it unprompted.
 disable-model-invocation: true
 ---
 
