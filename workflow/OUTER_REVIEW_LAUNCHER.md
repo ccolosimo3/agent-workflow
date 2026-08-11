@@ -6,10 +6,9 @@ and re-review reuse; this file owns only CLI profiles, flags, launch, and resume
 
 ## Shared contract
 
-A canonical outer gate selected by `HANDOFF.md` or directly requested by the
-operator is preauthorized for one Claude session and its same-session re-reviews;
-do not request separate paid-call approval. This does not authorize extra or
-duplicate reviews or paid provider/evaluation/live-probe calls from the reviewer.
+A `HANDOFF.md`-required or operator-requested outer gate and its same-session
+re-reviews are preauthorized; do not request separate paid-call approval. Other
+paid activity remains governed by `AGENTS.md`.
 
 Require Claude Code 2.1.219+ and map supported profiles exactly:
 

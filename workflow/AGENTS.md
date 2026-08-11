@@ -110,11 +110,10 @@ Operating rules:
   code-level enforcement is actionable only when the work item, tracked
   repository/team policy, or a concrete defect on a supported path independently
   requires it.
-- One canonical `outerreview` or `outerspecreview` required by `HANDOFF.md` or
-  directly requested by the operator, plus its same-session re-reviews, is
-  preauthorized through `OUTER_REVIEW_LAUNCHER.md`; do not request separate
-  paid-call approval. Extra, duplicate, or early reviews and reviewer-triggered
-  paid provider/evaluation/live-probe calls remain gated.
+- One `HANDOFF.md`-required or operator-requested `outerreview` /
+  `outerspecreview` and its same-session re-reviews are preauthorized; do not
+  request separate paid-call approval. Extra, duplicate, or early reviews and
+  reviewer-triggered paid activity remain gated.
 - Read-only public web search, ordinary public-page lookup, and official
   documentation research are distinct from live source probes, authenticated
   traffic, API/provider traffic, paid calls, and external mutations; they remain
