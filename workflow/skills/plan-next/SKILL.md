@@ -70,7 +70,9 @@ planning conversation rather than presenting a finished specification.
    details only when they carry an approved substantive decision or a real safety
    or dependency constraint; within those bounds, let the task own safe local
    investigation, implementation, ordinary recovery, and proportionate
-   verification/review.
+   verification/review. When the task begins a named workflow, explicitly invoke
+   its skill in the kickoff (`$explore`, `$spec`, etc.); naming the phase alone
+   does not activate an opt-in skill.
    A gated action pauses only that action, not subsequent safe local work. Name
    this session as the active main planner so the task returns shared-state
    reconciliation instead of editing `INDEX.md` or umbrella state itself. Honor
