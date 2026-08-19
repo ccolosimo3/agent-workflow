@@ -271,9 +271,9 @@ risk local unless public context needs them. Compose the PR body from
 `kickoffs/pr-body.md`, use teammate-readable language, carry only accurate issue
 labels, and follow the approval boundary for every GitHub mutation.
 Team-facing PR and issue text must stand alone: replace private plan codes,
-workflow tiers, review-loop labels, local paths, and agent shorthand with plain-
-language behavior, verification, risks, and next steps; keep identifiers only
-when they are shared repository or tracker references.
+workflow tiers, review-loop labels, local paths, and agent shorthand with
+plain-language behavior, verification, risks, and next steps; keep identifiers
+only when they are shared repository or tracker references.
 
 ## Output budget
 
