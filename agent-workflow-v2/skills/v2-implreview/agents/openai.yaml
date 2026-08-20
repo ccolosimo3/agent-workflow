@@ -1,0 +1,6 @@
+interface:
+  display_name: "V2 Implementation Review"
+  short_description: "Run one fresh inner review of a V2 implementation"
+  default_prompt: "Use $v2-implreview to review this completed V2 implementation."
+policy:
+  allow_implicit_invocation: false

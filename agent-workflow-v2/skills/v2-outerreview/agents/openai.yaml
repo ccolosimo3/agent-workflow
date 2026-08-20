@@ -1,0 +1,6 @@
+interface:
+  display_name: "V2 Outer Review"
+  short_description: "Run the independent outer V2 implementation gate"
+  default_prompt: "Use $v2-outerreview to review this converged V2 implementation independently."
+policy:
+  allow_implicit_invocation: false

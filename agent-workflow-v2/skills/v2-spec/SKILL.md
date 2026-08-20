@@ -32,8 +32,8 @@ Write one compact living spec at the repository's declared plan location. Do not
 implement code, mutate trackers, or promote the plan merely because drafting is
 complete.
 
-Before entering review, resolve the V2 spec-review entrypoint, review authority,
-and canonical payload. Until Slice C provides all three, report “review phase not
-implemented,” name the missing component, and emit neither a review task nor a
-kickoff. Once available, the inner review loop may proceed under `WORKFLOW.md`
-without an ordinary status pause.
+Before entering review, resolve `v2-specreview`, `../../references/REVIEW.md`,
+`../../references/TESTING.md`, and the Spec initial payload they require. Stop
+with “review phase not implemented” if any is unavailable. Otherwise invoke
+`v2-specreview` and let its inner and risk-selected outer loops complete without
+an ordinary status pause.

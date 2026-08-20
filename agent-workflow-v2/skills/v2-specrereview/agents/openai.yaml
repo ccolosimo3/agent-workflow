@@ -1,0 +1,6 @@
+interface:
+  display_name: "V2 Spec Re-review"
+  short_description: "Reuse the V2 spec reviewer after revisions"
+  default_prompt: "Use $v2-specrereview to verify the revisions with the original spec reviewer."
+policy:
+  allow_implicit_invocation: false

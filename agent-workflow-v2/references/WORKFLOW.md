@@ -53,7 +53,9 @@ by a material decision, or its bounded retry limit is exhausted.
   rollout/cutover; a material unproven bet; or an operator request.
 - **Outer implementation review:** the same consequential surfaces, an inner
   finding that establishes a production-correctness, public/contract,
-  persistence, security, or data-loss defect, or an operator request.
+  persistence, security, or data-loss defect; a test-quality finding that
+  requires a production behavior or contract patch because that behavior lacked
+  proof; or an operator request.
 
 ## Planner ownership and delegation
 

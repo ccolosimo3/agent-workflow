@@ -1,6 +1,6 @@
 # Agent Workflow V2 Implementation Spec
 
-Status: Slices A and B are implemented and inner-reviewed on `workflow-v2`.
+Status: Slices A through C are implemented and inner-reviewed on `workflow-v2`.
 V1 remains canonical and active.
 
 ## Goal
@@ -169,10 +169,57 @@ Verification:
 
 ### Slice C — Review and testing authorities
 
-Port `TESTING.md`, `REVIEW_RUBRIC.md`, and the shared handoff state machine before
-adding thin inner/outer spec and implementation review skills. Keep the full
-review rubric intact for the first pilot. Re-review aliases reuse the original
-reviewer rather than owning copied policy.
+Add canonical `TESTING.md`, `REVIEW.md`, and conditional `FRONTEND.md`
+authorities, then thin inner/outer spec and implementation review skills. Keep
+every V1 defect-detection method for the first pilot while consolidating repeated
+kickoff and output ceremony. Re-review entrypoints reuse the original reviewer
+rather than owning copied policy.
+
+Acceptance criteria:
+
+1. `TESTING.md` preserves durable-value, real-boundary, observable-outcome,
+   redundancy, one-off-proof, inclusion, and anti-shape-test rules with
+   exception-only reporting.
+2. `REVIEW.md` preserves epistemic independence, original-intent and
+   proportionality checks, full-file/diff investigation, contract propagation,
+   information-loss, CI execution-context, behavior-proof, migration/persistence,
+   external-claim, candidate-admission, severity, and decision-routing methods.
+3. Spec review covers grounding, scope/non-goals, approach tradeoffs, valid
+   slicing, implementation latitude, acceptance, dependencies, risk, proof,
+   approvals, and conditional UI strategy. Implementation review covers every
+   changed file, affected consumer, assertion, and applicable surface bar.
+4. One shared review state machine owns fresh inner review, same-reviewer
+   re-review, the narrow documentation off-ramp, positive outer-gate selection,
+   first-pass outer independence, outer-patch routing, bounded spec convergence,
+   freshness, and compact semantic handoffs.
+5. Review output remains strict `APPROVED` / `ACTIONABLE`, but clean acceptance
+   criteria and tests are grouped rather than printed as full tables. No defect
+   method or test-quality judgment is removed.
+6. `v2-specreview` completes the formal spec phase autonomously after drafting;
+   it pauses only for a material operator decision or the bounded retry cap.
+   `v2-spec` no longer reports the review phase unavailable.
+7. Initial inner review uses one fresh reviewer. Spec and implementation
+   re-review reuse that reviewer; outer findings return only to the same outer
+   reviewer. A fresh fallback is permitted only when resumption is unavailable.
+8. Outer spec and implementation reviews are fresh, holistic, read-only gates
+   selected only by `WORKFLOW.md` risk or operator request. Their first pass does
+   not read prior findings or verdicts.
+9. All six review skills are explicit-only, load their canonical authorities,
+   and fail closed when required authority, payload, range, prior findings, or
+   host review capability is unavailable.
+10. `FRONTEND.md` is loaded only for UI scope and preserves the design-system
+    oracle, changed-state, accessibility, layout-stability, and proportionate
+    render/interaction proof.
+
+Verification:
+
+- official skill validation for all six review skills and all existing V2 skills;
+- plugin validation, reference resolution, unfinished-scaffold scan, and
+  `git diff --check`;
+- targeted policy assertions for phase routing, one-reviewer/reuse semantics,
+  independence, outer risk selection, conditional frontend loading, and compact
+  output;
+- one fresh inner review with same-reviewer re-review for findings.
 
 ### Slice D — Implementation and completion
 
