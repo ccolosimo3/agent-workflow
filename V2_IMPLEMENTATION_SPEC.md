@@ -1,7 +1,8 @@
 # Agent Workflow V2 Implementation Spec
 
-Status: Slices A through D are implemented and inner-reviewed on `workflow-v2`.
-V1 remains canonical and active; V2 is ready for isolated pilot design.
+Status: Slices A through D and the first Fast-route pilot are complete on
+`workflow-v2`. V1 remains canonical and active; V2 remains inactive pending a
+broader pilot and operator approval.
 
 ## Goal
 

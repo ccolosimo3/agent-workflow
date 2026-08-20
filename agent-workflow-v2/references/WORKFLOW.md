@@ -51,13 +51,11 @@ by a material decision, or its bounded retry limit is exhausted.
   API, or schema change; persisted lifecycle, migration, or data-loss risk;
   auth/security/identity; provider/dependency/toolchain strategy; cross-system
   rollout/cutover; a material unproven bet; or an operator request.
-- **Outer implementation review:** a diff touching a contract/API/schema,
-  persisted lifecycle/migration/data-loss surface, auth/security/identity,
-  provider boundary, dependency/toolchain, or cross-system rollout/cutover; an
-  inner finding that establishes a production-correctness, public/contract,
-  persistence, security, or data-loss defect; a test-quality finding that
-  requires a production behavior or contract patch because that behavior lacked
-  proof; or an operator request.
+- **Outer implementation review:** a diff or inner-review patch touching a
+  contract/API/schema, persisted lifecycle/migration/data-loss surface,
+  auth/security/identity, provider boundary, dependency/toolchain, or
+  cross-system rollout/cutover; an inner finding showing that one of those
+  surfaces lacked real behavior proof; or an operator request.
 
 ## Planner ownership and delegation
 
