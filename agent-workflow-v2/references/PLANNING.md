@@ -61,6 +61,10 @@ Add only these facts to `WORKFLOW.md`'s shared handoff envelope:
   and exact approvals or prepared environment available.
 - **Spec:** the raw outcome, known non-goals and decisions, current evidence and
   nearest owners/patterns, unresolved operator choice, and intended Task boundary.
+- **Implementation:** selected route; converged spec or Fast ask; current Task,
+  acceptance and non-goals; nearest owners/patterns; checkout/base ownership;
+  named main-planner identity or none; approval state; verification routes; and
+  remaining operator proof.
 
 ## Phase outputs
 

@@ -1,7 +1,7 @@
 # Agent Workflow V2 Implementation Spec
 
-Status: Slices A through C are implemented and inner-reviewed on `workflow-v2`.
-V1 remains canonical and active.
+Status: Slices A through D are implemented and inner-reviewed on `workflow-v2`.
+V1 remains canonical and active; V2 is ready for isolated pilot design.
 
 ## Goal
 
@@ -223,9 +223,58 @@ Verification:
 
 ### Slice D — Implementation and completion
 
-Add the implementation entrypoint, minimum-shape recheck, causal verification,
-docs-impact decision, compact receipt, and completion routing. Outer-owned
-patches return directly to the same outer reviewer.
+Add `v2-implement`, the implementation phase payload, and a portable PR-body
+template. The skill owns only phase execution; kernel, testing, review, and
+routing authorities remain canonical.
+
+Acceptance criteria:
+
+1. `v2-implement` is explicit-only and loads `KERNEL.md`, `WORKFLOW.md`,
+   `PLANNING.md`, `TESTING.md`, and `REVIEW.md`, plus `FRONTEND.md` only for UI
+   scope. Missing authority or input fails closed.
+2. A standard/assured implementation requires a converged spec and any selected
+   outer-spec gate. Fast work may start from a clear operator ask and behavioral
+   acceptance without manufacturing a spec.
+3. Preflight confirms checkout ownership, branch/base, `git status`, applicable
+   repository instructions, current acceptance/non-goals, nearest owners and
+   patterns, approval state, and the exact verification surface.
+4. Before investing in a material mechanism and again before review, the
+   implementer applies the minimum-sufficient shape check, removes unearned
+   machinery, and returns to planning only when simplification would change
+   observable behavior, scope, authority, safety, or the Task boundary.
+5. Implementation stays inside the selected Task, preserves public contracts
+   unless authorized, updates owning docs when behavior/setup/architecture or
+   operator workflow changes, and returns follow-up facts rather than expanding
+   scope.
+6. Verification follows repository routes and `TESTING.md`: smallest falsifying
+   loop proof first, all risk-selected affected gates once before review, and
+   causal reruns only after patches. Results are tied to the exact revision;
+   blocked/unselected/operator proof is explicit.
+7. Disposable one-off proofs remain outside the permanent suite. Temporary
+   fixtures, tools, and generated residue are removed before review.
+8. The implementation is committed before review without amend, history rewrite,
+   push, or external mutation. `v2-implreview` then runs automatically; its
+   selected outer gate and same-reviewer loops remain owned by the review layer.
+9. Completion emits one concise receipt headed by the human-readable work item,
+   with outcome, spec/source, branch/checkout, exact tip/range, verification,
+   reused evidence, blocked/unselected proof, documentation impact, review state,
+   outer routing, and remaining operator proof. It contains no findings ledger.
+10. The PR template uses teammate-readable outcome-first language, required
+    Summary and Verification sections, and only content-bearing optional sections;
+    it excludes private workflow vocabulary, local paths, and review ceremony.
+11. A worker updates only its own work-item artifact and returns reconciliation
+    facts to a named main planner. Pushes, PR/tracker operations, and other external
+    mutations remain separately approval-gated.
+
+Verification:
+
+- official validation for every V2 skill and the plugin;
+- reference resolution, unfinished-scaffold scan, `git diff --check`, and
+  Slice D scope check;
+- targeted assertions for fast versus spec-backed entry, shape recheck, causal
+  verification, automatic review, compact receipt, planner reconciliation, and
+  external-mutation gating;
+- one fresh inner review with same-reviewer re-review for findings.
 
 ### Slice E — Optional extensions and pilots
 

@@ -13,6 +13,8 @@ phase and outer-gate selection; `FRONTEND.md` is conditional on UI scope.
    for `[decision-required]` items. Causally affected verification runs, then the
    original reviewer receives the findings verbatim, mapped resolutions, reviewed
    revision, current tip or artifact, and invalidated evidence.
+   Implementation patches are committed as new commits without amend or history
+   rewrite before re-review; spec revisions identify the exact artifact revision.
 3. Re-review is narrow: verify each resolution and inspect its delta for
    regressions. Reuse the same reviewer; use a fresh fallback only when the host
    cannot resume it, and disclose the lost context. Spec convergence stops after
