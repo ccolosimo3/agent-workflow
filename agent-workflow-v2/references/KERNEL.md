@@ -28,6 +28,11 @@ Fresh current-session operator approval for the exact action is required before:
 - paid, authenticated, live-provider, or prepared-environment activity not
   explicitly authorized with its provider, input scope, and cap.
 
+Ordinary public web search, public-page lookup, and official-documentation
+research remain allowed unless the operator says local-only/no-web; they are not
+live-source probes, authenticated API/provider traffic, paid calls, or
+prepared-environment activity.
+
 Natural approval authorizes the stated action and its shown natural substeps.
 Re-ask only if the target, scope, side effect, provider, input, or cap materially
 changes. Ambiguous assent or silence is not approval. Before asking, state the

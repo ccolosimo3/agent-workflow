@@ -70,7 +70,8 @@ Outer review is positively selected for hard-to-reverse architecture/product
 policy; contract/API/schema; persisted lifecycle/migration/data-loss;
 auth/security/identity; provider/dependency/toolchain; cross-system rollout;
 material unproven bets; an inner finding establishing a material defect on those
-surfaces; or an operator request.
+surfaces or another production-correctness defect; a test-quality finding
+requiring a production behavior/contract patch; or an operator request.
 
 ## Shared handoff envelope
 

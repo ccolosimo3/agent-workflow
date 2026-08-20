@@ -54,8 +54,10 @@ by a material decision, or its bounded retry limit is exhausted.
 - **Outer implementation review:** a diff or inner-review patch touching a
   contract/API/schema, persisted lifecycle/migration/data-loss surface,
   auth/security/identity, provider boundary, dependency/toolchain, or
-  cross-system rollout/cutover; an inner finding showing that one of those
-  surfaces lacked real behavior proof; or an operator request.
+  cross-system rollout/cutover; an inner finding establishing a
+  production-correctness, public/contract, persistence, security, or data-loss
+  defect; a test-quality finding requiring a production behavior/contract patch
+  because that behavior was not previously proven; or an operator request.
 
 ## Planner ownership and delegation
 
