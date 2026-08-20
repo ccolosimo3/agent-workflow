@@ -61,9 +61,10 @@ this work item's own artifact with delivered facts. When a named main planner is
 active, leave shared program/index state to it and retain the planner's return
 identity; otherwise perform the repository's normal state update now. Commit every
 in-scope change as real commit(s) without amend, squash, rewrite, push, or external
-mutation, and disclose any preserved unowned working-tree change. Then invoke
-`v2-implreview` automatically and follow its same-reviewer inner and risk-selected
-outer loops. Outer-owned patches return only to the same outer reviewer.
+mutation, and disclose any preserved unowned working-tree change. Apply
+`REVIEW.md`'s documentation-only off-ramp; otherwise invoke `v2-implreview`
+automatically and follow its same-reviewer inner and risk-selected outer loops.
+Outer-owned patches return only to the same outer reviewer.
 
 ## Complete
 
