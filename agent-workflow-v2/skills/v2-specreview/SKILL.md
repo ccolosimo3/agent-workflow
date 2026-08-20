@@ -18,9 +18,11 @@ then read the repository instructions and relevant adapter.
 Confirm the spec is review-ready and build `REVIEW.md`'s Spec initial payload
 from the artifact and filesystem. Missing material remains visible; do not invent
 it. Hand the payload and authority paths to exactly one fresh reviewer using the
-host's isolated review capability. The planning context does not certify its own
-spec. If no fresh review capability exists, report that limitation and do not
-claim a verdict.
+host's isolated review capability. Before handoff, resolve every relative
+authority reference to a path the fresh context can open, pass those resolved
+paths, and confirm their reachability. The planning context does not certify its
+own spec. An unreachable authority or unavailable fresh review capability means
+no verdict; report the limitation.
 
 The reviewer applies `REVIEW.md`'s Spec method and Output contract to the entire
 artifact and returns strict `APPROVED` or `ACTIONABLE`.

@@ -20,9 +20,11 @@ item, diff, verification evidence, and filesystem. Do not invent missing results
 or expand scope to justify the diff.
 
 Hand the payload and authority paths to exactly one fresh reviewer through the
-host's isolated review capability. If fresh review is unavailable, report that
-limitation and do not claim convergence. The reviewer applies `REVIEW.md`'s
-Implementation method and Output contract.
+host's isolated review capability. Before handoff, resolve every relative
+authority reference to a path the fresh context can open, pass those resolved
+paths, and confirm their reachability. An unreachable authority or unavailable
+fresh review capability means no verdict; report the limitation. The reviewer
+applies `REVIEW.md`'s Implementation method and Output contract.
 
 ## Convergence
 

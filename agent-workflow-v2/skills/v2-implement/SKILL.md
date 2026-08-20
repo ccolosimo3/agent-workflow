@@ -52,8 +52,8 @@ Use the repository's verification routes and `TESTING.md`. Run the smallest
 falsifying proof during the loop and every risk-selected affected gate once before
 review. Tie results to the exact revision. After a patch, rerun only evidence the
 delta can invalidate; use a broad gate when shared infrastructure changed or no
-valid constituent proof remains. Pocket one-off proofs and report unavailable,
-unselected, or operator-only checks honestly.
+valid constituent proof remains. Keep one-off proofs outside the permanent suite
+and report unavailable, unselected, or operator-only checks honestly.
 
 Before review, repeat the minimum-sufficient check, remove unearned machinery and
 temporary residue, inspect the full diff, and decide documentation impact. Update

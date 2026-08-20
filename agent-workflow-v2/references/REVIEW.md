@@ -85,7 +85,10 @@ Before a verdict:
 4. Treat every summary, acceptance list, risk statement, verification receipt,
    and prior claim as something to confirm or refute.
 5. Resolve current external or version-sensitive claims against the repository's
-   pinned version and official primary sources; do not judge them from memory.
+   pinned version and official primary sources; do not judge them from memory. If
+   the host lacks public-research capability, disclose it and record the dated
+   claim as non-blocking residual proof unless repository evidence or acceptance
+   independently requires a hold.
 
 An implementation reviewer also opens every changed assertion, including the base
 version of deletions, and traces every changed public or cross-boundary contract
