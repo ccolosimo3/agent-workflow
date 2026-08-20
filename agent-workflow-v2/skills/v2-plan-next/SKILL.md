@@ -14,8 +14,9 @@ Before substantive work, read these files completely relative to this skill:
 
 - `../../references/KERNEL.md`
 - `../../references/WORKFLOW.md`
+- `../../references/PLANNING.md`
 
-If either file cannot be resolved, stop and report that V2 is incomplete. Do not
+If any file cannot be resolved, stop and report that V2 is incomplete. Do not
 fall back to partial V1 or improvised semantics.
 
 Then read the repository's instruction chain and any declared repo adapter. Repo
@@ -42,12 +43,13 @@ Follow `WORKFLOW.md` for delegation, phase eligibility, operator selection, and
 handoff semantics. Model/provider choice belongs to the operator or host adapter;
 do not hardcode provider-specific names here.
 
-Before dispatch, resolve the selected V2 phase entrypoint, its canonical
-authority, and its phase payload. If any are unavailable, stop with “phase not
-implemented,” name the missing component, and do not create a task or emit a
-phase kickoff. Do not launch implementation or certification under the
-planning-only Slice A semantics, and do not claim dispatch, isolation, or model
-selection the host did not provide.
+Before dispatch, resolve the selected V2 phase entrypoint and its canonical
+authority. Build the handoff from `WORKFLOW.md`'s shared envelope plus the
+selected input payload in `PLANNING.md`. If any are unavailable, stop with
+“phase not implemented,” name the missing component, and do not create a task or
+emit a phase kickoff. Do not launch implementation or certification until their
+V2 entrypoints and authorities exist, and do not claim dispatch, isolation, or
+model selection the host did not provide.
 
 ## Continuation
 
@@ -57,8 +59,9 @@ not pause an active program; incorporate it and continue safe authorized plannin
 
 ## Handoff
 
-Prepare the shared envelope and phase payload from `WORKFLOW.md`. Preserve
-approval state under `KERNEL.md`; never imply permission that was not granted.
+Prepare the shared envelope from `WORKFLOW.md` and the phase payload from
+`PLANNING.md`. Preserve approval state under `KERNEL.md`; never imply permission
+that was not granted.
 
 Keep operator updates concise: current outcome, completed work, in-flight work,
 real blocker/decision, safety or spend state, and next action.

@@ -18,10 +18,12 @@ plan
   -> complete
 ```
 
-The graph is not a mandatory pipeline. The operator selects movement between
-phases. Once a review phase is selected, its same-reviewer correction loop
-continues autonomously until approved, blocked by a material decision, or its
-bounded retry limit is exhausted.
+The graph is not a mandatory pipeline. The operator selects each substantive
+phase: explore, spike, spec, or implementation. Selecting formal spec or
+implementation includes its required inner review as that phase's completion
+gate; do not pause merely to ask whether to start it. Once a review gate starts,
+its same-reviewer correction loop continues autonomously until approved, blocked
+by a material decision, or its bounded retry limit is exhausted.
 
 ## Routes
 
@@ -55,14 +57,16 @@ bounded retry limit is exhausted.
 
 ## Planner ownership and delegation
 
-When a named main planner is active, it owns shared program scope, sequencing,
-dependencies, and operator-facing decisions. Otherwise, the task completing work
-owns the normal state update.
+When a named main planner is active, it alone owns shared program/index state,
+scope, sequencing, dependencies, and operator-facing decisions. Workers update
+only their work-item artifact and return reconciliation facts. Otherwise, the
+task completing work owns the normal state update.
 
 Plan directly by default. Delegate only a bounded evidence question with a named
 stop condition. One helper is the default; a second requires a separate question
 or adversarial purpose. Nested delegation is prohibited. Evidence helpers do not
-implement, mutate shared state, or issue certifying verdicts.
+implement, mutate shared state, recommend a phase transition or owning-phase
+outcome, or issue its `GO` / `NO-GO` / review verdict.
 
 Initial implementations and certifying reviews use fresh contexts when the host
 supports them; re-review reuses the original reviewer. If the host cannot provide

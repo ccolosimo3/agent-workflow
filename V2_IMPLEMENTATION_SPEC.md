@@ -1,6 +1,7 @@
 # Agent Workflow V2 Implementation Spec
 
-Status: implementation-ready for Slice A only. V1 remains canonical and active.
+Status: Slices A and B are implemented and inner-reviewed on `workflow-v2`.
+V1 remains canonical and active.
 
 ## Goal
 
@@ -132,9 +133,39 @@ Verification:
 
 ### Slice B — Planning evidence phases
 
-Add thin `v2-explore`, `v2-spike`, and `v2-spec` skills plus the canonical
-planning authority. Preserve compact durable outputs once a formal phase is
-invoked, but do not activate those phases from casual questions.
+Add `references/PLANNING.md` plus thin `v2-explore`, `v2-spike`, and `v2-spec`
+skills. Preserve compact durable outputs once a formal phase is invoked, but do
+not activate those phases from casual questions.
+
+Acceptance criteria:
+
+1. All three skills load `KERNEL.md`, `WORKFLOW.md`, and `PLANNING.md` and fail
+   closed if an authority is unavailable.
+2. Positive triggers make a phase eligible; only the operator selects movement
+   into a new formal phase.
+3. Explore compares credible options and returns a recommendation without
+   automatically starting a spike or spec.
+4. Spike proves one named bet at its riskiest safe boundary and returns `GO`,
+   `NO-GO`, or `BLOCKED` without becoming production implementation.
+5. Spec defines one independently reviewable Task with grounded acceptance and
+   verification, preserves implementation latitude, and runs the
+   minimum-sufficient shape check before declaring review-ready.
+6. Until Slice C provides V2 spec-review entrypoints and payloads, `v2-spec`
+   reports “review phase not implemented” and does not promote, dispatch, or emit
+   a review kickoff.
+7. Formal artifacts use the repository's declared plan location; casual planning
+   creates no artifact. The living document is a decision/evidence index rather
+   than a transcript.
+8. Delegated evidence work follows the shared bounded, no-nesting rule and cannot
+   issue a phase recommendation or verdict on the owning agent's behalf.
+
+Verification:
+
+- official skill validation for all three skills;
+- plugin validation;
+- relative-reference resolution and unfinished-scaffold scan;
+- `git diff --check` and Slice B scope check;
+- one fresh inner review, with same-reviewer re-review for any findings.
 
 ### Slice C — Review and testing authorities
 
