@@ -50,9 +50,10 @@ other untracked local configuration.
 - A planner-authored invariant is not independent authority. Before adding
   durable state or recovery for an exceptional retry or manual fallback, compare
   it with handling that exception through the existing path.
-- Preserve public contracts unless the work explicitly changes them. Prefer an
-  existing owner over a parallel abstraction; keep task-local code limited to
-  task-specific behavior.
+- Change only behavior the work explicitly targets; preserve other observed
+  behavior and public contracts unless changing them is necessary to satisfy the
+  ask. Prefer an existing owner over a parallel abstraction; keep task-local code
+  limited to task-specific behavior.
 - Treat untrusted object data as `unknown` until parsed or narrowed. Preserve
   named stable contracts after validation; open records are for genuinely dynamic
   keys.
