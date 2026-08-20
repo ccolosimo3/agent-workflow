@@ -154,8 +154,10 @@ Task, minimum-sufficient shape, and implementation latitude. Acceptance must be
 behaviorally testable and cover failures/edges; verification must exercise the
 real operation boundary and distinguish automated from operator/live proof.
 Confirm approval boundaries, documentation impact, and any conditional UI design
-strategy, plus tracker metadata when filing is an intended downstream action. A
-reviewer identifies direction choices but does not make them.
+strategy, plus tracker metadata when filing is an intended downstream action.
+Tracker- or public-facing text must omit private/local-only material and use
+project language rather than private workflow shorthand. A reviewer identifies
+direction choices but does not make them.
 
 ### Implementation method
 

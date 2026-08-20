@@ -30,8 +30,8 @@ applies `REVIEW.md`'s Implementation method and Output contract.
 
 Patch every autonomous finding within scope, rerun only causally affected proof,
 and use `v2-implrereview` with the original reviewer. Stop for a
-`[decision-required]` item or a patch that changes product behavior, scope,
-authority, safety, or the Task boundary.
+`[decision-required]` item or a patch that changes intended product behavior,
+scope, authority, safety, or the Task boundary.
 
 After approval, apply `WORKFLOW.md`'s outer-implementation selector. Launch
 `v2-outerreview` in a fresh context when selected or requested; otherwise record

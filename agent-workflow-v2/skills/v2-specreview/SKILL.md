@@ -30,10 +30,10 @@ artifact and returns strict `APPROVED` or `ACTIONABLE`.
 ## Convergence
 
 On `ACTIONABLE`, patch grounded mechanical findings autonomously. Stop for a
-`[decision-required]` item or any correction that changes product behavior,
-scope, policy, authority, safety, or the selected Task boundary. Otherwise run
-`v2-specrereview` with the original reviewer. Continue under `REVIEW.md` until
-approved or the three-cycle cap is reached.
+`[decision-required]` item or any correction that changes intended product
+behavior, scope, policy, authority, safety, or the selected Task boundary.
+Otherwise run `v2-specrereview` with the original reviewer. Continue under
+`REVIEW.md` until approved or the three-cycle cap is reached.
 
 After approval, apply `WORKFLOW.md`'s outer-spec selector. Launch
 `v2-outerspecreview` in a fresh context when selected or requested; otherwise

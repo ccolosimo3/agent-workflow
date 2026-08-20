@@ -33,6 +33,10 @@ research remain allowed unless the operator says local-only/no-web; they are not
 live-source probes, authenticated API/provider traffic, paid calls, or
 prepared-environment activity.
 
+One risk-selected or operator-requested certifying review and its same-session
+re-reviews are authorized substeps of the selected phase. Extra, duplicate, or
+early reviews and reviewer-triggered paid activity remain gated.
+
 Natural approval authorizes the stated action and its shown natural substeps.
 Re-ask only if the target, scope, side effect, provider, input, or cap materially
 changes. Ambiguous assent or silence is not approval. Before asking, state the

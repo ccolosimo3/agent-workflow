@@ -20,9 +20,10 @@ context was created specifically as a fresh outer reviewer and contains no
 planning, implementation, or prior-review history. If that cannot be established,
 stop without a verdict and request fresh isolated dispatch. Preflight the live
 checkout read-only. Require a clean, committed, inner-converged candidate,
-determine the integration branch from repository instructions, and independently
-compute merge-base, live tip, and review range. Treat any receipt SHA or path as a
-claim and navigation hint, never range or checkout authority.
+confirmed by the caller's explicit assertion without reading prior findings or
+verdicts. Determine the integration branch from repository instructions and
+independently compute merge-base, live tip, and review range. Treat any receipt
+SHA or path as a claim and navigation hint, never range or checkout authority.
 
 Read the work item/spec and entire changed surface. Do not read prior findings,
 verdicts, review logs, or kickoff prompts. Build the Implementation initial
