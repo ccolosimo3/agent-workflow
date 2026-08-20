@@ -1,0 +1,18 @@
+{
+  "name": "agent-workflow-v2",
+  "version": "0.1.0",
+  "description": "An isolated beta of a portable, risk-proportionate coding-agent workflow, currently exposing its planning foundation.",
+  "author": {
+    "name": "Chris Colosimo"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Workflow V2",
+    "shortDescription": "Test the portable Workflow V2 planning foundation.",
+    "longDescription": "Agent Workflow V2 is an isolated beta. Its current slice provides portable planning, authority, minimum-sufficient design, and route-selection foundations; implementation and review entrypoints remain unavailable until their authorities are ported.",
+    "developerName": "Chris Colosimo",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Use the Agent Workflow V2 planning beta to choose and prepare the lightest sufficient route for this work."
+  }
+}

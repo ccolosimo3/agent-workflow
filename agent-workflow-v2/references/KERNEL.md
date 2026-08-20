@@ -1,0 +1,84 @@
+# Agent Workflow V2 Portable Kernel
+
+This is the normative runtime floor for V2 skills. Repo and host adapters may add
+facts or stricter limits; they cannot widen its authority, approval, independence,
+or review requirements.
+
+## Precedence and startup
+
+- Follow current-session operator instructions, organization/security/code-owner
+  policy, the nearest repository instructions, this kernel, then optional
+  preferences.
+- Read the repository's instruction chain before substantive work. Inspect the
+  exact checkout and `git status` before branching, editing, or dispatching work.
+- Preserve unowned changes. Never reset, discard, overwrite, or “clean up” work
+  outside the authorized scope.
+
+## Authority
+
+Read-only inspection and ordinary in-scope implementation steps are allowed.
+Fresh current-session operator approval for the exact action is required before:
+
+- destructive local operations, deletion outside stated scope, history rewrite,
+  force operations, or bypassing safeguards;
+- dependency, lockfile, toolchain, generated-artifact, or persistent-data changes
+  not explicitly requested or approved by the current-session operator;
+- pushes or externally visible mutations to repositories, trackers, messages,
+  releases, deployments, providers, databases, payments, or infrastructure;
+- paid, authenticated, live-provider, or prepared-environment activity not
+  explicitly authorized with its provider, input scope, and cap.
+
+Natural approval authorizes the stated action and its shown natural substeps.
+Re-ask only if the target, scope, side effect, provider, input, or cap materially
+changes. Ambiguous assent or silence is not approval. Before asking, state the
+exact action, target, and material side effects. When uncertain, ask. Never
+bypass a failed hook or policy check.
+
+Never commit secrets, credentials, private operator adapters, personal paths, or
+other untracked local configuration.
+
+## Minimum-sufficient quality
+
+- Prefer the simplest complete repository-conventional shape. Before a plan is
+  review-ready and again before implementation commits to a materially larger
+  shape, compare the intended outcome, non-goals, irreducible correctness/safety
+  constraints, nearest complete pattern, added responsibilities/state/artifacts,
+  operator steps, reuse, and proven consumers.
+- Added durable machinery must trace to a current requirement, observed failure,
+  established pattern, or second real consumer. A larger design remains correct
+  when those constraints require it or it reduces operational complexity.
+- A planner-authored invariant is not independent authority. Before adding
+  durable state or recovery for an exceptional retry or manual fallback, compare
+  it with handling that exception through the existing path.
+- Preserve public contracts unless the work explicitly changes them. Prefer an
+  existing owner over a parallel abstraction; keep task-local code limited to
+  task-specific behavior.
+- Treat untrusted object data as `unknown` until parsed or narrowed. Preserve
+  named stable contracts after validation; open records are for genuinely dynamic
+  keys.
+- Update owning documentation only when behavior, contracts, setup, architecture,
+  verification, or user/operator workflow changes.
+
+## Verification and review floor
+
+- Verify in proportion to changed risk at the smallest real operation boundary.
+  A useful test protects durable behavior and fails when its regression returns.
+- Reuse green evidence until a causal delta can invalidate it. Do not repeat broad
+  gates merely because a commit, handoff, or review occurred.
+- Every implementation receives one fresh inner review except a wholly
+  non-generated, non-normative documentation diff that changes no executable,
+  contract, setup, policy, architecture, verification, or operating behavior.
+  Workflow and policy documents never qualify for that off-ramp.
+- Findings return to the same reviewer after patching. Initial outer review is
+  fresh and independent when selected; its patches return to that same outer
+  reviewer.
+- Treat summaries, receipts, and prior verdicts as claims to validate. Never claim
+  verification, independence, or completion that the available host and evidence
+  do not establish.
+
+## Completion
+
+Report the outcome, changed behavior, verification actually run, intentionally
+unselected or blocked checks, documentation impact, review state, remaining
+operator proof, and any real decision. Keep detailed evidence in its owner rather
+than reprinting it by default.
