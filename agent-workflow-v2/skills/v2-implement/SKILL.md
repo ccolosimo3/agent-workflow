@@ -68,8 +68,9 @@ Outer-owned patches return only to the same outer reviewer.
 
 ## Complete
 
-After the final verdict, confirm the live tip and that no in-scope change remains
-uncommitted. Do not mutate the certified tip. Return shared index/program
+After review approval or a documentation-only off-ramp determination, confirm the
+live tip and that no in-scope change remains uncommitted. Do not mutate the
+certified tip. Return shared index/program
 reconciliation only when a named main planner is active; otherwise report that the
 normal state update is already included. Emit this compact record with real values
 and `none` for empty sections:
@@ -94,7 +95,7 @@ Not selected or blocked:
 - <check and reason, or none>
 
 Docs impact: <updated owner paths and effect, or none>
-Review: <inner verdict and pass count>
+Review: <inner verdict and pass count | skipped — documentation-only off-ramp>
 Outer gate: <approved | skipped — reason | blocked>
 Remaining operator proof: <exact check and owner, or none>
 ```
