@@ -32,8 +32,7 @@ Write one compact living spec at the repository's declared plan location. Do not
 implement code, mutate trackers, or promote the plan merely because drafting is
 complete.
 
-Before entering review, resolve `v2-specreview`, `../../references/REVIEW.md`,
-`../../references/TESTING.md`, and the Spec initial payload they require. Stop
-with “review phase not implemented” if any is unavailable. Otherwise invoke
-`v2-specreview` and let its inner and risk-selected outer loops complete without
-an ordinary status pause.
+Before review, resolve `v2-specreview`. If unavailable, report “review phase not
+implemented” without promotion or kickoff. Otherwise invoke it;
+`v2-specreview` owns authority resolution, payload construction, and review
+loops.

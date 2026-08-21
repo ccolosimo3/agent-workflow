@@ -130,11 +130,9 @@ construct the cheapest pair of inputs that collapse together and test the result
 
 ### Behavior and test proof
 
-Apply `TESTING.md` to every added, changed, deleted, or relaxed assertion. Name
-the durable regression and authority, observable outcome, real boundary, and
-whether restoring the regression makes the test fail. Confirm equivalent durable
-coverage remains after deletion. A shape assertion is supplemental only when the
-shape is contractual and behavioral or operator proof carries the outcome.
+Apply `TESTING.md` to every added, changed, deleted, or relaxed assertion;
+confirm equivalent durable proof remains after deletion. Shape assertions are
+supplemental only when contractual and paired with behavioral or operator proof.
 
 ### CI execution context
 

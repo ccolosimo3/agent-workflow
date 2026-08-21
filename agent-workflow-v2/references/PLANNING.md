@@ -32,11 +32,8 @@ real operation boundary.
 
 ## Minimum-sufficient shape
 
-Apply `KERNEL.md` before review-ready promotion. Compare the proposal with the
-nearest complete pattern using the outcome, non-goals, irreducible invariants,
-added responsibilities/state/artifacts, operator steps, reuse, and real
-consumers. A planner-authored invariant is not authority for speculative
-machinery.
+Before review-ready promotion, apply `KERNEL.md`'s minimum-sufficient check; it
+governs speculative machinery as well as plan shape.
 
 Architecture may describe the full destination while the current Task remains
 small. Do not confuse physical line count with design size; larger work is valid
