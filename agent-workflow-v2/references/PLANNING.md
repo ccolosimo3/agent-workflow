@@ -26,10 +26,10 @@ and unresolved decisions.
 
 Map the broader destination when it helps sequencing, but fully authorize only
 one independently reviewable risk boundary at a time. That Task must remain a
-valid state if later work never lands. When one Task accumulates multiple
-independently provable mechanisms or operational responsibilities, split or
-simplify before review-ready. Keep together work whose separation creates an
-invalid intermediate state or hides the real operation boundary.
+valid state if later work never lands. When one Task accumulates several
+materially independent risks or operational responsibilities, split or simplify
+before review-ready. Keep together work whose separation creates an invalid
+intermediate state or hides the real operation boundary.
 
 ## Minimum-sufficient shape
 
