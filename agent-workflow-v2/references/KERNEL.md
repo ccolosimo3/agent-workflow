@@ -53,6 +53,9 @@ other untracked local configuration.
   shape, compare the intended outcome, non-goals, irreducible correctness/safety
   constraints, nearest complete pattern, added responsibilities/state/artifacts,
   operator steps, reuse, and proven consumers.
+- Apply the same comparison to proof code. When a harness becomes materially
+  broader or owns more contract/lifecycle behavior than the product delta, stop
+  and reduce it to the smallest causal boundary using existing production owners.
 - Added durable machinery must trace to a current requirement, observed failure,
   established pattern, or second real consumer. A larger design remains correct
   when those constraints require it or it reduces operational complexity.

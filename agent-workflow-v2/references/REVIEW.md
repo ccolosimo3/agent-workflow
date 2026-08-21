@@ -133,6 +133,8 @@ construct the cheapest pair of inputs that collapse together and test the result
 Apply `TESTING.md` to every added, changed, deleted, or relaxed assertion;
 confirm equivalent durable proof remains after deletion. Shape assertions are
 supplemental only when contractual and paired with behavioral or operator proof.
+Do not accept a spec-authored equivalence as authority: validate its premise and
+the product regression each proof would catch at the minimum causal boundary.
 
 ### CI execution context
 

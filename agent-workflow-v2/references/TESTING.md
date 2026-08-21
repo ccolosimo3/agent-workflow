@@ -34,6 +34,12 @@ that honestly proves it. Keep a heavier test only for what the heavier boundary
 alone establishes, such as persistence reload, integration behavior,
 cross-boundary ordering, concurrency, lifecycle, or device behavior.
 
+Use canonical production owners and validators for behavior under test; do not
+recreate their contract, lifecycle, identity, or projection logic in a harness or
+oracle. For unrelated state whose setup behavior is not under test and whose
+relevant contract is only exact preservation, schema-valid deterministic fixtures
+are sufficient.
+
 - Before adding coverage, name any retained test that catches the same regression
   under the same relevant conditions. Merge or omit redundant proof.
 - Test what the change affects; do not backfill unrelated historical gaps into the
@@ -44,6 +50,11 @@ cross-boundary ordering, concurrency, lifecycle, or device behavior.
   a disposable proof or operator check, not a permanent test.
 - Coverage percentage is a constraint, never the behavioral target. If an
   enforced gate can be met only with a weak test, surface the conflict.
+
+After two local or CI failures on the same proof premise without evidence of a
+new product defect, stop patching the harness and return to the premise and
+minimum proof shape. CI confirms a diagnosed correction; it is not the iterative
+diagnosis loop.
 
 ## Inclusion disposition
 
@@ -75,7 +86,9 @@ exceptions—never print a clean row for every assertion.
   or accessible behavior. Load `FRONTEND.md` for visual, state, accessibility,
   and layout proof.
 - **CI workflow:** prove the job's execution context, ordering, and dependencies;
-  YAML parsing and isolated tests of the called script are not enough.
+  YAML parsing and isolated tests of the called script are not enough. At
+  CI-sensitive shell or command boundaries, label assertions and report the
+  observed mismatch so logs identify the failed contract.
 - **Unavailable real boundary:** record the exact operator/live/manual proof and
   owner rather than inventing weaker automation.
 
