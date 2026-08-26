@@ -284,6 +284,21 @@ Port `prreview` as a separate, deliberately thorough coworker-PR extension. Add
 optional host adapters only after the portable behavior works without them. Run
 frozen V1/V2 pilots before any activation or V1 retirement decision.
 
+### Selected guidance pilot — scientific bug investigation
+
+The first post-foundation treatment keeps `dbde89b` as the unchanged V2 control
+and changes only `v2-implement`'s behavior for diagnosis-heavy bug fixes. When the
+affected boundary is practical, the treatment observes the reported symptom before
+editing, confirms the causal mechanism with repository or runtime evidence, applies
+the smallest fix, and repeats the same observation. Unavailable exact reproduction
+is bounded and reported; it does not justify stalling or weak substitute automation.
+
+The pilot remains portable across Codex, Claude, Cursor, and OpenCode. It imports no
+pstack runtime, text, scripts, state, host routing, dependency, or external-action
+semantics. Existing approval boundaries remain unchanged. Cold-resume support and a
+wholesale pstack comparison are out of scope because neither serves the current
+one-agent-per-work-item operating model or an available controlled environment.
+
 ## Pilot and promotion
 
 Use identical frozen revisions, acceptance criteria, and available evidence for

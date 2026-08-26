@@ -37,6 +37,15 @@ Implement the smallest complete shape that satisfies acceptance, failures, and
 safety; do not add speculative recovery, compatibility, configuration, state, or
 abstractions.
 
+For a diagnosis-heavy bug fix, use an evidence-first loop when the affected
+boundary is practical: observe the reported symptom there before editing, narrow
+plausible causes, confirm the selected mechanism with repository or runtime
+evidence, then apply the smallest fix and repeat the same observation. Do not
+start with speculative fallback or guard code. If exact reproduction remains
+unavailable after the narrowest reasonable attempt, state why and use the
+strongest safe proxy plus the exact remaining real-boundary proof instead of
+stalling or inventing weak automation.
+
 A simpler repository-conventional mechanism may replace a planned mechanism when
 observable behavior and approved contracts remain intact. Return to planning only
 when a correction changes behavior, scope, authority, safety, or the Task's risk
