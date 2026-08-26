@@ -133,10 +133,10 @@ construct the cheapest pair of inputs that collapse together and test the result
 For each materially changed stateful surface, trace one realistic adverse state
 through every applicable retry, timeout/expiry, cleanup, fallback, recovery, and
 rollback transition at the real supported entry and operation boundary. Identify
-the invariant and its success/health/completion/reversion oracle; hold when a
-transition can report success or erase actionable evidence while that invariant
-remains false. Keep the trace internal unless it yields a finding or residual
-proof.
+the invariant and its success/health/completion/reversion oracle. Treat a
+transition that can report success or erase actionable evidence while that
+invariant remains false as a candidate under the normal admission and severity
+rules. Keep the trace internal unless it yields a finding or residual proof.
 
 ### Behavior and test proof
 
