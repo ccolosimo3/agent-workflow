@@ -128,6 +128,16 @@ input, state what distinctions the output preserves and discards. For each
 discarded distinction that can affect correctness, policy, or uniqueness,
 construct the cheapest pair of inputs that collapse together and test the result.
 
+### Closed-loop lifecycle
+
+For each materially changed stateful surface, trace one realistic adverse state
+through every applicable retry, timeout/expiry, cleanup, fallback, recovery, and
+rollback transition at the real supported entry and operation boundary. Identify
+the invariant and its success/health/completion/reversion oracle; hold when a
+transition can report success or erase actionable evidence while that invariant
+remains false. Keep the trace internal unless it yields a finding or residual
+proof.
+
 ### Behavior and test proof
 
 Apply `TESTING.md` to every added, changed, deleted, or relaxed assertion;
