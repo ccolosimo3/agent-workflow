@@ -1,0 +1,6 @@
+interface:
+  display_name: "TypeScript Engineering"
+  short_description: "Apply reliable TypeScript type and boundary design"
+  default_prompt: "Use $typescript-engineering to improve the TypeScript design in this task."
+policy:
+  allow_implicit_invocation: true

@@ -26,13 +26,20 @@ canonical review authority with human-facing calibration.
 
 - `references/` — portable kernel, workflow, planning, testing, and review
   authorities;
-- `skills/` — thin phase entrypoints;
+- `skills/` — explicit phase entrypoints plus compact, automatically selected
+  expert guidance for matching technical work;
 - `templates/` — user host and repository adapters plus PR-body shape;
 - `docs/SETUP.md` — installation, host configuration, and uninstall guidance.
+- `THIRD_PARTY_NOTICES.md` — attribution for adapted third-party guidance.
 
 Skills resolve shared files relative to this package. Keep one canonical local
 checkout and expose its skills through links or configured discovery paths rather
 than maintaining copied folders.
+
+The workflow phases remain explicit. The `typescript-engineering`,
+`technical-writing`, and `blast-radius` skills may be selected automatically
+when their narrow descriptions match; they inform the active task without
+selecting a phase, expanding scope, or creating an artifact.
 
 ## Start
 

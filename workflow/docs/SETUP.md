@@ -47,10 +47,12 @@ or command IDs. Any match blocks ordinary installation rather than replacing or
 ambiguously shadowing an active entrypoint; replacement requires the separately
 approved cutover path.
 
-Always register explicit-only phase entrypoints through the host's current
-official mechanism. In always-on mode, also register one persistent route to the
-central `references/KERNEL.md`. Preserve unrelated existing user instructions
-and confirm only the selected surfaces locally.
+Register explicit-only phase entrypoints and automatic expert-guidance skills
+through the host's current official mechanism. Expert guidance can inform an
+already-selected activity but cannot select a phase or create workflow
+artifacts. In always-on mode, also register one persistent route to the central
+`references/KERNEL.md`. Preserve unrelated existing user instructions and
+confirm only the selected surfaces locally.
 
 - **Codex:** link each package skill into `~/.agents/skills/`. In always-on mode,
   resolve `CODEX_HOME` and its active global instruction owner:
@@ -71,7 +73,9 @@ and confirm only the selected surfaces locally.
   path. Normal Desktop setup is **Customize → Plugins → Add Marketplace →
   Import from Disk**; select the V2 repository root, add `agent-workflow-v2` at
   user/personal scope, and set the variable once. The plugin supplies explicit
-  commands while disabling direct skill registration. In always-on mode, setup
+  phase commands while disabling direct skill registration. Link the package's
+  expert-guidance skills into `~/.agents/skills/` unless those exact canonical
+  links already exist through another selected host. In always-on mode, setup
   additionally renders the packaged kernel-rule template into the user's Cursor
   rules directory with the absolute package path; on-demand mode omits that
   rule. Check for the direct `cursor-agent` binary before using Cursor Desktop's
@@ -94,13 +98,16 @@ must resolve its canonical skill and shared authorities. Setup records the
 activation mode, each entrypoint scope, and any kernel owner, then verifies the
 selected surfaces before declaring a host ready.
 
-Every release skill is explicit-only through the selected host's supported
-control: Codex uses each skill's `agents/openai.yaml` policy; Claude Code sets
-each release ID to `user-invocable-only` in `skillOverrides`; Cursor exposes
-only the package's explicit command shims; and OpenCode uses
-`metadata.opencode/autoinvoke: false`. Setup must verify that state before
-declaring registration complete. Owning phases start required child phases by
-naming that entrypoint explicitly in the fresh task's initial prompt.
+Every workflow phase skill is explicit-only through the selected host's
+supported control: Codex uses each phase's `agents/openai.yaml` policy; Claude
+Code sets each phase ID to `user-invocable-only` in `skillOverrides`; Cursor uses
+the package's explicit command shims and the phase descriptions require operator
+selection; and OpenCode uses `metadata.opencode/autoinvoke: false`. The
+`typescript-engineering`, `technical-writing`, and `blast-radius` expert skills
+remain eligible for automatic selection under their narrow descriptions. Setup
+must verify both states before declaring registration complete. Owning phases
+start required child phases by naming that entrypoint explicitly in the fresh
+task's initial prompt.
 
 Desktop command discovery does not prove headless command expansion. For Cursor
 CLI automation, confirm the installed version's behavior or name the canonical

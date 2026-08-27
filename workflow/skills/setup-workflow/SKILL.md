@@ -55,8 +55,11 @@ the package and silently break its shared references.
    adapter. Never replace a skill outside the approved cutover. Installing a
    CLI, logging in, or running even a tiny paid smoke call is separate and
    requires explicit authorization.
-5. After approval, register the package's explicit-only phase entrypoints
-   through each selected host's supported mechanism. In always-on mode, also
+5. After approval, register the package's explicit-only phase entrypoints and
+   its automatic expert-guidance skills through each selected host's supported
+   mechanism. Expert guidance may inform work inside an already-selected
+   activity; it cannot select a workflow phase or create workflow artifacts. In
+   always-on mode, also
    register one persistent route to `KERNEL.md`: Codex's active global owner
    after `AGENTS.override.md` precedence, Claude Code's global `CLAUDE.md`
    import, a rendered user-level Cursor rule from the packaged template, or
@@ -64,11 +67,12 @@ the package and silently break its shared references.
    untouched. Preserve unrelated global instructions and block if always-on
    composition would shadow them or cannot be made safe. Preserve the packaged
    Codex and OpenCode invocation controls, set Claude Code `skillOverrides` to
-   `user-invocable-only`, and set Cursor's `WORKFLOW_ROOT` to the absolute package
-   path. Write
-   the adapter, then verify explicit-only entrypoints, shared-reference
-   reachability, and either the active persistent route or its absence without a
-   model call. Explain
+   `user-invocable-only` only for phase skills, and set Cursor's `WORKFLOW_ROOT`
+   to the absolute package path. Leave expert skills eligible for automatic
+   invocation according to their frontmatter and host policy. Write the adapter,
+   then verify explicit-only phase entrypoints, automatic expert-skill discovery,
+   shared-reference reachability, and either the active persistent route or its
+   absence without a model call. Explain
    that a fresh session is required to prove loaded behavior; any such smoke
    remains separately approval-gated.
 

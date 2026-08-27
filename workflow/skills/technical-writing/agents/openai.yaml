@@ -1,0 +1,6 @@
+interface:
+  display_name: "Technical Writing"
+  short_description: "Write clear, task-shaped engineering documentation"
+  default_prompt: "Use $technical-writing to make this engineering document clear and usable."
+policy:
+  allow_implicit_invocation: true
