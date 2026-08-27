@@ -44,13 +44,14 @@ Use the host's current official mechanism and confirm it locally:
   `stream-json`), with `--model`, `--effort`, and `--resume` when supported.
 - **Cursor:** register the package as a local Cursor plugin and configure its
   `WORKFLOW_ROOT` variable to the package's absolute path. Normal Desktop setup
-  is **Customize → Plugins → Add → From Local Repository**; select this package
-  and set the variable once. The plugin exposes explicit commands that load the
-  central skill bodies and disables direct skill registration. Check for the
-  direct `cursor-agent` binary before using Cursor Desktop's `cursor agent`
-  wrapper, which may install it; installation and login remain separately
-  approved. Headless runs use `cursor-agent --print --output-format json`;
-  confirm model options from the installed CLI.
+  is **Customize → Plugins → Add → From Local Repository**; select the V2
+  repository root, add `agent-workflow-v2`, and set the variable once. The
+  plugin exposes explicit commands that load the central skill bodies and
+  disables direct skill registration. Check for the direct `cursor-agent`
+  binary before using Cursor Desktop's `cursor agent` wrapper, which may install
+  it; installation and login remain separately approved. Headless runs use
+  `cursor-agent --print --output-format json`; confirm model options from the
+  installed CLI.
 - **OpenCode:** use the same `~/.agents/skills/` links, or register the package
   `skills/` directory in `opencode.json`. Non-interactive runs use `opencode run
   --format json`, with `--model`, `--variant`, and `--session` when supported.

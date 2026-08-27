@@ -1,0 +1,16 @@
+{
+  "name": "agent-workflow-v2-local",
+  "owner": {
+    "name": "Chris Colosimo"
+  },
+  "metadata": {
+    "description": "Local installation source for Agent Workflow V2."
+  },
+  "plugins": [
+    {
+      "name": "agent-workflow-v2",
+      "source": "agent-workflow-v2",
+      "description": "Explicit Cursor commands for the central Agent Workflow V2 package."
+    }
+  ]
+}
