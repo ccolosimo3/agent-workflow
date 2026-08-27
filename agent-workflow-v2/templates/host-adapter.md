@@ -14,6 +14,7 @@ Repeat this block for each enabled host.
 
 - Executable and version: `<command>` — `<version>`
 - Authentication/config check: `<non-secret status command and result>`
+- Persistent kernel: `<confirmed active owner and scope -> references/KERNEL.md>`
 - Skill discovery: `<confirmed link or configured path to the canonical package>`
 - Fresh context: `<supported launch method | unavailable>`
 - Resume: `<supported method | unavailable>`

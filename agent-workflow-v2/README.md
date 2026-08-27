@@ -43,8 +43,9 @@ than maintaining copied folders.
    outer-review behavior.
 4. Test discovery only in a clean isolated host home/profile with no matching
    skill IDs; otherwise invoke beta instructions by their package paths.
-5. Let setup verify discovery and shared references without a model call, then
-   add a short repository adapter from `templates/repo-adapter.md` if wanted.
+5. Let setup verify the persistent kernel, explicit phase discovery, and shared
+   references without a model call, then add a short repository adapter from
+   `templates/repo-adapter.md` if wanted.
 6. Open a new isolated session and invoke the selected skill explicitly.
 
 See [setup and uninstall](docs/SETUP.md) for host-specific details.

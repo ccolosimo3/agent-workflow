@@ -34,27 +34,46 @@ isolated host home/profile. Before writing, scan every selected host's discovery
 roots for all release skill or command IDs; any match stops beta registration
 rather than replacing or ambiguously shadowing an active entrypoint.
 
-Use the host's current official mechanism and confirm it locally:
+Register two surfaces through the host's current official mechanism: one
+persistent route to the central `references/KERNEL.md`, plus explicit-only phase
+entrypoints. Preserve unrelated existing user instructions and confirm both
+surfaces locally.
 
-- **Codex:** link each package skill into `~/.agents/skills/`. `codex exec
-  --json` provides JSONL;
-  `--model`, `--profile`, and `-c key=value` provide invocation overrides.
-- **Claude Code:** link the same package skills into `~/.claude/skills/`.
-  Non-interactive runs use `claude -p --output-format json` (or
-  `stream-json`), with `--model`, `--effort`, and `--resume` when supported.
-- **Cursor:** register the package as a local Cursor plugin and configure its
-  `WORKFLOW_ROOT` variable to the package's absolute path. Normal Desktop setup
-  is **Customize → Plugins → Add → From Local Repository**; select the V2
-  repository root, add `agent-workflow-v2`, and set the variable once. The
-  plugin exposes explicit commands that load the central skill bodies and
-  disables direct skill registration. Check for the direct `cursor-agent`
-  binary before using Cursor Desktop's `cursor agent` wrapper, which may install
-  it; installation and login remain separately approved. Headless runs use
-  `cursor-agent --print --output-format json`; confirm model options from the
-  installed CLI.
-- **OpenCode:** use the same `~/.agents/skills/` links, or register the package
-  `skills/` directory in `opencode.json`. Non-interactive runs use `opencode run
-  --format json`, with `--model`, `--variant`, and `--session` when supported.
+- **Codex:** resolve `CODEX_HOME` and its active global instruction owner:
+  non-empty `AGENTS.override.md` takes precedence over `AGENTS.md`. Point that
+  exact owner at the central kernel when V2 owns it, or add a thin instruction
+  to read the kernel without replacing unrelated guidance; block if it cannot
+  be composed safely. Link each package skill into `~/.agents/skills/`. `codex
+  exec --json` provides JSONL; `--model`, `--profile`, and `-c key=value`
+  provide invocation overrides.
+- **Claude Code:** import the central kernel from `~/.claude/CLAUDE.md`, or
+  point that file at the kernel when V2 owns it, then link the package skills
+  into `~/.claude/skills/`. Non-interactive runs use `claude -p --output-format
+  json` (or `stream-json`), with `--model`, `--effort`, and `--resume` when
+  supported.
+- **Cursor:** register the package as a local Cursor plugin at user/personal
+  scope and configure its `WORKFLOW_ROOT` variable to the package's absolute
+  path. Normal Desktop setup is **Customize → Plugins → Add → From Local
+  Repository**; select the V2 repository root, add `agent-workflow-v2`, confirm
+  user/personal scope, and set the variable once. The plugin supplies one
+  always-on kernel rule and explicit commands while disabling direct skill
+  registration. Check for the direct `cursor-agent` binary before using Cursor
+  Desktop's `cursor agent` wrapper, which may install it; installation and login
+  remain separately approved. Headless runs use `cursor-agent --print
+  --output-format json`; confirm model options from the installed CLI.
+- **OpenCode:** resolve its config directory (for example, with `opencode debug
+  paths`) and use that directory's `AGENTS.md`, normally
+  `~/.config/opencode/AGENTS.md`. Point that exact owner at the central kernel
+  when V2 owns it, or add a thin instruction to read the kernel without
+  replacing unrelated guidance. Use the same `~/.agents/skills/` links, or
+  register the package `skills/` directory in `opencode.json`. Non-interactive
+  runs use `opencode run --format json`, with `--model`, `--variant`, and
+  `--session` when supported.
+
+A fresh ordinary session must receive the kernel without invoking a phase. A
+phase command must additionally resolve its canonical skill and shared
+authorities. Setup records each exact kernel owner and install scope, then
+verifies both surfaces before declaring a host ready.
 
 Every release skill is explicit-only through the selected host's supported
 control: Codex uses each skill's `agents/openai.yaml` policy; Claude Code sets
@@ -69,10 +88,10 @@ CLI automation, confirm the installed version's behavior or name the canonical
 `SKILL.md` path directly in the prompt and expose the package root with the
 supported workspace/additional-directory option.
 
-These registrations point to the central package rather than copying skill
-bodies. Updating the central checkout updates all hosts. If links are unavailable
-on Windows, use directory junctions or the host's configured package path; setup
-must not fall back to maintained copies.
+These registrations point to the central package rather than copying kernel or
+skill bodies. Updating the central checkout updates all hosts. If links are
+unavailable on Windows, use directory junctions or the host's configured package
+path; setup must not fall back to maintained copies.
 Replacing an existing registration is permitted only in the separately approved
 release cutover.
 
@@ -117,10 +136,10 @@ it. Direct operator instructions override stored preferences for that invocation
 
 ## Verification and optional smoke test
 
-Setup verifies executable/version, non-secret auth status, skill discovery,
-shared-reference reachability, and documented structured-output flags without a
-model call. A real prompt is optional and separately approval-gated because it
-may consume paid usage.
+Setup verifies executable/version, non-secret auth status, persistent-kernel and
+skill/command discovery, shared-reference reachability, and documented
+structured-output flags without a model call. A real prompt is optional and
+separately approval-gated because it may consume paid usage.
 
 ## Release cutover
 
@@ -137,17 +156,21 @@ released workflow revision; it does not retain V1 as a compatibility layer.
 ## Uninstall
 
 Run `setup-workflow` and request uninstall. It previews the exact V2 skill
-registrations/links and host adapter it will remove. After approval it removes
-only those V2-created surfaces. It preserves the canonical checkout unless the
-operator separately asks to delete it, and never removes host applications,
-credentials, repositories, or unrelated skills/configuration.
+registrations/links, kernel owners/scopes, and host adapter it will remove.
+After approval it removes only those V2-created surfaces. It preserves the
+canonical checkout unless the operator separately asks to delete it, and never
+removes host applications, credentials, repositories, or unrelated
+skills/configuration.
 
 ## Current host references
 
 - [Codex developer commands](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
+- [Codex `AGENTS.md`](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 - [Claude Code CLI reference](https://docs.anthropic.com/en/docs/claude-code/cli-usage)
+- [Claude Code memory](https://docs.anthropic.com/en/docs/claude-code/memory)
 - [Cursor Agent Skills](https://cursor.com/docs/skills)
-- [Cursor plugin commands](https://cursor.com/docs/reference/plugins)
+- [Cursor plugins and rules](https://cursor.com/docs/reference/plugins)
 - [Cursor CLI output formats](https://cursor.com/docs/cli/reference/output-format)
 - [OpenCode Agent Skills](https://opencode.ai/docs/skills)
+- [OpenCode instructions](https://opencode.ai/v2/docs/instructions)
 - [OpenCode CLI](https://opencode.ai/docs/cli)

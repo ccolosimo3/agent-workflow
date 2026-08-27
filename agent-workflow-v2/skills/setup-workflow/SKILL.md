@@ -35,26 +35,36 @@ the package and silently break its shared references.
    skill or command IDs. During beta, any match stops registration; use package-
    path invocation or a clean isolated host home/profile instead. Never print
    credentials or make a model/provider call merely to test setup.
+   For Codex, resolve `CODEX_HOME` and the active global instruction owner after
+   `AGENTS.override.md` precedence. For OpenCode, resolve its config directory
+   (for example, with `opencode debug paths`) and its resulting global
+   `AGENTS.md`. For Cursor, inspect the selected plugin installation scope.
    For Cursor, check for the direct `cursor-agent` binary before invoking the
    Desktop `cursor agent` wrapper because the wrapper may install it.
 3. Record exact confirmed commands and values in the host adapter. Do not invent
    unsupported reasoning equivalence or treat a model alias as stable when the
    host exposes an exact ID. Missing hosts stay unavailable and do not block the
    others.
-4. Show the proposed package registration, host-adapter path, collision result,
-   and any host config edits before writing. Preserve unrelated settings and
-   request approval before mutating user configuration, installing/registering
-   the package, or replacing an existing adapter. Never replace a skill during
-   beta. Installing a CLI, logging in, or running even a tiny paid smoke call is
-   separate and requires explicit authorization.
-5. After approval, expose the central package entrypoints through the selected
-   host's supported registration and make each one explicit-only: preserve the
-   packaged Codex and OpenCode controls, set Claude
-   Code `skillOverrides` to `user-invocable-only`, and register Cursor through
-   the package's command-only plugin with `WORKFLOW_ROOT` set to the absolute
-   package path. Write the adapter, then verify discovery, explicit-only state,
-   and reference reachability without a model call. Explain any restart or new-
-   session requirement.
+4. Show the proposed package registration, exact kernel owner and scope, host-
+   adapter path, collision result, and any host config edits before writing.
+   Preserve unrelated settings and request approval before mutating user
+   configuration, installing/registering the package, or replacing an existing
+   adapter. Never replace a skill during beta. Installing a CLI, logging in, or
+   running even a tiny paid smoke call is separate and requires explicit
+   authorization.
+5. After approval, register one persistent route to the central `KERNEL.md` and
+   the package's explicit-only phase entrypoints through each selected host's
+   supported mechanism. Preserve unrelated global instructions. Use Codex's
+   active global owner after `AGENTS.override.md` precedence, Claude Code's
+   global `CLAUDE.md` import, Cursor's user-scoped packaged always-on rule, and
+   OpenCode's resolved global `AGENTS.md`; block if shadowing or unsafe
+   composition prevents kernel loading. Preserve the packaged Codex and OpenCode
+   invocation controls, set Claude Code `skillOverrides` to `user-invocable-
+   only`, and set Cursor's `WORKFLOW_ROOT` to the absolute package path. Write
+   the adapter, then verify the active persistent-kernel route, explicit-only
+   entrypoints, and shared-reference reachability without a model call. Explain
+   that a fresh session is required to prove loaded behavior; any such smoke
+   remains separately approval-gated.
 
 Do not infer Cursor CLI slash-command expansion from Desktop discovery. Confirm
 the installed CLI behavior; otherwise invoke automation with a prompt that names
@@ -87,12 +97,12 @@ outer reviewer, silently change the selected profile, or call a missing host.
 
 ## Audit and uninstall
 
-An audit rechecks installed versions, command shapes, package discovery, and
-adapter references, then proposes only stale fields. Uninstall first previews and
-then removes only V2-created registrations, discovery links, and the V2 host
-adapter after approval. Preserve the central checkout unless its deletion is
-separately requested, plus repositories, credentials, unrelated host
-configuration and other skills/plugins.
+An audit rechecks installed versions, command shapes, the recorded kernel owner
+and scope, package discovery, and adapter references, then proposes only stale
+fields. Uninstall first previews and then removes only V2-created kernel routes,
+registrations, discovery links, and the V2 host adapter after approval. Preserve
+the central checkout unless its deletion is separately requested, plus
+repositories, credentials, unrelated host configuration and other skills/plugins.
 
 For an approved release cutover, preview the canonical-path move, release skill
 registrations, and legacy removals together. Switch discovery, verify the new

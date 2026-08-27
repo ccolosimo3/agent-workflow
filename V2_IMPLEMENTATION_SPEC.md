@@ -295,6 +295,8 @@ Complete the shareable package without changing or activating V1 during beta:
   reuses `REVIEW.md` rather than creating a second rubric;
 - add a concise `README.md`, one setup guide, and agent-readable uninstall
   instructions for macOS and Windows around one canonical local checkout;
+- register one host-native persistent route to the central kernel while keeping
+  detailed phase entrypoints explicit-only;
 - add a `setup-workflow` skill plus a user-level host-adapter template for Codex,
   Claude, Cursor, and OpenCode;
 - keep host launch commands, available models/reasoning levels, and outer-review
@@ -354,7 +356,8 @@ Acceptance criteria:
 
 1. A clean user can install and invoke the complete core loop, including
    `review-pr`, from Codex, Claude, Cursor, or OpenCode without editing canonical
-   workflow files.
+   workflow files. A fresh ordinary session receives the portable kernel, while
+   formal phase procedures remain explicit-only.
 2. One ignored `HOST.local.md` beside the canonical package owns machine
    capabilities, model profiles, and outer-review preferences; repository
    adapters contain only project facts.
