@@ -1,6 +1,8 @@
 ---
 name: review-spec
 description: Hand a completed specification to one fresh inner reviewer and drive its same-reviewer revision loop to approval or a material operator decision. Use after spec or for an explicit spec preflight; not for code review.
+metadata:
+  opencode/autoinvoke: false
 ---
 
 # Review Spec

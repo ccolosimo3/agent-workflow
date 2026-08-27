@@ -35,14 +35,17 @@ than maintaining copied folders.
 
 ## Start
 
-1. During beta, keep this package in one stable isolated path without replacing
-   an active workflow or nesting it inside another workflow repository.
-2. Ask an existing agent to read `skills/setup-workflow/SKILL.md` and configure V2.
+1. During beta, keep this package in one stable isolated path and do not register
+   its release skill names in an active host profile.
+2. Ask an existing agent to read `skills/setup-workflow/SKILL.md` by path and run
+   its read-only capability and collision audit.
 3. Choose enabled hosts, model/reasoning profiles, workload preferences, and
    outer-review behavior.
-4. Let setup verify discovery and shared references without a model call.
-5. Add a short repository adapter from `templates/repo-adapter.md`.
-6. Open a new session and invoke the selected skill explicitly.
+4. Test discovery only in a clean isolated host home/profile with no matching
+   skill IDs; otherwise invoke beta instructions by their package paths.
+5. Let setup verify discovery and shared references without a model call, then
+   add a short repository adapter from `templates/repo-adapter.md` if wanted.
+6. Open a new isolated session and invoke the selected skill explicitly.
 
 See [setup and uninstall](docs/SETUP.md) for host-specific details.
 

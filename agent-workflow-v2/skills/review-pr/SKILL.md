@@ -1,6 +1,8 @@
 ---
 name: review-pr
 description: Review someone else's pull request through evidence-first discovery, proportionate independent challenge, and human-facing action calibration. Use for coworker PR review; not for the operator's own implementation gate.
+metadata:
+  opencode/autoinvoke: false
 ---
 
 # Review PR

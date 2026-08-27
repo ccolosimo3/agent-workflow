@@ -1,6 +1,8 @@
 ---
 name: setup-workflow
 description: Configure or audit workflow hosts, models, review routing, and repository onboarding. Use for installation, plan-storage setup, capability repair, or uninstall; not for repository implementation work.
+metadata:
+  opencode/autoinvoke: false
 ---
 
 # Setup Workflow
@@ -29,21 +31,27 @@ the package and silently break its shared references.
 2. Inspect each selected host read-only using its executable, `--version`, local
    help, non-secret authentication/config status, model listing when locally
    available, skill discovery path, fresh launch/resume capability, and
-   structured-output flags. Never print credentials or make a model/provider
-   call merely to test setup.
+   structured-output flags. Scan every active discovery root for all release
+   skill IDs. During beta, any match stops registration; use package-path
+   invocation or a clean isolated host home/profile instead. Never print
+   credentials or make a model/provider call merely to test setup.
 3. Record exact confirmed commands and values in the host adapter. Do not invent
    unsupported reasoning equivalence or treat a model alias as stable when the
    host exposes an exact ID. Missing hosts stay unavailable and do not block the
    others.
-4. Show the proposed package registration, host-adapter path, and any host config
-   edits before writing. Preserve unrelated settings and request approval before
-   mutating user configuration, installing/registering the package, or replacing
-   an existing adapter. Installing a CLI, logging in, or running even a tiny paid
-   smoke call is separate and requires explicit authorization.
+4. Show the proposed package registration, host-adapter path, collision result,
+   and any host config edits before writing. Preserve unrelated settings and
+   request approval before mutating user configuration, installing/registering
+   the package, or replacing an existing adapter. Never replace a skill during
+   beta. Installing a CLI, logging in, or running even a tiny paid smoke call is
+   separate and requires explicit authorization.
 5. After approval, expose the central package skills through the selected host's
-   supported discovery links or configured path, write the adapter from the
-   template, and verify skill discovery plus reference reachability without a
-   model call. Explain any restart or new-session requirement.
+   supported discovery links or configured path and make every release skill
+   explicit-only: preserve the packaged Codex and OpenCode controls, set Claude
+   Code `skillOverrides` to `user-invocable-only`, and set Cursor skills to
+   **Manual** in Customize. Write the adapter, then verify discovery, explicit-
+   only state, and reference reachability without a model call. Explain any
+   restart or new-session requirement.
 
 The adapter is `HOST.local.md` at the canonical package root and is ignored by
 Git. Hosts receive only discovery links or a configured skills path to that
@@ -78,9 +86,9 @@ adapter after approval. Preserve the central checkout unless its deletion is
 separately requested, plus repositories, credentials, unrelated host
 configuration and other skills/plugins.
 
-For an approved release cutover, preview the canonical-path move, unversioned
-skill registrations, and legacy removals together. Switch discovery, verify the
-new names in fresh host sessions, then remove the superseded V1 and beta-only
+For an approved release cutover, preview the canonical-path move, release skill
+registrations, and legacy removals together. Switch discovery, verify the new
+names in fresh host sessions, then remove the superseded V1 and beta-only
 surfaces; never leave both kernels active. New installations skip this migration
 and install the release directly.
 

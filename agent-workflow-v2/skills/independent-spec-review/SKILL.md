@@ -1,6 +1,8 @@
 ---
 name: independent-spec-review
 description: Run the fresh independent outer gate for a converged specification when risk routing or the operator selects it, then re-review its patches in the same conversation. Not for inner review or implementation.
+metadata:
+  opencode/autoinvoke: false
 ---
 
 # Independent Spec Review

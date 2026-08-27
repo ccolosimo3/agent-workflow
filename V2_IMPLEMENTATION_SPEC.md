@@ -375,6 +375,10 @@ Acceptance criteria:
    plus repositories, user host settings, credentials, and unrelated skills.
 8. No provider CLI, model, dependency, hook, permission bypass, or outer gate is
    installed or enabled implicitly.
+9. Every release entrypoint is explicit-only through each host's supported
+   mechanism. Beta setup remains unregistered in active host profiles, fails
+   closed on any matching skill ID, and permits replacement only during the
+   separately approved release cutover.
 
 Verification:
 

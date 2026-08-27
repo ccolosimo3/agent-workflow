@@ -1,8 +1,10 @@
 # Setup and host configuration
 
 Agent Workflow V2 uses one canonical local checkout with shared references.
-Register skills through discovery links or host-configured paths; do not maintain
-copied skill trees.
+Release installations register skills through discovery links or host-configured
+paths; do not maintain copied skill trees. During beta, keep release names out of
+active discovery and use package-path invocation or a clean isolated host
+home/profile.
 
 The recommended path is to give an existing agent this package and invoke
 `setup-workflow`. It gathers preferences, checks installed capabilities without making
@@ -21,13 +23,18 @@ It contains no credentials. It records enabled hosts, confirmed command shapes,
 named model/reasoning profiles, workload preferences, and outer-gate routing.
 Repository adapters remain project-specific and do not copy these preferences.
 
-During beta, use any stable isolated path. The released default is
-`$HOME/.agents/workflow`; the adapter records the absolute resolved location.
+During beta, use any stable isolated path without registering it into an active
+host profile. The released default is `$HOME/.agents/workflow`; the adapter
+records the absolute resolved location.
 
 ## Host registration
 
-Use the host's current official mechanism and confirm it locally before writing
-configuration:
+The paths below are release targets. A beta discovery pilot uses only a clean,
+isolated host home/profile. Before writing, scan every selected host's discovery
+roots for all release skill IDs; any match stops beta registration rather than
+replacing or ambiguously shadowing an active skill.
+
+Use the host's current official mechanism and confirm it locally:
 
 - **Codex:** link each package skill into `~/.agents/skills/`. `codex exec
   --json` provides JSONL;
@@ -42,9 +49,19 @@ configuration:
   `skills/` directory in `opencode.json`. Non-interactive runs use `opencode run
   --format json`, with `--model`, `--variant`, and `--session` when supported.
 
+Every release skill is explicit-only through the selected host's supported
+control: Codex uses each skill's `agents/openai.yaml` policy; Claude Code sets
+each release ID to `user-invocable-only` in `skillOverrides`; Cursor sets each
+registered skill to **Manual** in Customize; and OpenCode uses
+`metadata.opencode/autoinvoke: false`. Setup must verify that state before
+declaring registration complete. Owning phases start required child phases by
+naming that skill explicitly in the fresh task's initial prompt.
+
 These are discovery links, not copies. Updating the central checkout updates all
 hosts. If links are unavailable on Windows, use directory junctions or the
 host's configured skills path; setup must not fall back to maintained copies.
+Replacing an existing registration is permitted only in the separately approved
+release cutover.
 
 Do not bake permission bypasses into V2. The setup agent records the user's
 existing safe mode or asks which documented mode they want; it does not enable a
