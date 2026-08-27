@@ -11,10 +11,10 @@ plan
   -> spike, when one load-bearing bet can be falsified cheaply
   -> spec
   -> inner spec review <-> revision
-  -> outer spec review <-> revision, when selected by risk
+  -> outer spec review <-> revision, when enabled and selected by risk
   -> implementation
   -> inner implementation review <-> patch
-  -> outer implementation review <-> patch, when selected by risk
+  -> outer implementation review <-> patch, when enabled and selected by risk
   -> complete
 ```
 
@@ -38,6 +38,33 @@ by a material decision, or its bounded retry limit is exhausted.
   implementation.
 
 “More review might help” is not a route trigger.
+
+## Host and outer-gate policy
+
+Read `HOST.local.md` from the canonical V2 package root when present. It owns
+available hosts, named model profiles, workload preferences, and outer routing;
+repository adapters do not.
+Without one, treat outer gates as `operator-invoked` and use the current host's
+capabilities without inventing cross-host launch or model selection.
+
+When dispatch exposes model choice, follow the applicable fixed profile or
+choose the lowest profile sufficient for the task from its allowed range; do not
+default to the strongest setting. A current-session operator choice wins. If the
+host cannot select or confirm the profile, inherit its default and report that
+limitation rather than claiming a configured choice.
+
+- `risk-selected`: apply the positive outer selectors below.
+- `operator-invoked`: run an outer gate only on a direct operator request.
+- `disabled`: omit outer gates from normal completion. A direct operator request
+  may override this preference for that invocation.
+
+When a gate is selected, use exactly one configured reviewer. A
+`prefer-different-host` preference chooses the first eligible configured profile
+whose host differs from the known authoring/implementation host, then follows the
+configured order. If the origin host is unknown, do not guess. Use a same-host
+fresh context only when configured or directly requested; it remains valid
+independence. If a required risk-selected gate has no permitted fresh context,
+report the missing capability rather than silently weakening or duplicating it.
 
 ## Positive phase triggers
 
@@ -66,16 +93,19 @@ scope, sequencing, dependencies, and operator-facing decisions. Workers update
 only their work-item artifact and return reconciliation facts. Otherwise, the
 task completing work owns the normal state update.
 
-Plan directly by default. Delegate only a bounded evidence question with a named
-stop condition. One helper is the default; a second requires a separate question
-or adversarial purpose. Nested delegation is prohibited. Evidence helpers do not
-implement, mutate shared state, recommend a phase transition or owning-phase
-outcome, or issue its `GO` / `NO-GO` / review verdict.
+Plan directly by default. When the host adapter configures an evidence-helper
+profile, the planner may delegate a bounded, independently answerable evidence
+question with a named stop condition; otherwise it works serially. Helpers return
+sourced observations and uncertainty, not judgments or decisions; they do not
+implement, mutate shared state, or delegate. One helper is the default; a second
+requires a separate question or adversarial purpose. The planner checks
+load-bearing claims and alone turns the evidence into plans, phase choices, and
+operator-facing recommendations.
 
-Initial implementations and certifying reviews use fresh contexts when the host
-supports them; re-review reuses the original reviewer. If the host cannot provide
-fresh context, isolation, model selection, or resumption, report the limitation
-instead of claiming the capability.
+Initial implementations and certifying reviews use fresh contexts when required
+and available; re-review reuses the original reviewer. If the selected route
+cannot provide fresh context, isolation, configured model selection, or
+resumption, report the exact limitation instead of claiming the capability.
 
 ## Shared handoff envelope
 

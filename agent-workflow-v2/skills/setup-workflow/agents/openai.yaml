@@ -1,0 +1,6 @@
+interface:
+  display_name: "Setup Workflow"
+  short_description: "Configure workflow hosts and repository onboarding"
+  default_prompt: "Use $setup-workflow to configure this workflow for this machine and repository."
+policy:
+  allow_implicit_invocation: false

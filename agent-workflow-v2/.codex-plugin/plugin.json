@@ -1,6 +1,6 @@
 {
   "name": "agent-workflow-v2",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "An isolated beta of a portable, risk-proportionate coding-agent workflow with planning, implementation, and review foundations.",
   "author": {
     "name": "Chris Colosimo"

@@ -1,0 +1,89 @@
+---
+name: setup-workflow
+description: Configure or audit workflow hosts, models, review routing, and repository onboarding. Use for installation, plan-storage setup, capability repair, or uninstall; not for repository implementation work.
+---
+
+# Setup Workflow
+
+Configure the package conversationally without changing its portable policy.
+
+## Read first
+
+Resolve this skill’s real package directory first when it was discovered through a link; relative paths below use that target, not the discovery-link directory.
+
+Read `../../README.md`, `../../docs/SETUP.md`, and
+`../../templates/host-adapter.md`. Resolve them from this skill's actual package
+directory. Stop if any is unavailable; do not copy an individual skill away from
+the package and silently break its shared references.
+
+## Configure
+
+1. Ask only for choices not already stated: hosts to enable; desired model and
+   exact reasoning/variant profiles; fixed versus allowed profiles by workload;
+   an optional single evidence-helper profile; outer-gate policy;
+   different-host versus ordered reviewer choice; and same-host fresh-context
+   fallback. Recommend risk-selected outer gates, different-host preference, and
+   an allowed same-host fresh fallback when the installed hosts support them, but
+   preserve the user's choice. Leave evidence helpers disabled when none is
+   selected.
+2. Inspect each selected host read-only using its executable, `--version`, local
+   help, non-secret authentication/config status, model listing when locally
+   available, skill discovery path, fresh launch/resume capability, and
+   structured-output flags. Never print credentials or make a model/provider
+   call merely to test setup.
+3. Record exact confirmed commands and values in the host adapter. Do not invent
+   unsupported reasoning equivalence or treat a model alias as stable when the
+   host exposes an exact ID. Missing hosts stay unavailable and do not block the
+   others.
+4. Show the proposed package registration, host-adapter path, and any host config
+   edits before writing. Preserve unrelated settings and request approval before
+   mutating user configuration, installing/registering the package, or replacing
+   an existing adapter. Installing a CLI, logging in, or running even a tiny paid
+   smoke call is separate and requires explicit authorization.
+5. After approval, expose the central package skills through the selected host's
+   supported discovery links or configured path, write the adapter from the
+   template, and verify skill discovery plus reference reachability without a
+   model call. Explain any restart or new-session requirement.
+
+The adapter is `HOST.local.md` at the canonical package root and is ignored by
+Git. Hosts receive only discovery links or a configured skills path to that
+root; never copy skill bodies or the adapter into multiple maintained locations.
+Do not duplicate its contents into repositories or canonical workflow files.
+
+## Repository onboarding
+
+When onboarding a repository, inspect its adapter for a durable plan location.
+If none exists, present `.agent-workflow/plans/` as the default private repo-local
+directory excluded through `.git/info/exclude`; allow a tracked/custom location
+or no durable storage when the user prefers it. Preview the exact directory,
+exclusion, and adapter edit, then request approval before writing. Record private
+storage in the local repository adapter and shared storage in the tracked adapter.
+Initialize only `active/` and `archive/`; add `INDEX.md` when multiple work items
+need coordination. Do not initialize a nested Git repository unless requested.
+
+## Outer routing
+
+The authoring or implementing agent reports its current host when known. For a
+selected outer gate, `prefer-different-host` chooses the first configured
+outer-review profile on another host; otherwise it follows the configured list.
+Use the same-host fresh fallback only when allowed. Never launch more than one
+outer reviewer, silently change the selected profile, or call a missing host.
+
+## Audit and uninstall
+
+An audit rechecks installed versions, command shapes, package discovery, and
+adapter references, then proposes only stale fields. Uninstall first previews and
+then removes only V2-created registrations, discovery links, and the V2 host
+adapter after approval. Preserve the central checkout unless its deletion is
+separately requested, plus repositories, credentials, unrelated host
+configuration and other skills/plugins.
+
+For an approved release cutover, preview the canonical-path move, unversioned
+skill registrations, and legacy removals together. Switch discovery, verify the
+new names in fresh host sessions, then remove the superseded V1 and beta-only
+surfaces; never leave both kernels active. New installations skip this migration
+and install the release directly.
+
+Return a concise setup receipt: enabled hosts and profiles, workload and outer
+routing, capability gaps, files/registrations changed, discovery checks, and any
+restart or optional paid smoke test remaining.

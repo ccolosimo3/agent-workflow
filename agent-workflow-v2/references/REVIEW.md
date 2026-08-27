@@ -19,10 +19,12 @@ phase and outer-gate selection; `FRONTEND.md` is conditional on UI scope.
    regressions. Reuse the same reviewer; use a fresh fallback only when the host
    cannot resume it, and disclose the lost context. Spec convergence stops after
    three revise/re-review cycles or a material operator decision.
-4. After inner approval, apply `WORKFLOW.md`'s positive outer selector. Skip the
-   outer gate automatically when it does not apply; do not ask for a waiver.
-5. A selected outer gate begins in one fresh context, reads no prior findings,
-   and reviews the whole converged artifact or final implementation range. Its
+4. After inner approval, apply `WORKFLOW.md`'s configured outer policy and, when
+   enabled, its positive selector. Skip automatically when disabled,
+   operator-invoked but not requested, or not selected; do not ask for a waiver.
+5. A selected outer gate begins in exactly one configured fresh context, reads no
+   prior findings, and reviews the whole converged artifact or final
+   implementation range. Its
    patches return directly to that same outer reviewer. Do not reopen the inner
    reviewer unless the patch expands scope beyond an outer finding.
 
@@ -33,8 +35,8 @@ the same reviewer.
 
 Selecting a formal spec or implementation includes its inner review gate. Review
 loops continue without ordinary status pauses. Stop only for a material decision,
-missing required evidence or authority, unavailable review capability, or the
-bounded spec retry cap.
+missing required evidence or authority, an unavailable required inner or selected
+outer review capability, or the bounded spec retry cap.
 
 ### Documentation-only off-ramp
 

@@ -87,8 +87,8 @@ other untracked local configuration.
   contract, setup, policy, architecture, verification, or operating behavior.
   Workflow and policy documents never qualify for that off-ramp.
 - Findings return to the same reviewer after patching. Initial outer review is
-  fresh and independent when selected; its patches return to that same outer
-  reviewer.
+  fresh and independent when enabled and selected under `WORKFLOW.md`; its
+  patches return to that same outer reviewer.
 - Treat summaries, receipts, and prior verdicts as claims to validate. Never claim
   verification, independence, or completion that the available host and evidence
   do not establish.

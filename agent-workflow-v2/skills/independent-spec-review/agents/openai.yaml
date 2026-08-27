@@ -1,0 +1,6 @@
+interface:
+  display_name: "Independent Spec Review"
+  short_description: "Run the independent outer specification gate"
+  default_prompt: "Use $independent-spec-review to review this converged specification independently."
+policy:
+  allow_implicit_invocation: false

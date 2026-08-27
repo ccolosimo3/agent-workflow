@@ -1,6 +1,0 @@
-interface:
-  display_name: "V2 Plan Next"
-  short_description: "Coordinate scoped project planning in Workflow V2"
-  default_prompt: "Use $v2-plan-next to get current, shape the next work, and coordinate execution without implementing it here."
-policy:
-  allow_implicit_invocation: false

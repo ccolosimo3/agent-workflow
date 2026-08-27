@@ -11,11 +11,23 @@ phase-specific investigation.
 - A formal explore, spike, or spec begins only after operator selection. Once
   invoked, preserve its compact result so downstream work does not recreate the
   evidence.
-- Use the repository's declared plan location. If none exists, do not invent a
-  tracked planning hierarchy; keep the result in the task until the operator
-  chooses a durable location.
 - A living work-item document is a decision/evidence index, not a transcript,
   status diary, or review log.
+
+## Plan storage
+
+Use the repository's declared plan location. When durable planning is first
+needed and none is configured, offer one-time initialization of the private,
+repo-local default `.agent-workflow/plans/`, excluded through the repository's
+local Git configuration. The operator may instead choose a tracked or custom
+location, or no durable storage. Preview the directory, exclusion, and adapter
+change before writing; never create or track a plan area silently.
+
+Record the resolved location and visibility in the repository adapter and reuse
+it without asking again. Keep one living Markdown work item under
+`active/<short-name>/README.md`, move terminal work to `archive/`, and add an
+`INDEX.md` or other buckets only when real coordination needs them. Casual work
+does not trigger storage setup.
 
 ## Grounding and scope
 

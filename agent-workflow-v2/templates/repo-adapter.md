@@ -14,7 +14,7 @@ know; it does not copy workflow policy.
 
 - Workspaces, services, and generated surfaces
 - Integration branch and branch/PR conventions
-- Durable plan location, when formal plans are used
+- Durable plan location and visibility (`private/excluded`, `tracked`, or none)
 - Tracker and issue conventions, when applicable
 
 ## Verification routes
@@ -30,13 +30,11 @@ know; it does not copy workflow policy.
 - Non-obvious ownership or ordering rules demonstrated by the repository
 - Existing owners that task-specific implementations must reuse
 
-## Host capabilities
+## Local execution facts
 
-- Fresh task/context creation and resumption
-- Checkout/worktree isolation
-- Independent reviewer availability
-- Web research and tracker access
-- Model/provider selection, if operator-controlled
+- Checkout/worktree constraints specific to this repository
+- Repository-specific access or tooling needed for verification
 
-State unavailable capabilities plainly. The adapter may require stricter behavior
-but cannot widen the V2 kernel's authority or review requirements.
+User host/model/reviewer preferences belong in the V2 host adapter, not here.
+State unavailable repository capabilities plainly. This adapter may require
+stricter behavior but cannot widen the V2 kernel's authority or review rules.

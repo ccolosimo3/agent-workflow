@@ -1,6 +1,0 @@
-interface:
-  display_name: "V2 Implementation Re-review"
-  short_description: "Reuse the V2 implementation reviewer after patches"
-  default_prompt: "Use $v2-implrereview to verify patches with the original implementation reviewer."
-policy:
-  allow_implicit_invocation: false

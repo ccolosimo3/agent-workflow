@@ -1,6 +1,0 @@
-interface:
-  display_name: "V2 Spec Review"
-  short_description: "Run one fresh inner review of a V2 specification"
-  default_prompt: "Use $v2-specreview to review this V2 specification."
-policy:
-  allow_implicit_invocation: false
