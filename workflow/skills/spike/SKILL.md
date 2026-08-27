@@ -1,7 +1,6 @@
 ---
 name: spike
 description: Run a disposable GO, NO-GO, or BLOCKED proof of one operator-selected design bet at its riskiest safe boundary. Use after an option is chosen but a load-bearing mechanism remains unproved; not for open-ended exploration or production implementation.
-disable-model-invocation: true
 metadata:
   opencode/autoinvoke: false
 ---

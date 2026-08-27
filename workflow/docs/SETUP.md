@@ -75,8 +75,8 @@ authorities. Setup records each exact kernel owner and install scope, then
 verifies both surfaces before declaring a host ready.
 
 Every release skill is explicit-only through the selected host's supported
-control: Codex uses each skill's `agents/openai.yaml` policy; Claude Code uses
-the packaged `disable-model-invocation: true` frontmatter; Cursor exposes
+control: Codex uses each skill's `agents/openai.yaml` policy; Claude Code sets
+each release ID to `user-invocable-only` in `skillOverrides`; Cursor exposes
 only the package's explicit command shims; and OpenCode uses
 `metadata.opencode/autoinvoke: false`. Setup must verify that state before
 declaring registration complete. Owning phases start required child phases by
@@ -146,6 +146,12 @@ When replacing an existing workflow, setup previews one cutover: install the
 release at `~/.agents/workflow`, register the release skill names, open fresh
 host sessions to verify discovery, and then remove superseded registrations and
 staging files. Do not leave two kernels active.
+
+Before replacement, inventory non-release personal skills or scripts stored
+inside the superseded package. Move each retained utility to the user's normal
+skill root, update its canonical references, validate it, and repoint its host
+registrations before removing the old tree. Do not silently drop or absorb
+personal utilities into the portable release.
 
 Before final removal, a failed cutover may restore the previously active links.
 After cutover is validated and finalized, rollback installs a selected released

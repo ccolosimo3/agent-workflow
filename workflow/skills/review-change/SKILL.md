@@ -1,7 +1,6 @@
 ---
 name: review-change
 description: Hand a completed committed implementation to one fresh inner reviewer and drive same-reviewer patches to convergence. Use for own-work implementation review; not for specs or coworker PRs.
-disable-model-invocation: true
 metadata:
   opencode/autoinvoke: false
 ---

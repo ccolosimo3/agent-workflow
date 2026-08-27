@@ -1,7 +1,6 @@
 ---
 name: setup-workflow
 description: Configure or audit workflow hosts, models, review routing, and repository onboarding. Use for installation, plan-storage setup, capability repair, or uninstall; not for repository implementation work.
-disable-model-invocation: true
 metadata:
   opencode/autoinvoke: false
 ---
@@ -60,8 +59,8 @@ the package and silently break its shared references.
    global `CLAUDE.md` import, Cursor's user-scoped packaged always-on rule, and
    OpenCode's resolved global `AGENTS.md`; block if shadowing or unsafe
    composition prevents kernel loading. Preserve the packaged Codex and OpenCode
-   invocation controls, preserve the package's explicit-only Claude skill
-   frontmatter, and set Cursor's `WORKFLOW_ROOT` to the absolute package path. Write
+   invocation controls, set Claude Code `skillOverrides` to `user-invocable-
+   only`, and set Cursor's `WORKFLOW_ROOT` to the absolute package path. Write
    the adapter, then verify the active persistent-kernel route, explicit-only
    entrypoints, and shared-reference reachability without a model call. Explain
    that a fresh session is required to prove loaded behavior; any such smoke
@@ -106,9 +105,11 @@ the central checkout unless its deletion is separately requested, plus
 repositories, credentials, unrelated host configuration and other skills/plugins.
 
 For an approved release cutover, preview the canonical-path move, release skill
-registrations, and legacy removals together. Switch discovery, verify the new
-names in fresh host sessions, then remove superseded and staging surfaces; never
-leave both kernels active. New installations skip this migration and install the
+registrations, and legacy removals together. Inventory non-release personal
+skills or scripts inside the old package and preserve retained utilities in the
+user skill root before replacement. Switch discovery, verify the new names in
+fresh host sessions, then remove superseded and staging surfaces; never leave
+both kernels active. New installations skip this migration and install the
 release directly.
 
 Return a concise setup receipt: enabled hosts and profiles, workload and outer

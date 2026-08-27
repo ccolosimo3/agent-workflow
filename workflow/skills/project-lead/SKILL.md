@@ -1,7 +1,6 @@
 ---
 name: project-lead
 description: Coordinate a project's current planning, sequence the next independently reviewable work, and prepare authorized execution handoffs without implementing or certifying in the planning session. Use for an ongoing main planner or a request to decide and coordinate what should happen next.
-disable-model-invocation: true
 metadata:
   opencode/autoinvoke: false
 ---
