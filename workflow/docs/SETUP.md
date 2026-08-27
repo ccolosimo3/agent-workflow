@@ -10,6 +10,19 @@ The recommended path is to give an existing agent this package and invoke
 a model call, previews changes, and writes the user-level adapter only after
 approval.
 
+## Activation
+
+- **On-demand** is the recommended trial mode. Register explicit skills and
+  commands, but leave each host's global kernel owner untouched. Ordinary tasks
+  use the host's existing behavior; invoking a V2 phase loads the complete V2
+  authorities for that task.
+- **Always-on** is the daily-driver mode. It uses the same package and
+  entrypoints, plus one persistent host route to `references/KERNEL.md`.
+
+Changing modes adds or removes only V2-owned persistent routes and updates the
+matching activation/kernel records in `HOST.local.md`. It does not reinstall the
+package, change other preferences, or alter repository adapters.
+
 ## Shared configuration
 
 The adapter lives beside that checkout and is ignored by Git:
@@ -18,8 +31,9 @@ The adapter lives beside that checkout and is ignored by Git:
 <workflow-package>/HOST.local.md
 ```
 
-It contains no credentials. It records enabled hosts, confirmed command shapes,
-named model/reasoning profiles, workload preferences, and outer-gate routing.
+It contains no credentials. It records activation mode, enabled hosts, confirmed
+command shapes, named model/reasoning profiles, workload preferences, and
+outer-gate routing.
 Repository adapters remain project-specific and do not copy these preferences.
 
 The default is `$HOME/.agents/workflow`; the adapter records the absolute
@@ -33,46 +47,52 @@ or command IDs. Any match blocks ordinary installation rather than replacing or
 ambiguously shadowing an active entrypoint; replacement requires the separately
 approved cutover path.
 
-Register two surfaces through the host's current official mechanism: one
-persistent route to the central `references/KERNEL.md`, plus explicit-only phase
-entrypoints. Preserve unrelated existing user instructions and confirm both
-surfaces locally.
+Always register explicit-only phase entrypoints through the host's current
+official mechanism. In always-on mode, also register one persistent route to the
+central `references/KERNEL.md`. Preserve unrelated existing user instructions
+and confirm only the selected surfaces locally.
 
-- **Codex:** resolve `CODEX_HOME` and its active global instruction owner:
+- **Codex:** link each package skill into `~/.agents/skills/`. In always-on mode,
+  resolve `CODEX_HOME` and its active global instruction owner:
   non-empty `AGENTS.override.md` takes precedence over `AGENTS.md`. Point that
   exact owner at the central kernel when V2 owns it, or add a thin instruction
   to read the kernel without replacing unrelated guidance; block if it cannot
-  be composed safely. Link each package skill into `~/.agents/skills/`. `codex
-  exec --json` provides JSONL; `--model`, `--profile`, and `-c key=value`
+  be composed safely. On-demand mode leaves that owner unchanged. `codex exec
+  --json` provides JSONL; `--model`, `--profile`, and `-c key=value`
   provide invocation overrides.
-- **Claude Code:** import the central kernel from `~/.claude/CLAUDE.md`, or
-  point that file at the kernel when V2 owns it, then link the package skills
-  into `~/.claude/skills/`. Non-interactive runs use `claude -p --output-format
-  json` (or `stream-json`), with `--model`, `--effort`, and `--resume` when
+- **Claude Code:** link the package skills into `~/.claude/skills/`. In
+  always-on mode, import the central kernel from `~/.claude/CLAUDE.md`, or point
+  that file at the kernel when V2 owns it; on-demand mode leaves it unchanged.
+  Non-interactive runs use `claude -p --output-format json` (or
+  `stream-json`), with `--model`, `--effort`, and `--resume` when
   supported.
 - **Cursor:** register the package as a local Cursor plugin at user/personal
   scope and configure its `WORKFLOW_ROOT` variable to the package's absolute
-  path. Normal Desktop setup is **Customize → Plugins → Add → From Local
-  Repository**; select the V2 repository root, add `agent-workflow-v2`, confirm
-  user/personal scope, and set the variable once. The plugin supplies one
-  always-on kernel rule and explicit commands while disabling direct skill
-  registration. Check for the direct `cursor-agent` binary before using Cursor
-  Desktop's `cursor agent` wrapper, which may install it; installation and login
-  remain separately approved. Headless runs use `cursor-agent --print
-  --output-format json`; confirm model options from the installed CLI.
-- **OpenCode:** resolve its config directory (for example, with `opencode debug
-  paths`) and use that directory's `AGENTS.md`, normally
-  `~/.config/opencode/AGENTS.md`. Point that exact owner at the central kernel
-  when V2 owns it, or add a thin instruction to read the kernel without
-  replacing unrelated guidance. Use the same `~/.agents/skills/` links, or
-  register the package `skills/` directory in `opencode.json`. Non-interactive
-  runs use `opencode run --format json`, with `--model`, `--variant`, and
+  path. Normal Desktop setup is **Customize → Plugins → Add Marketplace →
+  Import from Disk**; select the V2 repository root, add `agent-workflow-v2` at
+  user/personal scope, and set the variable once. The plugin supplies explicit
+  commands while disabling direct skill registration. In always-on mode, setup
+  additionally renders the packaged kernel-rule template into the user's Cursor
+  rules directory with the absolute package path; on-demand mode omits that
+  rule. Check for the direct `cursor-agent` binary before using Cursor Desktop's
+  `cursor agent` wrapper, which may install it; installation and login remain
+  separately approved. Headless runs use `cursor-agent --print --output-format
+  json`; confirm model options from the installed CLI.
+- **OpenCode:** use the same `~/.agents/skills/` links, or register the package
+  `skills/` directory in `opencode.json`. In always-on mode, resolve its config
+  directory (for example, with `opencode debug paths`) and use that directory's
+  `AGENTS.md`, normally `~/.config/opencode/AGENTS.md`. Point that exact owner at
+  the central kernel when V2 owns it, or add a thin instruction to read the
+  kernel without replacing unrelated guidance; on-demand mode leaves it
+  unchanged. Non-interactive runs use `opencode run --format json`, with
+  `--model`, `--variant`, and
   `--session` when supported.
 
-A fresh ordinary session must receive the kernel without invoking a phase. A
-phase command must additionally resolve its canonical skill and shared
-authorities. Setup records each exact kernel owner and install scope, then
-verifies both surfaces before declaring a host ready.
+In always-on mode, a fresh ordinary session must receive the kernel without
+invoking a phase. In on-demand mode it must not. In both modes, a phase command
+must resolve its canonical skill and shared authorities. Setup records the
+activation mode, each entrypoint scope, and any kernel owner, then verifies the
+selected surfaces before declaring a host ready.
 
 Every release skill is explicit-only through the selected host's supported
 control: Codex uses each skill's `agents/openai.yaml` policy; Claude Code sets
@@ -135,10 +155,10 @@ it. Direct operator instructions override stored preferences for that invocation
 
 ## Verification and optional smoke test
 
-Setup verifies executable/version, non-secret auth status, persistent-kernel and
-skill/command discovery, shared-reference reachability, and documented
-structured-output flags without a model call. A real prompt is optional and
-separately approval-gated because it may consume paid usage.
+Setup verifies executable/version, non-secret auth status, skill/command
+discovery, shared-reference reachability, selected activation behavior, and
+documented structured-output flags without a model call. A real prompt is
+optional and separately approval-gated because it may consume paid usage.
 
 ## Release cutover
 
@@ -166,6 +186,10 @@ After approval it removes only those V2-created surfaces. It preserves the
 canonical checkout unless the operator separately asks to delete it, and never
 removes host applications, credentials, repositories, or unrelated
 skills/configuration.
+
+To pause V2 without uninstalling it, switch to on-demand mode. Setup previews
+and removes only V2's persistent kernel routes, updates the matching host-adapter
+records, and leaves explicit entrypoints and the canonical checkout available.
 
 ## Current host references
 

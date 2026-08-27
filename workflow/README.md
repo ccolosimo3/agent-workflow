@@ -6,8 +6,9 @@ review authorities while letting each user choose their hosts, models, and outer
 review policy.
 
 The package is installed once at a stable user-level path and exposed through
-each host's native kernel and skill or command discovery. Repository adapters
-keep project facts separate from the portable workflow.
+each host's skill or command discovery. Users may keep it on-demand or add one
+persistent kernel route for always-on use. Repository adapters keep project
+facts separate from the portable workflow.
 
 ## Workflow
 
@@ -39,13 +40,14 @@ than maintaining copied folders.
    `~/.agents/workflow`.
 2. Ask an existing agent to read `skills/setup-workflow/SKILL.md` by path and run
    its read-only capability and collision audit.
-3. Choose enabled hosts, model/reasoning profiles, workload preferences, and
-   outer-review behavior.
-4. Review and approve setup's exact kernel, discovery, adapter, and replacement
-   preview.
-5. Let setup verify the persistent kernel, explicit phase discovery, and shared
-   references without a model call, then add a short repository adapter from
-   `templates/repo-adapter.md` if wanted.
+3. Choose `on-demand` for a dormant trial or `always-on` for a daily driver,
+   then choose enabled hosts, model/reasoning profiles, workload preferences,
+   and outer-review behavior.
+4. Review and approve setup's exact activation, discovery, adapter, and
+   replacement preview.
+5. Let setup verify explicit phase discovery and shared references without a
+   model call, plus the persistent kernel only in always-on mode, then add a
+   short repository adapter from `templates/repo-adapter.md` if wanted.
 6. Open a fresh session and invoke a phase only when that phase is wanted.
 
 See [setup and uninstall](docs/SETUP.md) for host-specific details.
@@ -53,3 +55,7 @@ See [setup and uninstall](docs/SETUP.md) for host-specific details.
 An approved replacement cutover points host discovery only to the canonical
 installation. Superseded workflow registrations do not remain active after the
 operator validates and finalizes cutover.
+
+Switching modes changes only V2-owned persistent kernel routes and the matching
+activation/kernel records in `HOST.local.md`. The package, explicit entrypoints,
+other preferences, and repository setup remain in place.

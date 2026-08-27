@@ -4,7 +4,7 @@ alwaysApply: true
 ---
 
 Before substantive repository work, read and follow
-`${WORKFLOW_ROOT}/references/KERNEL.md`. Treat the repository's native
+`<WORKFLOW_ROOT>/references/KERNEL.md`. Treat the repository's native
 instructions as its project adapter. If the kernel cannot be opened, stop and
 report the incomplete V2 installation. Load detailed V2 phase procedures only
 when their explicit command is invoked; ordinary questions and status requests

@@ -20,14 +20,16 @@ the package and silently break its shared references.
 
 ## Configure
 
-1. Ask only for choices not already stated: hosts to enable; desired model and
+1. Ask only for choices not already stated: activation mode (`on-demand` or
+   `always-on`); hosts to enable; desired model and
    exact reasoning/variant profiles; fixed versus allowed profiles by workload;
    an optional single evidence-helper profile; outer-gate policy;
    different-host versus ordered reviewer choice; and same-host fresh-context
-   fallback. Recommend risk-selected outer gates, different-host preference, and
-   an allowed same-host fresh fallback when the installed hosts support them, but
-   preserve the user's choice. Leave evidence helpers disabled when none is
-   selected.
+   fallback. Recommend on-demand for a trial and always-on only when the user
+   wants V2 as their daily driver. Recommend risk-selected outer gates,
+   different-host preference, and an allowed same-host fresh fallback when the
+   installed hosts support them, but preserve the user's choice. Leave evidence
+   helpers disabled when none is selected.
 2. Inspect each selected host read-only using its executable, `--version`, local
    help, non-secret authentication/config status, model listing when locally
    available, skill discovery path, fresh launch/resume capability, and
@@ -45,24 +47,28 @@ the package and silently break its shared references.
    unsupported reasoning equivalence or treat a model alias as stable when the
    host exposes an exact ID. Missing hosts stay unavailable and do not block the
    others.
-4. Show the proposed package registration, exact kernel owner and scope, host-
-   adapter path, collision result, and any host config edits before writing.
+4. Show the proposed package registration, activation mode, exact kernel owner
+   and scope when always-on, host-adapter path, collision result, and any host
+   config edits before writing.
    Preserve unrelated settings and request approval before mutating user
    configuration, installing/registering the package, or replacing an existing
    adapter. Never replace a skill outside the approved cutover. Installing a
    CLI, logging in, or running even a tiny paid smoke call is separate and
    requires explicit authorization.
-5. After approval, register one persistent route to the central `KERNEL.md` and
-   the package's explicit-only phase entrypoints through each selected host's
-   supported mechanism. Preserve unrelated global instructions. Use Codex's
-   active global owner after `AGENTS.override.md` precedence, Claude Code's
-   global `CLAUDE.md` import, Cursor's user-scoped packaged always-on rule, and
-   OpenCode's resolved global `AGENTS.md`; block if shadowing or unsafe
-   composition prevents kernel loading. Preserve the packaged Codex and OpenCode
-   invocation controls, set Claude Code `skillOverrides` to `user-invocable-
-   only`, and set Cursor's `WORKFLOW_ROOT` to the absolute package path. Write
-   the adapter, then verify the active persistent-kernel route, explicit-only
-   entrypoints, and shared-reference reachability without a model call. Explain
+5. After approval, register the package's explicit-only phase entrypoints
+   through each selected host's supported mechanism. In always-on mode, also
+   register one persistent route to `KERNEL.md`: Codex's active global owner
+   after `AGENTS.override.md` precedence, Claude Code's global `CLAUDE.md`
+   import, a rendered user-level Cursor rule from the packaged template, or
+   OpenCode's resolved global `AGENTS.md`. On-demand mode leaves those owners
+   untouched. Preserve unrelated global instructions and block if always-on
+   composition would shadow them or cannot be made safe. Preserve the packaged
+   Codex and OpenCode invocation controls, set Claude Code `skillOverrides` to
+   `user-invocable-only`, and set Cursor's `WORKFLOW_ROOT` to the absolute package
+   path. Write
+   the adapter, then verify explicit-only entrypoints, shared-reference
+   reachability, and either the active persistent route or its absence without a
+   model call. Explain
    that a fresh session is required to prove loaded behavior; any such smoke
    remains separately approval-gated.
 
@@ -97,9 +103,12 @@ outer reviewer, silently change the selected profile, or call a missing host.
 
 ## Audit and uninstall
 
-An audit rechecks installed versions, command shapes, the recorded kernel owner
-and scope, package discovery, and adapter references, then proposes only stale
-fields. Uninstall first previews and then removes only V2-created kernel routes,
+An audit rechecks installed versions, command shapes, activation mode, any
+recorded kernel owner and scope, package discovery, and adapter references, then
+proposes only stale fields. Switching activation mode previews and adds or
+removes only V2's persistent kernel routes and updates the matching activation
+and per-host kernel records in `HOST.local.md`. Uninstall first previews and then
+removes only V2-created kernel routes,
 registrations, discovery links, and the V2 host adapter after approval. Preserve
 the central checkout unless its deletion is separately requested, plus
 repositories, credentials, unrelated host configuration and other skills/plugins.
@@ -112,6 +121,6 @@ fresh host sessions, then remove superseded and staging surfaces; never leave
 both kernels active. New installations skip this migration and install the
 release directly.
 
-Return a concise setup receipt: enabled hosts and profiles, workload and outer
-routing, capability gaps, files/registrations changed, discovery checks, and any
-restart or optional paid smoke test remaining.
+Return a concise setup receipt: activation mode, enabled hosts and profiles,
+workload and outer routing, capability gaps, files/registrations changed,
+discovery checks, and any restart or optional paid smoke test remaining.

@@ -1,9 +1,13 @@
 # Agent Workflow V2 Implementation Spec
 
-Status: Slices A through E, the selected pilots, final package review, and the
-Cursor host smoke are complete on `workflow-v2`. The approved personal cutover
-is in progress; V1 remains active until Codex and Claude fresh-session checks
-pass.
+Status: Slices A through E, selected pilots, final package review, Cursor smoke,
+personal cutover, and project-adapter review are complete. V2 is locally active;
+the release is adding the approved on-demand trial mode before final fresh-session
+checks.
+
+The body below preserves the original beta build contract. Current installation
+and activation behavior is owned by `workflow/README.md` and
+`workflow/docs/SETUP.md`.
 
 ## Goal
 
@@ -296,8 +300,8 @@ Complete the shareable package without changing or activating V1 during beta:
   reuses `REVIEW.md` rather than creating a second rubric;
 - add a concise `README.md`, one setup guide, and agent-readable uninstall
   instructions for macOS and Windows around one canonical local checkout;
-- register one host-native persistent route to the central kernel while keeping
-  detailed phase entrypoints explicit-only;
+- register explicit-only phase entrypoints, with an optional host-native
+  persistent route to the central kernel for always-on activation;
 - add a `setup-workflow` skill plus a user-level host-adapter template for Codex,
   Claude, Cursor, and OpenCode;
 - keep host launch commands, available models/reasoning levels, and outer-review
@@ -329,7 +333,8 @@ The mechanical skill rename follows the completed pstack-derived checkpoint and
 precedes final package review and clean-host pilots so those gates exercise the
 actual release paths and commands.
 
-The setup agent asks which installed hosts to use, verifies their executable,
+The setup agent first asks whether V2 should be on-demand or always-on, then asks
+which installed hosts to use, verifies their executable,
 version, authentication/config visibility, skill discovery, and supported
 non-interactive structured-output flags without making a model call, then records
 only confirmed capabilities. Hosts receive thin discovery links or a configured
@@ -339,6 +344,7 @@ unconfigured rather than blocking installation.
 
 The host adapter records:
 
+- activation mode: `on-demand` or `always-on`;
 - enabled hosts and their confirmed launch/resume/structured-output capability;
 - named per-host model profiles with exact model and reasoning/variant values;
 - role defaults or allowed profile ranges, without asserting unsupported
@@ -357,9 +363,9 @@ Acceptance criteria:
 
 1. A clean user can install and invoke the complete core loop, including
    `review-pr`, from Codex, Claude, Cursor, or OpenCode without editing canonical
-   workflow files. A fresh ordinary session receives the portable kernel, while
-   formal phase procedures remain explicit-only.
-2. One ignored `HOST.local.md` beside the canonical package owns machine
+   workflow files. Always-on sessions receive the portable kernel; on-demand
+   sessions remain unchanged until a formal phase is explicitly invoked.
+2. One ignored `HOST.local.md` beside the canonical package owns activation, machine
    capabilities, model profiles, and outer-review preferences; repository
    adapters contain only project facts.
 3. Setup is conversational and idempotent: it preserves existing unrelated host

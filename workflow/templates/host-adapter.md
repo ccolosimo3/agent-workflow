@@ -5,6 +5,7 @@ tokens out of this file. Record only capabilities confirmed on this machine.
 
 - Canonical package root: `<absolute path>`
 - Adapter/package schema version: `<version>`
+- Activation mode: `<on-demand | always-on>`
 
 ## Hosts
 
@@ -14,7 +15,7 @@ Repeat this block for each enabled host.
 
 - Executable and version: `<command>` — `<version>`
 - Authentication/config check: `<non-secret status command and result>`
-- Persistent kernel: `<confirmed active owner and scope -> references/KERNEL.md>`
+- Persistent kernel: `<confirmed active owner and scope -> references/KERNEL.md | not registered (on-demand)>`
 - Skill discovery: `<confirmed link or configured path to the canonical package>`
 - Fresh context: `<supported launch method | unavailable>`
 - Resume: `<supported method | unavailable>`
