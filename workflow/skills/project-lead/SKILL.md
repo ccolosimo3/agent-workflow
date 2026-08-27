@@ -65,8 +65,11 @@ model selection the host did not provide.
 ## Continuation
 
 Follow `WORKFLOW.md` for route selection, pause, recovery, and worker-liveness
-rules. A status question, informational message, or completed child report does
-not pause an active program; incorporate it and continue safe authorized planning.
+rules. Status and interim child updates do not pause an active program. After
+dispatch, use the host's bounded wait/monitor capability until every declared
+return completes, needs operator input, or reaches a real blocker; reconcile
+completed reports before yielding, or state the host limitation and exact resume
+boundary.
 
 ## Handoff
 
