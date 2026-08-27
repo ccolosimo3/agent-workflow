@@ -32,8 +32,8 @@ the package and silently break its shared references.
    help, non-secret authentication/config status, model listing when locally
    available, skill discovery path, fresh launch/resume capability, and
    structured-output flags. Scan every active discovery root for all release
-   skill IDs. During beta, any match stops registration; use package-path
-   invocation or a clean isolated host home/profile instead. Never print
+   skill or command IDs. During beta, any match stops registration; use package-
+   path invocation or a clean isolated host home/profile instead. Never print
    credentials or make a model/provider call merely to test setup.
 3. Record exact confirmed commands and values in the host adapter. Do not invent
    unsupported reasoning equivalence or treat a model alias as stable when the
@@ -45,18 +45,20 @@ the package and silently break its shared references.
    the package, or replacing an existing adapter. Never replace a skill during
    beta. Installing a CLI, logging in, or running even a tiny paid smoke call is
    separate and requires explicit authorization.
-5. After approval, expose the central package skills through the selected host's
-   supported discovery links or configured path and make every release skill
-   explicit-only: preserve the packaged Codex and OpenCode controls, set Claude
-   Code `skillOverrides` to `user-invocable-only`, and set Cursor skills to
-   **Manual** in Customize. Write the adapter, then verify discovery, explicit-
-   only state, and reference reachability without a model call. Explain any
-   restart or new-session requirement.
+5. After approval, expose the central package entrypoints through the selected
+   host's supported registration and make each one explicit-only: preserve the
+   packaged Codex and OpenCode controls, set Claude
+   Code `skillOverrides` to `user-invocable-only`, and register Cursor through
+   the package's command-only plugin with `WORKFLOW_ROOT` set to the absolute
+   package path. Write the adapter, then verify discovery, explicit-only state,
+   and reference reachability without a model call. Explain any restart or new-
+   session requirement.
 
 The adapter is `HOST.local.md` at the canonical package root and is ignored by
-Git. Hosts receive only discovery links or a configured skills path to that
-root; never copy skill bodies or the adapter into multiple maintained locations.
-Do not duplicate its contents into repositories or canonical workflow files.
+Git. Host registrations point to that root; Cursor's thin command shims also
+live there and load the same skill bodies. Never copy skill bodies or the adapter
+into multiple maintained locations or duplicate its contents into repositories
+or canonical workflow files.
 
 ## Repository onboarding
 

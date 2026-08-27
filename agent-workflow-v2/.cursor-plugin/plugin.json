@@ -1,0 +1,21 @@
+{
+  "name": "agent-workflow-v2",
+  "version": "0.4.0",
+  "description": "Explicit Cursor commands for the central Agent Workflow V2 package.",
+  "author": {
+    "name": "Chris Colosimo"
+  },
+  "skills": [],
+  "commands": "./cursor-commands/",
+  "variables": {
+    "type": "object",
+    "properties": {
+      "WORKFLOW_ROOT": {
+        "type": "string",
+        "title": "Workflow package root",
+        "description": "Absolute path to the central agent-workflow-v2 package."
+      }
+    },
+    "required": ["WORKFLOW_ROOT"]
+  }
+}

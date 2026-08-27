@@ -1,10 +1,10 @@
 # Setup and host configuration
 
 Agent Workflow V2 uses one canonical local checkout with shared references.
-Release installations register skills through discovery links or host-configured
-paths; do not maintain copied skill trees. During beta, keep release names out of
-active discovery and use package-path invocation or a clean isolated host
-home/profile.
+Release installations register entrypoints through host discovery or configured
+package paths; do not maintain copied skill trees. During beta, keep release
+names out of active discovery and use package-path invocation or a clean isolated
+host home/profile.
 
 The recommended path is to give an existing agent this package and invoke
 `setup-workflow`. It gathers preferences, checks installed capabilities without making
@@ -31,8 +31,8 @@ records the absolute resolved location.
 
 The paths below are release targets. A beta discovery pilot uses only a clean,
 isolated host home/profile. Before writing, scan every selected host's discovery
-roots for all release skill IDs; any match stops beta registration rather than
-replacing or ambiguously shadowing an active skill.
+roots for all release skill or command IDs; any match stops beta registration
+rather than replacing or ambiguously shadowing an active entrypoint.
 
 Use the host's current official mechanism and confirm it locally:
 
@@ -42,24 +42,27 @@ Use the host's current official mechanism and confirm it locally:
 - **Claude Code:** link the same package skills into `~/.claude/skills/`.
   Non-interactive runs use `claude -p --output-format json` (or
   `stream-json`), with `--model`, `--effort`, and `--resume` when supported.
-- **Cursor:** use the same `~/.agents/skills/` links as Codex, or register the
-  package `skills/` directory. Headless runs use `agent --print
-  --output-format json`; confirm model options from the installed CLI.
+- **Cursor:** register the package as a local Cursor plugin and configure its
+  `WORKFLOW_ROOT` variable to the package's absolute path. It exposes explicit
+  commands that load the central skill bodies; its manifest disables direct
+  skill registration. Headless runs use `agent --print --output-format json`;
+  confirm model options from the installed CLI.
 - **OpenCode:** use the same `~/.agents/skills/` links, or register the package
   `skills/` directory in `opencode.json`. Non-interactive runs use `opencode run
   --format json`, with `--model`, `--variant`, and `--session` when supported.
 
 Every release skill is explicit-only through the selected host's supported
 control: Codex uses each skill's `agents/openai.yaml` policy; Claude Code sets
-each release ID to `user-invocable-only` in `skillOverrides`; Cursor sets each
-registered skill to **Manual** in Customize; and OpenCode uses
+each release ID to `user-invocable-only` in `skillOverrides`; Cursor exposes
+only the package's explicit command shims; and OpenCode uses
 `metadata.opencode/autoinvoke: false`. Setup must verify that state before
 declaring registration complete. Owning phases start required child phases by
-naming that skill explicitly in the fresh task's initial prompt.
+naming that entrypoint explicitly in the fresh task's initial prompt.
 
-These are discovery links, not copies. Updating the central checkout updates all
-hosts. If links are unavailable on Windows, use directory junctions or the
-host's configured skills path; setup must not fall back to maintained copies.
+These registrations point to the central package rather than copying skill
+bodies. Updating the central checkout updates all hosts. If links are unavailable
+on Windows, use directory junctions or the host's configured package path; setup
+must not fall back to maintained copies.
 Replacing an existing registration is permitted only in the separately approved
 release cutover.
 
@@ -134,6 +137,7 @@ credentials, repositories, or unrelated skills/configuration.
 - [Codex developer commands](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
 - [Claude Code CLI reference](https://docs.anthropic.com/en/docs/claude-code/cli-usage)
 - [Cursor Agent Skills](https://cursor.com/docs/skills)
+- [Cursor plugin commands](https://cursor.com/docs/reference/plugins)
 - [Cursor CLI output formats](https://cursor.com/docs/cli/reference/output-format)
 - [OpenCode Agent Skills](https://opencode.ai/docs/skills)
 - [OpenCode CLI](https://opencode.ai/docs/cli)
