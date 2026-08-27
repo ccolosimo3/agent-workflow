@@ -46,11 +46,13 @@ One risk-selected or operator-requested certifying review and its same-session
 re-reviews are authorized substeps of the selected phase. Extra, duplicate, or
 early reviews and reviewer-triggered paid activity remain gated.
 
-Natural approval authorizes the stated action and its shown natural substeps.
-Re-ask only if the target, scope, side effect, provider, input, or cap materially
-changes. Ambiguous assent or silence is not approval. Before asking, state the
-exact action, target, and material side effects. When uncertain, ask. Never
-bypass a failed hook or policy check.
+Natural approval covers the stated action and bounded correction or retry within
+the same risk envelope; failure does not consume it unless the operator or
+governing policy made it single-use. Re-ask only if the target, scope, side
+effects, provider, input scope, or cap materially changes. Ambiguous assent or
+silence is not approval. Before asking, state the exact action, target, and
+material side effects. When uncertain, ask. Never bypass a failed hook or policy
+check.
 
 Never commit secrets, credentials, private operator adapters, personal paths, or
 other untracked local configuration.
