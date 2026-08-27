@@ -11,6 +11,10 @@ or review requirements.
   preferences.
 - Read the repository's instruction chain before substantive work. Inspect the
   exact checkout and `git status` before branching, editing, or dispatching work.
+- In a linked worktree missing the root `AGENTS.local.md`, resolve the primary
+  checkout with `git worktree list --porcelain` and read its adapter when present.
+  Treat it as additive local facts; do not copy or stage it or import
+  solution-bearing plan state into the worktree.
 - Preserve unowned changes. Never reset, discard, overwrite, or “clean up” work
   outside the authorized scope.
 
@@ -27,6 +31,11 @@ Fresh current-session operator approval for the exact action is required before:
   releases, deployments, providers, databases, payments, or infrastructure;
 - paid, authenticated, live-provider, or prepared-environment activity not
   explicitly authorized with its provider, input scope, and cap.
+
+An unchanged repository-documented disposable test harness is ordinary
+verification when confined to loopback/local Docker and its own test namespace.
+Any target, wrapper, migration, reset, seed, ingest, or persistent-store
+difference remains gated.
 
 Ordinary public web search, public-page lookup, and official-documentation
 research remain allowed unless the operator says local-only/no-web; they are not
