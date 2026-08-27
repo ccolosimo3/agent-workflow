@@ -45,8 +45,10 @@ Use the host's current official mechanism and confirm it locally:
 - **Cursor:** register the package as a local Cursor plugin and configure its
   `WORKFLOW_ROOT` variable to the package's absolute path. It exposes explicit
   commands that load the central skill bodies; its manifest disables direct
-  skill registration. Headless runs use `agent --print --output-format json`;
-  confirm model options from the installed CLI.
+  skill registration. Check for the direct `cursor-agent` binary before using
+  Cursor Desktop's `cursor agent` wrapper, which may install it; installation
+  and login remain separately approved. Headless runs use `cursor-agent --print
+  --output-format json`; confirm model options from the installed CLI.
 - **OpenCode:** use the same `~/.agents/skills/` links, or register the package
   `skills/` directory in `opencode.json`. Non-interactive runs use `opencode run
   --format json`, with `--model`, `--variant`, and `--session` when supported.
@@ -58,6 +60,11 @@ only the package's explicit command shims; and OpenCode uses
 `metadata.opencode/autoinvoke: false`. Setup must verify that state before
 declaring registration complete. Owning phases start required child phases by
 naming that entrypoint explicitly in the fresh task's initial prompt.
+
+Desktop command discovery does not prove headless command expansion. For Cursor
+CLI automation, confirm the installed version's behavior or name the canonical
+`SKILL.md` path directly in the prompt and expose the package root with the
+supported workspace/additional-directory option.
 
 These registrations point to the central package rather than copying skill
 bodies. Updating the central checkout updates all hosts. If links are unavailable

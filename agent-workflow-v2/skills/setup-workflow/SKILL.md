@@ -35,6 +35,8 @@ the package and silently break its shared references.
    skill or command IDs. During beta, any match stops registration; use package-
    path invocation or a clean isolated host home/profile instead. Never print
    credentials or make a model/provider call merely to test setup.
+   For Cursor, check for the direct `cursor-agent` binary before invoking the
+   Desktop `cursor agent` wrapper because the wrapper may install it.
 3. Record exact confirmed commands and values in the host adapter. Do not invent
    unsupported reasoning equivalence or treat a model alias as stable when the
    host exposes an exact ID. Missing hosts stay unavailable and do not block the
@@ -53,6 +55,10 @@ the package and silently break its shared references.
    package path. Write the adapter, then verify discovery, explicit-only state,
    and reference reachability without a model call. Explain any restart or new-
    session requirement.
+
+Do not infer Cursor CLI slash-command expansion from Desktop discovery. Confirm
+the installed CLI behavior; otherwise invoke automation with a prompt that names
+the canonical `SKILL.md` path and makes the package root readable.
 
 The adapter is `HOST.local.md` at the canonical package root and is ignored by
 Git. Host registrations point to that root; Cursor's thin command shims also
