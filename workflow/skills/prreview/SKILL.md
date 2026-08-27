@@ -45,7 +45,8 @@ calibration.
    PR into the current base branch.
 5. Map the behavior/system flow before -> after, material risk surfaces, affected
    tests and verification routes, and shared producer/consumer, schema, state,
-   transaction, deployment, and rollout seams.
+   transaction, recovery/expiry/cleanup, false-success/health, deployment, and
+   rollout seams.
 
 Choose a profile by risk and cohesion, then record one-line evidence in the kickoff:
 
@@ -95,6 +96,8 @@ Candidate evidence: scenario/input | PR relevance | consequence/authority |
 supporting and counterevidence | narrow check/result
 Important claims still needing proof:
 Verified-clean observations:
+Closed-loop state receipts for material stateful surfaces: adverse state |
+lifecycle transitions | success/health/recovery oracle | proof/gap
 Residual checks:
 ```
 
@@ -121,6 +124,11 @@ clean conclusions, evidence, and uncertainty. Send it to the same challenger to:
 - challenge important clean conclusions and identify an unexamined seam;
 - reconcile its blind candidates against the lead's evidence; and
 - name only the narrowest missing proof for factual disputes.
+
+The working set must include the rubric's closed-loop lifecycle receipt for every
+mapped material stateful surface. Keep a missing real-boundary proof explicit;
+green forward-path tests do not imply recovery, expiry, cleanup, or rollback
+correctness.
 
 For every candidate, establish PR relevance, a concrete supported/realistic path,
 observable consequence or authority, and confirming/refuting evidence at the

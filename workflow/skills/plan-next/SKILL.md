@@ -54,6 +54,15 @@ planning conversation rather than presenting a finished specification.
    `/spike` here when the operator asks for that formal phase; do not force a
    separate planning task merely to preserve roles. Match planning and proof to
    the current decision, using the smallest credible evidence that resolves it.
+   For supporting planning evidence, use bounded read-only subagents only when a
+   question splits cleanly or a noisy investigation would otherwise become a
+   separate planning task. Default to one helper, cap concurrent helpers at two,
+   prohibit nested delegation, and pass only task-local context. The main planner
+   owns synthesis, decisions, and durable state. Prefer Luna for mechanical
+   lookup, Terra for exploration or comparison, and Sol only when the delegated
+   question needs frontier judgment; choose reasoning in proportion to
+   complexity. Never spawn merely to keep lanes busy or layer helpers around a
+   named workflow that already owns delegation.
 2. Keep Tasks proportionate and sequence them against real dependencies. Use the
    repository's plans/index as durable state; keep chat coordination to a compact
    current / in-flight / blocked / next rollup. While this main planner is
@@ -95,10 +104,13 @@ planning conversation rather than presenting a finished specification.
   production edits and review loops stay in the dispatched task.
 - A recommendation or discussion is not authority to dispatch. Wait for an
   explicit start/spin-up/dispatch instruction.
-- Never substitute subagents for delegated work. If the host cannot create a
-  fresh user-visible Codex task, return the exact kickoff for the operator to
-  launch instead.
-- Do not create a second planning task by default. Delegate planning only when
+- Subagents may support planning evidence but do not own implementation, formal
+  review, approvals, worktrees, external actions, or durable plan state. Use a
+  fresh user-visible task when work needs mutation, operator steering, an
+  independent review context, gated/live activity, or durable execution history.
+  If the host cannot create that task, return the exact kickoff for the operator
+  to launch instead.
+- Do not create a second user-visible planning task by default. Use one only when
   the operator asks or a genuinely independent planning lane benefits from its
   own durable context.
 - Re-ground task state from the repository and task results after compaction or
