@@ -12,10 +12,11 @@ approval.
 
 ## Activation
 
-- **On-demand** is the recommended trial mode. Register explicit skills and
-  commands, but leave each host's global kernel owner untouched. Ordinary tasks
-  use the host's existing behavior; invoking a V2 phase loads the complete V2
-  authorities for that task.
+- **On-demand** is the recommended trial mode. Register the same skills and
+  commands, including automatic advisory and user-facing discovery, but leave
+  each host's global kernel owner untouched. V2 loads only when a matching skill
+  is selected by clear ordinary language or explicit invocation; unrelated tasks
+  use the host's existing behavior.
 - **Always-on** is the daily-driver mode. It uses the same package and
   entrypoints, plus one persistent host route to `references/KERNEL.md`.
 
@@ -205,9 +206,11 @@ canonical checkout unless the operator separately asks to delete it, and never
 removes host applications, credentials, repositories, or unrelated
 skills/configuration.
 
-To pause V2 without uninstalling it, switch to on-demand mode. Setup previews
-and removes only V2's persistent kernel routes, updates the matching host-adapter
-records, and leaves explicit entrypoints and the canonical checkout available.
+To pause V2's always-on kernel routing without uninstalling its skills, switch to
+on-demand mode. Setup previews and removes only V2's persistent kernel routes,
+updates the matching host-adapter records, and leaves automatic and explicit
+skill entrypoints plus the canonical checkout available. Removing skill
+discovery requires uninstalling those host registrations.
 
 ## Current host references
 

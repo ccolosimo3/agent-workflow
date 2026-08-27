@@ -11,7 +11,8 @@ marketplace manifest.
 2. Give an existing agent the path to
    [`workflow/skills/setup-workflow/SKILL.md`](workflow/skills/setup-workflow/SKILL.md)
    and ask it to run the read-only setup audit.
-3. Choose **on-demand** for a dormant trial or **always-on** for a daily driver.
+3. Choose **on-demand** to trial skill-triggered V2 without a persistent kernel,
+   or **always-on** for a daily driver.
 4. Review and approve the exact host registrations and configuration changes
    before setup writes them.
 5. Open fresh host sessions and invoke the workflow phases you want to use.

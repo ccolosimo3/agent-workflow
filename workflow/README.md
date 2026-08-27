@@ -49,9 +49,9 @@ or claim fresh-context independence.
    `~/.agents/workflow`.
 2. Ask an existing agent to read `skills/setup-workflow/SKILL.md` by path and run
    its read-only capability and collision audit.
-3. Choose `on-demand` for a dormant trial or `always-on` for a daily driver,
-   then choose enabled hosts, model/reasoning profiles, workload preferences,
-   and outer-review behavior.
+3. Choose `on-demand` to trial skill-triggered V2 without a persistent kernel or
+   `always-on` for a daily driver, then choose enabled hosts, model/reasoning
+   profiles, workload preferences, and outer-review behavior.
 4. Review and approve setup's exact activation, discovery, adapter, and
    replacement preview.
 5. Let setup verify automatic advisory and user-facing discovery, explicit-only
