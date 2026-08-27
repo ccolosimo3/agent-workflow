@@ -3,4 +3,4 @@ interface:
   short_description: "Coordinate scoped project planning and execution"
   default_prompt: "Use $project-lead to get current, shape the next work, and coordinate execution without implementing it here."
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true

@@ -1,6 +1,7 @@
 ---
 name: independent-review
 description: Run the fresh independent outer gate for a converged implementation when risk routing or the operator selects it, then re-review its patches in the same conversation. Not for coworker PRs or inner review.
+disable-model-invocation: true
 metadata:
   opencode/autoinvoke: false
 ---

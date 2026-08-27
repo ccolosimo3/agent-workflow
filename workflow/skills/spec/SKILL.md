@@ -2,7 +2,7 @@
 name: spec
 description: Turn an operator-selected work item into one grounded, right-sized, implementation-ready Task with behavioral acceptance and risk-selected verification. Use for a formal spec; not for casual planning, architectural option comparison, or implementation.
 metadata:
-  opencode/autoinvoke: false
+  opencode/autoinvoke: true
 ---
 
 # Spec

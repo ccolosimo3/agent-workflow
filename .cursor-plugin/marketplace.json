@@ -10,7 +10,7 @@
     {
       "name": "agent-workflow-v2",
       "source": "workflow",
-      "description": "Explicit commands for Agent Workflow V2, with optional persistent activation configured separately."
+      "description": "Natural-language workflow guidance and explicit commands for Agent Workflow V2, with optional persistent activation configured separately."
     }
   ]
 }

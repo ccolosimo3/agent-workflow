@@ -3,4 +3,4 @@ interface:
   short_description: "Prove one risky design bet before implementation"
   default_prompt: "Use $spike to run a disposable GO or NO-GO proof of this design bet."
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true

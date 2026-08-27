@@ -18,6 +18,12 @@ plan
   -> complete
 ```
 
+Skill discovery is not phase selection. A clear operator request in ordinary
+language may select the matching user-facing phase; relevance alone may not
+start, expand, or chain a phase, create its artifacts, dispatch work, grant
+authority, or claim fresh-context independence. Only a selected phase's
+declared handoff may start its review child.
+
 The graph is not a mandatory pipeline. The operator selects each substantive
 phase: explore, spike, spec, or implementation. Selecting formal spec or
 implementation includes its required inner review as that phase's completion

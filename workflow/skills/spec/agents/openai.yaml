@@ -3,4 +3,4 @@ interface:
   short_description: "Write a right-sized implementation-ready specification"
   default_prompt: "Use $spec to turn this work item into a grounded, review-ready implementation spec."
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true

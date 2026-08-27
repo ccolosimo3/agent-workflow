@@ -1,8 +1,8 @@
 ---
 name: project-lead
-description: Coordinate a project's current planning, sequence the next independently reviewable work, and prepare authorized execution handoffs without implementing or certifying in the planning session. Use for an ongoing main planner or a request to decide and coordinate what should happen next.
+description: Coordinate a project's current planning, sequence the next independently reviewable work, and prepare authorized execution handoffs without implementing or certifying in the planning session. Use only when the operator establishes this task as an ongoing main planner/project lead or explicitly asks it to coordinate multiple work items; not for a one-off status, option, or next-step question.
 metadata:
-  opencode/autoinvoke: false
+  opencode/autoinvoke: true
 ---
 
 # Project Lead
@@ -28,6 +28,10 @@ facts may narrow execution but cannot widen the V2 kernel's approval or review
 requirements.
 
 ## Planning role
+
+Confirm the operator established this task as the main planner/project lead or
+explicitly requested multi-item coordination; otherwise answer directly without
+assuming shared program ownership or dispatching.
 
 - Get current from the repository's concise status, roadmap, active plans, recent
   landed work, and exact checkout state. Follow owner routes instead of reading

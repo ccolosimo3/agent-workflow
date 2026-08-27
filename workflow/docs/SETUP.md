@@ -47,12 +47,15 @@ or command IDs. Any match blocks ordinary installation rather than replacing or
 ambiguously shadowing an active entrypoint; replacement requires the separately
 approved cutover path.
 
-Register explicit-only phase entrypoints and automatic expert-guidance skills
-through the host's current official mechanism. Expert guidance can inform an
-already-selected activity but cannot select a phase or create workflow
-artifacts. In always-on mode, also register one persistent route to the central
-`references/KERNEL.md`. Preserve unrelated existing user instructions and
-confirm only the selected surfaces locally.
+Register user-facing entrypoints and advisory skills for automatic discovery,
+and control-plane skills for explicit or declared internal invocation, through
+the host's current supported mechanism. Discovery may recognize a clear
+ordinary-language request, but `references/WORKFLOW.md` prevents relevance alone
+from selecting or chaining a phase, creating artifacts, dispatching work,
+granting authority, or claiming fresh-context independence. In always-on mode,
+also register one persistent route to the central `references/KERNEL.md`.
+Preserve unrelated existing user instructions and confirm only the selected
+surfaces locally.
 
 - **Codex:** link each package skill into `~/.agents/skills/`. In always-on mode,
   resolve `CODEX_HOME` and its active global instruction owner:
@@ -73,9 +76,10 @@ confirm only the selected surfaces locally.
   path. Normal Desktop setup is **Customize → Plugins → Add Marketplace →
   Import from Disk**; select the V2 repository root, add `agent-workflow-v2` at
   user/personal scope, and set the variable once. The plugin supplies explicit
-  phase commands while disabling direct skill registration. Link the package's
-  expert-guidance skills into `~/.agents/skills/` unless those exact canonical
-  links already exist through another selected host. In always-on mode, setup
+  command shims while shared discovery supplies automatic skills. Link all
+  package skills into `~/.agents/skills/` unless those exact canonical links
+  already exist through another selected host; the packaged invocation controls
+  keep control-plane skills explicit-only. In always-on mode, setup
   additionally renders the packaged kernel-rule template into the user's Cursor
   rules directory with the absolute package path; on-demand mode omits that
   rule. Check for the direct `cursor-agent` binary before using Cursor Desktop's
@@ -98,16 +102,23 @@ must resolve its canonical skill and shared authorities. Setup records the
 activation mode, each entrypoint scope, and any kernel owner, then verifies the
 selected surfaces before declaring a host ready.
 
-Every workflow phase skill is explicit-only through the selected host's
-supported control: Codex uses each phase's `agents/openai.yaml` policy; Claude
-Code sets each phase ID to `user-invocable-only` in `skillOverrides`; Cursor uses
-the package's explicit command shims and the phase descriptions require operator
-selection; and OpenCode uses `metadata.opencode/autoinvoke: false`. The
-`typescript-engineering`, `technical-writing`, and `blast-radius` expert skills
-remain eligible for automatic selection under their narrow descriptions. Setup
-must verify both states before declaring registration complete. Owning phases
-start required child phases by naming that entrypoint explicitly in the fresh
-task's initial prompt.
+Invocation has three classes across hosts:
+
+- `typescript-engineering`, `technical-writing`, and `blast-radius` are
+  automatic advisory guidance under their narrow descriptions.
+- `explore`, `spike`, `spec`, `implement`, `review-pr`, and `project-lead` are
+  automatic only when ordinary language clearly selects that user-facing work.
+- `setup-workflow`, `review-change`, `review-spec`, `independent-review`, and
+  `independent-spec-review` are explicit/internal control-plane skills. Codex
+  uses `agents/openai.yaml`; Claude Code sets only these IDs to
+  `user-invocable-only` in `skillOverrides`; Cursor uses
+  `disable-model-invocation: true`; and OpenCode uses
+  `metadata.opencode/autoinvoke: false`.
+
+Setup must verify all three states before declaring registration complete.
+Owning spec and implementation phases start their required review children by
+naming the control-plane entrypoint explicitly in the fresh task's initial
+prompt; the operator does not need to invoke those review loops separately.
 
 Desktop command discovery does not prove headless command expansion. For Cursor
 CLI automation, confirm the installed version's behavior or name the canonical

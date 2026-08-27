@@ -2,7 +2,7 @@
 name: explore
 description: Compare credible architectural approaches with bounded repository and primary-source evidence after the operator selects a formal options pass. Use when the approach is genuinely open; not for casual questions, implementation, or proving one already chosen bet.
 metadata:
-  opencode/autoinvoke: false
+  opencode/autoinvoke: true
 ---
 
 # Explore

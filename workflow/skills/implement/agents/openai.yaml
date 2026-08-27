@@ -3,4 +3,4 @@ interface:
   short_description: "Implement and review one right-sized work item"
   default_prompt: "Use $implement to implement this approved work item through review and completion."
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true

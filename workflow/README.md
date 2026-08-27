@@ -26,8 +26,8 @@ canonical review authority with human-facing calibration.
 
 - `references/` — portable kernel, workflow, planning, testing, and review
   authorities;
-- `skills/` — explicit phase entrypoints plus compact, automatically selected
-  expert guidance for matching technical work;
+- `skills/` — natural-language workflow entrypoints, internal review controls,
+  and compact advisory guidance for matching technical work;
 - `templates/` — user host and repository adapters plus PR-body shape;
 - `docs/SETUP.md` — installation, host configuration, and uninstall guidance.
 - `THIRD_PARTY_NOTICES.md` — attribution for adapted third-party guidance.
@@ -36,10 +36,12 @@ Skills resolve shared files relative to this package. Keep one canonical local
 checkout and expose its skills through links or configured discovery paths rather
 than maintaining copied folders.
 
-The workflow phases remain explicit. The `typescript-engineering`,
-`technical-writing`, and `blast-radius` skills may be selected automatically
-when their narrow descriptions match; they inform the active task without
-selecting a phase, expanding scope, or creating an artifact.
+Clear ordinary language can select the matching user-facing workflow entrypoint,
+while setup and review-control skills remain explicit/internal. The
+`typescript-engineering`, `technical-writing`, and `blast-radius` skills may be
+selected automatically when their narrow descriptions match. Skill discovery
+cannot manufacture operator intent, expand scope, chain phases, grant authority,
+or claim fresh-context independence.
 
 ## Start
 
@@ -52,10 +54,12 @@ selecting a phase, expanding scope, or creating an artifact.
    and outer-review behavior.
 4. Review and approve setup's exact activation, discovery, adapter, and
    replacement preview.
-5. Let setup verify explicit phase discovery and shared references without a
-   model call, plus the persistent kernel only in always-on mode, then add a
-   short repository adapter from `templates/repo-adapter.md` if wanted.
-6. Open a fresh session and invoke a phase only when that phase is wanted.
+5. Let setup verify automatic advisory and user-facing discovery, explicit-only
+   control-plane entrypoints, and shared references without a model call, plus
+   the persistent kernel only in always-on mode; then add a short repository
+   adapter from `templates/repo-adapter.md` if wanted.
+6. Open a fresh session and request the wanted work naturally or invoke its
+   entrypoint explicitly.
 
 See [setup and uninstall](docs/SETUP.md) for host-specific details.
 

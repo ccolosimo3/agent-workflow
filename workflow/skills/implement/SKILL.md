@@ -2,7 +2,7 @@
 name: implement
 description: Implement one operator-selected work item in its minimum-sufficient repository-conventional shape, verify it proportionally, and drive inner and selected outer review to completion. Use for own-work execution; not for planning or coworker PR review.
 metadata:
-  opencode/autoinvoke: false
+  opencode/autoinvoke: true
 ---
 
 # Implement
