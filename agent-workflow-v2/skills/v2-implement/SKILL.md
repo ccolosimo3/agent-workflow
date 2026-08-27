@@ -37,14 +37,28 @@ Implement the smallest complete shape that satisfies acceptance, failures, and
 safety; do not add speculative recovery, compatibility, configuration, state, or
 abstractions.
 
-For a diagnosis-heavy bug fix, use an evidence-first loop when the affected
-boundary is practical: observe the reported symptom there before editing, narrow
-plausible causes, confirm the selected mechanism with repository or runtime
-evidence, then apply the smallest fix and repeat the same observation. Do not
-start with speculative fallback or guard code. If exact reproduction remains
-unavailable after the narrowest reasonable attempt, state why and use the
-strongest safe proxy plus the exact remaining real-boundary proof instead of
-stalling or inventing weak automation.
+### Conditional methods
+
+These methods apply only within an already-selected implementation. They do not
+select a phase, expand scope, or require a label, artifact, or receipt.
+
+- **Diagnosis-heavy bug:** When the affected boundary is practical, observe the
+  reported symptom there before editing, narrow plausible causes, confirm the
+  selected mechanism with repository or runtime evidence, then apply the smallest
+  fix and repeat the same observation. Do not start with speculative fallback or
+  guard code. If exact reproduction remains unavailable after the narrowest
+  reasonable attempt, state why and use the strongest safe proxy plus the exact
+  remaining real-boundary proof instead of stalling or inventing weak automation.
+- **Explicitly authorized behavior-preserving refactor:** Establish the current
+  observable contract at the real boundary before structural edits, keep the same
+  proof green through small steps, and separate any behavior change discovered.
+- **Explicit performance outcome:** Capture the baseline at the real boundary,
+  change the measured dominant cost, then compare the same workload and check that
+  material cost was not merely displaced.
+- **Migration or lifecycle:** Identify the invariant and applicable supported
+  transitions before editing; apply `REVIEW.md`'s closed-loop lifecycle audit and
+  `TESTING.md`'s persistence/schema bar during implementation, not only after
+  handoff.
 
 A simpler repository-conventional mechanism may replace a planned mechanism when
 observable behavior and approved contracts remain intact. Return to planning only

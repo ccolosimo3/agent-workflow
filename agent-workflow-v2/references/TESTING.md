@@ -82,6 +82,15 @@ exceptions—never print a clean row for every assertion.
   silently corrupt data.
 - **Integration or contract:** cross the actual producer/consumer seam and assert
   the caller-visible status, shape, error, or side effect.
+- **Behavior-preserving refactor:** prove before/after parity at the same real
+  boundary across every applicable status, output or data shape, error, side
+  effect, persistence result, and contract. Prefer existing coverage; use a
+  disposable equivalence or characterization proof when needed rather than
+  turning incidental structure into a permanent test.
+- **Performance claim:** compare before/after at the same representative workload,
+  environment, and metric. Repeat enough to distinguish the change from normal
+  variation, and confirm material cost was not merely shifted to another
+  resource, stage, or tail.
 - **UI:** render and interact through the real component boundary; assert visible
   or accessible behavior. Load `FRONTEND.md` for visual, state, accessibility,
   and layout proof.
