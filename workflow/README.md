@@ -27,7 +27,7 @@ canonical review authority with human-facing calibration.
 - `references/` — portable kernel, workflow, planning, testing, and review
   authorities;
 - `skills/` — natural-language workflow entrypoints, internal review controls,
-  and compact advisory guidance for matching technical work;
+  compact advisory guidance, and focused explanation utilities;
 - `templates/` — user host and repository adapters plus PR-body shape;
 - `docs/SETUP.md` — installation, host configuration, and uninstall guidance.
 - `THIRD_PARTY_NOTICES.md` — attribution for adapted third-party guidance.
@@ -38,10 +38,11 @@ than maintaining copied folders.
 
 Clear ordinary language can select the matching user-facing workflow entrypoint,
 while setup and review-control skills remain explicit/internal. The
-`typescript-engineering`, `technical-writing`, and `blast-radius` skills may be
-selected automatically when their narrow descriptions match. Skill discovery
-cannot manufacture operator intent, expand scope, chain phases, grant authority,
-or claim fresh-context independence.
+`typescript-engineering`, `technical-writing`, `blast-radius`, and `show-me`
+may be selected automatically when their narrow descriptions match. `bro`
+remains an explicit operator utility. Skill discovery cannot manufacture
+operator intent, expand scope, chain phases, grant authority, or claim
+fresh-context independence.
 
 ## Start
 

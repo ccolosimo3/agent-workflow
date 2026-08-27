@@ -57,11 +57,11 @@ the package and silently break its shared references.
    CLI, logging in, or running even a tiny paid smoke call is separate and
    requires explicit authorization.
 5. After approval, register the package's user-facing entrypoints and advisory
-   skills for automatic discovery, and its control-plane skills for explicit or
-   declared internal invocation, through each selected host's supported
-   mechanism. Follow `WORKFLOW.md`: discovery can recognize clear operator
-   intent but cannot create intent, authority, artifacts, phase chaining, or
-   fresh-context independence. In always-on mode, also
+   skills for automatic discovery, and its explicit utilities and control-plane
+   skills for explicit or declared internal invocation, through each selected
+   host's supported mechanism. Follow `WORKFLOW.md`: discovery can recognize
+   clear operator intent but cannot create intent, authority, artifacts, phase
+   chaining, or fresh-context independence. In always-on mode, also
    register one persistent route to `KERNEL.md`: Codex's active global owner
    after `AGENTS.override.md` precedence, Claude Code's global `CLAUDE.md`
    import, a rendered user-level Cursor rule from the packaged template, or
@@ -69,13 +69,13 @@ the package and silently break its shared references.
    untouched. Preserve unrelated global instructions and block if always-on
    composition would shadow them or cannot be made safe. Preserve the packaged
    Codex and OpenCode invocation controls, set Claude Code `skillOverrides` to
-   `user-invocable-only` only for the control-plane skills, and set Cursor's
-   `WORKFLOW_ROOT` to the absolute package path. Leave advisory and user-facing
-   entrypoints eligible for automatic invocation according to their narrow
-   descriptions and host policy. Write the adapter, then verify automatic
-   advisory and user-facing discovery, explicit-only control-plane entrypoints,
-   shared-reference reachability, and either the active persistent route or its
-   absence without a model call. Explain
+   `user-invocable-only` only for the skills packaged as explicit, and set
+   Cursor's `WORKFLOW_ROOT` to the absolute package path. Leave advisory and
+   user-facing entrypoints eligible for automatic invocation according to their
+   narrow descriptions and host policy. Write the adapter, then verify automatic
+   advisory and user-facing discovery, explicit-only utilities and control-plane
+   entrypoints, shared-reference reachability, and either the active persistent
+   route or its absence without a model call. Explain
    that a fresh session is required to prove loaded behavior; any such smoke
    remains separately approval-gated.
 

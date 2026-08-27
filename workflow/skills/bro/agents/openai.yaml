@@ -1,0 +1,6 @@
+interface:
+  display_name: "Bro"
+  short_description: "Restate the last response plainly"
+  default_prompt: "Use $bro to restate the last response in plain, high-level language."
+policy:
+  allow_implicit_invocation: false

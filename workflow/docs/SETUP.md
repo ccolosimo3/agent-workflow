@@ -105,15 +105,15 @@ selected surfaces before declaring a host ready.
 
 Invocation has three classes across hosts:
 
-- `typescript-engineering`, `technical-writing`, and `blast-radius` are
-  automatic advisory guidance under their narrow descriptions.
+- `typescript-engineering`, `technical-writing`, `blast-radius`, and `show-me`
+  are automatic advisory guidance under their narrow descriptions.
 - `explore`, `spike`, `spec`, `implement`, `review-pr`, and `project-lead` are
   automatic only when ordinary language clearly selects that user-facing work.
-- `setup-workflow`, `review-change`, `review-spec`, `independent-review`, and
-  `independent-spec-review` are explicit/internal control-plane skills. Codex
-  uses `agents/openai.yaml`; Claude Code sets only these IDs to
-  `user-invocable-only` in `skillOverrides`; Cursor uses
-  `disable-model-invocation: true`; and OpenCode uses
+- `bro` is an explicit operator utility. `setup-workflow`, `review-change`,
+  `review-spec`, `independent-review`, and `independent-spec-review` are
+  explicit/internal control-plane skills. Codex uses `agents/openai.yaml`;
+  Claude Code sets these IDs to `user-invocable-only` in `skillOverrides`;
+  Cursor uses `disable-model-invocation: true`; and OpenCode uses
   `metadata.opencode/autoinvoke: false`.
 
 Setup must verify all three states before declaring registration complete.
