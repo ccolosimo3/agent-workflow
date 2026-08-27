@@ -57,8 +57,12 @@ other untracked local configuration.
   broader or owns more contract/lifecycle behavior than the product delta, stop
   and reduce it to the smallest causal boundary using existing production owners.
 - Added durable machinery must trace to a current requirement, observed failure,
-  established pattern, or second real consumer. A larger design remains correct
-  when those constraints require it or it reduces operational complexity.
+  established pattern, or second real consumer. When the same correction recurs
+  and a repository mechanism can reliably prevent it, prefer the lowest existing
+  owner—type/API boundary, runtime guard, or focused static/CI check—over more
+  workflow prose; promotion beyond the authorized task remains separate work. A
+  larger design remains correct when those constraints require it or it reduces
+  operational complexity.
 - A planner-authored invariant is not independent authority. Before adding
   durable state or recovery for an exceptional retry or manual fallback, compare
   it with handling that exception through the existing path.
