@@ -1,8 +1,9 @@
 # Agent Workflow V2 Implementation Spec
 
-Status: Slices A through D and the first Fast-route pilot are complete on
-`workflow-v2`; Slice E release packaging is in progress. V1 remains canonical
-and active; V2 remains inactive pending broader pilots and operator approval.
+Status: Slices A through E, the selected pilots, final package review, and the
+Cursor host smoke are complete on `workflow-v2`. The approved personal cutover
+is in progress; V1 remains active until Codex and Claude fresh-session checks
+pass.
 
 ## Goal
 

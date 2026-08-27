@@ -1,5 +1,5 @@
 {
-  "name": "agent-workflow-v2-local",
+  "name": "agent-workflow-local",
   "owner": {
     "name": "Chris Colosimo"
   },
@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "agent-workflow-v2",
-      "source": "agent-workflow-v2",
+      "source": "workflow",
       "description": "Persistent kernel guidance and explicit commands for Agent Workflow V2."
     }
   ]

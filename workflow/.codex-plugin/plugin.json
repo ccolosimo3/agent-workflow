@@ -1,0 +1,18 @@
+{
+  "name": "agent-workflow-v2",
+  "version": "1.0.0",
+  "description": "A portable, risk-proportionate coding-agent workflow for planning, implementation, and review.",
+  "author": {
+    "name": "Chris Colosimo"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Workflow V2",
+    "shortDescription": "Run the portable Workflow V2 core loop.",
+    "longDescription": "Agent Workflow V2 provides portable planning, minimum-sufficient implementation, risk-selected verification, and same-reviewer inner and outer gates.",
+    "developerName": "Chris Colosimo",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Follow Agent Workflow V2 and choose the least sufficient route for this request."
+  }
+}

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Plan Next"
-  short_description: "Plan and coordinate a project's next work"
-  default_prompt: "Use $plan-next as my main planning agent: get current, shape what comes next, and dispatch authorized work to fresh Codex tasks."

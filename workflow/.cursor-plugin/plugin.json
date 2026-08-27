@@ -1,0 +1,22 @@
+{
+  "name": "agent-workflow-v2",
+  "version": "1.0.0",
+  "description": "Persistent kernel guidance and explicit commands for Agent Workflow V2.",
+  "author": {
+    "name": "Chris Colosimo"
+  },
+  "skills": [],
+  "rules": "./cursor-rules/",
+  "commands": "./cursor-commands/",
+  "variables": {
+    "type": "object",
+    "properties": {
+      "WORKFLOW_ROOT": {
+        "type": "string",
+        "title": "Workflow package root",
+        "description": "Absolute path to the central Agent Workflow V2 package."
+      }
+    },
+    "required": ["WORKFLOW_ROOT"]
+  }
+}

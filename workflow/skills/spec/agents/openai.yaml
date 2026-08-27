@@ -1,6 +1,6 @@
 interface:
   display_name: "Spec"
-  short_description: "Formally plan one selected work item"
-  default_prompt: "Use $spec to produce an implementation-ready plan for this issue."
+  short_description: "Write a right-sized implementation-ready specification"
+  default_prompt: "Use $spec to turn this work item into a grounded, review-ready implementation spec."
 policy:
   allow_implicit_invocation: false

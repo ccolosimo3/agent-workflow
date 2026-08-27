@@ -1,6 +1,0 @@
-interface:
-  display_name: "Behavior"
-  short_description: "Explain work behavior and key decisions"
-  default_prompt: "Use $behavior to give me a concise summary of the behavior and key design decisions for this work."
-policy:
-  allow_implicit_invocation: false

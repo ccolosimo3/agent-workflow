@@ -1,6 +1,0 @@
-interface:
-  display_name: "Outer Spec Review"
-  short_description: "Run an independent gate on a converged spec"
-  default_prompt: "Use $outerspecreview to independently review this converged spec."
-policy:
-  allow_implicit_invocation: false
