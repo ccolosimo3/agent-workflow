@@ -99,6 +99,9 @@ drift.
 (h) For any changed code that parses, normalizes, groups, filters, allocates,
     falls back, or reduces input, run the Information-loss audit below even when
     the code is private and no exported/public or cross-boundary contract changed.
+(i) For every material changed stateful lifecycle, run the Closed-loop lifecycle
+    audit below. Forward-path success alone cannot prove a migration, monitor,
+    queue, retry, lease, cleanup/expiry window, or persisted workflow.
 
 ## Scope-vs-intent check (run BEFORE issuing any verdict)
 
@@ -152,6 +155,20 @@ reduces input, identify which distinctions the resulting representation preserve
 and discards. For every discarded distinction that could affect correctness,
 policy, or uniqueness, construct the cheapest pair of inputs that become
 indistinguishable and test the resulting behavior.
+
+## Closed-loop lifecycle audit
+
+For each material changed stateful surface, trace one realistic adverse state
+through every retry, timeout, expiry, cleanup, fallback, or rollback transition
+that can end, hide, or recover it. Exercise the real supported entry and operation
+boundary. Record internally:
+
+`adverse state | lifecycle transitions | success/health/recovery oracle | proof or explicit residual`
+
+Ask whether any transition can report healthy, successful, complete, or reverted,
+or erase actionable evidence, while the underlying invariant remains false. Admit
+that as a candidate when the normal candidate-admission requirements are met. Apply
+this proportionately; a review with no material stateful surface needs no receipt.
 
 ## Behavior-proof audit
 
