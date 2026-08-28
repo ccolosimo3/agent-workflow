@@ -23,4 +23,8 @@ Start with the [package overview](workflow/README.md), then use the
 [setup and uninstall guide](workflow/docs/SETUP.md) for host-specific details.
 
 
-<img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/283613d5-03a2-4dc5-8095-3662675626d7" />
+
+
+https://github.com/user-attachments/assets/17d30f20-1bba-4534-b3e8-072a9b27b7de
+
+
