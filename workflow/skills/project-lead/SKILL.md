@@ -62,6 +62,10 @@ emit a phase kickoff. Do not launch implementation or certification until their
 V2 entrypoints and authorities exist, and do not claim dispatch, isolation, or
 model selection the host did not provide.
 
+When the receiver can read a named artifact, pass its path and exact revision or
+hash plus only the shared envelope and task-specific deltas; do not inline the
+artifact or restate workflow policy.
+
 ## Continuation
 
 Follow `WORKFLOW.md` for route selection, pause, recovery, and worker-liveness
