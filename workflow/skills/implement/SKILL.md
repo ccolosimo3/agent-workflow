@@ -65,7 +65,8 @@ select a phase, expand scope, or require a label, artifact, or receipt.
 - **Repetitive mechanical change or sweep:** Establish one representative
   transformation and its real-boundary proof before scaling it. Use the smallest
   deterministic automation only when it is safer or more repeatable than the
-  remaining manual edits; batch only when it improves proof or fault isolation.
+  remaining manual edits; confirm it reproduces the proven transformation before
+  applying it further, and batch only when that improves proof or fault isolation.
   Remove task-local tooling unless a continuing consumer earns it, and never let
   it own product behavior.
 - **Explicit performance outcome:** Capture the baseline at the real boundary,
