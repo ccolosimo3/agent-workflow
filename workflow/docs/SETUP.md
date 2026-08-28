@@ -12,8 +12,8 @@ approval.
 
 ## Activation
 
-- **On-demand** is the recommended trial mode. Register the same skills and
-  commands, including automatic advisory and user-facing discovery, but leave
+- **On-demand** is the recommended trial mode. Register the same skills,
+  including automatic advisory and user-facing discovery, but leave
   each host's global kernel owner untouched. V2 loads only when a matching skill
   is selected by clear ordinary language or explicit invocation; unrelated tasks
   use the host's existing behavior.
@@ -44,9 +44,11 @@ the active installation is ready to switch.
 ## Host registration
 
 Before writing, scan every selected host's discovery roots for all release skill
-or command IDs. Any match blocks ordinary installation rather than replacing or
-ambiguously shadowing an active entrypoint; replacement requires the separately
-approved cutover path.
+IDs and legacy V2 Cursor command/plugin registrations. An existing skill link
+that resolves to this exact canonical package is reusable. Every legacy V2
+Cursor command/plugin registration and any other match blocks ordinary
+installation rather than being left to shadow an entrypoint; removal or
+replacement requires the separately approved cutover path.
 
 Register user-facing entrypoints and advisory skills for automatic discovery,
 and control-plane skills for explicit or declared internal invocation, through
@@ -72,21 +74,17 @@ surfaces locally.
   Non-interactive runs use `claude -p --output-format json` (or
   `stream-json`), with `--model`, `--effort`, and `--resume` when
   supported.
-- **Cursor:** register the package as a local Cursor plugin at user/personal
-  scope and configure its `WORKFLOW_ROOT` variable to the package's absolute
-  path. Normal Desktop setup is **Customize → Plugins → Add Marketplace →
-  Import from Disk**; select the V2 repository root, add `agent-workflow-v2` at
-  user/personal scope, and set the variable once. The plugin supplies explicit
-  command shims while shared discovery supplies automatic skills. Link all
-  package skills into `~/.agents/skills/` unless those exact canonical links
-  already exist through another selected host; the packaged invocation controls
-  keep control-plane skills explicit-only. In always-on mode, setup
-  additionally renders the packaged kernel-rule template into the user's Cursor
-  rules directory with the absolute package path; on-demand mode omits that
-  rule. Check for the direct `cursor-agent` binary before using Cursor Desktop's
-  `cursor agent` wrapper, which may install it; installation and login remain
-  separately approved. Headless runs use `cursor-agent --print --output-format
-  json`; confirm model options from the installed CLI.
+- **Cursor:** use the same canonical `~/.agents/skills/` links. Current Cursor
+  discovers those skills automatically and exposes them for manual
+  `/skill-name` invocation; do not also install command shims for the same IDs.
+  The packaged invocation controls keep control-plane skills explicit-only. In
+  always-on mode, setup additionally renders the packaged kernel-rule template
+  into the user's Cursor rules directory with the absolute package path;
+  on-demand mode omits that rule. Check for the direct `cursor-agent` binary
+  before using Cursor Desktop's `cursor agent` wrapper, which may install it;
+  installation and login remain separately approved. Headless runs use
+  `cursor-agent --print --output-format json`; confirm model options from the
+  installed CLI.
 - **OpenCode:** use the same `~/.agents/skills/` links, or register the package
   `skills/` directory in `opencode.json`. In always-on mode, resolve its config
   directory (for example, with `opencode debug paths`) and use that directory's
@@ -121,10 +119,10 @@ Owning spec and implementation phases start their required review children by
 naming the control-plane entrypoint explicitly in the fresh task's initial
 prompt; the operator does not need to invoke those review loops separately.
 
-Desktop command discovery does not prove headless command expansion. For Cursor
-CLI automation, confirm the installed version's behavior or name the canonical
-`SKILL.md` path directly in the prompt and expose the package root with the
-supported workspace/additional-directory option.
+Desktop skill discovery does not prove headless slash-command expansion. For
+Cursor CLI automation, confirm the installed version's behavior or name the
+canonical `SKILL.md` path directly in the prompt and expose the package root
+with the supported workspace/additional-directory option.
 
 These registrations point to the central package rather than copying kernel or
 skill bodies. Updating the central checkout updates all hosts. If links are
@@ -174,7 +172,7 @@ it. Direct operator instructions override stored preferences for that invocation
 
 ## Verification and optional smoke test
 
-Setup verifies executable/version, non-secret auth status, skill/command
+Setup verifies executable/version, non-secret auth status, skill
 discovery, shared-reference reachability, selected activation behavior, and
 documented structured-output flags without a model call. A real prompt is
 optional and separately approval-gated because it may consume paid usage.
@@ -200,11 +198,11 @@ layer.
 ## Uninstall
 
 Run `setup-workflow` and request uninstall. It previews the exact V2 skill
-registrations/links, kernel owners/scopes, and host adapter it will remove.
-After approval it removes only those V2-created surfaces. It preserves the
-canonical checkout unless the operator separately asks to delete it, and never
-removes host applications, credentials, repositories, or unrelated
-skills/configuration.
+registrations/links, legacy V2 Cursor command/plugin registrations, kernel
+owners/scopes, and host adapter it will remove. After approval it removes only
+those V2-created surfaces. It preserves the canonical checkout unless the
+operator separately asks to delete it, and never removes host applications,
+credentials, repositories, or unrelated skills/configuration.
 
 To pause V2's always-on kernel routing without uninstalling its skills, switch to
 on-demand mode. Setup previews and removes only V2's persistent kernel routes,

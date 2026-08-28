@@ -35,14 +35,18 @@ the package and silently break its shared references.
    help, non-secret authentication/config status, model listing when locally
    available, skill discovery path, fresh launch/resume capability, and
    structured-output flags. Scan every active discovery root for all release
-   skill or command IDs. Any match blocks ordinary installation; replacement
-   uses only the separately approved cutover path. Never print credentials or
-   make a model/provider call merely to test setup.
+   skill IDs and legacy V2 Cursor command/plugin registrations. An existing
+   skill link that resolves to this exact canonical package is reusable. Every
+   legacy V2 Cursor command/plugin registration and any other match blocks
+   ordinary installation; removal or replacement uses only the separately
+   approved cutover path. Never print credentials or make a model/provider call
+   merely to test setup.
    For Codex, resolve `CODEX_HOME` and the active global instruction owner after
    `AGENTS.override.md` precedence. For OpenCode, resolve its config directory
    (for example, with `opencode debug paths`) and its resulting global
-   `AGENTS.md`. For Cursor, inspect the selected plugin installation scope.
-   For Cursor, check for the direct `cursor-agent` binary before invoking the
+   `AGENTS.md`. For Cursor, inspect native `~/.agents/skills/` discovery,
+   `~/.cursor/rules/`, and any legacy V2 command/plugin registrations. Check for
+   the direct `cursor-agent` binary before invoking the
    Desktop `cursor agent` wrapper because the wrapper may install it.
 3. Record exact confirmed commands and values in the host adapter. Do not invent
    unsupported reasoning equivalence or treat a model alias as stable when the
@@ -69,13 +73,14 @@ the package and silently break its shared references.
    untouched. Preserve unrelated global instructions and block if always-on
    composition would shadow them or cannot be made safe. Preserve the packaged
    Codex and OpenCode invocation controls, set Claude Code `skillOverrides` to
-   `user-invocable-only` only for the skills packaged as explicit, and set
-   Cursor's `WORKFLOW_ROOT` to the absolute package path. Leave advisory and
-   user-facing entrypoints eligible for automatic invocation according to their
-   narrow descriptions and host policy. Write the adapter, then verify automatic
-   advisory and user-facing discovery, explicit-only utilities and control-plane
-   entrypoints, shared-reference reachability, and either the active persistent
-   route or its absence without a model call. Explain
+   `user-invocable-only` only for the skills packaged as explicit. Cursor uses
+   the shared `~/.agents/skills/` links for both automatic discovery and manual
+   slash invocation; do not install command shims for the same IDs. Leave
+   advisory and user-facing entrypoints eligible for automatic invocation
+   according to their narrow descriptions and host policy. Write the adapter,
+   then verify automatic advisory and user-facing discovery, explicit-only
+   utilities and control-plane entrypoints, shared-reference reachability, and
+   either the active persistent route or its absence without a model call. Explain
    that a fresh session is required to prove loaded behavior; any such smoke
    remains separately approval-gated.
 
@@ -84,8 +89,7 @@ the installed CLI behavior; otherwise invoke automation with a prompt that names
 the canonical `SKILL.md` path and makes the package root readable.
 
 The adapter is `HOST.local.md` at the canonical package root and is ignored by
-Git. Host registrations point to that root; Cursor's thin command shims also
-live there and load the same skill bodies. Never copy skill bodies or the adapter
+Git. Host registrations point to that root. Never copy skill bodies or the adapter
 into multiple maintained locations or duplicate its contents into repositories
 or canonical workflow files.
 
@@ -115,10 +119,11 @@ recorded kernel owner and scope, package discovery, and adapter references, then
 proposes only stale fields. Switching activation mode previews and adds or
 removes only V2's persistent kernel routes and updates the matching activation
 and per-host kernel records in `HOST.local.md`. Uninstall first previews and then
-removes only V2-created kernel routes,
-registrations, discovery links, and the V2 host adapter after approval. Preserve
-the central checkout unless its deletion is separately requested, plus
-repositories, credentials, unrelated host configuration and other skills/plugins.
+removes only V2-created kernel routes, skill registrations and discovery links,
+legacy V2 Cursor command/plugin registrations, and the V2 host adapter after
+approval. Preserve the central checkout unless its deletion is separately
+requested, plus repositories, credentials, unrelated host configuration and
+other skills/plugins.
 
 For an approved release cutover, preview the canonical-path move, release skill
 registrations, and legacy removals together. Inventory non-release personal
