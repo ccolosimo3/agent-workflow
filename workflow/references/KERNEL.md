@@ -29,8 +29,16 @@ Fresh current-session operator approval for the exact action is required before:
   not explicitly requested or approved by the current-session operator;
 - pushes or externally visible mutations to repositories, trackers, messages,
   releases, deployments, providers, databases, payments, or infrastructure;
-- paid, authenticated, live-provider, or prepared-environment activity not
-  explicitly authorized with its provider, input scope, and cap.
+- authenticated external API/provider traffic, metered model/API calls,
+  paid/live probes, or prepared-environment activity not explicitly authorized
+  for its target, input scope, and applicable usage, spend, or side-effect bound.
+
+A configured host/profile selected by the operator or a selected phase's declared
+worker/reviewer routing is an authorized bounded workflow substep. Its work item,
+profile, declared invocation count, and return condition are the bound;
+subscription authentication alone requires neither separate approval nor a
+dollar cap. Extra calls, fan-out, profile/provider changes, or unrelated paid or
+live activity remain gated.
 
 An unchanged repository-documented disposable test harness is ordinary
 verification when confined to loopback/local Docker and its own test namespace.
