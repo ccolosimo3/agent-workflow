@@ -24,12 +24,23 @@ start, expand, or chain a phase, create its artifacts, dispatch work, grant
 authority, or claim fresh-context independence. Only a selected phase's
 declared handoff may start its review child.
 
-The graph is not a mandatory pipeline. The operator selects each substantive
-phase: explore, spike, spec, or implementation. Selecting formal spec or
-implementation includes its required inner review as that phase's completion
-gate; do not pause merely to ask whether to start it. Once a review gate starts,
-its same-reviewer correction loop continues autonomously until approved, blocked
-by a material decision, or its bounded retry limit is exhausted.
+The graph is not a mandatory pipeline. Without a clear end-to-end grant, the
+operator selects each substantive phase: explore, spike, spec, or implementation.
+A clear request to implement or own one named work item end-to-end selects the
+minimum necessary route through required preparation, formal spec and its
+declared reviews when the route requires them, implementation, and implementation
+review. It does not select another work item, manufacture explore or spike
+without a positive trigger, authorize a gated action or external publication,
+expand scope, or transfer a product-direction choice to the agent. Broad
+completion language selects this route only when current context identifies one
+work item and completion responsibility; otherwise resolve the context before
+chaining phases.
+
+Selecting formal spec or implementation includes its required inner review as
+that phase's completion gate; do not pause merely to ask whether to start it.
+Once a review gate starts, its same-reviewer correction loop continues
+autonomously until approved, blocked by a material decision, or its bounded retry
+limit is exhausted.
 
 ## Routes
 
@@ -138,6 +149,21 @@ Continue through research, drafting, safe proof, review patching, and same-revie
 re-review. Pause only for a decision that changes observable product behavior,
 authority or spend, a safety boundary, irreversible scope, or the currently
 authorized task.
+
+Park a decision or blocked proof that affects one branch while independent
+authorized work continues. Batch genuine operator questions with the recommended
+default and consequence; yield early only when every useful path depends on an
+answer or an agreed checkpoint requires it.
+
+When the operator says `keep going`, `finish`, `do not stop`, or `run until
+<result>`, the active owner states one checkable exit predicate and continues
+within the existing authority envelope. Status updates and an unproductive
+approach do not end the run. Do not repeat an unchanged attempt without new
+evidence; distinguish a product defect from a false premise, harness/setup
+failure, or environmental limitation, and change approach when evidence
+invalidates the current one. Stop when the predicate holds, a material gate
+blocks every useful path, no credible safe in-scope approach remains, or the
+operator stops the run.
 
 Do not replace a worker on transcript silence alone or while an active writer
 cannot be ruled out. Inspect the named task and checkout state. A blocked live or

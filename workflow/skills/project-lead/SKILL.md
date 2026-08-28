@@ -65,11 +65,13 @@ model selection the host did not provide.
 ## Continuation
 
 Follow `WORKFLOW.md` for route selection, pause, recovery, and worker-liveness
-rules. Status and interim child updates do not pause an active program. After
-dispatch, use the host's bounded wait/monitor capability until every declared
-return completes, needs operator input, or reaches a real blocker; reconcile
-completed reports before yielding, or state the host limitation and exact resume
-boundary.
+rules. Status and interim child updates do not pause an active program. Park a
+declared return that needs operator input or reaches a real blocker, continue
+independent ready or in-flight work, and use the host's bounded wait/monitor
+capability until every declared return completes or is parked with no useful
+independent path remaining. Preserve active-writer checks before retry or
+replacement. Reconcile completed reports and batch genuine decisions before
+yielding, or state the host limitation and exact resume boundary.
 
 ## Handoff
 

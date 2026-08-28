@@ -59,9 +59,15 @@ Natural approval covers the stated action and bounded correction or retry within
 the same risk envelope; failure does not consume it unless the operator or
 governing policy made it single-use. Re-ask only if the target, scope, side
 effects, provider, input scope, or cap materially changes. Ambiguous assent or
-silence is not approval. Before asking, state the exact action, target, and
-material side effects. When uncertain, ask. Never bypass a failed hook or policy
-check.
+silence is not approval. For a non-gated execution choice, use applicable
+instructions, repository conventions, read-only inspection, and the smallest safe
+disposable observation that can settle it before asking. Proceed with the simplest
+reversible in-scope choice and report the assumption. Ask when the unresolved
+choice can change observable behavior, the authorized Task or risk boundary,
+authority or spend, safety, or difficult-to-reverse state. Actions in the
+approval-gated list and review-count gate above require approval regardless of
+reversibility. Before asking, state the exact action, target, and material side
+effects. Never bypass a failed hook or policy check.
 
 Never commit secrets, credentials, private operator adapters, personal paths, or
 other untracked local configuration.
