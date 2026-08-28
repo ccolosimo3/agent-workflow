@@ -33,12 +33,13 @@ Fresh current-session operator approval for the exact action is required before:
   paid/live probes, or prepared-environment activity not explicitly authorized
   for its target, input scope, and applicable usage, spend, or side-effect bound.
 
-A configured host/profile selected by the operator or a selected phase's declared
-worker/reviewer routing is an authorized bounded workflow substep. Its work item,
-profile, declared invocation count, and return condition are the bound;
-subscription authentication alone requires neither separate approval nor a
-dollar cap. Extra calls, fan-out, profile/provider changes, or unrelated paid or
-live activity remain gated.
+Selecting a configured host/profile through operator intent or a selected phase's
+declared worker/reviewer routing authorizes that bounded workflow substep. Its
+work item, profile, declared invocation count, and return condition are the bound.
+Subscription-backed usage needs no separate approval or dollar cap; a metered or
+API-key-backed profile still requires its applicable usage or spend bound. Extra
+calls, fan-out, profile/provider changes, or unrelated paid or live activity
+remain gated.
 
 An unchanged repository-documented disposable test harness is ordinary
 verification when confined to loopback/local Docker and its own test namespace.
