@@ -56,13 +56,27 @@ select a phase, expand scope, or require a label, artifact, or receipt.
 - **Explicitly authorized behavior-preserving refactor:** Establish the current
   observable contract at the real boundary before structural edits, keep the same
   proof green through small steps, and separate any behavior change discovered.
+  For an explicitly authorized internal API convergence where compatibility is
+  not required, define the target caller shape, migrate affected callers in
+  verifiable steps, and remove the obsolete path; never infer this permission for
+  public or independently versioned consumers. Use subtraction when it objectively
+  removes obsolete layers, state, or call paths, but observable parity—not a
+  subjective reader-load claim—remains the proof.
+- **Repetitive mechanical change or sweep:** Establish one representative
+  transformation and its real-boundary proof before scaling it. Use the smallest
+  deterministic automation only when it is safer or more repeatable than the
+  remaining manual edits; batch only when it improves proof or fault isolation.
+  Remove task-local tooling unless a continuing consumer earns it, and never let
+  it own product behavior.
 - **Explicit performance outcome:** Capture the baseline at the real boundary,
   change the measured dominant cost, then compare the same workload and check that
   material cost was not merely displaced.
 - **Migration or lifecycle:** Identify the invariant and applicable supported
   transitions before editing; apply `REVIEW.md`'s closed-loop lifecycle audit and
   `TESTING.md`'s persistence/schema bar during implementation, not only after
-  handoff.
+  handoff. Trace repeat delivery, partial failure, retry or late completion,
+  cleanup, and convergence only where changed state or side effects make them
+  applicable; prove the material transitions at the real operation boundary.
 
 A simpler repository-conventional mechanism may replace a planned mechanism when
 observable behavior and approved contracts remain intact. Return to planning only
