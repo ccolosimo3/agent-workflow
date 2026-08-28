@@ -1,0 +1,6 @@
+interface:
+  display_name: "How It Works"
+  short_description: "Trace how an existing subsystem actually works"
+  default_prompt: "Use $how to explain how this subsystem works from its real code paths."
+policy:
+  allow_implicit_invocation: true

@@ -38,9 +38,9 @@ than maintaining copied folders.
 
 Clear ordinary language can select the matching user-facing workflow entrypoint,
 while setup and review-control skills remain explicit/internal. The
-`typescript-engineering`, `technical-writing`, `blast-radius`, and `show-me`
-may be selected automatically when their narrow descriptions match. `bro`
-remains an explicit operator utility. Skill discovery cannot manufacture
+`typescript-engineering`, `technical-writing`, `blast-radius`, `how`, `why`, and
+`show-me` may be selected automatically when their narrow descriptions match.
+`bro` remains an explicit operator utility. Skill discovery cannot manufacture
 operator intent, expand scope, chain phases, grant authority, or claim
 fresh-context independence.
 

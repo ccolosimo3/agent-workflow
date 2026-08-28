@@ -105,8 +105,8 @@ selected surfaces before declaring a host ready.
 
 Invocation has three classes across hosts:
 
-- `typescript-engineering`, `technical-writing`, `blast-radius`, and `show-me`
-  are automatic advisory guidance under their narrow descriptions.
+- `typescript-engineering`, `technical-writing`, `blast-radius`, `how`, `why`,
+  and `show-me` are automatic advisory guidance under their narrow descriptions.
 - `explore`, `spike`, `spec`, `implement`, `review-pr`, and `project-lead` are
   automatic only when ordinary language clearly selects that user-facing work.
 - `bro` is an explicit operator utility. `setup-workflow`, `review-change`,

@@ -1,9 +1,9 @@
 # Third-party notices
 
-The `typescript-engineering`, `technical-writing`, and `blast-radius` skills are
-original adaptations informed by corresponding skills and principles in
-[pstack](https://github.com/cursor/plugins/tree/main/pstack), licensed under the
-MIT License.
+The `typescript-engineering`, `technical-writing`, `blast-radius`, `how`, and
+`why` skills are original adaptations informed by corresponding skills and
+principles in [pstack](https://github.com/cursor/plugins/tree/main/pstack),
+licensed under the MIT License.
 
 ```text
 MIT License
