@@ -39,4 +39,6 @@ condition rather than substituting a weaker proof or retrying.
 
 Write the compact Spike result described in `PLANNING.md`. Return `GO`, `NO-GO`,
 or `BLOCKED`, the evidence, and the design implication. Do not continue into spec
-or implementation.
+or implementation. When `KERNEL.md`'s receipt trigger applies, first read
+`../../references/RECEIPTS.md` and write its best-effort record from evidence
+already gathered.

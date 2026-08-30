@@ -25,7 +25,7 @@ canonical review authority with human-facing calibration.
 ## Package
 
 - `references/` — portable kernel, workflow, planning, testing, and review
-  authorities;
+  authorities, plus the optional completion-receipt contract;
 - `skills/` — natural-language workflow entrypoints, internal review controls,
   compact advisory guidance, and focused explanation utilities;
 - `templates/` — user host and repository adapters plus PR-body shape;
@@ -35,6 +35,11 @@ canonical review authority with human-facing calibration.
 Skills resolve shared files relative to this package. Keep one canonical local
 checkout and expose its skills through links or configured discovery paths rather
 than maintaining copied folders.
+
+Setup may optionally configure one private user-level receipt store. Eligible
+terminal work projects its existing completion evidence into a small local
+self-report while later independent outcomes remain separately sourced; receipts
+never certify or block work. See `references/RECEIPTS.md`.
 
 Clear ordinary language can select the matching user-facing workflow entrypoint,
 while setup and review-control skills remain explicit/internal. The

@@ -6,6 +6,7 @@ tokens out of this file. Record only capabilities confirmed on this machine.
 - Canonical package root: `<absolute path>`
 - Adapter/package schema version: `<version>`
 - Activation mode: `<on-demand | always-on>`
+- Completion receipt store: `<disabled | canonical absolute user-local data path>`
 
 ## Hosts
 

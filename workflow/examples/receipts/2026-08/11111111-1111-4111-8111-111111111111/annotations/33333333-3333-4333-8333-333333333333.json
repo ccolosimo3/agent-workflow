@@ -1,0 +1,13 @@
+{
+  "schema": "agent-workflow.annotation/v1",
+  "annotation_id": "33333333-3333-4333-8333-333333333333",
+  "receipt_id": "11111111-1111-4111-8111-111111111111",
+  "recorded_at": "2026-09-02T15:30:00Z",
+  "source": {
+    "kind": "operator",
+    "ref": "work-item follow-up"
+  },
+  "kind": "correction",
+  "summary": "The work item remains unmerged; completion described the implementation task, not repository integration.",
+  "corrects": "self_report"
+}

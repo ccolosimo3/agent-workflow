@@ -1,0 +1,35 @@
+{
+  "schema": "agent-workflow.receipt/v1",
+  "receipt_id": "44444444-4444-4444-8444-444444444444",
+  "recorded_at": "2026-08-30T21:00:00Z",
+  "repository": "example/mobile-prototype",
+  "task": {
+    "id": "local-offline-navigation",
+    "title": "Test offline navigation feasibility",
+    "shape": "prototype",
+    "intent": "Determine whether the existing navigation shell can preserve the last opened screen without adding a new state subsystem."
+  },
+  "agent_state": "completed",
+  "result": "A disposable prototype preserved the last screen through the existing router state; a separate persistence service was unnecessary for the tested session boundary.",
+  "evidence": [
+    {
+      "kind": "observation",
+      "ref": "disposable prototype run",
+      "result": "The router restored the last screen after the simulated reconnect.",
+      "quality": "direct"
+    },
+    {
+      "kind": "source",
+      "ref": "current router documentation",
+      "result": "Documented restoration behavior is limited to the current application session.",
+      "quality": "proxy"
+    }
+  ],
+  "discarded": [
+    "A new persistence service was not earned by the tested session-scoped requirement."
+  ],
+  "uncertainty": [
+    "Cold-launch restoration has not been tested."
+  ],
+  "next_decision": "Decide whether cold-launch restoration is a current product requirement."
+}

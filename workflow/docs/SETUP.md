@@ -34,8 +34,17 @@ The adapter lives beside that checkout and is ignored by Git:
 
 It contains no credentials. It records activation mode, enabled hosts, confirmed
 command shapes, named model/reasoning profiles, workload preferences, and
-outer-gate routing.
+outer-gate routing. It may also enable one completion receipt store or record it
+as `disabled`.
 Repository adapters remain project-specific and do not copy these preferences.
+
+Completion receipts are optional local evidence, not workflow state or
+certification. When enabled, setup recommends the platform's normal private
+user-data location (for example, Application Support on macOS, `%LOCALAPPDATA%`
+on Windows, or `$XDG_DATA_HOME`/`~/.local/share` on Unix), resolves and previews
+one canonical absolute directory outside the package and product repositories,
+checks private permissions and every enabled host's access, then creates only
+that root after approval. It never falls back to repository-local storage.
 
 The default is `$HOME/.agents/workflow`; the adapter records the absolute
 resolved location. A replacement cutover may use a stable staging path until
@@ -202,7 +211,8 @@ registrations/links, legacy V2 Cursor command/plugin registrations, kernel
 owners/scopes, and host adapter it will remove. After approval it removes only
 those V2-created surfaces. It preserves the canonical checkout unless the
 operator separately asks to delete it, and never removes host applications,
-credentials, repositories, or unrelated skills/configuration.
+credentials, repositories, unrelated skills/configuration, or completion
+receipt data unless that data deletion is separately requested.
 
 To pause V2's always-on kernel routing without uninstalling its skills, switch to
 on-demand mode. Setup previews and removes only V2's persistent kernel routes,

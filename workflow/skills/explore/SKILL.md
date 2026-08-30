@@ -38,4 +38,6 @@ better shape.
 Write the compact Explore result described in `PLANNING.md` at the repository's
 declared plan location. Do not implement, mutate external state, or start a spike
 or spec. Return the recommendation, unresolved decision, and eligible next phase,
-then stop.
+then stop. When `KERNEL.md`'s receipt trigger applies, first read
+`../../references/RECEIPTS.md` and write its best-effort record from evidence
+already gathered.

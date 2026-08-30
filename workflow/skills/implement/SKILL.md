@@ -44,7 +44,8 @@ abstractions.
 ### Conditional methods
 
 These methods apply only within an already-selected implementation. They do not
-select a phase, expand scope, or require a label, artifact, or receipt.
+select a phase, expand scope, or require an additional label, artifact, or
+receipt.
 
 - **Diagnosis-heavy bug:** When the affected boundary is practical, observe the
   reported symptom there before editing, narrow plausible causes, confirm the
@@ -141,7 +142,13 @@ Docs impact: <updated owner paths and effect, or none>
 Review: <inner verdict and pass count | skipped — documentation-only off-ramp>
 Outer gate: <approved | skipped — reason | blocked>
 Remaining operator proof: <exact check and owner, or none>
+Receipt: <self-report path | disabled | skipped — reason>
 ```
+
+When `KERNEL.md`'s receipt trigger applies, read `../../references/RECEIPTS.md`
+and project the evidence already gathered above into its self-report and any
+separately sourced known annotations; do not rerun or recollect evidence. Keep
+the normal chat completion even when the durable write is skipped.
 
 Do not include findings or an internal ledger. When the operator asks for a PR,
 compose its body from `../../templates/pr-body.md`; pushing, opening/editing the

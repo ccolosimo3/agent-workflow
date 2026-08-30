@@ -25,12 +25,14 @@ the package and silently break its shared references.
    `always-on`); hosts to enable; desired model and
    exact reasoning/variant profiles; fixed versus allowed profiles by workload;
    an optional single evidence-helper profile; outer-gate policy;
-   different-host versus ordered reviewer choice; and same-host fresh-context
-   fallback. Recommend on-demand for a trial and always-on only when the user
-   wants V2 as their daily driver. Recommend risk-selected outer gates,
-   different-host preference, and an allowed same-host fresh fallback when the
-   installed hosts support them, but preserve the user's choice. Leave evidence
-   helpers disabled when none is selected.
+   different-host versus ordered reviewer choice; same-host fresh-context
+   fallback; and whether to enable an optional completion receipt store and, if
+   so, its user-local path. Recommend on-demand for a trial and always-on only
+   when the user wants V2 as their daily driver. Recommend risk-selected outer
+   gates, different-host preference, and an allowed same-host fresh fallback
+   when the installed hosts support them, but preserve the user's choice. Leave
+   evidence helpers disabled when none is selected and receipts disabled when
+   declined.
 2. Inspect each selected host read-only using its executable, `--version`, local
    help, non-secret authentication/config status, model listing when locally
    available, skill discovery path, fresh launch/resume capability, and
@@ -56,8 +58,13 @@ the package and silently break its shared references.
    host exposes an exact ID. Missing hosts stay unavailable and do not block the
    others.
 4. Show the proposed package registration, activation mode, exact kernel owner
-   and scope when always-on, host-adapter path, collision result, and any host
-   config edits before writing.
+   and scope when always-on, host-adapter path, completion-receipt setting,
+   collision result, and any host config edits before writing. For an enabled
+   receipt store, resolve symlinks and preview one canonical absolute path in the
+   platform's private user-data area outside the package and product repositories,
+   its permissions, directory creation, and every enabled host's access. Leave it
+   disabled rather than using a repository-local fallback when containment,
+   privacy, or access cannot be established.
    Preserve unrelated settings and request approval before mutating user
    configuration, installing/registering the package, or replacing an existing
    adapter. Never replace a skill outside the approved cutover. Installing a
@@ -83,7 +90,9 @@ the package and silently break its shared references.
    according to their narrow descriptions and host policy. Write the adapter,
    then verify automatic advisory and user-facing discovery, explicit-only
    utilities and control-plane entrypoints, shared-reference reachability, and
-   either the active persistent route or its absence without a model call. Explain
+   either the active persistent route or its absence without a model call. When
+   approved, create and verify only the configured private receipt root; do not
+   write a sample receipt or make a model call. Explain
    that a fresh session is required to prove loaded behavior; any such smoke
    remains separately approval-gated.
 
@@ -117,16 +126,17 @@ outer reviewer, silently change the selected profile, or call a missing host.
 
 ## Audit and uninstall
 
-An audit rechecks installed versions, command shapes, activation mode, any
-recorded kernel owner and scope, package discovery, and adapter references, then
-proposes only stale fields. Switching activation mode previews and adds or
-removes only V2's persistent kernel routes and updates the matching activation
-and per-host kernel records in `HOST.local.md`. Uninstall first previews and then
-removes only V2-created kernel routes, skill registrations and discovery links,
-legacy V2 Cursor command/plugin registrations, and the V2 host adapter after
-approval. Preserve the central checkout unless its deletion is separately
-requested, plus repositories, credentials, unrelated host configuration and
-other skills/plugins.
+An audit rechecks installed versions, command shapes, activation mode, receipt
+store configuration/access, any recorded kernel owner and scope, package
+discovery, and adapter references, then proposes only stale fields. Switching
+activation mode previews and adds or removes only V2's persistent kernel routes
+and updates the matching activation and per-host kernel records in
+`HOST.local.md`. Uninstall first previews and then removes only V2-created kernel
+routes, skill registrations and discovery links, legacy V2 Cursor command/plugin
+registrations, and the V2 host adapter after approval. Preserve the receipt
+store and records unless their deletion is separately requested, plus the
+central checkout unless its deletion is separately requested, repositories,
+credentials, unrelated host configuration, and other skills/plugins.
 
 For an approved release cutover, preview the canonical-path move, release skill
 registrations, and legacy removals together. Inventory non-release personal
@@ -137,5 +147,6 @@ both kernels active. New installations skip this migration and install the
 release directly.
 
 Return a concise setup receipt: activation mode, enabled hosts and profiles,
-workload and outer routing, capability gaps, files/registrations changed,
+workload and outer routing, completion-receipt setting, capability gaps,
+files/registrations changed,
 discovery checks, and any restart or optional paid smoke test remaining.

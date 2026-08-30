@@ -130,3 +130,11 @@ Report the outcome, changed behavior, verification actually run, intentionally
 unselected or blocked checks, documentation impact, review state, remaining
 operator proof, and any real decision. Keep detailed evidence in its owner rather
 than reprinting it by default.
+
+When `HOST.local.md` configures a completion receipt store, a terminal
+implementation or explicitly selected Explore, Spike, or prototype that produced
+code, a durable artifact, or decision-relevant learning writes the best-effort
+record in `RECEIPTS.md`; no other task does. Configuration authorizes only that
+bounded local write. Keep the agent report unchanged and put independent outcomes
+in sourced annotations. Receipt absence, drift, or write failure never blocks or
+replays work; report a skipped write once and continue.
