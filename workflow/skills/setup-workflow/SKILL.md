@@ -42,7 +42,10 @@ the package and silently break its shared references.
    approved cutover path. Never print credentials or make a model/provider call
    merely to test setup.
    For Codex, resolve `CODEX_HOME` and the active global instruction owner after
-   `AGENTS.override.md` precedence. For OpenCode, resolve its config directory
+   `AGENTS.override.md` precedence. For Claude Code, compare `skillOverrides`
+   with the package: only explicitly packaged skills may remain
+   `user-invocable-only`; include stale overrides on advisory or user-facing
+   skills in the previewed removal. For OpenCode, resolve its config directory
    (for example, with `opencode debug paths`) and its resulting global
    `AGENTS.md`. For Cursor, inspect native `~/.agents/skills/` discovery,
    `~/.cursor/rules/`, and any legacy V2 command/plugin registrations. Check for

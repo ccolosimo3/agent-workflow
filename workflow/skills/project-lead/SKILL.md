@@ -62,9 +62,15 @@ emit a phase kickoff. Do not launch implementation or certification until their
 V2 entrypoints and authorities exist, and do not claim dispatch, isolation, or
 model selection the host did not provide.
 
-When the receiver can read a named artifact, pass its path and exact revision or
-hash plus only the shared envelope and task-specific deltas; do not inline the
-artifact or restate workflow policy.
+When the receiver can read a named artifact, pass its path plus only the shared
+envelope and task-specific deltas; do not inline the artifact, restate workflow
+policy, or require a content hash for an ordinary living plan.
+
+Use a fresh implementation context for each work item; reuse a worker only for
+that item's correction and re-review loop. Treat the named plan as living
+authority: relay changes that affect behavior, scope, acceptance, authority, or
+risk to the active worker, while wording and routine status edits need no
+reapproval or pause.
 
 ## Continuation
 
