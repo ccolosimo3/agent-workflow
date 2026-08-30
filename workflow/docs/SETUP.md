@@ -44,7 +44,8 @@ user-data location (for example, Application Support on macOS, `%LOCALAPPDATA%`
 on Windows, or `$XDG_DATA_HOME`/`~/.local/share` on Unix), resolves and previews
 one canonical absolute directory outside the package and product repositories,
 checks private permissions and every enabled host's access, then creates only
-that root after approval. It never falls back to repository-local storage.
+that root after approval. Setup records the store as enabled only after this
+succeeds. It never falls back to repository-local storage.
 
 The default is `$HOME/.agents/workflow`; the adapter records the absolute
 resolved location. A replacement cutover may use a stable staging path until

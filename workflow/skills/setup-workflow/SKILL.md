@@ -60,20 +60,24 @@ the package and silently break its shared references.
 4. Show the proposed package registration, activation mode, exact kernel owner
    and scope when always-on, host-adapter path, completion-receipt setting,
    collision result, and any host config edits before writing. For an enabled
-   receipt store, resolve symlinks and preview one canonical absolute path in the
-   platform's private user-data area outside the package and product repositories,
-   its permissions, directory creation, and every enabled host's access. Leave it
-   disabled rather than using a repository-local fallback when containment,
-   privacy, or access cannot be established.
+   receipt store, recommend the platform's private user-data area, then resolve
+   symlinks and preview the selected canonical absolute user-local path outside
+   the package and product repositories, its permissions, directory creation,
+   and every enabled host's access. Accept another user-selected path when those
+   properties hold. Leave it disabled rather than using a repository-local
+   fallback when containment, privacy, or access cannot be established.
    Preserve unrelated settings and request approval before mutating user
    configuration, installing/registering the package, or replacing an existing
    adapter. Never replace a skill outside the approved cutover. Installing a
    CLI, logging in, or running even a tiny paid smoke call is separate and
    requires explicit authorization.
-5. After approval, register the package's user-facing entrypoints and advisory
-   skills for automatic discovery, and its explicit utilities and control-plane
-   skills for explicit or declared internal invocation, through each selected
-   host's supported mechanism. Follow `WORKFLOW.md`: discovery can recognize
+5. After approval, first create and verify only an enabled configured private
+   receipt root; keep the adapter value disabled if that fails, and do not write
+   a sample receipt or make a model call. Then register the package's user-facing
+   entrypoints and advisory skills for automatic discovery, and its explicit
+   utilities and control-plane skills for explicit or declared internal
+   invocation, through each selected host's supported mechanism. Follow
+   `WORKFLOW.md`: discovery can recognize
    clear operator intent but cannot create intent, authority, artifacts, phase
    chaining, or fresh-context independence. In always-on mode, also
    register one persistent route to `KERNEL.md`: Codex's active global owner
@@ -87,12 +91,11 @@ the package and silently break its shared references.
    the shared `~/.agents/skills/` links for both automatic discovery and manual
    slash invocation; do not install command shims for the same IDs. Leave
    advisory and user-facing entrypoints eligible for automatic invocation
-   according to their narrow descriptions and host policy. Write the adapter,
-   then verify automatic advisory and user-facing discovery, explicit-only
-   utilities and control-plane entrypoints, shared-reference reachability, and
-   either the active persistent route or its absence without a model call. When
-   approved, create and verify only the configured private receipt root; do not
-   write a sample receipt or make a model call. Explain
+   according to their narrow descriptions and host policy. Verify automatic
+   advisory and user-facing discovery, explicit-only utilities and control-plane
+   entrypoints, shared-reference reachability, and either the active persistent
+   route or its absence without a model call, then write the adapter with the
+   verified receipt setting. Explain
    that a fresh session is required to prove loaded behavior; any such smoke
    remains separately approval-gated.
 

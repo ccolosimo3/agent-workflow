@@ -8,16 +8,19 @@ completion, invalidates product evidence, or triggers replay or repair.
 ## When to write
 
 Read this file only when `HOST.local.md` names an enabled `Completion receipt
-store` and `KERNEL.md`'s completion trigger applies. Write one receipt when a
-terminal implementation or explicitly selected evidence-producing Explore,
-Spike, or prototype produced code, a durable artifact, or decision-relevant
-learning. Specs already own their artifact; planners, reviewers, evidence
-helpers, casual questions, and status exchanges write nothing.
+store` and either `KERNEL.md`'s self-report trigger applies or the current task
+explicitly asks to append a material sourced annotation to an existing receipt.
+Write one self-report when a terminal implementation or explicitly selected
+evidence-producing Explore, Spike, or prototype produced code, a durable
+artifact, or decision-relevant learning. An annotation-only follow-up writes no
+self-report. Otherwise specs, planners, reviewers, evidence helpers, casual
+questions, and status exchanges write nothing.
 
-Reuse evidence already gathered for completion. Do not rerun commands, inspect
-usage, or collect more context for the receipt. If the store is disabled, unsafe,
-missing, or unwritable, report `Receipt: skipped — <reason>` once and continue.
-Never fall back to a product repository or plan directory.
+Reuse evidence already gathered for completion or supplied by the named
+annotation source. Do not rerun commands, inspect usage, or collect more context
+for the receipt. If the store is disabled, unsafe, missing, or unwritable, report
+`Receipt: skipped — <reason>` once and continue. Never fall back to a product
+repository or plan directory.
 
 ## Storage
 

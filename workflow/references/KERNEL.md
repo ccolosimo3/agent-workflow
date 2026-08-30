@@ -134,7 +134,8 @@ than reprinting it by default.
 When `HOST.local.md` configures a completion receipt store, a terminal
 implementation or explicitly selected Explore, Spike, or prototype that produced
 code, a durable artifact, or decision-relevant learning writes the best-effort
-record in `RECEIPTS.md`; no other task does. Configuration authorizes only that
-bounded local write. Keep the agent report unchanged and put independent outcomes
-in sourced annotations. Receipt absence, drift, or write failure never blocks or
-replays work; report a skipped write once and continue.
+record in `RECEIPTS.md`; no other task creates a self-report. An explicitly
+scoped follow-up may append a material sourced annotation to an existing receipt
+without creating another self-report. Configuration authorizes only those bounded
+local writes. Keep the agent report unchanged. Receipt absence, drift, or write
+failure never blocks or replays work; report a skipped write once and continue.
