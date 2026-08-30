@@ -89,6 +89,11 @@ other untracked local configuration.
   workflow prose; promotion beyond the authorized task remains separate work. A
   larger design remains correct when those constraints require it or it reduces
   operational complexity.
+- Workflow metadata may coordinate or report work; its absence or drift does not
+  invalidate previously valid output or require replay unless it protects target
+  identity, approval or authority, product integrity, or a causal dependency.
+  Revalidate the smallest affected behavior and continue; do not repair
+  bookkeeping as a substitute for implementation or evidence.
 - A planner-authored invariant is not independent authority. Before adding
   durable state or recovery for an exceptional retry or manual fallback, compare
   it with handling that exception through the existing path.
