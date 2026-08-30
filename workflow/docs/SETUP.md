@@ -47,9 +47,9 @@ checks private permissions and every enabled host's access, then creates only
 that root after approval. Setup records the store as enabled only after this
 succeeds. It never falls back to repository-local storage.
 
-The default is `$HOME/.agents/workflow`; the adapter records the absolute
-resolved location. A replacement cutover may use a stable staging path until
-the active installation is ready to switch.
+The default package path is `$HOME/.agents/workflow`; the adapter records the
+absolute resolved location. A replacement cutover may use a stable staging path
+until the active installation is ready to switch.
 
 ## Host registration
 

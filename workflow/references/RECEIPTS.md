@@ -33,6 +33,9 @@ host access. Under that root, create without overwriting:
 <store>/<YYYY-MM>/<receipt-id>/annotations/<annotation-id>.json
 ```
 
+See `../examples/receipts/` for the localized implementation, exploratory
+prototype, and sourced-annotation fixtures.
+
 The bucket comes only from the self-report's UTC month. Later annotations remain
 under that bucket. IDs are lowercase canonical UUIDv4 values; repository and
 task text never becomes a path segment. Validate complete JSON before publishing

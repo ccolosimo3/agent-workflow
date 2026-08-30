@@ -145,8 +145,9 @@ Remaining operator proof: <exact check and owner, or none>
 Receipt: <self-report path | disabled | skipped — reason>
 ```
 
-When `KERNEL.md`'s receipt trigger applies, read `../../references/RECEIPTS.md`
-and project the evidence already gathered above into its self-report and any
+When `KERNEL.md`'s receipt trigger applies, including to a terminal partial,
+blocked, or abandoned implementation, read `../../references/RECEIPTS.md` and
+project the evidence already gathered above into its self-report and any
 separately sourced known annotations; do not rerun or recollect evidence. Keep
 the normal chat completion even when the durable write is skipped.
 
