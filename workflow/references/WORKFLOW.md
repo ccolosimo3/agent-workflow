@@ -104,10 +104,10 @@ report the missing capability rather than silently weakening or duplicating it.
   because that behavior was not previously proven; or an operator request.
 
 A named surface selects an outer gate only when the work creates or materially
-revises its external or persisted invariant, authority, failure/recovery behavior,
-provider/toolchain behavior, or rollout. Proximity, code volume, or “more review
-might help” is insufficient; otherwise skip with a one-line reason and do not ask
-for a waiver.
+revises its external, persisted, or security invariant, authority,
+failure/recovery behavior, provider/toolchain behavior, or rollout. Proximity,
+code volume, or “more review might help” is insufficient; otherwise skip with a
+one-line reason and do not ask for a waiver.
 
 ## Planner ownership and delegation
 
