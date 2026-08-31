@@ -117,9 +117,9 @@ other untracked local configuration.
   non-generated, non-normative documentation diff that changes no executable,
   contract, setup, policy, architecture, verification, or operating behavior.
   Workflow and policy documents never qualify for that off-ramp.
-- Findings return to the same reviewer after patching. Initial outer review is
-  fresh and independent when enabled and selected under `WORKFLOW.md`; its
-  patches return to that same outer reviewer.
+- Review patches follow `REVIEW.md`'s approval-retention rule. When re-review is
+  required, reuse the same reviewer; every outer-owned patch returns to its same
+  outer reviewer.
 - Treat summaries, receipts, and prior verdicts as claims to validate. Never claim
   verification, independence, or completion that the available host and evidence
   do not establish.

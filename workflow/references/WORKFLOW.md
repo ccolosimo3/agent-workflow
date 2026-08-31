@@ -91,17 +91,23 @@ report the missing capability rather than silently weakening or duplicating it.
   can be proved safely with disposable work.
 - **Spec:** the operator requests a formal implementation-ready plan or downstream
   execution needs durable acceptance and verification scope.
-- **Outer spec review:** hard-to-reverse architecture/product policy; contract,
-  API, or schema change; persisted lifecycle, migration, or data-loss risk;
-  auth/security/identity; provider/dependency/toolchain strategy; cross-system
-  rollout/cutover; a material unproven bet; or an operator request.
-- **Outer implementation review:** a diff or inner-review patch touching a
-  contract/API/schema, persisted lifecycle/migration/data-loss surface,
-  auth/security/identity, provider boundary, dependency/toolchain, or
+- **Outer spec review:** hard-to-reverse architecture/product policy; a material
+  contract/API/schema change; material persisted-lifecycle, migration, or
+  data-loss risk; auth/security/identity; provider/dependency/toolchain strategy;
+  cross-system rollout/cutover; a material unproven bet; or an operator request.
+- **Outer implementation review:** a diff or inner-review patch materially
+  changing a contract/API/schema, persisted lifecycle/migration/data-loss
+  behavior, auth/security/identity, provider boundary, dependency/toolchain, or
   cross-system rollout/cutover; an inner finding establishing a
   production-correctness, public/contract, persistence, security, or data-loss
   defect; a test-quality finding requiring a production behavior/contract patch
   because that behavior was not previously proven; or an operator request.
+
+A named surface selects an outer gate only when the work creates or materially
+revises its external or persisted invariant, authority, failure/recovery behavior,
+provider/toolchain behavior, or rollout. Proximity, code volume, or “more review
+might help” is insufficient; otherwise skip with a one-line reason and do not ask
+for a waiver.
 
 ## Planner ownership and delegation
 

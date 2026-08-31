@@ -28,10 +28,10 @@ phase and outer-gate selection; `FRONTEND.md` is conditional on UI scope.
    patches return directly to that same outer reviewer. Do not reopen the inner
    reviewer unless the patch expands scope beyond an outer finding.
 
-An `APPROVED` verdict may carry low suggestions. They are optional; leaving them
-does not weaken approval. A purely mechanical patch with no behavior, contract,
-test, or policy effect may retain approval, while any material patch returns to
-the same reviewer.
+An `APPROVED` verdict may carry low suggestions; they are optional. In the inner
+loop, a wholly mechanical low-only patch with no behavior, contract, test, policy,
+acceptance, or verification effect retains approval; report it without re-review.
+Any material inner patch and every outer-gate patch returns to the same reviewer.
 
 Selecting a formal spec or implementation includes its inner review gate. Review
 loops continue without ordinary status pauses. Stop only for a material decision,
