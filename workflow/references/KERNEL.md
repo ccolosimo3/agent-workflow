@@ -101,9 +101,6 @@ other untracked local configuration.
   behavior and public contracts unless changing them is necessary to satisfy the
   ask. Prefer an existing owner over a parallel abstraction; keep task-local code
   limited to task-specific behavior.
-- Treat untrusted object data as `unknown` until parsed or narrowed. Preserve
-  named stable contracts after validation; open records are for genuinely dynamic
-  keys.
 - Update owning documentation only when behavior, contracts, setup, architecture,
   verification, or user/operator workflow changes.
 
