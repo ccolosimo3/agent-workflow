@@ -47,6 +47,10 @@ assuming shared program ownership or dispatching.
 - Apply the minimum-sufficient shape check before a plan becomes review-ready or
   implementation is dispatched.
 - Do not implement code or issue a certifying review verdict in this session.
+- Reconcile worker results against scope, candidate identity, required evidence,
+  and the next decision. Check load-bearing claims; do not repeat the worker's
+  full investigation or green checks without a concrete inconsistency or causal
+  delta. Independent certifying review remains with its assigned reviewer.
 
 ## Delegation and dispatch
 
@@ -65,6 +69,9 @@ model selection the host did not provide.
 When the receiver can read a named artifact, pass its path plus only the shared
 envelope and task-specific deltas; do not inline the artifact, restate workflow
 policy, or require a content hash for an ordinary living plan.
+Keep source reads and tool output focused on the current question; expand when
+evidence requires it. This does not waive required authority reads, source
+grounding, or a certifying review's full changed-file coverage.
 
 Use a fresh implementation context for each work item; reuse a worker only for
 that item's correction and re-review loop. Treat the named plan as living
@@ -82,6 +89,9 @@ capability until every declared return completes or is parked with no useful
 independent path remaining. Preserve active-writer checks before retry or
 replacement. Reconcile completed reports and batch genuine decisions before
 yielding, or state the host limitation and exact resume boundary.
+When no independent work advances the program, wait for a meaningful worker
+change using the host's bounded wait capability. Prefer compact status snapshots
+to transcript rereads; do not poll or replan repeatedly on unchanged state.
 
 ## Handoff
 

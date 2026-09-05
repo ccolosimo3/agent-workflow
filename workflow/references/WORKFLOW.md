@@ -150,8 +150,10 @@ Plan directly by default. When the host adapter configures an evidence-helper
 profile, the planner may delegate a bounded, independently answerable evidence
 question with a named stop condition; otherwise it works serially. Helpers return
 sourced observations and uncertainty, not judgments or decisions; they do not
-implement, mutate shared state, or delegate. One helper is the default; a second
-requires a separate question or adversarial purpose. The planner checks
+implement, mutate shared state, or delegate. Do short lookups directly; delegate
+only when the separate question justifies another context. Use one helper when
+delegation is warranted; a second requires a separate question or adversarial
+purpose. The planner checks
 load-bearing claims and alone turns the evidence into plans, phase choices, and
 operator-facing recommendations.
 
