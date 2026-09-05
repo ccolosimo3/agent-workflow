@@ -27,16 +27,23 @@ planning, implementation, or prior-review history. If that cannot be established
 stop without a verdict and request fresh isolated dispatch. Preflight the live
 checkout read-only. Require a clean, committed, inner-converged candidate,
 confirmed by the caller's explicit assertion without reading prior findings or
-verdicts. Determine the integration branch from repository instructions and
-independently compute merge-base, live tip, and review range. Treat any receipt
-SHA or path as a claim and navigation hint, never range or checkout authority.
+verdicts. Resolve full implementation or evidence-only completion scope under
+`WORKFLOW.md` and `REVIEW.md`. Do not read prior findings, verdicts, review logs,
+or kickoff prompts in either mode.
 
-Read the work item/spec and entire changed surface. Do not read prior findings,
-verdicts, review logs, or kickoff prompts. Build the Implementation initial
-payload from current source and apply `REVIEW.md`'s Implementation method and
-Output contract. Reuse green verification only when it matches the reviewed tip
-and environment and the diff gives no causal reason to doubt it; run the
-narrowest decisive check for concrete review hypotheses.
+For a full implementation review, determine the integration branch from
+repository instructions and independently compute merge-base, live tip, and
+review range. Treat any receipt SHA or path as a claim and navigation hint, never
+range or checkout authority. Read the work item/spec and entire changed surface.
+Build the Implementation initial payload from current source and apply
+`REVIEW.md`'s Implementation method and Output contract.
+
+For evidence-only completion, apply `REVIEW.md`'s admission, investigation, and
+scoped output rules instead of repeating the full source audit. Fresh-context
+independence and same-reviewer convergence still apply. In either mode, reuse
+green verification only when it matches the candidate and environment and no
+causal delta invalidates it; run the narrowest decisive check for concrete
+review hypotheses.
 
 Remain read-only: no edits, commits, branch switches, tracker/GitHub mutation, or
 provider activity. Return `APPROVED` or `ACTIONABLE` with the certified range and

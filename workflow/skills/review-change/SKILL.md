@@ -45,7 +45,8 @@ reviewer cannot resume, disclose that limitation and give one fresh fallback the
 full initial payload plus prior findings.
 
 After approval, apply `WORKFLOW.md`'s configured outer policy and implementation
-selector. Launch `independent-review` in exactly one permitted fresh context when
-selected or requested; otherwise record the one-line skip reason. State the
-implementation host when known so different-host preference can work without
-guessing. Outer findings return only to that outer reviewer.
+selector, including its evidence-only completion admission when applicable.
+Name the selected scope in the payload. Launch `independent-review` in exactly one
+permitted fresh context when selected or requested; otherwise record the one-line
+skip reason. State the implementation host when known so different-host preference
+can work without guessing. Outer findings return only to that outer reviewer.

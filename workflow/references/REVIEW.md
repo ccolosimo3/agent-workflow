@@ -24,9 +24,10 @@ phase and outer-gate selection; `FRONTEND.md` is conditional on UI scope.
    operator-invoked but not requested, or not selected; do not ask for a waiver.
 5. A selected outer gate begins in exactly one configured fresh context, reads no
    prior findings, and reviews the whole converged artifact or final
-   implementation range. Its
-   patches return directly to that same outer reviewer. Do not reopen the inner
-   reviewer unless the patch expands scope beyond an outer finding.
+   implementation range, except in the explicitly scoped evidence-only mode
+   below. For both specs and implementations, outer-owned corrections return
+   only to that same outer reviewer. Do not reopen the inner reviewer unless the
+   patch expands scope beyond an outer finding.
 
 An `APPROVED` verdict may carry low suggestions; they are optional. In the inner
 loop, a wholly mechanical low-only patch with no behavior, contract, test, policy,
@@ -66,6 +67,13 @@ operator or environment proof; repository authorities.
 **Re-review:** prior findings verbatim; artifact revision or prior-tip/current-tip
 range; resolution per finding; verification invalidated and rerun. Do not rebuild
 or resend the initial payload to a resumable reviewer.
+
+Before dispatch, check that the evidence supports the claimed candidate and
+outcomes; carry genuine gaps explicitly. Keep the sent payload and returned
+reviewer/session identity together in the existing private work-item or review
+record when available. Record absence rather than creating a new acceptance gate
+or ledger. Recovery must distinguish an exact retained payload from a disclosed
+reconstruction.
 
 Payload summaries are claims. The artifact, diff, repository, and actual command
 output are authority. A kickoff or review becomes stale when its named revision
@@ -193,6 +201,29 @@ On the surfaces touched, explicitly check security/permission behavior and
 performance/scale. When state or side effects change, also check partial failure,
 repeat delivery, and ordering. Treat an inapplicable concern as clean, not as a
 finding to manufacture.
+
+### Evidence-only completion
+
+Use this limited scope only when the caller identifies the source-approved
+candidate, confirms all required source gates are closed, and names the remaining
+runtime/operator evidence question. No full source-review requirement may remain.
+Independently verify unchanged relevant source, tests, configuration, and
+dependencies against that candidate; approval alone is not proof of identity.
+
+Inspect the actual artifacts and their binding to the candidate, environment,
+claimed behavior, and observed outcome. Read the necessary source to assess those
+claims; the full source-diff audit above is not repeated. Apply the normal proof,
+severity, and approval bars to this scope. Missing required evidence stays
+actionable; labels, hashes, or summaries cannot substitute for observed behavior.
+The review grants no authority to run live/provider checks or occupy a shared
+environment.
+
+If source identity, a source-affecting correction, or newly exposed risk defeats
+this scope, reselect the normal review route under `WORKFLOW.md`, preserving
+same-reviewer ownership. Use the implementation output contract labeled
+**Evidence-only completion**: name the covered question, reused source approval,
+candidate identity, and residual proof. An approval certifies only that evidence
+scope; it is not a second full source certification or proof of unrelated gates.
 
 ## Candidate admission and severity
 

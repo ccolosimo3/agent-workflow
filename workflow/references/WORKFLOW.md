@@ -56,6 +56,12 @@ limit is exhausted.
 
 “More review might help” is not a route trigger.
 
+Use Fast when its conditions hold unless the operator selected a formal spec.
+Choose spec and implementation outer gates separately, naming the material risk
+or unanswered boundary question in the existing handoff. A spec outer gate neither
+automatically selects nor discharges an implementation outer gate. Do not reopen
+valid completed gates merely because routing guidance changed.
+
 ## Host and outer-gate policy
 
 Read `HOST.local.md` from the canonical V2 package root when present. It owns
@@ -116,16 +122,22 @@ it. Same-reviewer correction loops keep their selected profile.
 - **Outer implementation review:** a diff or inner-review patch materially
   changing a contract/API/schema, persisted lifecycle/migration/data-loss
   behavior, auth/security/identity, provider boundary, dependency/toolchain, or
-  cross-system rollout/cutover; an inner finding establishing a
-  production-correctness, public/contract, persistence, security, or data-loss
-  defect; a test-quality finding requiring a production behavior/contract patch
-  because that behavior was not previously proven; or an operator request.
+  cross-system rollout/cutover; a finding or proof gap exposing one of those
+  material risks; or an operator request. An ordinary bounded correctness or
+  test-quality finding requires correction and same-reviewer re-review, not an
+  automatic outer gate. Reassess the actual risk of its resolution.
 
 A named surface selects an outer gate only when the work creates or materially
 revises its external, persisted, or security invariant, authority,
 failure/recovery behavior, provider/toolchain behavior, or rollout. Proximity,
 code volume, or “more review might help” is insufficient; otherwise skip with a
 one-line reason and do not ask for a waiver.
+
+When required source reviews are complete and only later runtime or operator
+evidence remains to be reviewed, use `REVIEW.md`'s evidence-only completion mode
+if its admission conditions hold. It cannot replace a selected full source gate
+or an explicit full-review request. Use the existing gate's reviewer routing and
+same-reviewer correction rules; this mode does not add another review round.
 
 ## Planner ownership and delegation
 
