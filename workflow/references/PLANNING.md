@@ -13,6 +13,10 @@ phase-specific investigation.
   evidence.
 - A living work-item document is a decision/evidence index, not a transcript,
   status diary, or review log.
+- Required verification evidence belongs in the work item or its existing evidence
+  owner. Capture exact commands and results there during execution. The optional
+  completion receipt may summarize or point to that evidence; its formatting,
+  schema, availability, or exhaustive contents must not become Task acceptance.
 
 ## Plan storage
 

@@ -64,24 +64,42 @@ repository adapters do not.
 Without one, treat outer gates as `operator-invoked` and use the current host's
 capabilities without inventing cross-host launch or model selection.
 
-When dispatch exposes model choice, follow the applicable fixed profile or
-choose the lowest profile sufficient for the task from its allowed range; do not
-default to the strongest setting. A current-session operator choice wins. If the
-host cannot select or confirm the profile, inherit its default and report that
-limitation rather than claiming a configured choice.
+Resolve workload preferences for the host doing the selected phase, not a
+coordinator that dispatched it. When dispatch exposes model choice, follow the
+applicable fixed profile or choose the lowest sufficient profile from its allowed
+range. A current-session operator choice wins. If a host cannot select or confirm
+a required profile, report that limitation; inherit a host default only when the
+applicable preference permits it.
+
+`Inner review: inherit` means the actual spec author or implementer's host and
+model/effort profile in a fresh context. Prefer that host's native isolated agent;
+use its same-host fresh CLI context when needed. Coworker PR challenger recipes,
+outer-review lists, and coordinator defaults do not select an inner reviewer.
+Cross-host inner review requires an explicit inner profile or operator choice.
 
 - `risk-selected`: apply the positive outer selectors below.
 - `operator-invoked`: run an outer gate only on a direct operator request.
 - `disabled`: omit outer gates from normal completion. A direct operator request
   may override this preference for that invocation.
 
-When a gate is selected, use exactly one configured reviewer. A
-`prefer-different-host` preference chooses the first eligible configured profile
-whose host differs from the known authoring/implementation host, then follows the
-configured order. If the origin host is unknown, do not guess. Use a same-host
-fresh context only when configured or directly requested; it remains valid
-independence. If a required risk-selected gate has no permitted fresh context,
-report the missing capability rather than silently weakening or duplicating it.
+For a selected outer gate, first resolve the eligible profiles for the actual
+authoring/implementation host and applicable complexity tier. An author-specific
+list replaces the global list; exclusions apply before ordering or fallback.
+`prefer-different-host` chooses the first eligible profile on another host, then
+follows the eligible order. `ordered` follows that order directly. Same-host fresh
+review remains independent, but is permitted only when both eligible and allowed.
+Never broaden an eligible list because a host is unavailable. If origin is unknown,
+use an explicitly configured unknown-origin list or an unconditioned global list;
+otherwise report the missing origin without guessing.
+
+Use exactly one reviewer, without child reviewers or helper fan-out unless the
+operator separately authorizes it. Check the actual run's reported model and any
+substitution/reroute notice before accepting a verdict. A substituted model or
+unconfirmed required profile cannot certify the gate. A successful preliminary
+probe does not establish the later run's identity; probes are optional capability
+diagnosis, not a prerequisite for every review. If a required gate has no permitted
+fresh context, report the missing capability rather than weakening or duplicating
+it. Same-reviewer correction loops keep their selected profile.
 
 ## Positive phase triggers
 
@@ -136,6 +154,7 @@ resumption, report the exact limitation instead of claiming the capability.
 Work item: stable ID, human-readable name, source, repository
 Goal / non-goals: observable outcome and deliberate exclusions
 Scope: exact branch, base/tip or files, checkout/worktree owner and isolation state
+Author: actual phase author/implementer host and profile, or unknown; coordinator host separately when different
 Acceptance: behaviors that must hold
 Evidence: exact commands/results and the revision, counts, hashes, or artifacts proved
 Risk / remaining checks: blocked, stale, operator-only, or intentionally unselected

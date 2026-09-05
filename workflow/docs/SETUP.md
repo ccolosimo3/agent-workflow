@@ -33,8 +33,9 @@ The adapter lives beside that checkout and is ignored by Git:
 ```
 
 It contains no credentials. It records activation mode, enabled hosts, confirmed
-command shapes, named model/reasoning profiles, workload preferences, and
-outer-gate routing. It may also enable one completion receipt store or record it
+command shapes, named model/reasoning profiles, workload preferences by active
+host, and outer-gate routing by actual author when hosts need different eligibility.
+It may also enable one completion receipt store or record it
 as `disabled`.
 Repository adapters remain project-specific and do not copy these preferences.
 
@@ -175,10 +176,19 @@ must show resolved paths before creating links or configuration.
 - `operator-invoked`: outer gates run only when explicitly requested.
 - `disabled`: outer gates are absent from normal completion.
 
-`prefer-different-host` supports both directions: Codex work can route to Claude,
-and Claude work can route to Codex. Cursor and OpenCode can participate the same
-way. A same-host fresh context remains a valid fallback when the operator allows
-it. Direct operator instructions override stored preferences for that invocation.
+`Inner review: inherit` keeps the actual author's host and profile in a fresh
+context. Record the host's native isolated-agent launch, or its same-host fresh
+CLI fallback. A coordinator's host and a saved coworker-review recipe do not
+override that choice.
+
+For outer review, `prefer-different-host` supports both directions: Codex work
+can route to Claude, and Claude work can route to Codex. Author-specific eligible
+lists can enforce stricter choices, including model-family exclusions; apply them
+before ordering or same-host fallback. The author is the agent that produced the
+artifact, even when a different host coordinated the work. `WORKFLOW.md` owns the
+resolution and unavailable/unknown-origin rules. Confirm the actual review model;
+a prior smoke probe does not prove that a later run avoided substitution. Direct
+operator instructions override stored preferences for that invocation.
 
 ## Verification and optional smoke test
 

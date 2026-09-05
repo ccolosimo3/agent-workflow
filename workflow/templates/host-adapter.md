@@ -19,6 +19,7 @@ Repeat this block for each enabled host.
 - Persistent kernel: `<confirmed active owner and scope -> references/KERNEL.md | not registered (on-demand)>`
 - Skill discovery: `<confirmed link or configured path to the canonical package>`
 - Fresh context: `<supported launch method | unavailable>`
+- Native isolated agent: `<launch without author/review history | unavailable>`
 - Resume: `<supported method | unavailable>`
 - Structured output: `<confirmed command shape | unavailable>`
 - Profiles:
@@ -29,7 +30,10 @@ Repeat this block for each enabled host.
 
 Use only the roles the operator wants to configure. A profile range permits the
 agent to choose the lowest sufficient configured profile for the task; it does
-not claim that reasoning levels are equivalent across providers.
+not claim that reasoning levels are equivalent across providers. Group preferences
+by the host doing the phase when hosts need different defaults. `inherit` for
+inner review means the actual author's host and model/effort in a fresh context,
+as defined in `WORKFLOW.md`; it does not inherit the coordinator's profile.
 
 - Planning/specification: `<fixed host/profile | allowed profiles>`
 - Implementation: `<fixed host/profile | allowed profiles>`
@@ -42,13 +46,16 @@ not claim that reasoning levels are equivalent across providers.
 - Policy: `<risk-selected | operator-invoked | disabled>`
 - Reviewer choice: `<prefer-different-host | ordered>`
 - Ordered outer-review profiles: `<host/profile, ...>`
+- Author-specific eligible profiles, when needed: `<author host -> ordered profiles; optional ordinary/complex tiers>`
+- Exclusions, when needed: `<author host -> excluded reviewer hosts/models>`
 - Same-host fresh-context fallback: `<allowed | disallowed>`
 - Outer-spec override: `<inherit | policy and profiles>`
 
-`prefer-different-host` excludes the known authoring/implementation host when a
-different configured reviewer is available, then follows the ordered list. If
-the origin host is unknown, follow the list without guessing. Cross-host review
-is a preference; a same-host fresh context is still independent when allowed.
+An author-specific list replaces the global list. Apply exclusions before the
+ordering and same-host fallback rules in `WORKFLOW.md`; fallback never adds an
+ineligible profile. If only author-specific lists exist, an unknown origin needs
+its own explicit list or resolution before dispatch. Cross-host review is a
+preference; eligible same-host fresh review remains independent when allowed.
 
 ## Setup record
 

@@ -71,6 +71,12 @@ Payload summaries are claims. The artifact, diff, repository, and actual command
 output are authority. A kickoff or review becomes stale when its named revision
 no longer matches the reviewed artifact or tip.
 
+Review required proof in its owning artifact or command output. Optional
+completion-receipt metadata is not an acceptance gate, even when a Task mistakenly
+promotes it into one. Report that owner mismatch without invalidating otherwise
+valid proof or requiring receipt repair. Missing material product, target, or
+authority evidence remains a real finding; a receipt cannot substitute for it.
+
 ## Stance and required investigation
 
 Review adversarially, then report honestly. Approval is valid only after trying

@@ -25,8 +25,9 @@ the package and silently break its shared references.
    `always-on`); hosts to enable; desired model and
    exact reasoning/variant profiles; fixed versus allowed profiles by workload;
    an optional single evidence-helper profile; outer-gate policy;
-   different-host versus ordered reviewer choice; same-host fresh-context
-   fallback; and whether to enable an optional completion receipt store and, if
+   different-host versus ordered reviewer choice; author-specific eligible outer
+   profiles and exclusions when wanted; same-host fresh-context fallback; and
+   whether to enable an optional completion receipt store and, if
    so, its user-local path. Recommend on-demand for a trial and always-on only
    when the user wants V2 as their daily driver. Recommend risk-selected outer
    gates, different-host preference, and an allowed same-host fresh fallback
@@ -121,11 +122,14 @@ need coordination. Do not initialize a nested Git repository unless requested.
 
 ## Outer routing
 
-The authoring or implementing agent reports its current host when known. For a
-selected outer gate, `prefer-different-host` chooses the first configured
-outer-review profile on another host; otherwise it follows the configured list.
-Use the same-host fresh fallback only when allowed. Never launch more than one
-outer reviewer, silently change the selected profile, or call a missing host.
+Record workload preferences by the host doing the phase and use `WORKFLOW.md`'s
+inner-inheritance and outer-eligibility rules. Keep the actual author's host and
+profile separate from the dispatching coordinator. Record any author-specific
+outer lists, complexity tiers, and exclusions; a fallback cannot escape those
+lists. Describe fresh native-agent launch and same-context resume where supported,
+including whether launch inherits conversation history. Confirm routing with
+read-only examples for each configured origin and unavailable capability; do not
+launch model smoke calls as part of this check.
 
 ## Audit and uninstall
 
