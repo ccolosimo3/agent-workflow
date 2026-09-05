@@ -50,6 +50,13 @@ are sufficient.
   a disposable proof or operator check, not a permanent test.
 - Coverage percentage is a constraint, never the behavioral target. If an
   enforced gate can be met only with a weak test, surface the conflict.
+- When test or harness complexity is disproportionate to the behavior changed,
+  stop before handoff and assess each affected test against durable proof and
+  inclusion disposition. Line count is a prompt to inspect, not a verdict.
+- Trim before splitting a large test file: remove redundant or incidental-shape
+  coverage and simplify fixtures first. Split the retained tests only when
+  grouping by behavior improves comprehension; splitting alone does not reduce
+  test burden.
 
 After two local or CI failures on the same proof premise without evidence of a
 new product defect, stop patching the harness and return to the premise and
