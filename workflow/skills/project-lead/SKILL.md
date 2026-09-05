@@ -89,6 +89,9 @@ reapproval or pause.
 
 ## Continuation
 
+Use continuous coordination below unless the operator selects scheduled
+coordination. A scheduled pass has its own yield boundary as defined below.
+
 Follow `WORKFLOW.md` for route selection, pause, recovery, and worker-liveness
 rules. Status and interim child updates do not pause an active program. Park a
 declared return that needs operator input or reaches a real blocker, continue
@@ -100,6 +103,36 @@ yielding, or state the host limitation and exact resume boundary.
 When no independent work advances the program, wait for a meaningful worker
 change using the host's bounded wait capability. Prefer compact status snapshots
 to transcript rereads; do not poll or replan repeatedly on unchanged state.
+
+### Scheduled coordination
+
+Activate only when the operator requests heartbeat or scheduled project
+leadership. During setup, use the host's supported scheduler to create or update one heartbeat
+in this existing planner task; reuse a matching schedule instead of duplicating
+it. Preserve the requested cadence, or default to every 30 minutes. Do not create
+a standalone task or polling-loop substitute when same-task scheduling is
+unavailable; report the host limitation.
+
+Before activating, check for a continuous goal on this planner. Use supported goal
+controls to pause it when the operator selected this switch; if the host cannot,
+ask the operator to pause it and leave activation pending. Never mark an unfinished
+goal complete or blocked to stop its continuations. Preserve worker goals.
+
+The saved prompt invokes `project-lead` in scheduled coordination mode and names
+the project, existing planner, authorized scope, and agreed milestone or stop
+condition. Use host workload preferences; scheduling grants no additional phase,
+dispatch, review, or external-action authority. Verify the scheduler's returned
+target and cadence before claiming activation.
+
+On each wake, start with compact worker/status checks; expand only for changed
+state or a load-bearing uncertainty. Reconcile results and advance ready authorized
+planning or handoffs. Once only waiting or blocked paths remain, end the turn;
+this is the agreed checkpoint under `WORKFLOW.md`, not a reason to wait inside the
+run. Preserve active-writer checks and existing evidence/reviewer ownership.
+Stay quiet on unchanged, non-actionable state; report meaningful progress,
+completion, failure, or a required decision. Pause the heartbeat when its agreed
+stop condition holds or the operator stops it; ordinary wakes do not repeat setup
+or refresh the schedule.
 
 ## Handoff
 
