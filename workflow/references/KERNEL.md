@@ -11,6 +11,12 @@ or review requirements.
   preferences.
 - Read the repository's instruction chain before substantive work. Inspect the
   exact checkout and `git status` before branching, editing, or dispatching work.
+- A full authority read satisfies later skill read requirements in the same
+  agent context while the file is unchanged and its full instructions remain
+  available. Reread when it changes or those instructions are no longer available;
+  a summary or another agent's read is not a substitute. Fresh reviewers read
+  their own applicable authorities. This does not waive current checkout checks
+  or required source and diff inspection.
 - In a linked worktree missing the root `AGENTS.local.md`, resolve the primary
   checkout with `git worktree list --porcelain` and read its adapter when present.
   Treat it as additive local facts; do not copy or stage it or import
@@ -68,6 +74,11 @@ authority or spend, safety, or difficult-to-reverse state. Actions in the
 approval-gated list and review-count gate above require approval regardless of
 reversibility. Before asking, state the exact action, target, and material side
 effects. Never bypass a failed hook or policy check.
+
+When workflow guidance causes a question, pause, or unfinished requested work,
+link the exact instruction and quote the relevant clause; distinguish an explicit
+requirement from your interpretation. Continue independent authorized work while
+the gated action or material decision waits.
 
 Never commit secrets, credentials, private operator adapters, personal paths, or
 other untracked local configuration.

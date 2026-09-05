@@ -117,33 +117,19 @@ certified tip. If a proof fails, distinguish whether it disproves product
 behavior or only its own premise/harness before reporting implementation state.
 Return shared index/program reconciliation only when a named main planner is
 active; otherwise report that the normal state update is already included. Emit
-this compact record with real values and `none` for empty sections:
+a concise human-facing completion under `KERNEL.md`: lead with the outcome,
+summarize meaningful verification and review results, and surface remaining
+proof or decisions. Omit empty sections and link to existing evidence instead of
+reprinting it.
 
-```text
-## Completion receipt — <work item ID/title>
-
-Outcome: <observable result and why it matters>
-Spec/source: <artifact path, tracker URL, or Fast ask>
-Branch / checkout: <branch> | <absolute repository/worktree root>
-Range / tip: <base>..<tip> | <full tip SHA>
-Working tree: <clean | preserved unowned changes disclosed>
-Environment: <only relevant prepared services/data, or default local>
-
-Verification:
-- <exact command or proof> — <useful result>
-
-Reused evidence:
-- <proof and causal reason, or none>
-
-Not selected or blocked:
-- <check and reason, or none>
-
-Docs impact: <updated owner paths and effect, or none>
-Review: <inner verdict and pass count | skipped — documentation-only off-ramp>
-Outer gate: <approved | skipped — reason | blocked>
-Remaining operator proof: <exact check and owner, or none>
-Receipt: <self-report path | disabled | skipped — reason>
-```
+Keep the source ask, exact branch/checkout/base/tip and working-tree state,
+relevant environment, verification commands/results, reused evidence and causal
+basis, documentation impact, review state, and remaining checks/reasons/owners
+in the existing work item or evidence owner. If none exists, include the necessary
+details in the completion; do not create an artifact solely for this format.
+Worker returns still carry `WORKFLOW.md`'s shared envelope and the reconciliation
+facts the planner needs. Concise reporting does not omit material evidence gaps
+or make the optional receipt their required owner.
 
 When `KERNEL.md`'s receipt trigger applies, including to a terminal partial,
 blocked, or abandoned implementation, read `../../references/RECEIPTS.md` and
