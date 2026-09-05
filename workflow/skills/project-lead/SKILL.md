@@ -66,6 +66,13 @@ Routine coordination stays here; do not create a formal phase or extra helper
 merely to obtain stronger reasoning. Reconcile the worker's result under the
 planning role above instead of reauthoring it.
 
+Select implementation separately from planning: a demanding spec may leave a
+straightforward implementation. Apply the host's implementation tiers to the
+remaining uncertainty, affected boundaries, available proof, and capability needs
+(including visual fidelity), not just work size or phase labels. Record the
+selected profile and reason in the existing handoff. Follow `WORKFLOW.md` when
+evidence warrants reassessing it.
+
 Before dispatch, resolve the selected V2 phase entrypoint and its canonical
 authority. Build the handoff from `WORKFLOW.md`'s shared envelope plus the
 selected input payload in `PLANNING.md`. If any are unavailable, stop with

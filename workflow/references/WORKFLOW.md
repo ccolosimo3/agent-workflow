@@ -82,6 +82,16 @@ change review gates. A current-session operator choice wins. If a host cannot
 select or confirm a required profile, report that limitation; inherit a host
 default only when the applicable preference permits it.
 
+Reassess the implementation profile when a new boundary appears or two correction
+attempts fail on the same unresolved mechanism. Diagnose first: environment,
+tooling, or authority failures do not justify a stronger model. Escalate only
+within the permitted profiles and when the diagnosis warrants it; explicit fixed
+choices still win. Preserve the candidate and evidence, confirm the old writer is
+inactive before any replacement, and hand off once instead of starting parallel
+attempts. An already-selected reviewer and its profile remain unchanged.
+
+An explicit inner-review mapping from the actual author's profile takes precedence
+over `inherit`; it selects one fresh reviewer, not an additional review round.
 `Inner review: inherit` means the actual spec author or implementer's host and
 model/effort profile in a fresh context. Prefer that host's native isolated agent;
 use its same-host fresh CLI context when needed. Coworker PR challenger recipes,

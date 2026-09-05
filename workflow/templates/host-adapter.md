@@ -44,6 +44,7 @@ same-reviewer continuations keep their selected profiles.
 - Explore/Spec override, when needed: `<allowed profiles; selection conditions>`
 - Implementation: `<fixed host/profile | allowed profiles>`
 - Inner review: `<inherit | fixed host/profile | allowed profiles>`
+- Author-profile inner overrides, when needed: `<author host/profile -> reviewer host/profile>`
 - Coworker PR review: `<fixed host/profile | allowed profiles>`
 - Evidence helper: `<disabled | host/profile>`
 
