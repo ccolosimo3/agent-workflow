@@ -51,6 +51,11 @@ tip, findings, reused/rerun evidence, and concise verified-clean record.
 
 ## Follow-up
 
+For newly supplied evidence without a source patch, recheck evidence-only
+admission and review the changed artifacts here under `REVIEW.md`'s scoped
+method. Keep source approval tied to its unchanged candidate; do not restart a
+full source audit merely because deferred proof arrived.
+
 After a scoped patch, preflight and compute the new tip, then re-review here using
 `REVIEW.md`'s Re-review mode. Inspect the entire delta from the previously
 reviewed tip. A hunk unrelated to an outer finding is scope expansion and returns

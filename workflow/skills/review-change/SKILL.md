@@ -17,6 +17,17 @@ Read `../../references/KERNEL.md`, `../../references/WORKFLOW.md`,
 `../../references/FRONTEND.md` only for UI scope. Stop if an applicable authority
 is unavailable, then read the repository instructions and adapter.
 
+## Evidence-only return
+
+Before starting a source review, check whether this is later evidence for a
+source-approved candidate. If `REVIEW.md`'s evidence-only admission holds, route
+directly to the reviewer assigned to that evidence gate with the candidate
+identity, new artifacts, and any changed proof. Do not repeat closed inner or
+outer source gates. Resume that reviewer; if it cannot resume, use the disclosed
+fresh fallback rule with its retained payload and relevant prior findings. A
+newly selected outer evidence gate uses one fresh `independent-review` context
+under the configured routing. Apply the scoped verdict and finish this path.
+
 ## Initial review
 
 Confirm the implementation is committed and identify the exact base/tip from the
