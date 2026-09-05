@@ -34,8 +34,14 @@ not claim that reasoning levels are equivalent across providers. Group preferenc
 by the host doing the phase when hosts need different defaults. `inherit` for
 inner review means the actual author's host and model/effort in a fresh context,
 as defined in `WORKFLOW.md`; it does not inherit the coordinator's profile.
+Role-specific preferences override general workload preferences. For an allowed
+range, name the task conditions that select the stronger profile; project
+importance or phase name alone is insufficient. Existing explicit handoffs and
+same-reviewer continuations keep their selected profiles.
 
+- Coordination: `<fixed host/profile | allowed profiles; selection conditions>`
 - Planning/specification: `<fixed host/profile | allowed profiles>`
+- Explore/Spec override, when needed: `<allowed profiles; selection conditions>`
 - Implementation: `<fixed host/profile | allowed profiles>`
 - Inner review: `<inherit | fixed host/profile | allowed profiles>`
 - Coworker PR review: `<fixed host/profile | allowed profiles>`

@@ -73,9 +73,14 @@ capabilities without inventing cross-host launch or model selection.
 Resolve workload preferences for the host doing the selected phase, not a
 coordinator that dispatched it. When dispatch exposes model choice, follow the
 applicable fixed profile or choose the lowest sufficient profile from its allowed
-range. A current-session operator choice wins. If a host cannot select or confirm
-a required profile, report that limitation; inherit a host default only when the
-applicable preference permits it.
+range. Resolve an explicit role preference (such as coordination or Explore/Spec)
+before the host's general workload preference. Select the worker independently
+of the coordinator, pass its resolved model/effort through supported launch
+controls, and include the profile and a short task-specific reason in the existing
+handoff. Profile selection does not select a phase, authorize another worker, or
+change review gates. A current-session operator choice wins. If a host cannot
+select or confirm a required profile, report that limitation; inherit a host
+default only when the applicable preference permits it.
 
 `Inner review: inherit` means the actual spec author or implementer's host and
 model/effort profile in a fresh context. Prefer that host's native isolated agent;

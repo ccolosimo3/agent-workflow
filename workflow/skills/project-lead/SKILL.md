@@ -58,6 +58,14 @@ Follow `WORKFLOW.md` for delegation, phase eligibility, operator selection, and
 handoff semantics. Model/provider choice belongs to the operator or host adapter;
 do not hardcode provider-specific names here.
 
+Use the configured coordination profile for program oversight. For a selected
+Explore or Spec needing substantive design, dispatch its phase worker under the
+host's role preference with the unresolved decision, relevant evidence, and return
+condition. State enough to choose the profile without solving the design twice.
+Routine coordination stays here; do not create a formal phase or extra helper
+merely to obtain stronger reasoning. Reconcile the worker's result under the
+planning role above instead of reauthoring it.
+
 Before dispatch, resolve the selected V2 phase entrypoint and its canonical
 authority. Build the handoff from `WORKFLOW.md`'s shared envelope plus the
 selected input payload in `PLANNING.md`. If any are unavailable, stop with
