@@ -25,5 +25,19 @@
     "branch": "fix/widget-name",
     "base": "f0a1000",
     "tip": "9f2c7aa"
-  }
+  },
+  "execution": [
+    {
+      "host": "codex",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "source": "Illustrative initial author runtime metadata"
+    },
+    {
+      "host": "codex",
+      "model": "gpt-6-astra",
+      "reasoning_effort": "low",
+      "source": "Illustrative correction author runtime metadata"
+    }
+  ]
 }

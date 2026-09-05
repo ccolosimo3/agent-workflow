@@ -9,5 +9,13 @@
   },
   "kind": "review_outcome",
   "summary": "The independent implementation review approved the focused change with no findings.",
-  "evidence": "Reviewed range f0a1000..9f2c7aa."
+  "evidence": "Reviewed range f0a1000..9f2c7aa.",
+  "execution": [
+    {
+      "host": "codex",
+      "model": "gpt-6-astra",
+      "reasoning_effort": "low",
+      "source": "Illustrative review-task-7 runtime metadata"
+    }
+  ]
 }

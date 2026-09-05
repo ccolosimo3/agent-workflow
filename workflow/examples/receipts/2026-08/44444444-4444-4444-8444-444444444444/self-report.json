@@ -31,5 +31,13 @@
   "uncertainty": [
     "Cold-launch restoration has not been tested."
   ],
-  "next_decision": "Decide whether cold-launch restoration is a current product requirement."
+  "next_decision": "Decide whether cold-launch restoration is a current product requirement.",
+  "execution": [
+    {
+      "host": "codex",
+      "model": "unknown",
+      "reasoning_effort": "unknown",
+      "source": "Illustrative host identity; model and effort unavailable"
+    }
+  ]
 }

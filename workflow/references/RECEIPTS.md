@@ -64,6 +64,7 @@ correct, merged, or production-proven.
 | `snags` | optional array of 0–8 snag objects defined below |
 | `next_decision` | optional concise string |
 | `discarded` | optional array of 0–8 concise strings |
+| `execution` | required for new self-reports: non-empty ordered array of author execution entries defined below |
 | `telemetry` | optional cheaply exposed values defined below |
 
 An evidence object has `kind` = `command`, `observation`, `artifact`, or
@@ -95,10 +96,45 @@ A snag object has non-empty string `summary` and `recovery`, plus attribution:
 - `operator_choice`: explicit operator direction;
 - `unknown`: evidence cannot distinguish the cause.
 
-`telemetry` may contain safe string `host` and `model`, nonnegative number
-`elapsed_seconds`, and nonnegative integers `tokens`, `helpers`, and `revisions`.
-Include only values the host already exposes cheaply; never estimate them or
-translate subscription usage into money.
+### Execution identity and optional measurements
+
+For each new self-report, record the actual author's host, exact model ID, and
+reasoning effort separately in `execution`. Each entry contains these non-empty
+safe strings:
+
+| Field | Value |
+| --- | --- |
+| `host` | Host identifier, such as `codex`, `claude`, or `cursor`; `unknown` if unavailable |
+| `model` | Exact model ID exposed for that run; `unknown` if unavailable |
+| `reasoning_effort` | Host-native effort or variant, such as `medium` or `xhigh`; `not_applicable` only when the host exposes no such setting, otherwise `unknown` if unavailable |
+| `source` | Concise reference to already available runtime metadata or the explicit launch configuration; `unknown` if neither is available |
+
+Prefer runtime-reported values over requested launch values. When only launch
+configuration is available, identify it as such in `source`; it is not proof of
+the served model. Never infer an actual setting from a current default, profile
+name, task difficulty, or another agent's settings. Keep reasoning effort out of
+the model string, and never store reasoning content.
+
+Use one entry when the author settings stayed the same. Preserve known changes
+of author host, model, or effort in execution order, including corrections and
+recovery; do not attribute the entire task to its final model. Represent a known
+segment with unavailable settings using `unknown`. Do not reconstruct missing
+history or inspect additional logs or usage solely to populate this field.
+Reviewer execution belongs in that reviewer's sourced annotation, not the
+author's self-report. Helper execution is outside this field's scope.
+
+`telemetry` may contain nonnegative number `elapsed_seconds` and nonnegative
+integers `tokens`, `helpers`, and `revisions`. Include only values the host already
+exposes cheaply; never estimate them or translate subscription usage into money.
+For tasks with multiple execution entries, available telemetry describes only
+the task scope its source establishes; do not assign totals to the final entry
+or claim full-task totals from a partial run.
+
+This is an additive v1 writing rule. Existing receipts and annotations remain
+valid and immutable without `execution`; their missing settings are unknown.
+Legacy `telemetry.host` and `telemetry.model` remain readable historical fields;
+new records use `execution` for identity. Do not guess, backfill, or rewrite old
+records. Missing metadata never changes the receipt's non-blocking status.
 
 The UTF-8 self-report is at most 16 KiB. Omit unknown optional fields instead of
 adding empty boilerplate.
@@ -127,6 +163,7 @@ consolidated annotation per source/session rather than one per finding.
 | `summary` | required concise non-empty string |
 | `evidence` | optional concise safe string |
 | `corrects` | required only for `correction`; literal `self_report` or an existing different annotation UUID in this receipt |
+| `execution` | required for new annotations with `source.kind` = `reviewer`: the source reviewer's execution entries using the same rules above; omit for other sources |
 
 `review_outcome` summarizes one certifying review session. `correction` refutes
 or changes the named self-report or annotation claim. `acceptance` and
