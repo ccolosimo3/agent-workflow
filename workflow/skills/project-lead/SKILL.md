@@ -40,7 +40,12 @@ assuming shared program ownership or dispatching.
   writes. Trigger its one-time setup only when no location exists and an artifact
   is actually needed; ordinary questions and status checks continue without it.
 - Own the program map, sequencing, dependencies, and operator-facing decisions
-  while this named planning session is active.
+  while this named planning session is active. Maintain one current summary per
+  purpose in its existing owner; other entrypoints link to it. During a material
+  reconciliation, update that summary in place rather than appending another
+  "current" section. Replace superseded status with links to retained decisions
+  and evidence, preserving active scope, approvals, unresolved proof, and
+  worker/reviewer ownership.
 - Shape the next independently reviewable risk boundary. Map a broader
   destination only when it helps sequence work; do not fully specify speculative
   later slices.
