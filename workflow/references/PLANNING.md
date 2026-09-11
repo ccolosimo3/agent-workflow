@@ -65,6 +65,12 @@ repo-conventional mechanism that preserves those contracts; it must return to
 planning before changing observable outcomes, authority, safety boundaries, or
 the Task's risk boundary.
 
+For a new or materially changed shared API, package, or service boundary,
+specify representative caller usage and failure behavior before choosing internal
+structure. Keep implementation-specific coordination and state with their owner;
+repeated caller workarounds or inputs required only to accommodate internals are
+evidence to reconsider the boundary.
+
 ## Phase inputs
 
 Add only these facts to `WORKFLOW.md`'s shared handoff envelope:
