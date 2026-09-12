@@ -27,6 +27,15 @@ permanent absence contract; remove only its obsolete assertion unless continuing
 functional, safety, accessibility, legal, privacy, policy, or public-contract
 authority requires absence coverage.
 
+For verification that can generate or rewrite files, record the relevant
+working-tree state before the command and inspect status and the actual diff
+after each run. Distinguish expected disposable output from changes to candidate
+source or generated artifacts. A later successful run does not prove the original
+candidate passed if an earlier run repaired it. Report the first-run result and
+resulting changes, preserve unowned work, and return candidate corrections to the
+owner under the current review mode. This check does not authorize regeneration,
+setup, or edits that the selected task otherwise forbids.
+
 ## Enough, then stop
 
 Cover each distinct behavior and failure mode once at the lowest-cost boundary

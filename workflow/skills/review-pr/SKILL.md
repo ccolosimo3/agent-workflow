@@ -25,8 +25,13 @@ Keep GitHub read-only. Inspect the linked issue and PR claims, checks, automated
 review exclusions, and exact base/head SHAs, but defer existing comment content
 until independent discovery finishes. Use the clean repository-root checkout by
 default; create a review worktree only when existing work or incompatible tooling
-requires it. Never stash, reset, or clean user work. Freeze and confirm one
-base-to-head range before local proof.
+requires it. Never stash, reset, or clean user work. Freeze the base/head SHAs and
+their merge-base before local proof. Review the effective merge-base-to-head
+change (`git diff <base-sha>...<head-sha>`), not the accumulated per-commit patch
+series or a direct comparison of diverged branch tips. Reconcile the changed-file
+set and relevant hunks with GitHub's current PR files/diff view. If sources
+disagree, check for moved refs or incomplete diff output and disclose any
+unresolved coverage; do not silently combine incompatible ranges.
 
 Map the behavior before/after, acceptance, material risk surfaces, changed tests,
 and affected producer/consumer, contract, state/lifecycle, migration,
@@ -84,9 +89,9 @@ untracked proof with a stated oracle, including base-versus-tip comparison when
 causality matters. Do not modify tracked code or dependencies, prototype a fix,
 or rerun broad verification for reassurance.
 
-Then read existing comments, deduplicate them, recheck the live PR head, and
-review any head delta that can invalidate evidence. Do not repeat a broad pass
-without new evidence, a changed tip, or a named unanswered question.
+Then read existing comments, deduplicate them, recheck the live PR base/head and
+effective diff, and review any change that can invalidate evidence. Do not repeat
+a broad pass without new evidence, a changed tip, or a named unanswered question.
 
 ## Calibrate for the operator
 

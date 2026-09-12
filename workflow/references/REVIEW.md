@@ -112,6 +112,15 @@ version of deletions, and traces every changed public or cross-boundary contract
 through affected consumers. An approval that leaves a changed file unopened is
 invalid.
 
+Use existing repository review guidance relevant to the changed behavior:
+domain risks, risk lenses, verification routes, and curated lessons from past
+reviews. Follow repository pointers and conventions; do not require particular
+filenames or create a rubric when none exists. Reconcile overlapping guidance
+against the actual behavior and governing authority. Historical lessons are
+prompts to investigate, not proof of a finding. Preserve blind discovery by
+deferring findings about the current candidate until the review mode permits
+them; outer reviewers must not read prior findings for that candidate.
+
 ## Shared audits
 
 ### Scope, intent, and proportionality
@@ -137,6 +146,12 @@ shape, routes, events, configuration, workflow outputs, persistence, component
 type, and accessibility semantics. Search repository-wide for changed and
 deliberately preserved identifiers. A preserved label over changed behavior can
 mask a broken contract; prove the real consumer.
+
+When behavior changes, inspect nearby comments and owning documentation for
+claims that the change makes false, especially setup, build, tooling, and codegen
+instructions. Apply the normal finding rules and judge severity by the consequence
+of following the stale guidance; neither its location in prose nor its age alone
+determines severity.
 
 ### Information loss
 
