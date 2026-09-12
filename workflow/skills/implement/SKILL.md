@@ -54,6 +54,10 @@ receipt.
   guard code. If exact reproduction remains unavailable after the narrowest
   reasonable attempt, state why and use the strongest safe proxy plus the exact
   remaining real-boundary proof instead of stalling or inventing weak automation.
+- **Repeated corrective layers:** Apply `WORKFLOW.md`'s shared-assumption diagnosis
+  before another workaround, expanded harness, or broad rerun. Use the smallest
+  discriminating observation at the affected owner; record the conclusion and
+  remaining uncertainty in the existing work item.
 - **Explicitly authorized behavior-preserving refactor:** Establish the current
   observable contract at the real boundary before structural edits, keep the same
   proof green through small steps, and separate any behavior change discovered.

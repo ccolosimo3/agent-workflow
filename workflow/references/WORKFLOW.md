@@ -82,13 +82,22 @@ change review gates. A current-session operator choice wins. If a host cannot
 select or confirm a required profile, report that limitation; inherit a host
 default only when the applicable preference permits it.
 
+When distinct corrections repeatedly add the same state, coordination, or
+caller workaround, examine their shared assumption before adding another layer.
+Distinguish a design problem from an unsupported obligation, a faulty proof,
+an environment/tooling limitation, or separate legitimate edge cases. Reconsider
+only the implicated boundary; preserve the candidate and causally valid evidence.
+Change mechanisms within the authorized Task when contracts remain intact;
+return material behavior, scope, authority, or safety decisions to the operator.
+This diagnosis does not automatically select a new phase, rewrite, or review.
+
 Reassess the implementation profile when a new boundary appears or two correction
-attempts fail on the same unresolved mechanism. Diagnose first: environment,
-tooling, or authority failures do not justify a stronger model. Escalate only
-within the permitted profiles and when the diagnosis warrants it; explicit fixed
-choices still win. Preserve the candidate and evidence, confirm the old writer is
-inactive before any replacement, and hand off once instead of starting parallel
-attempts. An already-selected reviewer and its profile remain unchanged.
+attempts fail on the same unresolved mechanism, after the diagnosis above.
+Environment, tooling, or authority failures do not justify a stronger model.
+Escalate only within the permitted profiles and when the diagnosis warrants it;
+explicit fixed choices still win. Confirm the old writer is inactive before any
+replacement, and hand off once instead of starting parallel attempts. An
+already-selected reviewer and its profile remain unchanged.
 
 An explicit inner-review mapping from the actual author's profile takes precedence
 over `inherit`; it selects one fresh reviewer, not an additional review round.

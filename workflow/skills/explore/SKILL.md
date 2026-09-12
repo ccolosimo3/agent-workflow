@@ -35,9 +35,25 @@ reuse, reversibility, cost, and proof—not novelty. Challenge whether the probl
 needs a new subsystem and whether an existing owner plus a small extension is the
 better shape.
 
+When credible options turn on an observable difference, name the question that
+could change the choice. Use existing evidence or the smallest bounded sketches
+or disposable experiments that distinguish the options under the same caller
+and failure scenario. Exercise the relevant existing owner when practical;
+a replica of the proposed behavior cannot establish that owner's capability.
+Do not manufacture alternatives when a supported pattern or fixed constraints
+settle the choice.
+
+Scratch experiments are evidence gathering within the selected Explore, not
+production implementation or a separate formal Spike. Keep them isolated from
+production source and shared state, within the decision's time/scope bound and
+`KERNEL.md`'s approval rules. Stop when the evidence settles the question or the
+bounded experiment cannot answer it; report the remaining proof rather than
+silently expanding its scope or building competing production implementations.
+Retain only useful evidence in the existing result.
+
 Write the compact Explore result described in `PLANNING.md` at the repository's
-declared plan location. Do not implement, mutate external state, or start a spike
-or spec. Return the recommendation, unresolved decision, and eligible next phase,
-then stop. When `KERNEL.md`'s receipt trigger applies, first read
-`../../references/RECEIPTS.md` and write its best-effort record from evidence
-already gathered.
+declared plan location. Do not implement production code, mutate external state,
+or start a formal spike or spec. Return the recommendation, unresolved decision,
+and eligible next phase, then stop. When `KERNEL.md`'s receipt trigger applies,
+first read `../../references/RECEIPTS.md` and write its best-effort record from
+evidence already gathered.

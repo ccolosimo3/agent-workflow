@@ -25,8 +25,9 @@ box when the bet does not prove out.
 
 Use the smallest disposable proof that exercises the real uncertainty. Prefer
 canonical parsers, validators, clients, and fixtures over reimplementing an
-existing contract. Avoid config, global, or shared-state side effects. A local
-mutation of disposable state requires the exact operator approval in `KERNEL.md`.
+existing contract. Avoid config, global, or shared-state side effects. Disposable
+scratch work within the selected proof follows `KERNEL.md`'s ordinary-action and
+approval rules; calling a target disposable does not exempt a gated operation.
 Proof code may live in the repository's declared plan area but does not become
 production code or a permanent test merely because it was useful; remove
 throwaway scaffolding by default and retain a proof artifact only when it remains

@@ -52,6 +52,15 @@ intermediate state or hides the real operation boundary.
 Before review-ready promotion, apply `KERNEL.md`'s minimum-sufficient check; it
 governs speculative machinery as well as plan shape.
 
+Before expanding a spec around compatibility, recovery, durable state, or a fixed
+mechanism, identify the supported contract/caller/state, explicit operator
+requirement, or observed failure that makes that costly obligation necessary.
+Use a concrete example when available; a supported contract or approved future
+requirement remains valid without a local sample. Keep unsupported planner
+assumptions visible as hypotheses and compare the existing ordinary path before
+turning them into acceptance criteria. Record this reasoning in the existing
+decision or tradeoff, not a separate constraint ledger.
+
 Architecture may describe the full destination while the current Task remains
 small. Do not confuse physical line count with design size; larger work is valid
 when required correctness, safety, or operational simplicity earns it.
@@ -107,6 +116,11 @@ Use these as semantic contents, not mandatory verbose headings.
 - exact evidence produced;
 - `GO`, `NO-GO`, or `BLOCKED` result and design implication;
 - disposable artifacts retained or removed.
+
+For Explore and Spike, distinguish the exact proposition the evidence supports
+from the stronger behavior that remains unproved. Carry those limits into the
+next Task: feasibility of an underlying tool does not qualify an unexercised
+production wrapper, lifecycle, or platform.
 
 ### Spec
 
