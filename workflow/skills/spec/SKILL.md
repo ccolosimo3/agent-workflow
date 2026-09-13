@@ -20,8 +20,9 @@ read the repository instructions and adapter relevant to the work item.
 Confirm the operator selected a formal spec. Re-ground the raw outcome against
 current source, owners, nearest complete patterns, and relevant landed work.
 Treat prior plans and summaries as claims. Resolve ordinary mechanical ambiguity
-through repository evidence; pause only for a material direction choice owned by
-the operator.
+through repository evidence. Apply `PLANNING.md`'s grounding and scope rule to
+consequential before/after behavior; keep unsettled operator choices visible in
+the draft and return them before review-ready promotion or dependent work.
 
 Define the next independently reviewable risk boundary using the Spec contents in
 `PLANNING.md`. Make acceptance behavioral and verification falsifying. Preserve

@@ -26,6 +26,10 @@ the current owner, nearest complete patterns, relevant history, and primary
 external sources when facts may have changed. Separate verified capability,
 repository evidence, and design hypotheses.
 
+Compare approaches against the intended behavior under `PLANNING.md`'s grounding
+and scope rule. Surface consequential behavioral tradeoffs alongside the options;
+selecting a mechanism does not settle its otherwise unresolved behavior choices.
+
 Work serially by default. Follow `WORKFLOW.md` if a bounded evidence helper is
 worth using; helpers investigate distinct questions and do not recommend the
 final option.

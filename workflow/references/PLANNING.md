@@ -40,6 +40,31 @@ and complete pattern, relevant landed work, and only the external facts that can
 change the decision. Separate verified facts, repository evidence, assumptions,
 and unresolved decisions.
 
+Establish which outcomes the request intends to improve and which should remain.
+For consequential workflow or contract changes, trace representative everyday
+scenarios at the affected boundary and explain meaningful before/after differences
+in the existing plan or conversation; do not require an exhaustive compatibility
+inventory. Preserve established behavior outside the intended change by default,
+but do not reject a proposed improvement merely because it changes that behavior.
+
+When the request or established requirements leave a consequential choice
+unsettled—capabilities, familiar defaults, required user steps, data treatment,
+compatibility, or meaningful failure/recovery behavior—present the current and
+proposed behavior, expected benefit, tradeoff, and recommendation to the operator
+before committing dependent planning or implementation. A broad goal such as
+"improve local development" does not settle every such tradeoff. Equivalent
+internal mechanisms, ordinary fixes to a known contract, and behavior already
+selected by the operator need no new direction approval; `KERNEL.md` still governs
+execution permissions.
+
+Resolve factual uncertainty through evidence. Keep remaining recommendations
+distinct from operator decisions in the existing work item and handoff: neither
+writing a choice into a spec nor another agent's agreement authorizes it. Workers
+return these choices through the named planner, who asks the operator rather than
+deciding on their behalf; without a planner, ask directly. Batch focused questions
+as they become material and continue independent authorized work while awaiting
+answers.
+
 Map the broader destination when it helps sequencing, but fully authorize only
 one independently reviewable risk boundary at a time. That Task must remain a
 valid state if later work never lands. When one Task accumulates several
@@ -146,7 +171,9 @@ ordinary local work.
 ## Review readiness
 
 A spec is review-ready when load-bearing claims are grounded, no material
-direction choice is hidden, acceptance is behaviorally testable, the Task is
+direction choice is hidden, and consequential behavior choices are settled by
+the request, established requirements, or an explicit operator decision.
+Acceptance is behaviorally testable, the Task is
 right-sized and independently valid, verification can falsify the change, and
 approval-gated actions are explicit. Review-ready does not mean approved or
 authorized for implementation.

@@ -9,7 +9,7 @@ phase and outer-gate selection; `FRONTEND.md` is conditional on UI scope.
 1. An initial inner review uses exactly one fresh context. The receiver gets
    `WORKFLOW.md`'s envelope plus the applicable payload below and independently
    validates it.
-2. `ACTIONABLE` findings are patched by the owning planner or implementer except
+2. `ACTIONABLE` findings are patched by the owning spec author or implementer except
    for `[decision-required]` items. Causally affected verification runs, then the
    original reviewer receives the findings verbatim, mapped resolutions, reviewed
    revision, current tip or artifact, and invalidated evidence.
@@ -126,6 +126,12 @@ them; outer reviewers must not read prior findings for that candidate.
 ### Scope, intent, and proportionality
 
 Compare the artifact or diff with the raw ask, not only acceptance criteria.
+For consequential behavioral differences, apply `PLANNING.md`'s grounding and
+scope rule: verify the before/after scenarios and whether the request, established
+requirements, or an explicit operator decision settle the choice. A spec's
+acceptance criteria or another agent's approval cannot supply missing operator
+authority. Surface an unsettled choice as `[decision-required]`; do not choose
+the behavior or reject an improvement solely to preserve the old behavior.
 Unrequested substitution of a public contract, component, primitive, library,
 algorithm, data path, schema, or dependency is `[decision-required]` even if the
 new form works. Cosmetic in-place refinements that preserve identity are not
