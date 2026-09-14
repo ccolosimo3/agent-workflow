@@ -90,6 +90,12 @@ Architecture may describe the full destination while the current Task remains
 small. Do not confuse physical line count with design size; larger work is valid
 when required correctness, safety, or operational simplicity earns it.
 
+Right-size the proof with the implementation: apply `TESTING.md` to proposed
+cases, reuse existing coverage, and justify heavier harnesses by the distinct
+behavior only that boundary can prove. A spec must not turn a list of internal
+permutations into required tests. Keep unavailable real-boundary proof explicit
+instead of declaring a substitute harness or shape assertion sufficient.
+
 ## Implementation latitude
 
 Specify observable behavior, owned contracts, non-goals, acceptance, and proof.

@@ -179,10 +179,18 @@ rules. Keep the trace internal unless it yields a finding or residual proof.
 ### Behavior and test proof
 
 Apply `TESTING.md` to every added, changed, deleted, or relaxed assertion;
-confirm equivalent durable proof remains after deletion. Shape assertions are
-supplemental only when contractual and paired with behavioral or operator proof.
-Do not accept a spec-authored equivalence as authority: validate its premise and
-the product regression each proof would catch at the minimum causal boundary.
+confirm equivalent durable proof remains after deletion. Independently re-derive
+test value from source rather than adopting the author's or spec's framing. Ask:
+*what relevant durable regression could return while this test stays green?*
+Try a concrete counterexample at the minimum causal boundary, checking whether a
+fixture or oracle merely repeats the implementation's assumption. Do not invent
+unrelated failure modes or require a mutation run for every assertion.
+
+Then judge inclusion separately: does a named retained test already catch the same
+regression under the same conditions, and what distinct condition justifies a
+heavier or repeated case? Report actionable quality and inclusion exceptions under
+the normal severity rules. Shape assertions are supplemental only when contractual and
+paired with a named behavioral or operator proof; an unrun proof remains pending.
 
 ### CI execution context
 

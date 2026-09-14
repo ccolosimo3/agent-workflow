@@ -17,7 +17,9 @@ A useful test must satisfy all four:
    accessibility, policy, or operational requirement.
 
 The quick falsifier is: *if this returned, would the test go red, and would that
-recurrence still be a defect?* Both answers must be yes.
+recurrence still be a defect?* Both answers must be yes. Passing execution alone
+does not satisfy these criteria. Rewrite a weak proof or use the inclusion rules
+below; a spec's named case does not exempt it from this bar.
 
 Test changed branches, fallbacks, failures, persistence, contracts, and device or
 integration outcomes. Pure copy, markup, static configuration, or a
@@ -43,11 +45,21 @@ that honestly proves it. Keep a heavier test only for what the heavier boundary
 alone establishes, such as persistence reload, integration behavior,
 cross-boundary ordering, concurrency, lifecycle, or device behavior.
 
+Exercise a shared input or policy matrix at its canonical owner. Each consumer
+keeps the smallest proof of its distinct outcome, wiring, failure timing, side
+effect, state, contract, version/environment, concurrency, or lifecycle condition;
+do not repeat the whole matrix at every consumer.
+
 Use canonical production owners and validators for behavior under test; do not
 recreate their contract, lifecycle, identity, or projection logic in a harness or
 oracle. For unrelated state whose setup behavior is not under test and whose
 relevant contract is only exact preservation, schema-valid deterministic fixtures
 are sufficient.
+
+When fixture shape is load-bearing to the behavior under test, ground it in the
+actual producer or authoritative contract, independently of the implementation's
+assumption. A realistic-looking fixture that repeats the same wrong assumption
+can leave the real defect green. This does not require live/provider activity.
 
 - Before adding coverage, name any retained test that catches the same regression
   under the same relevant conditions. Merge or omit redundant proof.
@@ -74,7 +86,9 @@ diagnosis loop.
 
 ## Inclusion disposition
 
-Judge test quality and whether it should ship as separate questions:
+Judge test quality and whether it should ship as separate questions. A valid,
+passing test can still be redundant or too costly to maintain. Account for mock
+surface, timing coordination, and fixture lifecycle as well as assertion count:
 
 - **ship:** distinct durable regression at the lowest honest boundary;
 - **trim:** valid but unnecessarily heavy or brittle;

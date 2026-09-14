@@ -102,8 +102,11 @@ delta can invalidate; use a broad gate when shared infrastructure changed or no
 valid constituent proof remains. Keep one-off proofs outside the permanent suite
 and report unavailable, unselected, or operator-only checks honestly.
 
-Before review, repeat the minimum-sufficient check, remove unearned machinery and
-temporary residue, inspect the full diff, and decide documentation impact. Update
+Before review, apply `TESTING.md`'s durable-proof and inclusion decisions to the
+changed tests; resolve clear weak, redundant, or oversized proof within its
+authority rules instead of leaving the first triage to the reviewer. Repeat the
+minimum-sufficient check, remove unearned machinery and temporary residue, inspect
+the full diff, and decide documentation impact. Update
 this work item's own artifact with delivered facts. When a named main planner is
 active, leave shared program/index state to it and retain the planner's return
 identity; otherwise perform the repository's normal state update now. Commit every
