@@ -49,8 +49,11 @@ the package and silently break its shared references.
    with the package: only explicitly packaged skills may remain
    `user-invocable-only`; include stale overrides on advisory or user-facing
    skills in the previewed removal. For OpenCode, resolve its config directory
-   (for example, with `opencode debug paths`) and its resulting global
-   `AGENTS.md`. For Cursor, inspect native `~/.agents/skills/` discovery,
+   with `opencode debug paths`; inspect global JSON/JSONC `instructions`,
+   `AGENTS.md`, the resolved `opencode debug config`, and `opencode debug skill`.
+   Check the selected agent's effective skill-tool settings and permissions;
+   catalog discovery and on-demand body loading are separate from kernel startup.
+   For Cursor, inspect native `~/.agents/skills/` discovery,
    `~/.cursor/rules/`, and any legacy V2 command/plugin registrations. Check for
    the direct `cursor-agent` binary before invoking the
    Desktop `cursor agent` wrapper because the wrapper may install it.
@@ -84,21 +87,26 @@ the package and silently break its shared references.
    register one persistent route to `KERNEL.md`: Codex's active global owner
    after `AGENTS.override.md` precedence, Claude Code's global `CLAUDE.md`
    import, a rendered user-level Cursor rule from the packaged template, or
-   OpenCode's resolved global `AGENTS.md`. On-demand mode leaves those owners
+   an absolute kernel path in OpenCode's global JSON/JSONC `instructions` list.
+   OpenCode does not import paths mentioned in `AGENTS.md`; replace an old V2
+   read-pointer with the native route, preserving unrelated entries and guidance
+   and avoiding duplicate kernel loads. On-demand mode leaves those owners
    untouched. Preserve unrelated global instructions and block if always-on
-   composition would shadow them or cannot be made safe. Preserve the packaged
-   Codex and OpenCode invocation controls, set Claude Code `skillOverrides` to
-   `user-invocable-only` only for the skills packaged as explicit. Cursor uses
-   the shared `~/.agents/skills/` links for both automatic discovery and manual
+   composition would shadow them or cannot be made safe. Preserve packaged
+   invocation metadata, but do not claim OpenCode enforces `opencode/autoinvoke`
+   without verified host support; record that capability gap. Set Claude Code
+   `skillOverrides` to `user-invocable-only` only for skills packaged as explicit.
+   Cursor uses the shared `~/.agents/skills/` links for automatic discovery and manual
    slash invocation; do not install command shims for the same IDs. Leave
    advisory and user-facing entrypoints eligible for automatic invocation
-   according to their narrow descriptions and host policy. Verify automatic
-   advisory and user-facing discovery, explicit-only utilities and control-plane
-   entrypoints, shared-reference reachability, and either the active persistent
-   route or its absence without a model call, then write the adapter with the
-   verified receipt setting. Explain
-   that a fresh session is required to prove loaded behavior; any such smoke
-   remains separately approval-gated.
+   according to their narrow descriptions and host policy. Verify discovery,
+   access and supported invocation controls for each class, shared-reference
+   reachability, and either the configured persistent route or its absence
+   without a model call, then write the adapter with the verified receipt setting
+   and any capability gaps. Do not preload skill bodies or equate configuration
+   with observed model context. Explain that a host restart and fresh session
+   are required to check loaded behavior; any model smoke remains separately
+   approval-gated and must be reported as unrun when omitted.
 
 Do not infer Cursor CLI slash-command expansion from Desktop discovery. Confirm
 the installed CLI behavior; otherwise invoke automation with a prompt that names

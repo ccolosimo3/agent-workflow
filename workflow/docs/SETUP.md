@@ -97,14 +97,23 @@ surfaces locally.
   `cursor-agent --print --output-format json`; confirm model options from the
   installed CLI.
 - **OpenCode:** use the same `~/.agents/skills/` links, or register the package
-  `skills/` directory in `opencode.json`. In always-on mode, resolve its config
-  directory (for example, with `opencode debug paths`) and use that directory's
-  `AGENTS.md`, normally `~/.config/opencode/AGENTS.md`. Point that exact owner at
-  the central kernel when V2 owns it, or add a thin instruction to read the
-  kernel without replacing unrelated guidance; on-demand mode leaves it
-  unchanged. Non-interactive runs use `opencode run --format json`, with
-  `--model`, `--variant`, and
-  `--session` when supported.
+  `skills/` directory through `skills.paths` in its configuration. In always-on
+  mode, resolve its config directory with `opencode debug paths`, then add the
+  canonical absolute `references/KERNEL.md` path once to `instructions` in the
+  existing global `opencode.json` or `opencode.jsonc` (normally under
+  `~/.config/opencode/`). Preserve other entries, agent settings, and unrelated
+  `AGENTS.md` guidance. A textual instruction to read the kernel is not a host
+  import: OpenCode does not automatically expand file references in `AGENTS.md`.
+  Replace an old V2 read-pointer with this native route; avoid a second kernel
+  copy or import. On-demand installation leaves global instructions unchanged.
+  Non-interactive runs use `opencode run --format json`, with `--model`,
+  `--variant`, and `--session` when supported.
+
+OpenCode exposes a skill catalog, then loads each full skill through its `skill`
+tool when needed. A skill body absent from initial context is expected, not a
+discovery failure. Check `opencode debug skill` for canonical locations and
+content, and the selected agent's effective skill-tool settings and permissions
+for access; do not preload every skill into `instructions`.
 
 In always-on mode, a fresh ordinary session must receive the kernel without
 invoking a phase. In on-demand mode it must not. In both modes, a phase command
@@ -122,10 +131,14 @@ Invocation has three classes across hosts:
   `review-spec`, `independent-review`, and `independent-spec-review` are
   explicit/internal control-plane skills. Codex uses `agents/openai.yaml`;
   Claude Code sets these IDs to `user-invocable-only` in `skillOverrides`;
-  Cursor uses `disable-model-invocation: true`; and OpenCode uses
-  `metadata.opencode/autoinvoke: false`.
+  Cursor uses `disable-model-invocation: true`. OpenCode's packaged
+  `metadata.opencode/autoinvoke` expresses intent, but is not a documented native
+  invocation control. Its explicit/internal boundary relies on skill descriptions
+  and `WORKFLOW.md`; record the lack of host enforcement as a capability gap
+  unless the installed version provides a verified supported control.
 
-Setup must verify all three states before declaring registration complete.
+Setup must distinguish these intended classes from host-enforced controls and
+record any enforcement gaps before declaring registration complete.
 Owning spec and implementation phases start their required review children by
 naming the control-plane entrypoint explicitly in the fresh task's initial
 prompt; the operator does not need to invoke those review loops separately.
@@ -192,10 +205,14 @@ operator instructions override stored preferences for that invocation.
 
 ## Verification and optional smoke test
 
-Setup verifies executable/version, non-secret auth status, skill
-discovery, shared-reference reachability, selected activation behavior, and
-documented structured-output flags without a model call. A real prompt is
-optional and separately approval-gated because it may consume paid usage.
+Setup verifies executable/version, non-secret auth status, skill discovery and
+access, shared-reference reachability, the configured activation route, and
+documented structured-output flags without a model call. For OpenCode, check
+`opencode debug config` for the resolved kernel entry and confirm that its file
+is readable. Configuration and discovery checks do not prove what a model
+received or followed. Restart OpenCode and use a fresh session to check runtime
+loading; a model smoke test is optional and separately approval-gated because it
+may consume paid usage. Report it as unrun when only local diagnostics were used.
 
 ## Release cutover
 
@@ -241,5 +258,5 @@ discovery requires uninstalling those host registrations.
 - [Cursor plugins and rules](https://cursor.com/docs/reference/plugins)
 - [Cursor CLI output formats](https://cursor.com/docs/cli/reference/output-format)
 - [OpenCode Agent Skills](https://opencode.ai/docs/skills)
-- [OpenCode instructions](https://opencode.ai/v2/docs/instructions)
+- [OpenCode rules and instruction files](https://opencode.ai/docs/rules/#referencing-external-files)
 - [OpenCode CLI](https://opencode.ai/docs/cli)
