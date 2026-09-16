@@ -12,7 +12,7 @@ https://github.com/user-attachments/assets/17d30f20-1bba-4534-b3e8-072a9b27b7de
 ## How it works
 
 ```mermaid
-flowchart LR
+flowchart TD
     P[Next work] --> R{Which path?}
 
     R -->|Clear and local| I[Implement]
@@ -22,9 +22,9 @@ flowchart LR
 
     E --> SP
     S --> SP
-    SP <--> SR[Independent spec review]
+    SP <--> SR["Independent<br/>spec review"]
     SR --> I
-    I <--> IR[Independent implementation review]
+    I <--> IR["Independent<br/>implementation review"]
 ```
 
 Exploration and spikes are optional. Formal specifications and implementation
