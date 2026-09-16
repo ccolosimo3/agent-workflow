@@ -33,6 +33,31 @@ it without asking again. Keep one living Markdown work item under
 `INDEX.md` or other buckets only when real coordination needs them. Casual work
 does not trigger storage setup.
 
+### Routine plan maintenance
+
+Within the configured plan area, local archival and current-index maintenance
+are ordinary planning work; perform clear-cut updates without a separate cleanup
+approval. Follow `WORKFLOW.md`'s planner ownership rule. Deletion and off-device
+archival or publication remain separate actions under `KERNEL.md`.
+
+Confirm completion, cancellation, or supersession from the owning evidence or
+operator decision, never age or silence alone. Required review or proof still
+owed keeps work open. Before retiring superseded work, carry any continuing
+obligations to a named current owner. Record the final disposition, evidence
+links, and continuing follow-ups in the existing plan; move the whole terminal
+folder to the local archive without overwriting retained history, and update the
+existing index and affected links in both moved and current documents. Keep a
+path in place while a worker uses it unless that worker's handoff is coordinated.
+
+Start routine retrieval from the current index or named active plans; consult
+archives when historical evidence is relevant. Replace obsolete current-status
+text in its existing owner and clearly identify superseded direction while
+preserving decisions and evidence. Surface genuinely unclear dispositions for
+operator resolution; continue independent work. Mention completed maintenance
+briefly in the normal update without creating a cleanup report, ledger, or
+mandatory lesson document. Bookkeeping gaps do not reopen valid verification or
+block unrelated implementation.
+
 ## Grounding and scope
 
 Start from the raw operator outcome, current repository behavior, nearest owner

@@ -46,6 +46,12 @@ assuming shared program ownership or dispatching.
   "current" section. Replace superseded status with links to retained decisions
   and evidence, preserving active scope, approvals, unresolved proof, and
   worker/reviewer ownership.
+- Apply `PLANNING.md`'s routine plan maintenance after reconciling terminal work,
+  before reporting closeout. On takeover, make a bounded pass through the
+  current index or active plans for completed or superseded work left behind;
+  during material planning updates, reconcile stale state encountered there.
+  Stay within this project's planning ownership; do not rescan the archive or
+  turn every status check into a cleanup sweep.
 - Shape the next independently reviewable risk boundary. Map a broader
   destination only when it helps sequence work; do not fully specify speculative
   later slices.
