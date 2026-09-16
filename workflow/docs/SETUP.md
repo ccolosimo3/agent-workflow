@@ -194,14 +194,33 @@ context. Record the host's native isolated-agent launch, or its same-host fresh
 CLI fallback. A coordinator's host and a saved coworker-review recipe do not
 override that choice.
 
-For outer review, `prefer-different-host` supports both directions: Codex work
-can route to Claude, and Claude work can route to Codex. Author-specific eligible
-lists can enforce stricter choices, including model-family exclusions; apply them
-before ordering or same-host fallback. The author is the agent that produced the
-artifact, even when a different host coordinated the work. `WORKFLOW.md` owns the
-resolution and unavailable/unknown-origin rules. Confirm the actual review model;
-a prior smoke probe does not prove that a later run avoided substitution. Direct
-operator instructions override stored preferences for that invocation.
+Both passes use the same review standards. Outer review is a second blind
+assessment of the converged candidate; it must not inherit the author's or inner
+reviewer's conversation. A fresh native subagent can perform either pass when
+the host supports that isolation. A separate model or subscription is optional.
+
+For one available host/profile, recommend this configuration using that user's
+selected profile; no extra routing setting is needed:
+
+```text
+Policy: risk-selected
+Reviewer choice: ordered
+Ordered outer-review profiles: <available host/profile>
+Same-host fresh-context fallback: allowed
+```
+
+The outer profile may be exactly the same as the author's and inner reviewer's.
+Each review still launches separately, and outer review remains risk-selected.
+With multiple available hosts, offer `prefer-different-host` as a preference,
+or keep an ordered profile list. Author-specific lists and exclusions can impose
+stricter host or model-family choices when the user wants them; never copy
+another user's restrictions into a new installation or silently relax existing
+ones. Apply them before ordering or fallback. The author is the agent that
+produced the artifact, even when a different host coordinated the work.
+`WORKFLOW.md` owns resolution and unavailable/unknown-origin rules. Confirm the
+actual review model; a prior smoke probe does not prove that a later run avoided
+substitution. Direct operator instructions override stored preferences for that
+invocation.
 
 ## Verification and optional smoke test
 

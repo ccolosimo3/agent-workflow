@@ -4,6 +4,15 @@ This file owns certifying review method, handoff semantics, verdicts, and
 same-reviewer convergence. `TESTING.md` owns test quality; `WORKFLOW.md` owns
 phase and outer-gate selection; `FRONTEND.md` is conditional on UI scope.
 
+Inner and outer review use the same investigation, test-quality, severity, and
+approval standards below. Outer review adds a separate blind assessment after
+inner convergence, not a stricter defect threshold. Both initial reviewers start
+without inherited planning, implementation, or prior-review conversation history.
+Give them the raw ask, spec or acceptance, candidate, and verification evidence.
+A native subagent is suitable when its launch provides that isolation; being a
+subagent does not itself prove a fresh context. Model diversity is optional under
+`WORKFLOW.md` and cannot substitute for context isolation.
+
 ## Review state machine
 
 1. An initial inner review uses exactly one fresh context. The receiver gets

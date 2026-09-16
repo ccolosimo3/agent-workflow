@@ -107,6 +107,12 @@ use its same-host fresh CLI context when needed. Coworker PR challenger recipes,
 outer-review lists, and coordinator defaults do not select an inner reviewer.
 Cross-host inner review requires an explicit inner profile or operator choice.
 
+Outer review does not require a different host, provider, model family, or exact
+model from the author or inner reviewer. Those restrictions are optional host
+configuration, not portable policy. One configured profile can serve all roles,
+but each initial review must use a separate fresh context under `REVIEW.md`;
+reusing the inner reviewer's conversation cannot count as outer review.
+
 - `risk-selected`: apply the positive outer selectors below.
 - `operator-invoked`: run an outer gate only on a direct operator request.
 - `disabled`: omit outer gates from normal completion. A direct operator request

@@ -32,6 +32,9 @@ include fresh inner review; outer review is configurable and selected according
 to risk or direct user request. Clear, local changes can take the Fast route
 without unnecessary planning ceremony.
 
+One subscription and model can run both review passes in separate fresh contexts.
+Using different hosts or model families is an optional configuration choice.
+
 ## Using the workflow
 
 Ask for work naturally or invoke a phase directly:

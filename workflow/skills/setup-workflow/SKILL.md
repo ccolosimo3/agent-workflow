@@ -30,8 +30,11 @@ the package and silently break its shared references.
    whether to enable an optional completion receipt store and, if
    so, its user-local path. Recommend on-demand for a trial and always-on only
    when the user wants V2 as their daily driver. Recommend risk-selected outer
-   gates, different-host preference, and an allowed same-host fresh fallback
-   when the installed hosts support them, but preserve the user's choice. Leave
+   gates. For one available host/profile, recommend `ordered` with that profile
+   and an allowed same-host fresh context; the same exact model may fill both
+   review roles. Offer different-host preference when multiple hosts are
+   available, and model-family exclusions only as an optional user choice.
+   Preserve existing choices and confirm the host can isolate each review. Leave
    evidence helpers disabled when none is selected and receipts disabled when
    declined.
 2. Inspect each selected host read-only using its executable, `--version`, local
@@ -135,9 +138,14 @@ inner-inheritance and outer-eligibility rules. Keep the actual author's host and
 profile separate from the dispatching coordinator. Record any author-specific
 outer lists, complexity tiers, and exclusions; a fallback cannot escape those
 lists. Describe fresh native-agent launch and same-context resume where supported,
-including whether launch inherits conversation history. Confirm routing with
-read-only examples for each configured origin and unavailable capability; do not
-launch model smoke calls as part of this check.
+including whether launch inherits conversation history. Both initial review
+passes require separate fresh contexts and use the same review standards; a
+different model cannot compensate for inherited author or prior-review history.
+Do not require another subscription or copy the installer's personal exclusions.
+Confirm routing with read-only examples for each configured origin, including a
+same-model outer when allowed and an unavailable capability. Preserve explicit
+exclusions instead of silently falling back outside them. Do not launch model
+smoke calls as part of this check.
 
 ## Audit and uninstall
 
