@@ -10,6 +10,13 @@ The recommended path is to give an existing agent this package and invoke
 a model call, previews changes, and writes the user-level adapter only after
 approval.
 
+First-time setup starts with three choices: activation mode, a host/model profile,
+and outer-review policy. One profile can author and review in separate fresh
+contexts. Advanced workload routing, cross-host preferences, exclusions, helpers,
+and receipts can be configured later when useful; helpers and receipts start
+disabled unless selected. Existing installations keep their configured choices.
+All proposed configuration writes still appear in the approval preview.
+
 ## Activation
 
 - **On-demand** is the recommended trial mode. Register the same skills,

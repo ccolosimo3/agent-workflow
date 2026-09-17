@@ -21,24 +21,22 @@ the package and silently break its shared references.
 
 ## Configure
 
-1. Ask only for choices not already stated: activation mode (`on-demand` or
-   `always-on`); hosts to enable; desired model and
-   exact reasoning/variant profiles; fixed versus allowed profiles by workload;
-   an optional single evidence-helper profile; outer-gate policy;
-   different-host versus ordered reviewer choice; author-specific eligible outer
-   profiles and exclusions when wanted; same-host fresh-context fallback; and
-   whether to enable an optional completion receipt store and, if
-   so, its user-local path. Recommend on-demand for a trial and always-on only
-   when the user wants V2 as their daily driver. Offer `broad`, `selective`
-   (recommended default), or `by-request` outer review as defined in `WORKFLOW.md`;
-   keep that choice separate from model diversity. For one available host/profile,
-   recommend `ordered` with that profile and an allowed same-host fresh context;
-   the same exact model may fill both
-   review roles. Offer different-host preference when multiple hosts are
-   available, and model-family exclusions only as an optional user choice.
-   Preserve existing choices and confirm the host can isolate each review. Leave
-   evidence helpers disabled when none is selected and receipts disabled when
-   declined.
+1. Preserve existing choices; apply defaults only to new, unset preferences. Ask
+   only for missing basics: activation mode (`on-demand` or `always-on`), the
+   host/model and reasoning profile to start with, and outer-review policy
+   (`broad`, `selective`, or `by-request`). Recommend on-demand for a trial and
+   selective outer review; always-on is available for daily use.
+   Start with the selected profile for ordinary work, `Inner review: inherit`,
+   and `ordered` outer review using that profile with same-host fresh contexts
+   allowed. Confirm the host can isolate both reviews. If multiple hosts are
+   selected, use each host's selected profile for its own work and fresh reviews;
+   record author-specific outer lists when needed to express that routing.
+   Advanced workload routing, different-host preferences, exclusions, evidence
+   helpers, and receipts remain available. Ask about them only when requested or
+   a concrete capability/routing need arises. Helpers and receipts default to
+   disabled for a new setup; configuring them later uses the same preview and
+   approval process. Existing profiles, exclusions, helpers, and receipt settings
+   are retained unless the operator asks to change them.
 2. Inspect each selected host read-only using its executable, `--version`, local
    help, non-secret authentication/config status, model listing when locally
    available, skill discovery path, fresh launch/resume capability, and

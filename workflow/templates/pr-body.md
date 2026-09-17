@@ -47,7 +47,10 @@ they carry information a reviewer needs; omit empty headings.
 - <optional non-obvious migration, rollback, or reviewer-relevant tradeoff>
 ```
 
-Use an outcome-first sentence-case title. Keep the body factual and concise. Do
-not claim a check passed unless it ran for the reviewed revision. Keep exhaustive
-commands, findings, verdicts, and rerun history in local evidence rather than the
-PR body. Omit `## Docs impact` when tracked docs did not change.
+Use an outcome-first sentence-case title. Report only observed results that apply
+to the candidate. Evidence from an earlier revision may be reused when no change
+to relevant code, configuration, dependencies, or environment can invalidate it;
+identify the tested revision and briefly explain why the evidence still applies.
+Never imply a reused check was rerun. Keep exhaustive commands, findings, verdicts,
+and rerun history in the existing evidence owner rather than the PR body. Omit
+`## Docs impact` when tracked docs did not change.
