@@ -26,11 +26,12 @@ subagent does not itself prove a fresh context. Model diversity is optional unde
    rewrite before re-review; spec revisions identify the exact artifact revision.
 3. Re-review is narrow: verify each resolution and inspect its delta for
    regressions. Reuse the same reviewer; use a fresh fallback only when the host
-   cannot resume it, and disclose the lost context. Spec convergence stops after
+   cannot resume it, disclose the lost context, and supply the full initial
+   payload plus prior findings and resolutions. Spec convergence stops after
    three revise/re-review cycles or a material operator decision.
-4. After inner approval, apply `WORKFLOW.md`'s configured outer policy and, when
-   enabled, its positive selector. Skip automatically when disabled,
-   operator-invoked but not requested, or not selected; do not ask for a waiver.
+4. After inner approval, apply `WORKFLOW.md`'s outer policy (`broad`, `selective`,
+   or `by-request`). Record a short reason when it skips the gate; do not ask for
+   a waiver or apply selective risk triggers as a prerequisite for broad review.
 5. A selected outer gate begins in exactly one configured fresh context, reads no
    prior findings, and reviews the whole converged artifact or final
    implementation range, except in the explicitly scoped evidence-only mode

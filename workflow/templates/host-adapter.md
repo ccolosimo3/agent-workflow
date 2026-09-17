@@ -50,13 +50,16 @@ same-reviewer continuations keep their selected profiles.
 
 ## Outer gates
 
-- Policy: `<risk-selected | operator-invoked | disabled>`
+- Policy: `<broad | selective | by-request>` (default: `selective`)
 - Reviewer choice: `<prefer-different-host | ordered>`
 - Ordered outer-review profiles: `<host/profile, ...>`
 - Author-specific eligible profiles, when needed: `<author host -> ordered profiles; optional ordinary/complex tiers>`
 - Exclusions, when needed: `<author host -> excluded reviewer hosts/models>`
 - Same-host fresh-context fallback: `<allowed | disallowed>`
 - Outer-spec override: `<inherit | policy and profiles>`
+
+Policy selects when to review; profile settings select who reviews. `WORKFLOW.md`
+defines the modes and compatibility with existing policy names.
 
 An author-specific list replaces the global list. Apply exclusions before the
 ordering and same-host fallback rules in `WORKFLOW.md`; fallback never adds an

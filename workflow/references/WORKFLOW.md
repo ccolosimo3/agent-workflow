@@ -11,10 +11,10 @@ plan
   -> spike, when one load-bearing bet can be falsified cheaply
   -> spec
   -> inner spec review <-> revision
-  -> outer spec review <-> revision, when enabled and selected by risk
+  -> outer spec review <-> revision, when selected by policy or request
   -> implementation
   -> inner implementation review <-> patch
-  -> outer implementation review <-> patch, when enabled and selected by risk
+  -> outer implementation review <-> patch, when selected by policy or request
   -> complete
 ```
 
@@ -42,33 +42,41 @@ Once a review gate starts, its same-reviewer correction loop continues
 autonomously until approved, blocked by a material decision, or its bounded retry
 limit is exhausted.
 
+For one bounded work item, default to planning and implementation in the same
+task through the applicable phase skills. A planning-only request stops at its
+selected phase; an end-to-end grant needs no additional kickoff between phases.
+Use separate execution tasks when requested or when parallel work, environment
+isolation, required capabilities, or broad project coordination warrants them.
+For a multi-item program, the lead normally coordinates scoped workers. A phase
+change alone does not require a fresh worker or a new handoff document. Initial
+certifying reviewers always start fresh; authors never certify their own work.
+
 ## Routes
 
 - **Fast:** outcome and shape are clear, the change is local and reversible, no
   consequential outer-gate surface is touched, and one focused proof can falsify
   it. Skip formal explore/spec; implement and use the inner review floor.
 - **Standard:** the work needs a durable implementation plan but no unresolved
-  architecture bet. Use spec, inner spec review, implementation, and inner
-  implementation review.
+  architecture bet. Use spec and implementation with their required reviews.
 - **Assured:** consequential risk is present. Use explore or spike only for real
-  uncertainty, then inner and risk-selected outer reviews around spec and
-  implementation.
+  uncertainty, then spec and implementation with their required reviews.
 
 “More review might help” is not a route trigger.
 
 Use Fast when its conditions hold unless the operator selected a formal spec.
-Choose spec and implementation outer gates separately, naming the material risk
-or unanswered boundary question in the existing handoff. A spec outer gate neither
-automatically selects nor discharges an implementation outer gate. Do not reopen
-valid completed gates merely because routing guidance changed.
+Apply the outer policy independently to each selected spec and implementation
+phase. Record its selection or short skip reason in the existing handoff or
+completion. One phase's review never discharges another's; do not reopen valid
+completed gates merely because routing guidance changed.
 
 ## Host and outer-gate policy
 
 Read `HOST.local.md` from the canonical V2 package root when present. It owns
 available hosts, named model profiles, workload preferences, and outer routing;
 repository adapters do not.
-Without one, treat outer gates as `operator-invoked` and use the current host's
-capabilities without inventing cross-host launch or model selection.
+Without one, use `selective` outer review and the current host/profile in separate
+fresh review contexts. Do not invent cross-host launch, isolation, or model
+selection capabilities. Existing explicit preferences remain in force.
 
 Resolve workload preferences for the host doing the selected phase, not a
 coordinator that dispatched it. When dispatch exposes model choice, follow the
@@ -77,8 +85,10 @@ range. Resolve an explicit role preference (such as coordination or Explore/Spec
 before the host's general workload preference. Select the worker independently
 of the coordinator, pass its resolved model/effort through supported launch
 controls, and include the profile and a short task-specific reason in the existing
-handoff. Profile selection does not select a phase, authorize another worker, or
-change review gates. A current-session operator choice wins. If a host cannot
+handoff when dispatching. Profile selection does not require dispatch or a context
+reset: use supported same-task model controls when needed, and preserve an
+explicitly selected active profile. It does not select a phase, authorize another
+worker, or change review gates. A current-session operator choice wins. If a host cannot
 select or confirm a required profile, report that limitation; inherit a host
 default only when the applicable preference permits it.
 
@@ -113,10 +123,22 @@ configuration, not portable policy. One configured profile can serve all roles,
 but each initial review must use a separate fresh context under `REVIEW.md`;
 reusing the inner reviewer's conversation cannot count as outer review.
 
-- `risk-selected`: apply the positive outer selectors below.
-- `operator-invoked`: run an outer gate only on a direct operator request.
-- `disabled`: omit outer gates from normal completion. A direct operator request
-  may override this preference for that invocation.
+Use one outer policy, independent of model diversity:
+
+- `broad`: run outer review on most formal specs and implementations. Skip only
+  clearly small, well-defined work with straightforward proof and no material
+  risk below. Borderline work gets outer review.
+- `selective` (default): run outer review for the material risks below or on a
+  direct operator request. Name the actual risk or unresolved boundary; proximity
+  to a named surface, diff size, or “more review might help” is insufficient.
+- `by-request`: run no automatic outer review; a direct request selects it for
+  that invocation, at any risk level.
+
+A direct request selects outer review in every mode. Do not ask for a waiver
+when policy skips it. Existing `risk-selected` means `selective`;
+`operator-invoked` and `disabled` mean `by-request`. Keep these existing values
+working without a forced config migration; never change a user's preference
+merely to adopt new names.
 
 For a selected outer gate, first resolve the eligible profiles for the actual
 authoring/implementation host and applicable complexity tier. An author-specific
@@ -137,7 +159,7 @@ diagnosis, not a prerequisite for every review. If a required gate has no permit
 fresh context, report the missing capability rather than weakening or duplicating
 it. Same-reviewer correction loops keep their selected profile.
 
-## Positive phase triggers
+## Phase triggers and selective outer risks
 
 - **Explore:** multiple credible approaches or an unowned boundary whose evidence
   changes the design.
@@ -157,11 +179,11 @@ it. Same-reviewer correction loops keep their selected profile.
   test-quality finding requires correction and same-reviewer re-review, not an
   automatic outer gate. Reassess the actual risk of its resolution.
 
-A named surface selects an outer gate only when the work creates or materially
-revises its external, persisted, or security invariant, authority,
+A named surface selects a `selective` outer gate only when the work creates or
+materially revises its external, persisted, or security invariant, authority,
 failure/recovery behavior, provider/toolchain behavior, or rollout. Proximity,
-code volume, or “more review might help” is insufficient; otherwise skip with a
-one-line reason and do not ask for a waiver.
+code volume, or “more review might help” is insufficient. These selectors do not
+limit an explicit request or the broader coverage of `broad`.
 
 When required source reviews are complete and only later runtime or operator
 evidence remains to be reviewed, use `REVIEW.md`'s evidence-only completion mode
@@ -187,10 +209,8 @@ purpose. The planner checks
 load-bearing claims and alone turns the evidence into plans, phase choices, and
 operator-facing recommendations.
 
-Initial implementations and certifying reviews use fresh contexts when required
-and available; re-review reuses the original reviewer. If the selected route
-cannot provide fresh context, isolation, configured model selection, or
-resumption, report the exact limitation instead of claiming the capability.
+Re-review reuses the original reviewer. Report an unavailable required isolation,
+profile, or resume capability instead of claiming it.
 
 ## Shared handoff envelope
 
@@ -205,9 +225,11 @@ Risk / remaining checks: blocked, stale, operator-only, or intentionally unselec
 Phase / stop: selected workflow phase and exact return condition
 ```
 
-The receiver validates the envelope independently. Narrative status and prior
-verdicts are not proof. Phase payloads may add required facts but must not restate
-kernel policy or create a second envelope.
+Use these as semantic contents, not mandatory headings or a new artifact.
+On dispatch, link readable source artifacts and pass only missing facts and the
+receiving skill's phase-specific inputs. The receiver validates them independently;
+narrative status and prior verdicts are not proof. Within one task, retain these
+facts in the existing context or work item rather than manufacturing a handoff.
 
 Re-review carries only the prior findings, resolution mapping, changed range,
 invalidated evidence, and current tip.

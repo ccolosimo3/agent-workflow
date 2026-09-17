@@ -29,9 +29,11 @@ the package and silently break its shared references.
    profiles and exclusions when wanted; same-host fresh-context fallback; and
    whether to enable an optional completion receipt store and, if
    so, its user-local path. Recommend on-demand for a trial and always-on only
-   when the user wants V2 as their daily driver. Recommend risk-selected outer
-   gates. For one available host/profile, recommend `ordered` with that profile
-   and an allowed same-host fresh context; the same exact model may fill both
+   when the user wants V2 as their daily driver. Offer `broad`, `selective`
+   (recommended default), or `by-request` outer review as defined in `WORKFLOW.md`;
+   keep that choice separate from model diversity. For one available host/profile,
+   recommend `ordered` with that profile and an allowed same-host fresh context;
+   the same exact model may fill both
    review roles. Offer different-host preference when multiple hosts are
    available, and model-family exclusions only as an optional user choice.
    Preserve existing choices and confirm the host can isolate each review. Leave
@@ -142,8 +144,11 @@ including whether launch inherits conversation history. Both initial review
 passes require separate fresh contexts and use the same review standards; a
 different model cannot compensate for inherited author or prior-review history.
 Do not require another subscription or copy the installer's personal exclusions.
-Confirm routing with read-only examples for each configured origin, including a
-same-model outer when allowed and an unavailable capability. Preserve explicit
+Preserve existing policy names through `WORKFLOW.md`'s compatibility mappings;
+never change review frequency merely during an upgrade. Confirm routing with
+read-only examples for the selected mode: a small clear change, a material-risk
+change, an explicit request, each configured origin, a same-model outer when
+allowed, and an unavailable capability. Preserve explicit
 exclusions instead of silently falling back outside them. Do not launch model
 smoke calls as part of this check.
 

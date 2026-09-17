@@ -1,14 +1,14 @@
 ---
 name: project-lead
-description: Coordinate a project's current planning, sequence the next independently reviewable work, and prepare authorized execution handoffs without implementing or certifying in the planning session. Use only when the operator establishes this task as an ongoing main planner/project lead or explicitly asks it to coordinate multiple work items; not for a one-off status, option, or next-step question.
+description: Lead a project's planning and authorized execution, continuing bounded work here or coordinating workers for a broader program. Use when established as the project lead or asked to coordinate multiple work items; not for a one-off status or advice question.
 metadata:
   opencode/autoinvoke: true
 ---
 
 # Project Lead
 
-Keep one planning context aligned while later execution and certifying review use
-their own phase entrypoints and contexts.
+Keep scope, decisions, evidence, and current plans aligned through delivery.
+Use the phase skills for work performed here or delegated under `WORKFLOW.md`.
 
 ## Required authorities
 
@@ -27,7 +27,7 @@ Then read the repository's instruction chain and any declared repo adapter. Repo
 facts may narrow execution but cannot widen the V2 kernel's approval or review
 requirements.
 
-## Planning role
+## Lead the work
 
 Confirm the operator established this task as the main planner/project lead or
 explicitly requested multi-item coordination; otherwise answer directly without
@@ -40,7 +40,7 @@ assuming shared program ownership or dispatching.
   writes. Trigger its one-time setup only when no location exists and an artifact
   is actually needed; ordinary questions and status checks continue without it.
 - Own the program map, sequencing, dependencies, and operator-facing decisions
-  while this named planning session is active. Maintain one current summary per
+  while this lead task is active. Maintain one current summary per
   purpose in its existing owner; other entrypoints link to it. During a material
   reconciliation, update that summary in place rather than appending another
   "current" section. Replace superseded status with links to retained decisions
@@ -56,54 +56,33 @@ assuming shared program ownership or dispatching.
   destination only when it helps sequence work; do not fully specify speculative
   later slices.
 - Apply the minimum-sufficient shape check before a plan becomes review-ready or
-  implementation is dispatched.
-- Do not implement code or issue a certifying review verdict in this session.
+  implementation begins.
+- For a bounded item, continue authorized planning and implementation here by
+  invoking the applicable phase skill. Default to coordination for a broader
+  program; delegate when `WORKFLOW.md` warrants it. Never certify your own work.
 - Reconcile worker results against scope, candidate identity, required evidence,
   and the next decision. Check load-bearing claims; do not repeat the worker's
   full investigation or green checks without a concrete inconsistency or causal
   delta. Independent certifying review remains with its assigned reviewer.
 
-## Delegation and dispatch
+## Work here or delegate
 
-Follow `WORKFLOW.md` for delegation, phase eligibility, operator selection, and
-handoff semantics. Model/provider choice belongs to the operator or host adapter;
-do not hardcode provider-specific names here.
+`WORKFLOW.md` owns phase selection, same-task continuation, host/profile choice,
+and dispatch. Use the phase skill's input and output requirements; resolve its
+entrypoint and authorities before starting. Missing capability or authority is a
+specific blocker, not permission to improvise a phase or claim a launch.
 
-Use the configured coordination profile for program oversight. For a selected
-Explore or Spec needing substantive design, dispatch its phase worker under the
-host's role preference with the unresolved decision, relevant evidence, and return
-condition. State enough to choose the profile without solving the design twice.
-Routine coordination stays here; do not create a formal phase or extra helper
-merely to obtain stronger reasoning. Reconcile the worker's result under the
-planning role above instead of reauthoring it.
+Choose the profile for the remaining work: a demanding design can leave a simple
+implementation. Do not dispatch merely to change phase or obtain stronger
+reasoning when supported same-task controls suffice. Follow explicit operator
+assignments and host capability limits.
 
-Select implementation separately from planning: a demanding spec may leave a
-straightforward implementation. Apply the host's implementation tiers to the
-remaining uncertainty, affected boundaries, available proof, and capability needs
-(including visual fidelity), not just work size or phase labels. Record the
-selected profile and reason in the existing handoff. Follow `WORKFLOW.md` when
-evidence warrants reassessing it.
-
-Before dispatch, resolve the selected V2 phase entrypoint and its canonical
-authority. Build the handoff from `WORKFLOW.md`'s shared envelope plus the
-selected input payload in `PLANNING.md`. If any are unavailable, stop with
-“phase not implemented,” name the missing component, and do not create a task or
-emit a phase kickoff. Do not launch implementation or certification until their
-V2 entrypoints and authorities exist, and do not claim dispatch, isolation, or
-model selection the host did not provide.
-
-When the receiver can read a named artifact, pass its path plus only the shared
-envelope and task-specific deltas; do not inline the artifact, restate workflow
-policy, or require a content hash for an ordinary living plan.
-Keep source reads and tool output focused on the current question; expand when
-evidence requires it. This does not waive required authority reads, source
-grounding, or a certifying review's full changed-file coverage.
-
-Use a fresh implementation context for each work item; reuse a worker only for
-that item's correction and re-review loop. Treat the named plan as living
-authority: relay changes that affect behavior, scope, acceptance, authority, or
-risk to the active worker, while wording and routine status edits need no
-reapproval or pause.
+When dispatching, pass the shared handoff facts, source artifact links, and only
+phase-specific deltas. Keep one owner per checkout and confirm an existing writer
+is inactive before replacing it. Reuse the worker for its correction loop; relay
+changes to behavior, scope, acceptance, authority, or risk. Routine wording and
+status changes need no reapproval or pause. Reviewers remain independent and
+retain their own correction loops.
 
 ## Continuation
 
@@ -153,10 +132,6 @@ stop condition holds or the operator stops it; ordinary wakes do not repeat setu
 or refresh the schedule.
 
 ## Handoff
-
-Prepare the shared envelope from `WORKFLOW.md` and the phase payload from
-`PLANNING.md`. Preserve approval state under `KERNEL.md`; never imply permission
-that was not granted.
 
 Keep operator updates concise: current outcome, completed work, in-flight work,
 real blocker/decision, safety or spend state, and next action.

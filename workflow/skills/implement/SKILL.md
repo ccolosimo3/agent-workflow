@@ -12,15 +12,16 @@ metadata:
 Resolve this skill’s real package directory first when it was discovered through a link; relative paths below use that target, not the discovery-link directory.
 
 Read `../../references/KERNEL.md`, `../../references/WORKFLOW.md`,
-`../../references/PLANNING.md`, `../../references/TESTING.md`, and
-`../../references/REVIEW.md` completely. Load `../../references/FRONTEND.md` only
-for UI scope. Stop if an applicable authority cannot be resolved, then read the
-repository's instruction chain and adapter.
+`../../references/PLANNING.md`, and `../../references/TESTING.md` completely.
+Load `../../references/FRONTEND.md` for UI scope; load `../../references/REVIEW.md`
+for the lifecycle method below or at review handoff. Stop if an applicable
+authority cannot be resolved, then read the repository's instruction chain and
+adapter. Reuse unchanged authority reads only as permitted by the kernel.
 
 ## Entry and preflight
 
-Confirm the operator selected implementation. Build `WORKFLOW.md`'s envelope and
-`PLANNING.md`'s Implementation payload from current evidence.
+Confirm implementation is selected directly or by an existing end-to-end grant.
+Continue here by default under `WORKFLOW.md`; a phase change requires no new task.
 
 - **Fast:** require every Fast condition in `WORKFLOW.md`, a clear raw ask,
   behavioral acceptance, and one focused falsifier. Do not manufacture a spec.
@@ -31,7 +32,9 @@ Confirm repository root, checkout/worktree owner, branch and integration base,
 `git status`, acceptance and non-goals, current source claims, nearest owners and
 complete patterns, approval state, and repository verification routes. Preserve
 all unowned changes. Stop rather than guessing when the selected Task, checkout,
-or required approval is ambiguous.
+or required approval is ambiguous. Retain any named coordinating lead's return
+identity, available evidence, and
+remaining operator proof. These are current facts, not a new handoff artifact.
 
 ## Implement the Task
 
@@ -78,8 +81,8 @@ receipt.
   change the measured dominant cost, then compare the same workload and check that
   material cost was not merely displaced.
 - **Migration or lifecycle:** Identify the invariant and applicable supported
-  transitions before editing; apply `REVIEW.md`'s closed-loop lifecycle audit and
-  `TESTING.md`'s persistence/schema bar during implementation, not only after
+  transitions before editing; read `REVIEW.md` and apply its closed-loop lifecycle
+  audit and `TESTING.md`'s persistence/schema bar during implementation, not only after
   handoff. Trace repeat delivery, partial failure, retry or late completion,
   cleanup, and convergence only where changed state or side effects make them
   applicable; prove the material transitions at the real operation boundary.
@@ -95,26 +98,24 @@ apply `FRONTEND.md` proportionally and remove temporary fixtures or tooling.
 
 ## Verify and review
 
-Use the repository's verification routes and `TESTING.md`. Run the smallest
-falsifying proof during the loop and every risk-selected affected gate once before
-review. Tie results to the exact revision. After a patch, rerun only evidence the
-delta can invalidate; use a broad gate when shared infrastructure changed or no
-valid constituent proof remains. Keep one-off proofs outside the permanent suite
-and report unavailable, unselected, or operator-only checks honestly.
+Use the repository's routes and `TESTING.md`, starting with the earliest safe
+falsifier of a load-bearing assumption. Run affected required checks before review
+and bind results to the candidate. Reuse causally valid evidence; a broad rerun
+needs changed shared infrastructure or insufficient constituent proof. Keep
+one-off proofs out of the permanent suite and unavailable checks explicit.
 
 Before review, apply `TESTING.md`'s durable-proof and inclusion decisions to the
 changed tests; resolve clear weak, redundant, or oversized proof within its
 authority rules instead of leaving the first triage to the reviewer. Repeat the
 minimum-sufficient check, remove unearned machinery and temporary residue, inspect
 the full diff, and decide documentation impact. Update
-this work item's own artifact with delivered facts. When a named main planner is
-active, leave shared program/index state to it and retain the planner's return
-identity; otherwise perform the repository's normal state update now. Commit every
+this work item's own artifact with delivered facts. Follow `WORKFLOW.md`'s shared
+state ownership: a lead implementing here updates its own program/index; a
+delegated worker returns those reconciliation facts. Commit every
 in-scope change as real commit(s) without amend, squash, rewrite, push, or external
 mutation, and disclose any preserved unowned working-tree change. Apply
-`REVIEW.md`'s documentation-only off-ramp; otherwise invoke `review-change`
-automatically and follow its same-reviewer inner and risk-selected outer loops.
-Outer-owned patches return only to the same outer reviewer.
+`REVIEW.md`'s documentation-only off-ramp after reading it; otherwise invoke
+`review-change`, which owns handoff and the inner/configured outer correction loops.
 
 ## Complete
 
@@ -122,21 +123,12 @@ After review approval or a documentation-only off-ramp determination, confirm th
 live tip and that no in-scope change remains uncommitted. Do not mutate the
 certified tip. If a proof fails, distinguish whether it disproves product
 behavior or only its own premise/harness before reporting implementation state.
-Return shared index/program reconciliation only when a named main planner is
-active; otherwise report that the normal state update is already included. Emit
-a concise human-facing completion under `KERNEL.md`: lead with the outcome,
-summarize meaningful verification and review results, and surface remaining
-proof or decisions. Omit empty sections and link to existing evidence instead of
-reprinting it.
-
-Keep the source ask, exact branch/checkout/base/tip and working-tree state,
-relevant environment, verification commands/results, reused evidence and causal
-basis, documentation impact, review state, and remaining checks/reasons/owners
-in the existing work item or evidence owner. If none exists, include the necessary
-details in the completion; do not create an artifact solely for this format.
-Worker returns still carry `WORKFLOW.md`'s shared envelope and the reconciliation
-facts the planner needs. Concise reporting does not omit material evidence gaps
-or make the optional receipt their required owner.
+Report under `KERNEL.md`, retaining `WORKFLOW.md`'s source, candidate, authority,
+evidence, and remaining-proof facts in the existing work item/evidence owner or,
+when none exists, the completion. Include the relevant environment and causal
+basis for reused checks. Delegated returns carry the reconciliation facts their
+lead needs. Link evidence, omit empty sections and internal ledgers, and create
+no artifact solely for reporting format.
 
 When `KERNEL.md`'s receipt trigger applies, including to a terminal partial,
 blocked, or abandoned implementation, read `../../references/RECEIPTS.md` and

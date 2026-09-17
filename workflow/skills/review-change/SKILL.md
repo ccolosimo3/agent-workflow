@@ -45,19 +45,13 @@ applies `REVIEW.md`'s Implementation method and Output contract.
 
 ## Convergence
 
-Patch every autonomous finding within scope and rerun only causally affected
-proof. Stop for a `[decision-required]` item or a patch that changes intended
-product behavior, scope, authority, safety, or the Task boundary. Otherwise
-require the prior findings verbatim, prior reviewed tip, current tip, patch range,
-resolutions per finding, and affected verification; resume the original reviewer
-with only that delta. The reviewer applies `REVIEW.md`'s Re-review mode. Do not
-rebuild the initial handoff or request broad rediscovery. If the original
-reviewer cannot resume, disclose that limitation and give one fresh fallback the
-full initial payload plus prior findings.
+Follow `REVIEW.md`'s state machine and re-review payload: the author patches
+in-scope findings, commits corrections, reruns causally affected proof, and
+resumes the same reviewer with the delta. Material operator choices remain open;
+use its disclosed fresh fallback only when resumption is unavailable. Do not
+restart broad discovery or send a second initial payload to a resumable reviewer.
 
-After approval, apply `WORKFLOW.md`'s configured outer policy and implementation
-selector, including its evidence-only completion admission when applicable.
-Name the selected scope in the payload. Launch `independent-review` in exactly one
-permitted fresh context when selected or requested; otherwise record the one-line
-skip reason. State the implementation host when known so different-host preference
-can work without guessing. Outer findings return only to that outer reviewer.
+After inner approval, apply `WORKFLOW.md`'s outer policy to this implementation.
+Launch `independent-review` in one eligible fresh context when selected, naming
+full-source or evidence-only scope and the actual author host/profile. Otherwise
+record the short skip reason. Outer corrections return to that same reviewer.

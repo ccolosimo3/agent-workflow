@@ -185,9 +185,18 @@ must show resolved paths before creating links or configuration.
 
 ## Outer-review choices
 
-- `risk-selected`: V2's positive risk rules select outer gates.
-- `operator-invoked`: outer gates run only when explicitly requested.
-- `disabled`: outer gates are absent from normal completion.
+Choose one policy; it controls frequency, independently of reviewer models:
+
+| Policy | When outer review runs |
+| --- | --- |
+| `broad` | Most formal specs and implementations; skips clearly small, well-defined work with straightforward proof and no material risk. Borderline work gets reviewed. |
+| `selective` (default) | Material risk under `WORKFLOW.md`, or an explicit request. |
+| `by-request` | Only on an explicit request, at any risk level. |
+
+An explicit request works in every mode. Apply the policy separately to spec and
+implementation; their fresh inner reviews remain required. Existing
+`risk-selected` maps to `selective`; `operator-invoked` and `disabled` map to
+`by-request`. Updating the package does not silently change an existing choice.
 
 `Inner review: inherit` keeps the actual author's host and profile in a fresh
 context. Record the host's native isolated-agent launch, or its same-host fresh
@@ -203,14 +212,15 @@ For one available host/profile, recommend this configuration using that user's
 selected profile; no extra routing setting is needed:
 
 ```text
-Policy: risk-selected
+Policy: selective
 Reviewer choice: ordered
 Ordered outer-review profiles: <available host/profile>
 Same-host fresh-context fallback: allowed
 ```
 
 The outer profile may be exactly the same as the author's and inner reviewer's.
-Each review still launches separately, and outer review remains risk-selected.
+Each initial review still launches separately; choose `broad` for more frequent
+outer review or `by-request` for manual selection.
 With multiple available hosts, offer `prefer-different-host` as a preference,
 or keep an ordered profile list. Author-specific lists and exclusions can impose
 stricter host or model-family choices when the user wants them; never copy

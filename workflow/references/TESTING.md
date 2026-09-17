@@ -4,6 +4,23 @@ This file owns portable test quality. Repository verification and stack guides
 own commands and concrete harnesses; they may be stricter but cannot make a
 shape-only test sufficient.
 
+## Plan the proof
+
+While shaping acceptance, identify the observable outcome, the smallest real
+operation that can falsify it, and existing proof worth reusing. Put these facts
+in the existing plan or conversation; no separate verification artifact is needed.
+
+Run the earliest safe check that could invalidate the approach before building
+around its assumption. Prioritize uncertain lifecycle, integration, device, or
+platform behavior over additional internal permutations. This does not by itself
+select a formal Spike or authorize live activity.
+
+Distinguish planned proof from completed evidence. For a required environment or
+platform that is unavailable, name the exact remaining check, prerequisite, and
+owner early. Proof on one platform or an underlying tool does not establish an
+unexercised wrapper or another platform; qualify only the affected differences,
+without demanding a full cross-platform matrix for unrelated changes.
+
 ## Durable proof
 
 A useful test must satisfy all four:

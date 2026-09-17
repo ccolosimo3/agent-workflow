@@ -35,19 +35,13 @@ artifact and returns strict `APPROVED` or `ACTIONABLE`.
 
 ## Convergence
 
-On `ACTIONABLE`, patch grounded mechanical findings autonomously. Stop for a
-`[decision-required]` item or any correction that changes intended product
-behavior, scope, policy, authority, safety, or the selected Task boundary.
-Otherwise require the prior findings verbatim, exact artifact revision previously
-reviewed, current artifact, resolutions per finding, and affected verification;
-resume the original reviewer with only that delta. The reviewer applies
-`REVIEW.md`'s Re-review mode. Do not rebuild the initial handoff or request broad
-rediscovery. If the original reviewer cannot resume, disclose that limitation and
-give one fresh fallback the full initial payload plus prior findings. Continue
-until approved or the three-cycle cap is reached.
+Follow `REVIEW.md`'s state machine and re-review payload: revise mechanical
+findings, preserve unresolved operator choices, and resume the same reviewer
+with the exact artifact delta, findings, resolutions, and affected proof. Use its
+fresh fallback only when resumption is unavailable; retain the three-cycle cap.
 
-After approval, apply `WORKFLOW.md`'s configured outer policy and spec selector.
-Launch `independent-spec-review` in exactly one permitted fresh context when
-selected or requested; state the authoring host when known. Otherwise record the
-one-line skip reason and finish. Do not pause merely to ask whether to run a
-required review gate.
+After inner approval, apply `WORKFLOW.md`'s outer policy to this spec. Launch
+`independent-spec-review` in one eligible fresh context when selected, carrying
+the actual author host/profile; otherwise record the short skip reason. Outer
+corrections return to that same reviewer. Return the approved spec to its author
+for already-authorized continuation; approval does not itself grant execution.

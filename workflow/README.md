@@ -17,10 +17,11 @@ plan -> explore/spike when needed -> spec -> spec review
      -> implementation -> implementation review -> complete
 ```
 
-Inner review is part of formal spec and implementation completion. Outer spec
-and implementation reviews are configurable as risk-selected,
-operator-invoked, or disabled. Coworker PR review uses `review-pr` and the same
-canonical review authority with human-facing calibration.
+Planning and implementation normally continue in the same task for a bounded
+item; broader programs can delegate execution. Inner review is part of formal
+spec and implementation completion and always starts fresh. Outer review is
+configurable as `broad`, `selective` (default), or `by-request`. Coworker PR review
+uses `review-pr` and the same canonical review authority with human-facing calibration.
 
 ## Package
 

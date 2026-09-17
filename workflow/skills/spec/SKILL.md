@@ -24,20 +24,37 @@ through repository evidence. Apply `PLANNING.md`'s grounding and scope rule to
 consequential before/after behavior; keep unsettled operator choices visible in
 the draft and return them before review-ready promotion or dependent work.
 
-Define the next independently reviewable risk boundary using the Spec contents in
-`PLANNING.md`. Make acceptance behavioral and verification falsifying. Preserve
-implementation latitude while naming mechanisms that are genuinely load-bearing.
-Apply the minimum-sufficient shape check before declaring review-ready.
+Define one independently valid Task. Use these as compact contents, not mandatory
+headings:
+
+- goal, non-goals, current behavior, settled decisions, and source evidence
+  (file:line for load-bearing repository claims);
+- chosen approach, rejected alternatives and tradeoffs, design risks, unresolved
+  choices, and the minimum-sufficient shape with implementation latitude;
+- ordered steps, affected owners/files, dependencies, valid intermediate state,
+  and behavioral acceptance including meaningful failures;
+- verification under `TESTING.md`: reuse, first falsifier at the real operation,
+  exact selected checks, and remaining operator/platform proof and owner;
+- approval-gated actions, documentation impact, review/implementation state,
+  and a tracker-ready summary only when applicable.
+
+Read `../../references/TESTING.md` while drawing up verification. For UI scope,
+also read `../../references/FRONTEND.md` and include the UI strategy. Run a domain
+pass only for a changed core noun, lifecycle meaning, user terminology, service
+boundary, or cross-system contract; record canonical terms and real choices
+without manufacturing an architecture record for ordinary work. Apply
+`PLANNING.md`'s review-readiness bar before promotion.
 
 Work serially by default. A bounded evidence helper may answer a distinct factual
 question under `WORKFLOW.md`; it does not author a second spec or certify this
 one.
 
-Write one compact living spec at the repository's declared plan location. Do not
-implement code, mutate trackers, or promote the plan merely because drafting is
-complete.
+Write the living spec at the repository's declared plan location. Drafting alone
+does not authorize implementation, tracker mutation, or promotion.
 
 Before review, resolve `review-spec`. If unavailable, report “review phase not
 implemented” without promotion or kickoff. Otherwise invoke it;
 `review-spec` owns authority resolution, payload construction, and review
 loops.
+After required approval, continue into `implement` in this task when execution
+is already authorized; otherwise return the spec and its remaining decision.

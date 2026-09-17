@@ -28,8 +28,8 @@ flowchart TD
 ```
 
 Exploration and spikes are optional. Formal specifications and implementation
-include fresh inner review; outer review is configurable and selected according
-to risk or direct user request. Clear, local changes can take the Fast route
+include fresh inner review; choose `broad`, `selective` (default), or `by-request`
+for outer review. Clear, local changes can take the Fast route
 without unnecessary planning ceremony.
 
 One subscription and model can run both review passes in separate fresh contexts.
@@ -39,14 +39,19 @@ Using different hosts or model families is an optional configuration choice.
 
 Ask for work naturally or invoke a phase directly:
 
-- **Project lead** keeps a project grounded, plans upcoming work, and hands
-  implementation to fresh tasks.
+- **Project lead** keeps plans current and leads delivery, continuing bounded
+  work in the same task or coordinating workers for a broader project.
 - **Explore** compares credible approaches when the direction is genuinely open.
 - **Spike** proves or rejects one risky assumption before committing to a design.
 - **Spec** defines one reviewable implementation boundary.
 - **Implement** builds, verifies, and drives the selected work through review.
 - **Review PR** thoroughly reviews someone else's change and calibrates what is
   actually blocking.
+
+Planning and implementation normally share a task; independent reviewers start
+fresh. A planning-only request still stops at planning. Verification is designed
+with acceptance, prioritizing the first real operation that could disprove the
+approach and making remaining platform or operator proof explicit.
 
 The workflow is designed to preserve momentum. Agents continue through ordinary
 implementation and review loops, stopping only for decisions or actions that

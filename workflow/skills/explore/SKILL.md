@@ -55,9 +55,14 @@ bounded experiment cannot answer it; report the remaining proof rather than
 silently expanding its scope or building competing production implementations.
 Retain only useful evidence in the existing result.
 
-Write the compact Explore result described in `PLANNING.md` at the repository's
-declared plan location. Do not implement production code, mutate external state,
-or start a formal spike or spec. Return the recommendation, unresolved decision,
-and eligible next phase, then stop. When `KERNEL.md`'s receipt trigger applies,
-first read `../../references/RECEIPTS.md` and write its best-effort record from
+At the declared plan location, preserve the decision, evidence and source
+authority, credible options with tradeoffs/failure modes, recommendation and why
+alternatives lose, unresolved choices/proof, and eligible next phase. Distinguish
+the proposition actually proved from stronger wrapper, lifecycle, or platform
+behavior still unexercised; carry those limits into the next Task.
+
+Exploration alone grants no production implementation or external mutation.
+Return the result and stop unless `WORKFLOW.md`'s existing end-to-end grant
+already covers the next necessary phase. When `KERNEL.md`'s receipt trigger
+applies, read `../../references/RECEIPTS.md` and write its best-effort record from
 evidence already gathered.

@@ -38,8 +38,12 @@ authenticated, destructive, or prepared-environment proof requires the exact
 approval in `KERNEL.md`; when unavailable, return `BLOCKED` with the missing
 condition rather than substituting a weaker proof or retrying.
 
-Write the compact Spike result described in `PLANNING.md`. Return `GO`, `NO-GO`,
-or `BLOCKED`, the evidence, and the design implication. Do not continue into spec
-or implementation. When `KERNEL.md`'s receipt trigger applies, first read
+Preserve the bet, falsifier, safe boundary, time/scope box, fallback, declared
+criteria, exact evidence, and retained/removed disposable artifacts in the
+existing work item. Return `GO`, `NO-GO`, or `BLOCKED` and the design implication.
+Distinguish what was proved from stronger wrapper, lifecycle, or platform claims
+still unexercised, and carry those limits forward. Continue only when the
+existing grant covers the next phase under `WORKFLOW.md`; an unresolved design
+choice still returns to the operator. When `KERNEL.md`'s receipt trigger applies, read
 `../../references/RECEIPTS.md` and write its best-effort record from evidence
 already gathered.

@@ -1,6 +1,6 @@
 interface:
   display_name: "Project Lead"
   short_description: "Coordinate scoped project planning and execution"
-  default_prompt: "Use $project-lead to get current, shape the next work, and coordinate execution without implementing it here."
+  default_prompt: "Use $project-lead to get current and lead the next work through planning, implementation, and independent review, delegating when useful."
 policy:
   allow_implicit_invocation: true

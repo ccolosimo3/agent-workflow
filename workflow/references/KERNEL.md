@@ -57,9 +57,10 @@ research remain allowed unless the operator says local-only/no-web; they are not
 live-source probes, authenticated API/provider traffic, paid calls, or
 prepared-environment activity.
 
-One risk-selected or operator-requested certifying review and its same-session
-re-reviews are authorized substeps of the selected phase. Extra, duplicate, or
-early reviews and reviewer-triggered paid activity remain gated.
+Required inner review and one outer review selected by configured policy or the
+operator, with their same-reviewer corrections, are authorized substeps of the
+selected phase. Extra, duplicate, or early reviews and reviewer-triggered paid
+activity remain gated.
 
 Natural approval covers the stated action and bounded correction or retry within
 the same risk envelope; failure does not consume it unless the operator or
