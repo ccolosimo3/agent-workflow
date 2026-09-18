@@ -51,6 +51,8 @@ same-reviewer continuations keep their selected profiles.
 ## Outer gates
 
 - Policy: `<broad | selective | by-request>` (default: `selective`)
+- Outer timing, optional: `<after-inner | concurrent>` (omission: `after-inner`)
+- Timing overrides, when needed: `<explicit route -> after-inner | concurrent>`
 - Reviewer choice: `<prefer-different-host | ordered>`
 - Ordered outer-review profiles: `<host/profile, ...>`
 - Author-specific eligible profiles, when needed: `<author host -> ordered profiles; optional ordinary/complex tiers>`
@@ -58,8 +60,9 @@ same-reviewer continuations keep their selected profiles.
 - Same-host fresh-context fallback: `<allowed | disallowed>`
 - Outer-spec override: `<inherit | policy and profiles>`
 
-Policy selects when to review; profile settings select who reviews. `WORKFLOW.md`
-defines the modes and compatibility with existing policy names.
+Policy selects whether to review; timing selects when; profile settings select
+who reviews. `WORKFLOW.md` defines the modes, override precedence, and
+compatibility with existing policy names.
 
 An author-specific list replaces the global list. Apply exclusions before the
 ordering and same-host fallback rules in `WORKFLOW.md`; fallback never adds an

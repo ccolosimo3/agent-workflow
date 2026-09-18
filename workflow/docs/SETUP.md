@@ -205,13 +205,18 @@ implementation; their fresh inner reviews remain required. Existing
 `risk-selected` maps to `selective`; `operator-invoked` and `disabled` map to
 `by-request`. Updating the package does not silently change an existing choice.
 
+Timing is separate: `Outer timing: after-inner` is the default; `concurrent`
+starts both reviews on the same unchanged candidate and requires the outer's
+final convergence check under `REVIEW.md`. This optional `HOST.local.md` setting
+may apply globally or to an explicitly named route.
+
 `Inner review: inherit` keeps the actual author's host and profile in a fresh
 context. Record the host's native isolated-agent launch, or its same-host fresh
 CLI fallback. A coordinator's host and a saved coworker-review recipe do not
 override that choice.
 
-Both passes use the same review standards. Outer review is a second blind
-assessment of the converged candidate; it must not inherit the author's or inner
+Both passes use the same review standards. Outer review adds a blind assessment
+and certifies the converged candidate; it must not inherit the author's or inner
 reviewer's conversation. A fresh native subagent can perform either pass when
 the host supports that isolation. A separate model or subscription is optional.
 

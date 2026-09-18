@@ -40,7 +40,8 @@ findings, preserve unresolved operator choices, and resume the same reviewer
 with the exact artifact delta, findings, resolutions, and affected proof. Use its
 fresh fallback only when resumption is unavailable; retain the three-cycle cap.
 
-After inner approval, apply `WORKFLOW.md`'s outer policy to this spec. Launch
+Apply `WORKFLOW.md`'s outer selection policy and timing through `REVIEW.md`'s
+state machine. Launch
 `independent-spec-review` in one eligible fresh context when selected, carrying
 the actual author host/profile; otherwise record the short skip reason. Outer
 corrections return to that same reviewer. Return the approved spec to its author

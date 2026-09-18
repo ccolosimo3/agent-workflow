@@ -1,6 +1,6 @@
 ---
 name: independent-spec-review
-description: Run the fresh independent outer gate for a converged specification when configured policy or the operator selects it, then re-review its patches in the same conversation. Not for inner review or implementation.
+description: Run the fresh independent outer gate for a specification when configured policy or the operator selects it, then re-review its patches in the same conversation. Not for inner review or implementation.
 disable-model-invocation: true
 metadata:
   opencode/autoinvoke: false
@@ -25,8 +25,10 @@ outer-review context; do not spawn another
 reviewer. Before the first verdict, confirm from host/task provenance that this
 context was created specifically as a fresh outer reviewer and contains no
 planning, implementation, or prior-review history. If that cannot be established,
-stop without a verdict and request fresh isolated dispatch. Confirm the named spec
-is converged from the operator or caller's explicit assertion. Read the whole spec
+stop without a verdict and request fresh isolated dispatch. Confirm from the
+operator or caller's explicit assertion that the named spec is the same initial
+revision supplied to the inner reviewer for a concurrent first cycle, otherwise
+inner-converged under `WORKFLOW.md`'s timing rules. Read the whole spec
 and its load-bearing dependencies, but do not read prior review findings,
 verdicts, review logs, or kickoff prompts.
 

@@ -1,6 +1,6 @@
 ---
 name: independent-review
-description: Run the fresh independent outer gate for a converged implementation when configured policy or the operator selects it, then re-review its patches in the same conversation. Not for coworker PRs or inner review.
+description: Run the fresh independent outer gate for an implementation when configured policy or the operator selects it, then re-review its patches in the same conversation. Not for coworker PRs or inner review.
 disable-model-invocation: true
 metadata:
   opencode/autoinvoke: false
@@ -25,11 +25,13 @@ reviewer. Before the first verdict, confirm from host/task provenance that this
 context was created specifically as a fresh outer reviewer and contains no
 planning, implementation, or prior-review history. If that cannot be established,
 stop without a verdict and request fresh isolated dispatch. Preflight the live
-checkout read-only. Require a clean, committed, inner-converged candidate,
-confirmed by the caller's explicit assertion without reading prior findings or
-verdicts. Resolve full implementation or evidence-only completion scope under
-`WORKFLOW.md` and `REVIEW.md`. Do not read prior findings, verdicts, review logs,
-or kickoff prompts in either mode.
+checkout read-only. Require a clean, committed candidate: the same initial
+revision supplied to the inner reviewer for a concurrent first cycle, otherwise
+inner-converged under `WORKFLOW.md`'s timing rules. Confirm this from the caller's
+explicit assertion without reading prior findings or verdicts. Resolve full
+implementation or evidence-only completion scope under `WORKFLOW.md` and
+`REVIEW.md`. Do not read prior findings,
+verdicts, review logs, or kickoff prompts in either mode.
 
 For a full implementation review, determine the integration branch from
 repository instructions and independently compute merge-base, live tip, and
@@ -58,6 +60,9 @@ full source audit merely because deferred proof arrived.
 
 After a scoped patch, preflight and compute the new tip, then re-review here using
 `REVIEW.md`'s Re-review mode. Inspect the entire delta from the previously
-reviewed tip. A hunk unrelated to an outer finding is scope expansion and returns
-to the operator; do not reopen the inner reviewer automatically. Do not demand a
-fresh outer task merely because the tip moved.
+reviewed tip. The concurrent convergence re-read includes all intervening inner
+corrections within the authorized work item; these are not scope expansion merely
+because they were absent from the outer findings. Otherwise, a hunk unrelated to
+an outer finding is scope expansion and returns to the operator; do not reopen
+the inner reviewer automatically. Do not demand a fresh outer task merely because
+the tip moved.

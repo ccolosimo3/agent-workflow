@@ -5,8 +5,8 @@ same-reviewer convergence. `TESTING.md` owns test quality; `WORKFLOW.md` owns
 phase and outer-gate selection; `FRONTEND.md` is conditional on UI scope.
 
 Inner and outer review use the same investigation, test-quality, severity, and
-approval standards below. Outer review adds a separate blind assessment after
-inner convergence, not a stricter defect threshold. Both initial reviewers start
+approval standards below. Outer review adds a separate blind assessment under
+the configured timing, with the same defect threshold. Both initial reviewers start
 without inherited planning, implementation, or prior-review conversation history.
 Give them the raw ask, spec or acceptance, candidate, and verification evidence.
 A native subagent is suitable when its launch provides that isolation; being a
@@ -29,15 +29,23 @@ subagent does not itself prove a fresh context. Model diversity is optional unde
    cannot resume it, disclose the lost context, and supply the full initial
    payload plus prior findings and resolutions. Spec convergence stops after
    three revise/re-review cycles or a material operator decision.
-4. After inner approval, apply `WORKFLOW.md`'s outer policy (`broad`, `selective`,
-   or `by-request`). Record a short reason when it skips the gate; do not ask for
-   a waiver or apply selective risk triggers as a prerequisite for broad review.
+4. Apply `WORKFLOW.md`'s outer selection policy and timing before dispatch;
+   reassess selection after inner approval for newly exposed risks. Record a
+   short reason when policy skips the gate; do not ask for a waiver or apply
+   selective risk triggers as a prerequisite for broad review. When both first
+   cycles ran concurrently, the original inner reviewer closes the reconciled
+   first-cycle corrections, including fixes from either reviewer. Resume the same outer
+   reviewer after inner closure, not on intermediate inner revisions. It inspects
+   the entire delta since its initial review, including inner corrections, and
+   confirms coverage of step 5's whole converged
+   artifact or final range before its approval counts. Further outer corrections
+   follow the existing same-reviewer loop.
 5. A selected outer gate begins in exactly one configured fresh context, reads no
    prior findings, and reviews the whole converged artifact or final
    implementation range, except in the explicitly scoped evidence-only mode
-   below. For both specs and implementations, outer-owned corrections return
-   only to that same outer reviewer. Do not reopen the inner reviewer unless the
-   patch expands scope beyond an outer finding.
+   below. After inner closure, outer-owned corrections return only to that same
+   outer reviewer. Do not reopen the inner reviewer unless the patch expands scope
+   beyond an outer finding.
 
 An `APPROVED` verdict may carry low suggestions; they are optional. In the inner
 loop, a wholly mechanical low-only patch with no behavior, contract, test, policy,

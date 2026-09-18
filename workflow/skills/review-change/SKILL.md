@@ -51,7 +51,8 @@ resumes the same reviewer with the delta. Material operator choices remain open;
 use its disclosed fresh fallback only when resumption is unavailable. Do not
 restart broad discovery or send a second initial payload to a resumable reviewer.
 
-After inner approval, apply `WORKFLOW.md`'s outer policy to this implementation.
+Apply `WORKFLOW.md`'s outer selection policy and timing through `REVIEW.md`'s
+state machine.
 Launch `independent-review` in one eligible fresh context when selected, naming
 full-source or evidence-only scope and the actual author host/profile. Otherwise
 record the short skip reason. Outer corrections return to that same reviewer.

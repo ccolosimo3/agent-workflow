@@ -134,6 +134,17 @@ Use one outer policy, independent of model diversity:
 - `by-request`: run no automatic outer review; a direct request selects it for
   that invocation, at any risk level.
 
+**Outer timing.** Timing does not select an outer gate. `after-inner` (default)
+starts a selected gate after inner approval. `concurrent` starts it alongside
+inner review when selected before initial dispatch; a gate selected later starts
+on the inner-converged candidate. Concurrent first cycles use the same initial
+revision; neither reviewer receives the other's findings during its first cycle.
+Collect both initial verdicts against the same unchanged candidate before applying
+corrections. The owning author reconciles overlapping findings into one correction.
+Outer convergence follows `REVIEW.md`.
+`HOST.local.md` may override the timing default globally or for an explicitly
+named route; a matching route override takes precedence over its global default.
+
 A direct request selects outer review in every mode. Do not ask for a waiver
 when policy skips it. Existing `risk-selected` means `selective`;
 `operator-invoked` and `disabled` mean `by-request`. Keep these existing values
