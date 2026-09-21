@@ -127,29 +127,8 @@ Report under `KERNEL.md`, retaining `WORKFLOW.md`'s source, candidate, authority
 evidence, and remaining-proof facts in the existing work item/evidence owner or,
 when none exists, the completion. Include the relevant environment and causal
 basis for reused checks. Delegated returns carry the reconciliation facts their
-lead needs.
-
-Use bold Built, Verified, and Reviews labels, each followed by a short bullet
-list, then a single Status line. Aim for 1–3 bullets per list; add more only for
-meaningful complexity, and never pad a list to meet a count.
-
-- **Built:** the resulting behavior and main implementation approach. Include
-  meaningful documentation impact; do not substitute a changed-file list for the outcome.
-- **Verified:** checks actually run or reused, their results, and material
-  limitations or unrun proof. Link detailed evidence instead of dumping commands.
-- **Reviews:** for each inner/outer gate in scope, name the reviewer model and
-  reasoning effort, completed initial and follow-up passes (for example,
-  `1 initial + 2 follow-ups`), and verdict or pending state. Distinguish phases
-  when reporting spec and implementation reviews; give a short reason for a
-  skipped gate. Pass counts are not counts of independent reviewers.
-- **Status:** commit/PR and publication state, plus remaining actions or decisions.
-
-Use available run metadata for reviewer identity; label launch settings when
-those are the only source, and unavailable identity or counts as unknown. Never
-infer them from configured defaults or count failed launches as completed passes.
-Use existing evidence and handoffs; do not collect extra telemetry, rerun checks,
-or create a report or receipt dependency to fill these fields. Omit empty detail
-and internal ledgers.
+lead needs. Link evidence, omit empty sections and internal ledgers, and create
+no artifact solely for reporting format.
 
 When `KERNEL.md`'s receipt trigger applies, including to a terminal partial,
 blocked, or abandoned implementation, read `../../references/RECEIPTS.md` and
