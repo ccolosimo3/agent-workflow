@@ -7,6 +7,10 @@ completion, invalidates product evidence, or triggers replay or repair.
 
 ## When to write
 
+When receipts are disabled or unconfigured, do not load this contract for ordinary
+completion, write records, or add receipt-status messages. The setup summary may
+state that receipts are disabled; answer direct questions about them normally.
+
 Read this file only when `HOST.local.md` names an enabled `Completion receipt
 store` and either `KERNEL.md`'s self-report trigger applies or the current task
 explicitly asks to append a material sourced annotation to an existing receipt.
@@ -18,7 +22,7 @@ questions, and status exchanges write nothing.
 
 Reuse evidence already gathered for completion or supplied by the named
 annotation source. Do not rerun commands, inspect usage, or collect more context
-for the receipt. If the store is disabled, unsafe, missing, or unwritable, report
+for the receipt. If an enabled store is unsafe, missing, or unwritable, report
 `Receipt: skipped — <reason>` once and continue. Never fall back to a product
 repository or plan directory.
 
@@ -183,8 +187,9 @@ environment value, raw payload, credential-bearing remote, or personal absolute
 checkout path. Apply the same redaction to annotation text and references. If a
 safe reference cannot be recorded, omit it or skip the receipt.
 
-Keep the normal chat completion. Add only:
+Keep the normal chat completion. For an enabled store and an applicable write,
+add only:
 
 ```text
-Receipt: <self-report path | disabled | skipped — reason>
+Receipt: <self-report path | skipped — reason>
 ```

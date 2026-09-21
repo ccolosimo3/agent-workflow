@@ -19,24 +19,39 @@ Read `../../README.md`, `../../docs/SETUP.md`, and
 directory. Stop if any is unavailable; do not copy an individual skill away from
 the package and silently break its shared references.
 
+## First-time introduction
+
+Give at most three short sentences, about 60 words, before presenting settings.
+Adapt this example; skip it for returning users and audits:
+
+> Describe what you want; the agent plans as needed, implements, and verifies it.
+> A fresh reviewer checks the work ("inner review"); higher-risk changes can get
+> a second independent check ("outer review"), using the same model if needed.
+> The agent handles corrections and asks you about consequential behavior or scope
+> decisions.
+
+Explain more only when requested or needed for a setup decision.
+
 ## Configure
 
-1. Preserve existing choices; apply defaults only to new, unset preferences. Ask
-   only for missing basics: activation mode (`on-demand` or `always-on`), the
-   host/model and reasoning profile to start with, and outer-review policy
-   (`broad`, `selective`, or `by-request`). Recommend on-demand for a trial and
-   selective outer review; always-on is available for daily use.
+1. Preserve existing choices; apply defaults only to new, unset preferences.
+   Use supplied preferences and reliably detected host/profile facts to propose
+   a configuration. Ask only for missing choices needed to make that preview
+   concrete, such as the intended app/profile or trial versus daily use; do not
+   turn defaults into separate questions. Recommend `on-demand` for a trial or
+   `always-on` for requested daily use, the current confirmed model/reasoning
+   profile, `selective` outer review, and `after-inner` timing.
    Start with the selected profile for ordinary work, `Inner review: inherit`,
    and `ordered` outer review using that profile with same-host fresh contexts
    allowed. Confirm the host can isolate both reviews. If multiple hosts are
    selected, use each host's selected profile for its own work and fresh reviews;
    record author-specific outer lists when needed to express that routing.
-   Advanced workload routing, different-host preferences, exclusions, evidence
-   helpers, and receipts remain available. Ask about them only when requested or
-   a concrete capability/routing need arises. Helpers and receipts default to
-   disabled for a new setup; configuring them later uses the same preview and
-   approval process. Existing profiles, exclusions, helpers, and receipt settings
-   are retained unless the operator asks to change them.
+   Defer advanced workload routing, review timing, different-host preferences,
+   exclusions, helpers, and receipts unless requested or a concrete capability
+   gap needs a choice. Helpers and receipts stay disabled unless explicitly
+   selected; configuring them later uses the same preview and approval process.
+   Existing profiles, exclusions, helpers, and receipt settings are retained
+   unless the operator asks to change them.
 2. Inspect each selected host read-only using its executable, `--version`, local
    help, non-secret authentication/config status, model listing when locally
    available, skill discovery path, fresh launch/resume capability, and
@@ -64,7 +79,9 @@ the package and silently break its shared references.
    unsupported reasoning equivalence or treat a model alias as stable when the
    host exposes an exact ID. Missing hosts stay unavailable and do not block the
    others.
-4. Show the proposed package registration, activation mode, exact kernel owner
+4. Present recommended settings with one short plain-language explanation each
+   in one concrete approval preview, not a separate tutorial or feature list.
+   Show the proposed package registration, activation mode, exact kernel owner
    and scope when always-on, host-adapter path, completion-receipt setting,
    collision result, and any host config edits before writing. For an enabled
    receipt store, recommend the platform's private user-data area, then resolve
@@ -122,6 +139,9 @@ or canonical workflow files.
 
 ## Repository onboarding
 
+Defer repository storage choices until repository onboarding is requested or
+durable planning needs a location.
+
 When onboarding a repository, inspect its adapter for a durable plan location.
 If none exists, present `.agent-workflow/plans/` as the default private repo-local
 directory excluded through `.git/info/exclude`; allow a tracked/custom location
@@ -172,7 +192,8 @@ fresh host sessions, then remove superseded and staging surfaces; never leave
 both kernels active. New installations skip this migration and install the
 release directly.
 
-Return a concise setup receipt: activation mode, enabled hosts and profiles,
+Return a concise setup summary: activation mode, enabled hosts and profiles,
 workload and outer routing, completion-receipt setting, capability gaps,
-files/registrations changed,
-discovery checks, and any restart or optional paid smoke test remaining.
+files/registrations changed, discovery checks, and any restart or optional paid
+smoke test remaining. For first-time setup, finish with one example request,
+such as "Implement this fix and verify it." Do not repeat the introduction.

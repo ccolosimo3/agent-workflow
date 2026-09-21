@@ -37,8 +37,9 @@ Skills resolve shared files relative to this package. Keep one canonical local
 checkout and expose its skills through links or configured discovery paths rather
 than maintaining copied folders.
 
-Setup may optionally configure one private user-level receipt store. Eligible
-terminal work projects its existing completion evidence into a small local
+Completion receipts are disabled by default and require explicit opt-in to a
+private user-level store. When enabled, eligible terminal work projects its
+existing completion evidence into a small local
 self-report while later independent outcomes remain separately sourced; receipts
 never certify or block work. See `references/RECEIPTS.md`.
 
@@ -56,9 +57,10 @@ fresh-context independence.
    `~/.agents/workflow`.
 2. Ask an existing agent to read `skills/setup-workflow/SKILL.md` by path and run
    its read-only capability and collision audit.
-3. Choose `on-demand` to trial skill-triggered V2 without a persistent kernel or
-   `always-on` for a daily driver, then choose a host/model profile and outer-review
-   behavior. Advanced routing and optional features can be configured later.
+3. Setup briefly explains the workflow and proposes settings using your current
+   confirmed host/model profile: `on-demand` for a trial or `always-on` for daily
+   use, with `selective` outer review after inner approval. Answer only missing
+   choices; advanced options can wait and existing preferences are preserved.
 4. Review and approve setup's exact activation, discovery, adapter, and
    replacement preview.
 5. Let setup verify automatic advisory and user-facing discovery, explicit-only

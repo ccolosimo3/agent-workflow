@@ -3,10 +3,15 @@
 User-level machine configuration for Agent Workflow V2. Keep credentials and
 tokens out of this file. Record only capabilities confirmed on this machine.
 
+Use defaults only for new, unset preferences; preserve existing settings. Omit
+unused optional fields and sections rather than treating this template as a
+questionnaire. Replace the disabled receipt value with a canonical absolute
+user-local data path only after explicit opt-in and the setup storage checks.
+
 - Canonical package root: `<absolute path>`
 - Adapter/package schema version: `<version>`
 - Activation mode: `<on-demand | always-on>`
-- Completion receipt store: `<disabled | canonical absolute user-local data path>`
+- Completion receipt store: `disabled`
 
 ## Hosts
 

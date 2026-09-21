@@ -10,12 +10,15 @@ The recommended path is to give an existing agent this package and invoke
 a model call, previews changes, and writes the user-level adapter only after
 approval.
 
-First-time setup starts with three choices: activation mode, a host/model profile,
-and outer-review policy. One profile can author and review in separate fresh
-contexts. Advanced workload routing, cross-host preferences, exclusions, helpers,
-and receipts can be configured later when useful; helpers and receipts start
-disabled unless selected. Existing installations keep their configured choices.
-All proposed configuration writes still appear in the approval preview.
+First-time setup gives a three-sentence introduction, then proposes a configuration
+using supplied preferences and the current confirmed host/model profile. It asks
+only for missing choices needed for the preview. Defaults are on-demand for a
+trial, selective outer review after inner approval, and the same profile in fresh
+review contexts. Always-on is recommended for requested daily use. Each setting
+gets one short explanation in the concrete approval preview; advanced options
+wait until requested or needed. Helpers and receipts start disabled unless
+explicitly selected. Existing installations keep their configured choices.
+Setup ends with a concise summary, one example request, and any restart instruction.
 
 ## Activation
 
@@ -46,11 +49,13 @@ It may also enable one completion receipt store or record it
 as `disabled`.
 Repository adapters remain project-specific and do not copy these preferences.
 
-Completion receipts are optional local evidence, not workflow state or
-certification. When enabled, setup recommends the platform's normal private
-user-data location (for example, Application Support on macOS, `%LOCALAPPDATA%`
-on Windows, or `$XDG_DATA_HOME`/`~/.local/share` on Unix), resolves and previews
-one canonical absolute directory outside the package and product repositories,
+Completion receipts are off by default and enabled only by explicit opt-in.
+They are local evidence, not workflow state or certification. Disabled receipts
+create no records or routine completion messages. When enabled, setup recommends
+the platform's normal private user-data location (for example, Application Support
+on macOS, `%LOCALAPPDATA%` on Windows, or `$XDG_DATA_HOME`/`~/.local/share` on Unix),
+resolves and previews one canonical absolute directory outside the package and
+product repositories,
 checks private permissions and every enabled host's access, then creates only
 that root after approval. Setup records the store as enabled only after this
 succeeds. It never falls back to repository-local storage.
@@ -168,6 +173,9 @@ more permissive mode implicitly.
 
 ## Repository setup
 
+Defer repository storage choices until onboarding is requested or durable planning
+needs a location.
+
 Keep project facts in one tracked repository adapter, normally the repo's
 `AGENTS.md` when its hosts support it. Add only a thin native pointer/import for a
 host that does not read that owner directly. Do not copy V2 policy or host/model
@@ -191,6 +199,11 @@ OpenCode recommends WSL for its fullest Windows compatibility. The setup agent
 must show resolved paths before creating links or configuration.
 
 ## Outer-review choices
+
+Inner review is the first fresh independent check of a formal spec or
+implementation. Outer review adds a second fresh independent check when selected.
+The author handles corrections and follow-up reviews; both reviewers may use the
+same model.
 
 Choose one policy; it controls frequency, independently of reviewer models:
 
