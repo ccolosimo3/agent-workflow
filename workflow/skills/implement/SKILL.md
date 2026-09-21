@@ -129,12 +129,12 @@ when none exists, the completion. Include the relevant environment and causal
 basis for reused checks. Delegated returns carry the reconciliation facts their
 lead needs.
 
-Use four compact labeled fields for the normal completion, with detail
-proportional to the change:
+Use bold Built, Verified, and Reviews labels, each followed by a short bullet
+list, then a single Status line. Aim for 1–3 bullets per list; add more only for
+meaningful complexity, and never pad a list to meet a count.
 
-- **Built:** two or three sentences on the resulting behavior and main
-  implementation approach, fewer for a trivial change. Include meaningful
-  documentation impact; do not substitute a changed-file list for the outcome.
+- **Built:** the resulting behavior and main implementation approach. Include
+  meaningful documentation impact; do not substitute a changed-file list for the outcome.
 - **Verified:** checks actually run or reused, their results, and material
   limitations or unrun proof. Link detailed evidence instead of dumping commands.
 - **Reviews:** for each inner/outer gate in scope, name the reviewer model and
