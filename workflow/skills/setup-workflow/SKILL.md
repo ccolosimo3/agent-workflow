@@ -79,6 +79,9 @@ Explain more only when requested or needed for a setup decision.
    unsupported reasoning equivalence or treat a model alias as stable when the
    host exposes an exact ID. Missing hosts stay unavailable and do not block the
    others.
+   Update existing settings in place; keep the adapter focused on current
+   configuration, dated capability evidence, and unresolved limitations rather
+   than superseded history or repeated portable policy.
 4. Present recommended settings with one short plain-language explanation each
    in one concrete approval preview, not a separate tutorial or feature list.
    Show the proposed package registration, activation mode, exact kernel owner
