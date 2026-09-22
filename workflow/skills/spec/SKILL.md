@@ -38,6 +38,10 @@ headings:
 - approval-gated actions, documentation impact, review/implementation state,
   and a tracker-ready summary only when applicable.
 
+When an established repository pattern or previously settled decision determines
+the approach, cite that basis instead of manufacturing alternatives. Explain
+credible alternatives and tradeoffs for consequential choices that remain open.
+
 Read `../../references/TESTING.md` while drawing up verification. For UI scope,
 also read `../../references/FRONTEND.md` and include the UI strategy. Run a domain
 pass only for a changed core noun, lifecycle meaning, user terminology, service

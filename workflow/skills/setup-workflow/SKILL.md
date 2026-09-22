@@ -145,14 +145,16 @@ or canonical workflow files.
 Defer repository storage choices until repository onboarding is requested or
 durable planning needs a location.
 
-When onboarding a repository, inspect its adapter for a durable plan location.
+When onboarding a repository, inspect its adapter for a durable plan location
+and reuse its declared planning structure under `../../references/PLANNING.md`.
 If none exists, present `.agent-workflow/plans/` as the default private repo-local
 directory excluded through `.git/info/exclude`; allow a tracked/custom location
 or no durable storage when the user prefers it. Preview the exact directory,
 exclusion, and adapter edit, then request approval before writing. Record private
 storage in the local repository adapter and shared storage in the tracked adapter.
-Initialize only `active/` and `archive/`; add `INDEX.md` when multiple work items
-need coordination. Do not initialize a nested Git repository unless requested.
+For a new default private planning area, initialize only `active/` and `archive/`;
+add `INDEX.md` when multiple work items need coordination. Do not initialize a
+nested Git repository unless requested.
 
 ## Outer routing
 

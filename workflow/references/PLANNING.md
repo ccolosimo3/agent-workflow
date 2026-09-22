@@ -19,18 +19,19 @@ phase selection and handoffs; each phase skill owns its inputs, process, and res
 
 ## Plan storage
 
-Use the repository's declared plan location. When durable planning is first
-needed and none is configured, offer one-time initialization of the private,
-repo-local default `.agent-workflow/plans/`, excluded through the repository's
-local Git configuration. The operator may instead choose a tracked or custom
-location, or no durable storage. Preview the directory, exclusion, and adapter
+Follow the repository's declared planning location, document owners, layout, and
+lifecycle, including shared or external planning repositories. When durable
+planning is first needed and none is configured, offer one-time initialization of
+the private, repo-local default `.agent-workflow/plans/`, excluded through the
+repository's local Git configuration. The operator may instead choose a tracked
+or custom location, or no durable storage. Preview the directory, exclusion, and adapter
 change before writing; never create or track a plan area silently.
 
 Record the resolved location and visibility in the repository adapter and reuse
-it without asking again. Keep one living Markdown work item under
-`active/<short-name>/README.md`, move terminal work to `archive/`, and add an
-`INDEX.md` or other buckets only when real coordination needs them. Casual work
-does not trigger storage setup.
+it without asking again. For a new default private planning area, keep one living
+Markdown work item under `active/<short-name>/README.md`, move terminal work to
+`archive/`, and add an `INDEX.md` or other buckets only when real coordination
+needs them. Casual work does not trigger storage setup.
 
 ### Routine plan maintenance
 
@@ -43,10 +44,11 @@ Confirm completion, cancellation, or supersession from the owning evidence or
 operator decision, never age or silence alone. Required review or proof still
 owed keeps work open. Before retiring superseded work, carry any continuing
 obligations to a named current owner. Record the final disposition, evidence
-links, and continuing follow-ups in the existing plan; move the whole terminal
-folder to the local archive without overwriting retained history, and update the
-existing index and affected links in both moved and current documents. Keep a
-path in place while a worker uses it unless that worker's handoff is coordinated.
+links, and continuing follow-ups in the existing plan; retire it using the
+repository's lifecycle without overwriting retained history. For the default
+layout, move the whole terminal folder to the local archive. Update the existing
+index and affected links in both moved and current documents. Keep a path in place
+while a worker uses it unless that worker's handoff is coordinated.
 
 Start routine retrieval from the current index or named active plans; consult
 archives when historical evidence is relevant. Replace obsolete current-status
