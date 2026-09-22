@@ -16,6 +16,12 @@ phase selection and handoffs; each phase skill owns its inputs, process, and res
   owner. Capture exact commands and results there during execution. The optional
   completion receipt may summarize or point to that evidence; its formatting,
   schema, availability, or exhaustive contents must not become Task acceptance.
+- Keep raw CLI responses, stdout/stderr, and test captures in ignored task-local
+  scratch storage. Retain findings, candidate and reviewer/session identity,
+  resolutions, and unique required proof in the existing evidence owner. Preserve
+  recovery inputs while work is open; at closeout, remove only task-owned disposable
+  output after retaining required proof. Do not create separate durable files for
+  every payload, result, stderr stream, or exit code by default.
 
 ## Plan storage
 

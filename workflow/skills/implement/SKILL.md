@@ -121,8 +121,9 @@ mutation, and disclose any preserved unowned working-tree change. Apply
 
 After review approval or a documentation-only off-ramp determination, confirm the
 live tip and that no in-scope change remains uncommitted. Do not mutate the
-certified tip. If a proof fails, distinguish whether it disproves product
-behavior or only its own premise/harness before reporting implementation state.
+certified tip. Apply `PLANNING.md`'s scratch-output retention rule at closeout.
+If a proof fails, distinguish whether it disproves product behavior or only its
+own premise/harness before reporting implementation state.
 Report under `KERNEL.md`, retaining `WORKFLOW.md`'s source, candidate, authority,
 evidence, and remaining-proof facts in the existing work item/evidence owner or,
 when none exists, the completion. Include the relevant environment and causal

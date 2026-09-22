@@ -87,11 +87,12 @@ range; resolution per finding; verification invalidated and rerun. Do not rebuil
 or resend the initial payload to a resumable reviewer.
 
 Before dispatch, check that the evidence supports the claimed candidate and
-outcomes; carry genuine gaps explicitly. Keep the sent payload and returned
-reviewer/session identity together in the existing private work-item or review
-record when available. Record absence rather than creating a new acceptance gate
-or ledger. Recovery must distinguish an exact retained payload from a disclosed
-reconstruction.
+outcomes; carry genuine gaps explicitly. Keep the sent payload recoverable and the
+returned reviewer/session identity in the existing private work-item or review
+record when available; links to ignored scratch storage suffice for recovery
+inputs under `PLANNING.md`'s retention rule. Record absence rather than creating
+a new acceptance gate or ledger. Recovery must distinguish an exact retained
+payload from a disclosed reconstruction.
 
 Payload summaries are claims. The artifact, diff, repository, and actual command
 output are authority. A kickoff or review becomes stale when its named revision
