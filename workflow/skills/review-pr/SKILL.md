@@ -9,6 +9,9 @@ metadata:
 
 Run the review in this conversation. The invoking agent is the lead reviewer;
 independent helpers challenge evidence but do not own the verdict or final message.
+Keep the invoking host, model, and reasoning/effort for the lead and all helpers
+unless the operator explicitly selects otherwise. Helpers inherit the profile,
+not the lead's conversation history.
 
 ## Authorities
 
@@ -46,8 +49,7 @@ deployment/CI, and rollout seams. Choose the smallest review topology that fits:
   that map, never more than three helpers total.
 
 File count alone selects nothing. If compact eligibility is uncertain, use
-standard. Apply the host adapter's coworker-review profile to both the lead and
-challengers.
+standard.
 
 ## Discover and challenge
 

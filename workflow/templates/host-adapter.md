@@ -50,7 +50,6 @@ same-reviewer continuations keep their selected profiles.
 - Implementation: `<fixed host/profile | allowed profiles>`
 - Inner review: `<inherit | fixed host/profile | allowed profiles>`
 - Author-profile inner overrides, when needed: `<author host/profile -> reviewer host/profile>`
-- Coworker PR review: `<fixed host/profile | allowed profiles>`
 - Evidence helper: `<disabled | host/profile>`
 
 ## Outer gates
