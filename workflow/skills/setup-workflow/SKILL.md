@@ -134,8 +134,9 @@ Explain more only when requested or needed for a setup decision.
    name, shared-reference reachability, and either the configured persistent
    route or its absence without a model call, then write the adapter with the
    verified receipt setting and any capability gaps. Do not preload skill
-   bodies or equate configuration with observed model context. Explain that a host restart and fresh session
-   are required to check loaded behavior; any model smoke remains separately
+   bodies or equate configuration with observed model context. Explain that a
+   host restart and fresh session are required to check loaded behavior; any
+   model smoke remains separately
    approval-gated and must be reported as unrun when omitted.
 
 Do not infer Cursor CLI slash-command expansion from Desktop discovery. Confirm
