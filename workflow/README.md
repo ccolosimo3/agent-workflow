@@ -63,8 +63,9 @@ fresh-context independence.
    choices; advanced options can wait and existing preferences are preserved.
 4. Review and approve setup's exact activation, discovery, adapter, and
    replacement preview.
-5. Let setup verify automatic advisory and user-facing discovery, explicit-only
-   control-plane entrypoints, and shared references without a model call, plus
+5. Let setup verify automatic advisory and user-facing discovery, control-plane
+   entrypoints that owning phases can invoke by name but description matching
+   cannot select, and shared references without a model call, plus
    the persistent kernel only in always-on mode; then add a short repository
    adapter from `templates/repo-adapter.md` if wanted.
 6. Open a fresh session and request the wanted work naturally or invoke its

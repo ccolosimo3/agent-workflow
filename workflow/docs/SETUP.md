@@ -100,7 +100,8 @@ surfaces locally.
 - **Cursor:** use the same canonical `~/.agents/skills/` links. Current Cursor
   discovers those skills automatically and exposes them for manual
   `/skill-name` invocation; do not also install command shims for the same IDs.
-  The packaged invocation controls keep control-plane skills explicit-only. In
+  Cursor has no verified name-only control, so control-plane skills remain
+  discoverable under their narrow descriptions (see the classes below). In
   always-on mode, setup additionally renders the packaged kernel-rule template
   into the user's Cursor rules directory with the absolute package path;
   on-demand mode omits that rule. Check for the direct `cursor-agent` binary
@@ -139,21 +140,32 @@ Invocation has three classes across hosts:
   and `show-me` are automatic advisory guidance under their narrow descriptions.
 - `explore`, `spike`, `spec`, `implement`, `review-pr`, and `project-lead` are
   automatic only when ordinary language clearly selects that user-facing work.
-- `bro` is an explicit operator utility. `setup-workflow`, `review-change`,
-  `review-spec`, `independent-review`, and `independent-spec-review` are
-  explicit/internal control-plane skills. Codex uses `agents/openai.yaml`;
-  Claude Code sets these IDs to `user-invocable-only` in `skillOverrides`;
-  Cursor uses `disable-model-invocation: true`. OpenCode's packaged
-  `metadata.opencode/autoinvoke` expresses intent, but is not a documented native
-  invocation control. Its explicit/internal boundary relies on skill descriptions
-  and `WORKFLOW.md`; record the lack of host enforcement as a capability gap
-  unless the installed version provides a verified supported control.
+- `bro` is an explicit operator utility. Codex uses `agents/openai.yaml`; its
+  `disable-model-invocation: true` frontmatter makes Claude Code and Cursor
+  operator-only, and Claude Code also sets it to `user-invocable-only` in
+  `skillOverrides`.
+- `setup-workflow`, `review-change`, `review-spec`, `independent-review`, and
+  `independent-spec-review` are explicit/internal control-plane skills: the
+  operator or an owning phase that names one may invoke it, but description
+  matching must not select it. Codex uses `agents/openai.yaml`; Claude Code sets
+  these IDs to `name-only` in `skillOverrides`, which lists the name without its
+  description. Never package these with `disable-model-invocation: true` or set
+  them to `user-invocable-only` or `off`: Claude Code and Cursor then refuse the
+  owning phase's invocation, so its required review or setup step cannot run.
+  Cursor has no verified name-only control, and OpenCode's packaged
+  `metadata.opencode/autoinvoke` expresses intent but is not a documented native
+  invocation control. On both, the explicit/internal boundary relies on skill
+  descriptions and `WORKFLOW.md`; record the lack of host enforcement as a
+  capability gap unless the installed version provides a verified supported
+  control.
 
 Setup must distinguish these intended classes from host-enforced controls and
 record any enforcement gaps before declaring registration complete.
-Owning spec and implementation phases start their required review children by
-naming the control-plane entrypoint explicitly in the fresh task's initial
-prompt; the operator does not need to invoke those review loops separately.
+Owning spec and implementation phases invoke their required review children by
+name, in their own task or in a fresh task's initial prompt; the operator does
+not need to invoke those review loops separately. Setup therefore verifies that
+each control-plane skill stays invocable by name on every registered host, not
+only that description matching cannot select it.
 
 Desktop skill discovery does not prove headless slash-command expansion. For
 Cursor CLI automation, confirm the installed version's behavior or name the

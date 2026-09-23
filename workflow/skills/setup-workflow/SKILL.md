@@ -1,7 +1,6 @@
 ---
 name: setup-workflow
 description: Configure or audit workflow hosts, models, review routing, and repository onboarding. Use for installation, plan-storage setup, capability repair, or uninstall; not for repository implementation work.
-disable-model-invocation: true
 metadata:
   opencode/autoinvoke: false
 ---
@@ -64,9 +63,11 @@ Explain more only when requested or needed for a setup decision.
    merely to test setup.
    For Codex, resolve `CODEX_HOME` and the active global instruction owner after
    `AGENTS.override.md` precedence. For Claude Code, compare `skillOverrides`
-   with the package: only explicitly packaged skills may remain
-   `user-invocable-only`; include stale overrides on advisory or user-facing
-   skills in the previewed removal. For OpenCode, resolve its config directory
+   with the package: only explicit operator utilities may be
+   `user-invocable-only`, and control-plane skills must be `name-only`. Include
+   stale overrides on advisory or user-facing skills in the previewed removal,
+   and any control-plane skill set to `user-invocable-only` or `off`, or
+   packaged with `disable-model-invocation: true`, in the previewed repair. For OpenCode, resolve its config directory
    with `opencode debug paths`; inspect global JSON/JSONC `instructions`,
    `AGENTS.md`, the resolved `opencode debug config`, and `opencode debug skill`.
    Check the selected agent's effective skill-tool settings and permissions;
@@ -118,12 +119,16 @@ Explain more only when requested or needed for a setup decision.
    composition would shadow them or cannot be made safe. Preserve packaged
    invocation metadata, but do not claim OpenCode enforces `opencode/autoinvoke`
    without verified host support; record that capability gap. Set Claude Code
-   `skillOverrides` to `user-invocable-only` only for skills packaged as explicit.
+   `skillOverrides` to `user-invocable-only` only for explicit operator
+   utilities and to `name-only` for control-plane skills, so owning phases can
+   invoke them by name.
    Cursor uses the shared `~/.agents/skills/` links for automatic discovery and manual
    slash invocation; do not install command shims for the same IDs. Leave
    advisory and user-facing entrypoints eligible for automatic invocation
    according to their narrow descriptions and host policy. Verify discovery,
-   access and supported invocation controls for each class, shared-reference
+   access and supported invocation controls for each class, including that no
+   host control blocks an owning phase from invoking a control-plane skill by
+   name, shared-reference
    reachability, and either the configured persistent route or its absence
    without a model call, then write the adapter with the verified receipt setting
    and any capability gaps. Do not preload skill bodies or equate configuration

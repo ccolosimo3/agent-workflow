@@ -1,7 +1,6 @@
 ---
 name: independent-spec-review
 description: Run the fresh independent outer gate for a specification when configured policy or the operator selects it, then re-review its patches in the same conversation. Not for inner review or implementation.
-disable-model-invocation: true
 metadata:
   opencode/autoinvoke: false
 ---
