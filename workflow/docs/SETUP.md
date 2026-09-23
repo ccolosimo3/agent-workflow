@@ -100,7 +100,8 @@ surfaces locally.
 - **Cursor:** use the same canonical `~/.agents/skills/` links. Current Cursor
   discovers those skills automatically and exposes them for manual
   `/skill-name` invocation; do not also install command shims for the same IDs.
-  Cursor has no verified name-only control, so control-plane skills remain
+  Cursor has no verified name-only control: the `disable-model-invocation` flag
+  that would hide control-plane skills also blocks owning phases, so they are
   discoverable under their narrow descriptions (see the classes below). In
   always-on mode, setup additionally renders the packaged kernel-rule template
   into the user's Cursor rules directory with the absolute package path;
@@ -134,7 +135,7 @@ must resolve its canonical skill and shared authorities. Setup records the
 activation mode, each entrypoint scope, and any kernel owner, then verifies the
 selected surfaces before declaring a host ready.
 
-Invocation has three classes across hosts:
+Invocation has four classes across hosts:
 
 - `typescript-engineering`, `technical-writing`, `blast-radius`, `how`, `why`,
   and `show-me` are automatic advisory guidance under their narrow descriptions.

@@ -66,10 +66,13 @@ Explain more only when requested or needed for a setup decision.
    with the package: only explicit operator utilities may be
    `user-invocable-only`, and control-plane skills must be `name-only`. Include
    stale overrides on advisory or user-facing skills in the previewed removal,
-   and any control-plane skill set to `user-invocable-only` or `off`, or
-   packaged with `disable-model-invocation: true`, in the previewed repair. For OpenCode, resolve its config directory
-   with `opencode debug paths`; inspect global JSON/JSONC `instructions`,
-   `AGENTS.md`, the resolved `opencode debug config`, and `opencode debug skill`.
+   and any control-plane skill set to `user-invocable-only` or `off` in the
+   previewed repair. Report a control-plane skill packaged with
+   `disable-model-invocation: true` as package drift, fixed by updating the
+   package rather than editing its installed frontmatter. For OpenCode, resolve
+   its config directory with `opencode debug paths`; inspect global JSON/JSONC
+   `instructions`, `AGENTS.md`, the resolved `opencode debug config`, and
+   `opencode debug skill`.
    Check the selected agent's effective skill-tool settings and permissions;
    catalog discovery and on-demand body loading are separate from kernel startup.
    For Cursor, inspect native `~/.agents/skills/` discovery,
@@ -128,9 +131,9 @@ Explain more only when requested or needed for a setup decision.
    according to their narrow descriptions and host policy. Verify discovery,
    access and supported invocation controls for each class, including that no
    host control blocks an owning phase from invoking a control-plane skill by
-   name, shared-reference
-   reachability, and either the configured persistent route or its absence
-   without a model call, then write the adapter with the verified receipt setting
+   name, shared-reference reachability, and either the configured persistent
+   route or its absence without a model call, then write the adapter with the
+   verified receipt setting
    and any capability gaps. Do not preload skill bodies or equate configuration
    with observed model context. Explain that a host restart and fresh session
    are required to check loaded behavior; any model smoke remains separately
