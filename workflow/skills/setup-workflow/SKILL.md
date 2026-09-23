@@ -136,8 +136,8 @@ Explain more only when requested or needed for a setup decision.
    verified receipt setting and any capability gaps. Do not preload skill
    bodies or equate configuration with observed model context. Explain that a
    host restart and fresh session are required to check loaded behavior; any
-   model smoke remains separately
-   approval-gated and must be reported as unrun when omitted.
+   model smoke remains separately approval-gated and must be reported as unrun
+   when omitted.
 
 Do not infer Cursor CLI slash-command expansion from Desktop discovery. Confirm
 the installed CLI behavior; otherwise invoke automation with a prompt that names
