@@ -19,6 +19,10 @@ instructions and adapter.
 
 ## First pass
 
+These initial-pass requirements apply to a new blind gate. For a disclosed
+unavailable-reviewer continuation, use `REVIEW.md`'s recovery context and coverage
+rules instead; an incomplete initial pass still requires a fresh blind gate.
+
 This skill is provider-neutral and runs inside the one configured fresh
 outer-review context; do not spawn another
 reviewer. Before the first verdict, confirm from host/task provenance that this
@@ -44,5 +48,5 @@ for a scoped revision.
 
 When the planner returns revisions, re-review them in this same conversation
 using `REVIEW.md`'s Re-review mode. Do not demand a fresh outer task or route the
-patch through `review-spec`. Start another blind pass only when the operator
-explicitly requests one.
+patch through `review-spec`. Use `REVIEW.md` for unavailable-reviewer recovery;
+an additional blind pass otherwise requires an explicit operator request.

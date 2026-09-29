@@ -33,10 +33,9 @@ production code or a permanent test merely because it was useful; remove
 throwaway scaffolding by default and retain a proof artifact only when it remains
 useful evidence.
 
-Remain read-only toward production and shared external state. Live, paid,
-authenticated, destructive, or prepared-environment proof requires the exact
-approval in `KERNEL.md`; when unavailable, return `BLOCKED` with the missing
-condition rather than substituting a weaker proof or retrying.
+Use `KERNEL.md`'s ordinary-development and approval boundaries. When required
+proof exceeds that authority, return `BLOCKED` with the exact missing condition;
+do not substitute a weaker proof or retry unchanged.
 
 Preserve the bet, falsifier, safe boundary, time/scope box, fallback, declared
 criteria, exact evidence, and retained/removed disposable artifacts in the

@@ -26,55 +26,51 @@ or review requirements.
 
 ## Authority
 
-Read-only inspection and ordinary in-scope implementation steps are allowed.
-Fresh current-session operator approval for the exact action is required before:
+Read-only inspection, public research, and ordinary in-scope development are
+allowed. Follow documented routes to install pinned dependencies without changing
+manifests or lockfiles, regenerate artifacts, and run local apps and tests.
+Internal mechanism choices within authorized behavior need no direction approval.
 
-- destructive local operations, deletion outside stated scope, history rewrite,
-  force operations, or bypassing safeguards;
-- dependency, lockfile, toolchain, generated-artifact, or persistent-data changes
-  not explicitly requested or approved by the current-session operator;
-- pushes or externally visible mutations to repositories, trackers, messages,
-  releases, deployments, providers, databases, payments, or infrastructure;
-- authenticated external API/provider traffic, metered model/API calls,
-  paid/live probes, or prepared-environment activity not explicitly authorized
-  for its target, input scope, and applicable usage, spend, or side-effect bound.
+Ordinary development includes repository-designated vendor sandbox/test/dev-tenant
+calls and incidental license checks, plus creating, starting, migrating, seeding,
+resetting, and removing disposable task environments. Establish the actual target
+and test namespace; state changes also require task-owned resources and known
+synthetic/test-data provenance. Existing worktree slots and manual-test data can
+qualify after confirming exclusive use; a "dev" name or idle service alone cannot.
+Sandbox calls stay within documented test operations, excluding shared account
+changes, tenant-wide deletion, real messages, and real charges. Production,
+staging, shared-app and primary-checkout data operations remain gated. Data
+designations never override these protections.
+
+Outside those bounds, get current-session operator approval before destructive
+operations; dependency/lockfile/toolchain changes; handling real-data dumps or
+uncertain data; pushes, publication, tracker/messages, deployments or
+infrastructure mutations; other authenticated provider traffic, automated
+live-source collection, and metered calls.
+Preserve unrelated environments and unowned changes. History rewrite, force
+operations, and safeguard bypasses require explicit approval; never bypass a
+failed hook or policy check. State the exact target, scope, side effects, and
+applicable spend bound before asking.
 
 Selecting a configured host/profile through operator intent or a selected phase's
-declared worker/reviewer routing authorizes that bounded workflow substep. Its
-work item, profile, declared invocation count, and return condition are the bound.
-Subscription-backed usage needs no separate approval or dollar cap; a metered or
-API-key-backed profile still requires its applicable usage or spend bound. Extra
-calls, fan-out, profile/provider changes, or unrelated paid or live activity
-remain gated.
+declared routing authorizes that bounded substep: work item, profile, invocation
+count, and return condition. Subscription usage needs no separate approval or
+dollar cap; metered/API-key usage still requires its usage or spend bound.
+Required inner review and one outer selected by policy or the operator, with
+their corrections and bounded unavailable-reviewer recovery under `REVIEW.md`,
+are authorized substeps. Extra reviews, helper fan-out, unconfigured profile
+changes, and unrelated paid activity remain gated.
 
-An unchanged repository-documented disposable test harness is ordinary
-verification when confined to loopback/local Docker and its own test namespace.
-Any target, wrapper, migration, reset, seed, ingest, or persistent-store
-difference remains gated.
-
-Ordinary public web search, public-page lookup, and official-documentation
-research remain allowed unless the operator says local-only/no-web; they are not
-live-source probes, authenticated API/provider traffic, paid calls, or
-prepared-environment activity.
-
-Required inner review and one outer review selected by configured policy or the
-operator, with their same-reviewer corrections, are authorized substeps of the
-selected phase. Extra, duplicate, or early reviews and reviewer-triggered paid
-activity remain gated.
-
-Natural approval covers the stated action and bounded correction or retry within
-the same risk envelope; failure does not consume it unless the operator or
-governing policy made it single-use. Re-ask only if the target, scope, side
-effects, provider, input scope, or cap materially changes. Ambiguous assent or
-silence is not approval. For a non-gated execution choice, use applicable
-instructions, repository conventions, read-only inspection, and the smallest safe
-disposable observation that can settle it before asking. Proceed with the simplest
-reversible in-scope choice and report the assumption. Ask when the unresolved
-choice can change observable behavior, the authorized Task or risk boundary,
-authority or spend, safety, or difficult-to-reverse state. Actions in the
-approval-gated list and review-count gate above require approval regardless of
-reversibility. Before asking, state the exact action, target, and material side
-effects. Never bypass a failed hook or policy check.
+Approval covers bounded corrections and retries within the same risk envelope;
+failure or a changed artifact hash does not consume it unless explicitly made
+single-use or revision-bound. Re-ask when target, scope, side effects, provider,
+input scope, or cap materially changes. Silence or ambiguous assent is not
+approval. Resolve factual uncertainty with instructions, inspection, or the
+smallest safe observation;
+choose the simplest reversible in-scope mechanism and report the assumption.
+Ask about unsettled observable behavior, Task/risk boundaries, authority, spend,
+safety, or difficult-to-reverse state. Neither reversibility nor a spec's own
+reasoning grants gated authority; operator-approved conditions plus evidence can.
 
 When workflow guidance causes a question, pause, or unfinished requested work,
 link the exact instruction and quote the relevant clause; distinguish an explicit
@@ -126,9 +122,8 @@ other untracked local configuration.
   non-generated, non-normative documentation diff that changes no executable,
   contract, setup, policy, architecture, verification, or operating behavior.
   Workflow and policy documents never qualify for that off-ramp.
-- Review patches follow `REVIEW.md`'s approval-retention rule. When re-review is
-  required, reuse the same reviewer; every outer-owned patch returns to its same
-  outer reviewer.
+- Review patches follow `REVIEW.md`'s approval-retention and recovery rules. Reuse
+  the same reviewer; every outer-owned patch returns to its outer gate.
 - Treat summaries, receipts, and prior verdicts as claims to validate. Never claim
   verification, independence, or completion that the available host and evidence
   do not establish.

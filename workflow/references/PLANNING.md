@@ -25,45 +25,27 @@ phase selection and handoffs; each phase skill owns its inputs, process, and res
 
 ## Plan storage
 
-Follow the repository's declared planning location, document owners, layout, and
-lifecycle, including shared or external planning repositories. When durable
-planning is first needed and none is configured, offer one-time initialization of
-the private, repo-local default `.agent-workflow/plans/`, excluded through the
-repository's local Git configuration. The operator may instead choose a tracked
-or custom location, or no durable storage. Preview the directory, exclusion, and adapter
-change before writing; never create or track a plan area silently.
-
-Record the resolved location and visibility in the repository adapter and reuse
-it without asking again. For a new default private planning area, keep one living
-Markdown work item under `active/<short-name>/README.md`, move terminal work to
-`archive/`, and add an `INDEX.md` or other buckets only when real coordination
-needs them. Casual work does not trigger storage setup.
+Follow the repository's declared planning location, owners, layout, and lifecycle,
+including shared or external repositories. If durable planning needs a location
+and none is configured, use `setup-workflow`'s Repository onboarding; do not create
+or track a plan area silently.
 
 ### Routine plan maintenance
 
-Within the configured plan area, local archival and current-index maintenance
-are ordinary planning work; perform clear-cut updates without a separate cleanup
-approval. Follow `WORKFLOW.md`'s planner ownership rule. Deletion and off-device
-archival or publication remain separate actions under `KERNEL.md`.
+Local archival and index updates are ordinary planning work under `WORKFLOW.md`'s
+ownership rule. Confirm terminal status from evidence or an operator decision;
+age, silence, or missing bookkeeping is insufficient. Required proof/review keeps
+work open. Carry continuing obligations to a named owner, retain disposition and
+evidence in the existing plan, then follow its archive lifecycle. For the default
+layout, move the whole folder to `archive/` and fix affected links. Coordinate
+before moving a path an active worker uses. Deletion and off-device publication
+follow `KERNEL.md`.
 
-Confirm completion, cancellation, or supersession from the owning evidence or
-operator decision, never age or silence alone. Required review or proof still
-owed keeps work open. Before retiring superseded work, carry any continuing
-obligations to a named current owner. Record the final disposition, evidence
-links, and continuing follow-ups in the existing plan; retire it using the
-repository's lifecycle without overwriting retained history. For the default
-layout, move the whole terminal folder to the local archive. Update the existing
-index and affected links in both moved and current documents. Keep a path in place
-while a worker uses it unless that worker's handoff is coordinated.
-
-Start routine retrieval from the current index or named active plans; consult
-archives when historical evidence is relevant. Replace obsolete current-status
-text in its existing owner and clearly identify superseded direction while
-preserving decisions and evidence. Surface genuinely unclear dispositions for
-operator resolution; continue independent work. Mention completed maintenance
-briefly in the normal update without creating a cleanup report, ledger, or
-mandatory lesson document. Bookkeeping gaps do not reopen valid verification or
-block unrelated implementation.
+Retrieve from the current index or named active work; consult archives as needed.
+Replace obsolete status in its owner, preserving decisions/evidence and marking
+superseded direction. Ask only about genuinely unclear dispositions; maintenance
+neither creates a report/ledger nor reopens valid verification or blocks unrelated
+work.
 
 ## Grounding and scope
 

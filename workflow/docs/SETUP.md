@@ -265,10 +265,10 @@ stricter host or model-family choices when the user wants them; never copy
 another user's restrictions into a new installation or silently relax existing
 ones. Apply them before ordering or fallback. The author is the agent that
 produced the artifact, even when a different host coordinated the work.
-`WORKFLOW.md` owns resolution and unavailable/unknown-origin rules. Confirm the
-actual review model; a prior smoke probe does not prove that a later run avoided
-substitution. Direct operator instructions override stored preferences for that
-invocation.
+`WORKFLOW.md` owns resolution, unavailable/unknown-origin rules, and identity:
+accepted launch model/effort with no reported substitution or reroute suffices;
+record it as launched, without searching logs. A reported mismatch cannot certify.
+Direct operator instructions override stored preferences for that invocation.
 
 ## Verification and optional smoke test
 

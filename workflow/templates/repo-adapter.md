@@ -22,7 +22,9 @@ know; it does not copy workflow policy.
 - Smallest focused commands by changed surface
 - Cross-project or composite gate and its selection rule
 - Local service, database, browser, hardware, or manual prerequisites
-- Live, paid, destructive, or prepared-environment checks requiring approval
+- Documented disposable environments, ownership checks, and test-data provenance
+- Designated vendor sandbox/test namespaces and ordinary permitted operations
+- Checks outside `KERNEL.md`'s ordinary-development bounds requiring approval
 
 ## Sensitive boundaries and known pitfalls
 

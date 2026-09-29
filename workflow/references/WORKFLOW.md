@@ -89,7 +89,7 @@ handoff when dispatching. Profile selection does not require dispatch or a conte
 reset: use supported same-task model controls when needed, and preserve an
 explicitly selected active profile. It does not select a phase, authorize another
 worker, or change review gates. A current-session operator choice wins. If a host cannot
-select or confirm a required profile, report that limitation; inherit a host
+select a required profile, report that limitation; inherit a host
 default only when the applicable preference permits it.
 
 When distinct corrections repeatedly add the same state, coordination, or
@@ -107,7 +107,8 @@ Environment, tooling, or authority failures do not justify a stronger model.
 Escalate only within the permitted profiles and when the diagnosis warrants it;
 explicit fixed choices still win. Confirm the old writer is inactive before any
 replacement, and hand off once instead of starting parallel attempts. An
-already-selected reviewer and its profile remain unchanged.
+already-selected reviewer and its profile remain unchanged except for
+`REVIEW.md`'s unavailable-reviewer recovery.
 
 An explicit inner-review mapping from the actual author's profile takes precedence
 over `inherit`; it selects one fresh reviewer, not an additional review round.
@@ -145,8 +146,11 @@ Outer convergence follows `REVIEW.md`.
 `HOST.local.md` may override the timing default globally or for an explicitly
 named route; a matching route override takes precedence over its global default.
 
-A direct request selects outer review in every mode. Do not ask for a waiver
-when policy skips it. Existing `risk-selected` means `selective`;
+A direct request for outer review selects it in every mode. A request to review
+completed work runs the pending inner gate, or the configured outer when inner
+is complete; it does not duplicate an open gate. A quick status, wording, or
+configuration check does not by itself select a certifying review. Do not ask
+for a waiver when policy skips it. Existing `risk-selected` means `selective`;
 `operator-invoked` and `disabled` mean `by-request`. Keep these existing values
 working without a forced config migration; never change a user's preference
 merely to adopt new names.
@@ -161,14 +165,13 @@ Never broaden an eligible list because a host is unavailable. If origin is unkno
 use an explicitly configured unknown-origin list or an unconditioned global list;
 otherwise report the missing origin without guessing.
 
-Use exactly one reviewer, without child reviewers or helper fan-out unless the
-operator separately authorizes it. Check the actual run's reported model and any
-substitution/reroute notice before accepting a verdict. A substituted model or
-unconfirmed required profile cannot certify the gate. A successful preliminary
-probe does not establish the later run's identity; probes are optional capability
-diagnosis, not a prerequisite for every review. If a required gate has no permitted
-fresh context, report the missing capability rather than weakening or duplicating
-it. Same-reviewer correction loops keep their selected profile.
+Use one reviewer per gate, without helper fan-out. The selected model/effort is
+sufficient when the host accepts those launch settings and reports no substitution
+or reroute. Record identity as launched; do not hunt through logs or rollouts for
+confirmation. A reported mismatch cannot certify the gate. Missing launch control
+is an unavailable profile, not permission to assume it. Preserve all other
+certification requirements. `REVIEW.md` owns resume and configured fallback;
+report a missing capability only after those permitted recovery paths fail.
 
 ## Phase triggers and selective outer risks
 
@@ -220,8 +223,7 @@ purpose. The planner checks
 load-bearing claims and alone turns the evidence into plans, phase choices, and
 operator-facing recommendations.
 
-Re-review reuses the original reviewer. Report an unavailable required isolation,
-profile, or resume capability instead of claiming it.
+Re-review follows `REVIEW.md`'s same-reviewer and bounded recovery rules.
 
 ## Shared handoff envelope
 

@@ -23,7 +23,7 @@ source-approved candidate. If `REVIEW.md`'s evidence-only admission holds, route
 directly to the reviewer assigned to that evidence gate with the candidate
 identity, new artifacts, and any changed proof. Do not repeat closed inner or
 outer source gates. Resume that reviewer; if it cannot resume, use the disclosed
-fresh fallback rule with its retained payload and relevant prior findings. A
+recovery rule with retained or reconstructed context and relevant findings. A
 newly selected outer evidence gate uses one fresh `independent-review` context
 under the configured routing. Apply the scoped verdict and finish this path.
 
@@ -47,7 +47,7 @@ applies `REVIEW.md`'s Implementation method and Output contract.
 Follow `REVIEW.md`'s state machine and re-review payload: the author patches
 in-scope findings, commits corrections, reruns causally affected proof, and
 resumes the same reviewer with the delta. Material operator choices remain open;
-use its disclosed fresh fallback only when resumption is unavailable. Do not
+use its disclosed recovery only when resumption is unavailable. Do not
 restart broad discovery or send a second initial payload to a resumable reviewer.
 
 Apply `WORKFLOW.md`'s outer selection policy and timing through `REVIEW.md`'s

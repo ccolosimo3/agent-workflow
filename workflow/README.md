@@ -39,9 +39,9 @@ than maintaining copied folders.
 
 Completion receipts are disabled by default and require explicit opt-in to a
 private user-level store. When enabled, eligible terminal work projects its
-existing completion evidence into a small local
-self-report while later independent outcomes remain separately sourced; receipts
-never certify or block work. See `references/RECEIPTS.md`.
+existing completion evidence into a small local self-report with attributed
+completed reviews; later outcomes use annotations. Receipts never certify or
+block work. See `references/RECEIPTS.md`.
 
 Clear ordinary language can select the matching user-facing workflow entrypoint,
 while setup and review-control skills remain explicit/internal. The

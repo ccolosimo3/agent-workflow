@@ -133,8 +133,8 @@ no artifact solely for reporting format.
 
 When `KERNEL.md`'s receipt trigger applies, including to a terminal partial,
 blocked, or abandoned implementation, read `../../references/RECEIPTS.md` and
-project the evidence already gathered above into its self-report and any
-separately sourced known annotations; do not rerun or recollect evidence. Keep
+project the evidence already gathered above into its self-report, including
+attributed completed reviews; do not rerun or recollect evidence. Keep
 the normal chat completion even when the durable write is skipped.
 
 Do not include findings or an internal ledger. When the operator asks for a PR,

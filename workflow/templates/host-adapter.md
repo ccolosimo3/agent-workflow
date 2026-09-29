@@ -42,7 +42,8 @@ as defined in `WORKFLOW.md`; it does not inherit the coordinator's profile.
 Role-specific preferences override general workload preferences. For an allowed
 range, name the task conditions that select the stronger profile; project
 importance or phase name alone is insufficient. Existing explicit handoffs and
-same-reviewer continuations keep their selected profiles.
+same-reviewer continuations keep their selected profiles; `REVIEW.md` governs
+unavailable-reviewer recovery.
 
 - Coordination: `<fixed host/profile | allowed profiles; selection conditions>`
 - Planning/specification: `<fixed host/profile | allowed profiles>`

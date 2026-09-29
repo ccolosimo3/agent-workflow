@@ -37,7 +37,7 @@ artifact and returns strict `APPROVED` or `ACTIONABLE`.
 Follow `REVIEW.md`'s state machine and re-review payload: revise mechanical
 findings, preserve unresolved operator choices, and resume the same reviewer
 with the exact artifact delta, findings, resolutions, and affected proof. Use its
-fresh fallback only when resumption is unavailable; retain the three-cycle cap.
+recovery only when resumption is unavailable; retain the three-cycle cap.
 
 Apply `WORKFLOW.md`'s outer selection policy and timing through `REVIEW.md`'s
 state machine. Launch

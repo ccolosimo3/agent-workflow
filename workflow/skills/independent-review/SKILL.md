@@ -18,6 +18,10 @@ is unavailable, then read repository instructions and the relevant adapter.
 
 ## First pass
 
+These initial-pass requirements apply to a new blind gate. For a disclosed
+unavailable-reviewer continuation, use `REVIEW.md`'s recovery context and coverage
+rules instead; an incomplete initial pass still requires a fresh blind gate.
+
 This skill is provider-neutral and runs inside the one configured fresh
 outer-review context; do not spawn another
 reviewer. Before the first verdict, confirm from host/task provenance that this
@@ -30,7 +34,7 @@ inner-converged under `WORKFLOW.md`'s timing rules. Confirm this from the caller
 explicit assertion without reading prior findings or verdicts. Resolve full
 implementation or evidence-only completion scope under `WORKFLOW.md` and
 `REVIEW.md`. Do not read prior findings,
-verdicts, review logs, or kickoff prompts in either mode.
+verdicts, review logs, or kickoff prompts in either initial mode.
 
 For a full implementation review, determine the integration branch from
 repository instructions and independently compute merge-base, live tip, and
@@ -46,8 +50,10 @@ green verification only when it matches the candidate and environment and no
 causal delta invalidates it; run the narrowest decisive check for concrete
 review hypotheses.
 
-Remain read-only: no edits, commits, branch switches, tracker/GitHub mutation, or
-provider activity. Return `APPROVED` or `ACTIONABLE` with the certified range and
+Keep the candidate and repository state read-only: no edits, commits, branch
+switches, or tracker/GitHub mutation. Narrow verification follows `KERNEL.md`'s
+ordinary-development and gated-action boundaries; return candidate corrections
+to the author. Return `APPROVED` or `ACTIONABLE` with the certified range and
 tip, findings, reused/rerun evidence, and concise verified-clean record.
 
 ## Follow-up

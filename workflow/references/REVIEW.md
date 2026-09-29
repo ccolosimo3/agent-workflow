@@ -20,31 +20,37 @@ subagent does not itself prove a fresh context. Model diversity is optional unde
    validates it.
 2. `ACTIONABLE` findings are patched by the owning spec author or implementer except
    for `[decision-required]` items. Causally affected verification runs, then the
-   original reviewer receives the findings verbatim, mapped resolutions, reviewed
-   revision, current tip or artifact, and invalidated evidence.
+   original reviewer receives finding IDs or concise summaries, mapped resolutions,
+   reviewed revision, current tip or artifact, and invalidated evidence.
    Implementation patches are committed as new commits without amend or history
    rewrite before re-review; spec revisions identify the exact artifact revision.
-3. Re-review is narrow: verify each resolution and inspect its delta for
-   regressions. Reuse the same reviewer; use a fresh fallback only when the host
-   cannot resume it, disclose the lost context, and supply the full initial
-   payload plus prior findings and resolutions. Spec convergence stops after
-   three revise/re-review cycles or a material operator decision.
+3. Re-review verifies resolutions and their delta for regressions. Resume the same
+   reviewer first. If resume fails or is unavailable, use one fresh context on the
+   same profile. At initial launch or recovery, profile/launch unavailability
+   permits one attempt per next configured eligible profile under `WORKFLOW.md`.
+   Do not retry unchanged failures or switch
+   reviewers because of findings or an unwelcome verdict. Disclose recovery and
+   supply original scope/acceptance, current candidate, all findings/resolutions,
+   and the accumulated delta; reconstruction suffices without exact old prose.
+   Reuse completed coverage; expand for missing, incomplete, or invalidated
+   coverage. An incomplete initial outer pass requires a fresh blind initial
+   review, not a delta-only recovery. Spec convergence stops after three
+   revise/re-review cycles or a material operator decision.
 4. Apply `WORKFLOW.md`'s outer selection policy and timing before dispatch;
    reassess selection after inner approval for newly exposed risks. Record a
-   short reason when policy skips the gate; do not ask for a waiver or apply
-   selective risk triggers as a prerequisite for broad review. When both first
-   cycles ran concurrently, the original inner reviewer closes the reconciled
-   first-cycle corrections, including fixes from either reviewer. Resume the same outer
-   reviewer after inner closure, not on intermediate inner revisions. It inspects
-   the entire delta since its initial review, including inner corrections, and
-   confirms coverage of step 5's whole converged
-   artifact or final range before its approval counts. Further outer corrections
-   follow the existing same-reviewer loop.
+   skip reason; broad review does not require a selective risk trigger. Concurrent
+   cycles use the same unchanged candidate, blind to each other's findings.
+   Collect both verdicts, reconcile once, and let inner close all first-cycle
+   corrections. Then resume outer once after inner closure; it inspects the full
+   accumulated delta, including inner fixes, and certifies step 5's whole final
+   range before its earlier approval counts. Do not chase intermediate inner tips.
 5. A selected outer gate begins in exactly one configured fresh context, reads no
    prior findings, and reviews the whole converged artifact or final
    implementation range, except in the explicitly scoped evidence-only mode
    below. After inner closure, outer-owned corrections return only to that same
-   outer reviewer. Do not reopen the inner reviewer unless the patch expands scope
+   outer reviewer, using step 3 only for unavailable-reviewer recovery. Such a
+   disclosed continuation may read prior findings; it is not another blind pass.
+   Do not reopen the inner reviewer unless the patch expands scope
    beyond an outer finding.
 
 An `APPROVED` verdict may carry low suggestions; they are optional. In the inner
@@ -82,9 +88,9 @@ follow-ups; exact verification/results tied to the tip; changed tests and
 inclusion exceptions; hot spots/deviations; documentation impact; remaining
 operator or environment proof; repository authorities.
 
-**Re-review:** prior findings verbatim; artifact revision or prior-tip/current-tip
-range; resolution per finding; verification invalidated and rerun. Do not rebuild
-or resend the initial payload to a resumable reviewer.
+**Re-review:** finding IDs or concise summaries; artifact revision or
+prior-tip/current-tip range; resolution per finding; verification invalidated
+and rerun. Do not rebuild or resend the initial payload to a resumable reviewer.
 
 Before dispatch, check that the evidence supports the claimed candidate and
 outcomes; carry genuine gaps explicitly. Keep the sent payload recoverable and the
@@ -94,9 +100,10 @@ inputs under `PLANNING.md`'s retention rule. Record absence rather than creating
 a new acceptance gate or ledger. Recovery must distinguish an exact retained
 payload from a disclosed reconstruction.
 
-Payload summaries are claims. The artifact, diff, repository, and actual command
-output are authority. A kickoff or review becomes stale when its named revision
-no longer matches the reviewed artifact or tip.
+Commits or stable document revision labels identify the candidate; hashes are
+not mandatory. Payload summaries are claims. The artifact, diff, repository,
+and actual command output are authority. A kickoff or review becomes stale when
+its named revision no longer matches the reviewed artifact or tip.
 
 Review required proof in its owning artifact or command output. Optional
 completion-receipt metadata is not an acceptance gate, even when a Task mistakenly
@@ -138,7 +145,7 @@ filenames or create a rubric when none exists. Reconcile overlapping guidance
 against the actual behavior and governing authority. Historical lessons are
 prompts to investigate, not proof of a finding. Preserve blind discovery by
 deferring findings about the current candidate until the review mode permits
-them; outer reviewers must not read prior findings for that candidate.
+them; initial outer reviewers must not read prior findings for that candidate.
 
 ## Shared audits
 
@@ -151,10 +158,11 @@ requirements, or an explicit operator decision settle the choice. A spec's
 acceptance criteria or another agent's approval cannot supply missing operator
 authority. Surface an unsettled choice as `[decision-required]`; do not choose
 the behavior or reject an improvement solely to preserve the old behavior.
-Unrequested substitution of a public contract, component, primitive, library,
-algorithm, data path, schema, or dependency is `[decision-required]` even if the
-new form works. Cosmetic in-place refinements that preserve identity are not
-substitutions.
+An unapproved change to observable behavior, public contracts, Task/risk
+boundaries, or gated dependencies is `[decision-required]`. Equivalent internal
+components, primitives, algorithms, or data paths within those bounds are
+implementation choices. An operator's conditional grant plus verified conditions
+can authorize execution; the spec's assertion alone cannot.
 
 For every new abstraction, configuration, persisted state, fallback/recovery
 path, or cross-package responsibility, identify its current requirement, observed
@@ -265,8 +273,8 @@ claimed behavior, and observed outcome. Read the necessary source to assess thos
 claims; the full source-diff audit above is not repeated. Apply the normal proof,
 severity, and approval bars to this scope. Missing required evidence stays
 actionable; labels, hashes, or summaries cannot substitute for observed behavior.
-The review grants no authority to run live/provider checks or occupy a shared
-environment.
+Checks follow `KERNEL.md`'s ordinary-development and gated-action boundaries;
+review selection grants no additional environment or provider authority.
 
 If source identity, a source-affecting correction, or newly exposed risk defeats
 this scope, reselect the normal review route under `WORKFLOW.md`, preserving
@@ -291,8 +299,8 @@ material mechanism as residual proof with the exact check and owner.
 - **critical:** data loss/corruption, security compromise, or silent destructive
   migration/schema behavior.
 - **high:** realistic changed-code wrong result, crash, or skipped required path;
-  unmet acceptance; unauthorized substitution of a public contract, component,
-  schema, library, or primitive; or a changed behavior whose only proof is a test
+  unmet acceptance; unauthorized behavior, public-contract, scope, or dependency
+  change; or a changed behavior whose only proof is a test
   anti-pattern.
 - **medium:** bounded lower-impact correctness or realistic scale defect; weak
   shape-only test; untested risk-bearing branch/failure/persistence; or unjustified

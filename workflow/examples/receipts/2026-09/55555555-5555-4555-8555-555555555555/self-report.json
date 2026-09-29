@@ -1,0 +1,44 @@
+{
+  "schema": "agent-workflow.receipt/v2",
+  "receipt_id": "55555555-5555-4555-8555-555555555555",
+  "recorded_at": "2026-09-28T20:15:00Z",
+  "repository": "example/widget-app",
+  "task": {
+    "id": "WID-43",
+    "title": "Preserve widget error codes",
+    "shape": "implementation",
+    "intent": "Keep diagnostic codes in sanitized failure responses."
+  },
+  "agent_state": "completed",
+  "result": "Sanitized failures preserve the existing diagnostic code.",
+  "verification": "Focused API regression passed for sanitized failure responses; live deployment untested.",
+  "uncertainty": [
+    "Not deployed."
+  ],
+  "authors": [
+    {
+      "host": "codex",
+      "model": "unknown",
+      "reasoning_effort": "unknown"
+    }
+  ],
+  "reviews": [
+    {
+      "role": "inner",
+      "host": "codex",
+      "model": "gpt-6-sol",
+      "reasoning_effort": "xhigh",
+      "source": "illustrative review-session-8; as launched",
+      "initial_verdict": "ACTIONABLE",
+      "final_verdict": "APPROVED",
+      "findings": "Error sanitization dropped the diagnostic code; corrected and verified."
+    }
+  ],
+  "snags": [
+    {
+      "summary": "Pinned dependency missing locally.",
+      "recovery": "Frozen install restored it without a manifest or lockfile change.",
+      "attribution": "environment bootstrap"
+    }
+  ]
+}

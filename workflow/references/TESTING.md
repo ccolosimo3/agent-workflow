@@ -76,7 +76,8 @@ are sufficient.
 When fixture shape is load-bearing to the behavior under test, ground it in the
 actual producer or authoritative contract, independently of the implementation's
 assumption. A realistic-looking fixture that repeats the same wrong assumption
-can leave the real defect green. This does not require live/provider activity.
+can leave the real defect green. Use source or safe observation under `KERNEL.md`;
+this does not require a live provider call.
 
 - Before adding coverage, name any retained test that catches the same regression
   under the same relevant conditions. Merge or omit redundant proof.
