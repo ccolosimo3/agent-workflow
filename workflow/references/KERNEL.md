@@ -33,10 +33,11 @@ Internal mechanism choices within authorized behavior need no direction approval
 
 Ordinary development includes repository-designated vendor sandbox/test/dev-tenant
 calls and incidental license checks, plus creating, starting, migrating, seeding,
-resetting, and removing disposable task environments. Establish the actual target
-and test namespace; state changes also require task-owned resources and known
-synthetic/test-data provenance. Existing worktree slots and manual-test data can
-qualify after confirming exclusive use; a "dev" name or idle service alone cannot.
+resetting, and removing disposable task environments. Resolve the actual target,
+test namespace, and (for state changes) exclusive task ownership and known
+synthetic/test-data provenance from checkout, configuration, and existing evidence;
+ask only when these leave eligibility unsettled. Existing slots and manual-test
+data qualify on that basis, not merely a "dev" label or idle service.
 Sandbox calls stay within documented test operations, excluding shared account
 changes, tenant-wide deletion, real messages, and real charges. Production,
 staging, shared-app and primary-checkout data operations remain gated. Data
@@ -82,33 +83,29 @@ other untracked local configuration.
 
 ## Minimum-sufficient quality
 
-- Prefer the simplest complete repository-conventional shape. Before a plan is
-  review-ready and again before implementation commits to a materially larger
-  shape, compare the intended outcome, non-goals, irreducible correctness/safety
-  constraints, nearest complete pattern, added responsibilities/state/artifacts,
-  operator steps, reuse, and proven consumers.
-- Apply the same comparison to proof code. When a harness becomes materially
-  broader or owns more contract/lifecycle behavior than the product delta, stop
-  and reduce it to the smallest causal boundary using existing production owners.
+- Choose the simplest complete repository-conventional shape. Before review-ready
+  planning or materially expanding implementation, compare outcome and non-goals,
+  correctness and safety constraints, nearest complete pattern, added
+  responsibilities, state, artifacts and operator steps, reuse, and proven consumers.
+- Apply that comparison to proof code. If a harness becomes materially broader or
+  owns more contract/lifecycle behavior than the product delta, stop and reduce it
+  to the smallest causal boundary using existing production owners.
 - Added durable machinery must trace to a current requirement, observed failure,
-  established pattern, or second real consumer. When the same correction recurs
-  and a repository mechanism can reliably prevent it, prefer the lowest existing
-  owner—type/API boundary, runtime guard, or focused static/CI check—over more
-  workflow prose; promotion beyond the authorized task remains separate work. A
-  larger design remains correct when those constraints require it or it reduces
-  operational complexity.
-- Workflow metadata may coordinate or report work; its absence or drift does not
-  invalidate previously valid output or require replay unless it protects target
-  identity, approval or authority, product integrity, or a causal dependency.
-  Revalidate the smallest affected behavior and continue; do not repair
-  bookkeeping as a substitute for implementation or evidence.
-- A planner-authored invariant is not independent authority. Before adding
-  durable state or recovery for an exceptional retry or manual fallback, compare
-  it with handling that exception through the existing path.
-- Change only behavior the work explicitly targets; preserve other observed
-  behavior and public contracts unless changing them is necessary to satisfy the
-  ask. Prefer an existing owner over a parallel abstraction; keep task-local code
-  limited to task-specific behavior.
+  established pattern, or second real consumer. Prevent recurring corrections at
+  the lowest reliable existing owner (type/API, runtime guard, or static/CI check)
+  rather than adding workflow prose; out-of-scope promotion remains separate work.
+  Larger designs are valid when required by those constraints or operationally
+  simpler.
+- Missing or stale workflow metadata does not invalidate valid work or force replay
+  unless it protects target identity, approval, authority, product integrity, or a
+  causal dependency. Revalidate only the smallest affected behavior; bookkeeping
+  repair cannot replace implementation or evidence.
+- Planner-authored invariants are not independent authority. Before adding durable
+  state or recovery for an exceptional retry or manual fallback, compare handling
+  it through the existing path.
+- Preserve observed behavior and public contracts outside the intended change
+  unless changing them is necessary to satisfy the ask. Reuse existing owners;
+  keep task-local code limited to task-specific behavior.
 - Update owning documentation only when behavior, contracts, setup, architecture,
   verification, or user/operator workflow changes.
 

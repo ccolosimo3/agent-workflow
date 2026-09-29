@@ -17,11 +17,9 @@ Read `../../references/KERNEL.md`, `../../references/WORKFLOW.md`,
 scope. Stop if any applicable authority is unavailable, then read the repository
 instructions and adapter.
 
-## First pass
+## Initial blind review
 
-These initial-pass requirements apply to a new blind gate. For a disclosed
-unavailable-reviewer continuation, use `REVIEW.md`'s recovery context and coverage
-rules instead; an incomplete initial pass still requires a fresh blind gate.
+For recovery continuations, use `REVIEW.md`'s state machine instead.
 
 This skill is provider-neutral and runs inside the one configured fresh
 outer-review context; do not spawn another

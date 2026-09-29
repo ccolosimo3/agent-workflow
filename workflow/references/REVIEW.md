@@ -24,18 +24,17 @@ subagent does not itself prove a fresh context. Model diversity is optional unde
    reviewed revision, current tip or artifact, and invalidated evidence.
    Implementation patches are committed as new commits without amend or history
    rewrite before re-review; spec revisions identify the exact artifact revision.
-3. Re-review verifies resolutions and their delta for regressions. Resume the same
-   reviewer first. If resume fails or is unavailable, use one fresh context on the
-   same profile. At initial launch or recovery, profile/launch unavailability
-   permits one attempt per next configured eligible profile under `WORKFLOW.md`.
-   Do not retry unchanged failures or switch
-   reviewers because of findings or an unwelcome verdict. Disclose recovery and
-   supply original scope/acceptance, current candidate, all findings/resolutions,
-   and the accumulated delta; reconstruction suffices without exact old prose.
-   Reuse completed coverage; expand for missing, incomplete, or invalidated
-   coverage. An incomplete initial outer pass requires a fresh blind initial
-   review, not a delta-only recovery. Spec convergence stops after three
-   revise/re-review cycles or a material operator decision.
+3. Re-review checks resolutions and the delta for regressions. Resume the same
+   reviewer; if resume fails or is unavailable, use one fresh context on the same
+   profile.
+   An unavailable initial or recovery launch/profile permits one attempt per next
+   eligible configured profile under `WORKFLOW.md`. Never retry unchanged failures
+   or switch reviewers because of findings or verdicts. Disclose recovery with
+   original scope/acceptance, current candidate, all findings/resolutions, and
+   accumulated delta; reconstructed context suffices. Reuse completed coverage; expand for
+   missing, incomplete, or invalidated coverage. An incomplete initial outer pass
+   requires a fresh blind review, not delta-only recovery. Spec convergence stops
+   after three revise/re-review cycles or a material operator decision.
 4. Apply `WORKFLOW.md`'s outer selection policy and timing before dispatch;
    reassess selection after inner approval for newly exposed risks. Record a
    skip reason; broad review does not require a selective risk trigger. Concurrent
@@ -74,7 +73,8 @@ procedure. Check source fidelity, links, private-data safety, and
 
 ## Review payloads
 
-Use semantic fields, not a verbatim template. Never invent missing facts.
+Supply these facts through `WORKFLOW.md`'s envelope and linked source artifacts,
+not a verbatim template or duplicate document. Never invent missing facts.
 
 **Spec initial:** artifact path/status and downstream action; raw operator ask;
 source material; in/out scope; dependencies and valid intermediate state;
@@ -83,7 +83,7 @@ unresolved decisions; acceptance and proof strategy; approval-gated activity;
 repository convention/testing/design authorities.
 
 **Implementation initial:** work item/spec and raw ask; acceptance; committed
-base/tip and checkout; two-sentence change summary; in/out scope and discovered
+base/tip and checkout; change summary; in/out scope and discovered
 follow-ups; exact verification/results tied to the tip; changed tests and
 inclusion exceptions; hot spots/deviations; documentation impact; remaining
 operator or environment proof; repository authorities.
@@ -92,24 +92,21 @@ operator or environment proof; repository authorities.
 prior-tip/current-tip range; resolution per finding; verification invalidated
 and rerun. Do not rebuild or resend the initial payload to a resumable reviewer.
 
-Before dispatch, check that the evidence supports the claimed candidate and
-outcomes; carry genuine gaps explicitly. Keep the sent payload recoverable and the
-returned reviewer/session identity in the existing private work-item or review
-record when available; links to ignored scratch storage suffice for recovery
-inputs under `PLANNING.md`'s retention rule. Record absence rather than creating
-a new acceptance gate or ledger. Recovery must distinguish an exact retained
-payload from a disclosed reconstruction.
+Before dispatch, check that evidence supports the candidate and claimed outcomes;
+disclose gaps. Keep the payload recoverable and reviewer/session identity in the
+existing private work/review record when available. Ignored scratch links suffice
+under `PLANNING.md`'s retention rule. Report missing records without creating a
+ledger or gate; distinguish retained payloads from reconstructed recovery context.
 
-Commits or stable document revision labels identify the candidate; hashes are
-not mandatory. Payload summaries are claims. The artifact, diff, repository,
-and actual command output are authority. A kickoff or review becomes stale when
-its named revision no longer matches the reviewed artifact or tip.
+Identify candidates by commit or stable document revision; hashes are optional.
+A kickoff or review is stale when its named revision differs from the candidate.
+Artifacts, diffs, repository source, and command output are authority;
+payload summaries are claims.
 
-Review required proof in its owning artifact or command output. Optional
-completion-receipt metadata is not an acceptance gate, even when a Task mistakenly
-promotes it into one. Report that owner mismatch without invalidating otherwise
-valid proof or requiring receipt repair. Missing material product, target, or
-authority evidence remains a real finding; a receipt cannot substitute for it.
+Read required proof in its owning artifact or command output. Receipt metadata
+is not an acceptance gate, even if a Task says otherwise; report that mismatch
+without requiring repair or invalidating valid proof. Missing material product,
+target, or authority evidence remains a finding; receipts cannot substitute for it.
 
 ## Stance and required investigation
 
