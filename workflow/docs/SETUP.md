@@ -141,10 +141,10 @@ Invocation has four classes across hosts:
   and `show-me` are automatic advisory guidance under their narrow descriptions.
 - `explore`, `spike`, `spec`, `implement`, `review-pr`, and `project-lead` are
   automatic only when ordinary language clearly selects that user-facing work.
-- `bro` is an explicit operator utility. Codex uses `agents/openai.yaml`; its
-  `disable-model-invocation: true` frontmatter makes Claude Code and Cursor
-  operator-only, and Claude Code also sets it to `user-invocable-only` in
-  `skillOverrides`.
+- `bro` and `align` are explicit operator utilities. Codex uses
+  `agents/openai.yaml`; their `disable-model-invocation: true` frontmatter makes
+  Claude Code and Cursor operator-only. Claude Code also sets them to
+  `user-invocable-only` in `skillOverrides`.
 - `setup-workflow`, `review-change`, `review-spec`, `independent-review`, and
   `independent-spec-review` are explicit/internal control-plane skills: the
   operator or an owning phase that names one may invoke it, but description

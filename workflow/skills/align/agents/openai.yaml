@@ -1,0 +1,6 @@
+interface:
+  display_name: "Align"
+  short_description: "Check understanding of your goals and problem"
+  default_prompt: "Use $align to restate what you understand my goals and underlying problem to be."
+policy:
+  allow_implicit_invocation: false
