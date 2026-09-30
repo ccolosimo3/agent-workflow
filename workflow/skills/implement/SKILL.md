@@ -12,9 +12,11 @@ metadata:
 Resolve this skill’s real package directory first when it was discovered through a link; relative paths below use that target, not the discovery-link directory.
 
 Read `../../references/KERNEL.md`, `../../references/WORKFLOW.md`,
-`../../references/PLANNING.md`, and `../../references/TESTING.md` completely.
+and `../../references/TESTING.md` completely.
+Read `../../references/PLANNING.md` completely for Standard/Assured work;
+for Fast work, read its Proportional planning section.
 Load `../../references/FRONTEND.md` for UI scope; load `../../references/REVIEW.md`
-for the lifecycle method below or at review handoff. Stop if an applicable
+completely for migration/lifecycle work or at review handoff. Stop if an applicable
 authority cannot be resolved, then read the repository's instruction chain and
 adapter. Reuse unchanged authority reads only as permitted by the kernel.
 
