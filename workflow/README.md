@@ -23,6 +23,10 @@ spec and implementation completion and always starts fresh. Outer review is
 configurable as `broad`, `selective` (default), or `by-request`. Coworker PR review
 uses `review-pr` and the same canonical review authority with human-facing calibration.
 
+Use `review-delivery` for an explicitly selected review of a complete integrated
+delivery, with risk-selected independent challenge. It reuses the same review
+standards and leaves ordinary inner/outer gates intact; it adds no required stage.
+
 ## Package
 
 - `references/` — portable kernel, workflow, planning, testing, and review
