@@ -1,6 +1,8 @@
 ---
 name: review-delivery
 description: Review an operator-selected integrated delivery against its original goal and acceptance, with risk-selected independent challenge. Use for combined own-work behavior across tasks or a batch; not for coworker PRs or ordinary inner/outer gate dispatch.
+metadata:
+  opencode/autoinvoke: true
 ---
 
 # Review Delivery
@@ -16,6 +18,7 @@ Resolve the real package directory when discovered through a link. Read
 `../../references/REVIEW.md`, and `../../references/TESTING.md`, plus repository
 instructions and its adapter. Resolve profiles through `../../HOST.local.md`
 when present; load `../../references/FRONTEND.md` only for UI scope.
+Stop if an applicable authority is unavailable.
 
 Use the original goal, non-goals and existing acceptance. Freeze a clean,
 committed candidate and the baseline covering the selected delivery. Derive the

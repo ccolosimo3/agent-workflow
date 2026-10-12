@@ -103,7 +103,7 @@ each action to the supported trigger, relevance to the reviewed range or unmet
 acceptance, and the configured consequence, including recovery. A reproduced
 intermediate failure or synthetic counterexample alone does not settle product
 reachability or merge action. When revising an action, distinguish new evidence
-from a changed risk judgment:
+from a changed risk judgment. Assign each surviving item one action:
 
 - **Request changes:** confirmed realistic defect, unmet acceptance, material
   security/data/migration/contract/deployment risk, or required proof whose
