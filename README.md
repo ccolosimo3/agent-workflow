@@ -47,6 +47,8 @@ Ask for work naturally or invoke a phase directly:
 - **Implement** builds, verifies, and drives the selected work through review.
 - **Review PR** thoroughly reviews someone else's change and calibrates what is
   actually blocking.
+- **Review Delivery** optionally reviews a complete integrated outcome with
+  risk-selected independent challenge, preserving ordinary inner/outer gates.
 
 Planning and implementation normally share a task; independent reviewers start
 fresh. A planning-only request still stops at planning. Verification is designed

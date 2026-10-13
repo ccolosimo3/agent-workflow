@@ -139,8 +139,9 @@ Invocation has four classes across hosts:
 
 - `typescript-engineering`, `technical-writing`, `blast-radius`, `how`, `why`,
   and `show-me` are automatic advisory guidance under their narrow descriptions.
-- `explore`, `spike`, `spec`, `implement`, `review-pr`, and `project-lead` are
-  automatic only when ordinary language clearly selects that user-facing work.
+- `explore`, `spike`, `spec`, `implement`, `review-pr`, `review-delivery`, and
+  `project-lead` are automatic only when ordinary language clearly selects that
+  user-facing work.
 - `bro` and `align` are explicit operator utilities. Codex uses
   `agents/openai.yaml`; their `disable-model-invocation: true` frontmatter makes
   Claude Code and Cursor operator-only. Claude Code also sets them to

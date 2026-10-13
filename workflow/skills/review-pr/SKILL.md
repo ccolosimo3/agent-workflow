@@ -80,8 +80,9 @@ Do not abandon useful code/history evidence or repeatedly retry the same missing
 capability.
 
 After blind discovery, give the same challenger the combined candidates and
-important clean conclusions. Ask it to refute blockers, challenge one potentially
-missed seam, and name the narrowest decisive proof for disagreements. Reconcile
+important clean conclusions. Ask it to refute blockers and material clean claims
+at the actual operation boundary, challenge one potentially missed seam, and name
+the narrowest decisive proof for disagreements. Reconcile
 against the code, history, and real boundary; agreement is not evidence. Continue
 only while an exchange changes a material candidate, counterexample, or proof.
 One unchanged exchange establishes convergence.
@@ -97,8 +98,12 @@ a broad pass without new evidence, a changed tip, or a named unanswered question
 
 ## Calibrate for the operator
 
-Discovery stays as strict as own-work review. Only after evidence converges,
-translate each surviving item into one action:
+Discovery stays as strict as own-work review. After evidence converges, calibrate
+each action to the supported trigger, relevance to the reviewed range or unmet
+acceptance, and the configured consequence, including recovery. A reproduced
+intermediate failure or synthetic counterexample alone does not settle product
+reachability or merge action. When revising an action, distinguish new evidence
+from a changed risk judgment. Assign each surviving item one action:
 
 - **Request changes:** confirmed realistic defect, unmet acceptance, material
   security/data/migration/contract/deployment risk, or required proof whose
@@ -117,8 +122,12 @@ and consequence, credit equivalent existing or practical manual proof, and ask
 for only the smallest proportionate coverage. Never downgrade a confirmed
 material defect merely for diplomacy.
 
-Return a one-screen action brief first, ordered by merge action, with evidence and
-the smallest requested outcome. Close with `approve`, `comment`, `request
+Return a one-screen action brief first, ordered by merge action. Explain each
+requested change's trigger and practical consequence, relevance to the reviewed
+range, decisive proof and material limit, and smallest required outcome. Summarize
+verification by behavior and actual boundary. State whether remaining proof could
+change the recommendation and, if so, name the smallest decisive check; keep
+required post-merge proof explicit. Close with `approve`, `comment`, `request
 changes`, or `hold for <answer/proof>`. Append a compact private audit mapping
 every non-clean candidate to its action/rejection, verification performed,
 material verified-clean surfaces, and residual checks. Do not print full clean
