@@ -56,8 +56,9 @@ Inspect the final delivery for residue from iterative implementation and
 corrections: superseded paths, duplicated responsibilities, temporary wiring,
 stale documentation and redundant proof. Recommend concrete simplifications
 that preserve accepted behavior and reduce maintenance or operating work.
-Migration consolidation requires confirmed never-applied eligibility and the
-required upgrade/equivalence proof; unknown history leaves it conditional.
+Surface concrete migration consolidation opportunities as optional suggestions,
+even when applied history is unknown. Consolidation requires confirmed
+never-applied eligibility and the required upgrade/equivalence proof.
 Use existing finding thresholds; ordinary polish remains optional.
 
 Helpers return sourced candidates, counterevidence, important clean claims and
