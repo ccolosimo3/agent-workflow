@@ -129,16 +129,16 @@ and consequence, credit equivalent existing or practical manual proof, and ask
 for only the smallest proportionate coverage. Never downgrade a confirmed
 material defect merely for diplomacy.
 
-Return a one-screen action brief first, ordered by merge action. Explain each
-requested change's trigger and practical consequence, relevance to the reviewed
-range, decisive proof and material limit, and smallest required outcome. Summarize
-verification by behavior and actual boundary. State whether remaining proof could
-change the recommendation and, if so, name the smallest decisive check; keep
-required post-merge proof explicit. Close with `approve`, `comment`, `request
-changes`, or `hold for <answer/proof>`. Append a compact private audit mapping
-every non-clean candidate to its action/rejection, verification performed,
-material verified-clean surfaces, and residual checks. Do not print full clean
-acceptance or per-test ledgers.
+Return a concise review with a recommendation (`approve`, `comment`, `request
+changes`, or `hold for <answer/proof>`), actionable findings ordered by merge
+action, verification actually performed, and material remaining proof or decisions.
+For each requested change, explain the supported trigger, practical consequence,
+relevance to the reviewed range, decisive evidence and limits, and smallest
+required outcome. Summarize verification by behavior and actual boundary. Name
+the smallest remaining check that could change the recommendation; keep required
+post-merge proof explicit. Include rejected candidates only when needed to explain
+the recommendation or reconcile prior feedback; otherwise omit them unless
+requested.
 
 Do not post, approve, request changes, comment, commit, push, or patch the
 author's branch without a separate operator request and approval.
