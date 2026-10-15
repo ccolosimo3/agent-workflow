@@ -92,16 +92,16 @@ untracked proof with a stated oracle, including base-versus-tip comparison when
 causality matters. Do not modify tracked code or dependencies, prototype a fix,
 or rerun broad verification for reassurance.
 
-Then read existing comments and complete relevant review threads with replies,
-deduplicate them, recheck the live PR base/head and effective diff, and review
-any change that can invalidate evidence. Treat each prior finding as fixed in
-code, still open, or settled by an authorized decision accepting or deferring
-its scope or risk. Thread resolution alone proves no fix. Unchanged code alone
-does not reopen a settled item; reopen it only for a change affecting it, an
-applicable requirement the decision cannot waive, or new material evidence such
-as a concrete counterexample to the decision's premise, and explain why. Do not
-repeat a broad pass without new evidence, a changed tip, or a named unanswered
-question.
+Then read existing comments and each relevant review thread in full, including
+replies, deduplicate them, recheck the live PR base/head and effective diff, and
+review any change that can invalidate evidence. Treat each prior finding as
+fixed in code, still open, or settled by an authorized decision accepting or
+deferring its scope or risk. Thread resolution alone proves no fix. Unchanged
+code alone does not reopen a settled item; reopen it only for a change affecting
+it, an applicable requirement the decision cannot waive, or new material
+evidence such as a concrete counterexample to the decision's premise, and
+explain why. Do not repeat a broad pass without new evidence, a changed tip, or
+a named unanswered question.
 
 ## Calibrate for the operator
 
