@@ -92,9 +92,16 @@ untracked proof with a stated oracle, including base-versus-tip comparison when
 causality matters. Do not modify tracked code or dependencies, prototype a fix,
 or rerun broad verification for reassurance.
 
-Then read existing comments, deduplicate them, recheck the live PR base/head and
-effective diff, and review any change that can invalidate evidence. Do not repeat
-a broad pass without new evidence, a changed tip, or a named unanswered question.
+Then read existing comments and each relevant review thread in full, including
+replies, deduplicate them, recheck the live PR base/head and effective diff, and
+review any change that can invalidate evidence. Treat each prior finding as
+fixed in code, still open, or settled by an authorized decision accepting or
+deferring its scope or risk. Thread resolution alone proves no fix. Unchanged
+code alone does not reopen a settled item; reopen it only for a change affecting
+it, an applicable requirement the decision cannot waive, or new material
+evidence such as a concrete counterexample to the decision's premise, and
+explain why. Do not repeat a broad pass without new evidence, a changed tip, or
+a named unanswered question.
 
 ## Calibrate for the operator
 
@@ -122,16 +129,16 @@ and consequence, credit equivalent existing or practical manual proof, and ask
 for only the smallest proportionate coverage. Never downgrade a confirmed
 material defect merely for diplomacy.
 
-Return a one-screen action brief first, ordered by merge action. Explain each
-requested change's trigger and practical consequence, relevance to the reviewed
-range, decisive proof and material limit, and smallest required outcome. Summarize
-verification by behavior and actual boundary. State whether remaining proof could
-change the recommendation and, if so, name the smallest decisive check; keep
-required post-merge proof explicit. Close with `approve`, `comment`, `request
-changes`, or `hold for <answer/proof>`. Append a compact private audit mapping
-every non-clean candidate to its action/rejection, verification performed,
-material verified-clean surfaces, and residual checks. Do not print full clean
-acceptance or per-test ledgers.
+Return a concise review with a recommendation (`approve`, `comment`, `request
+changes`, or `hold for <answer/proof>`), actionable findings ordered by merge
+action, verification actually performed, and material remaining proof or decisions.
+For each requested change, explain the supported trigger, practical consequence,
+relevance to the reviewed range, decisive evidence and limits, and smallest
+required outcome. Summarize verification by behavior and actual boundary. Name
+the smallest remaining check that could change the recommendation; keep required
+post-merge proof explicit. Include rejected candidates only when needed to explain
+the recommendation or reconcile prior feedback; otherwise omit them unless
+requested.
 
 Do not post, approve, request changes, comment, commit, push, or patch the
 author's branch without a separate operator request and approval.
