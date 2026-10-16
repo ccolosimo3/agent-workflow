@@ -51,6 +51,16 @@ Choose the smallest topology that fits:
 The lead applies `REVIEW.md`'s implementation investigation and verdict rules to
 the entire selected delivery, including test quality and inclusion under
 `TESTING.md`. Specialist coverage does not replace the lead's complete coverage.
+
+Inspect the final delivery for residue from iterative implementation and
+corrections: superseded paths, duplicated responsibilities, temporary wiring,
+stale documentation and redundant proof. Recommend concrete simplifications
+that preserve accepted behavior and reduce maintenance or operating work.
+Surface concrete migration consolidation opportunities as optional suggestions,
+even when applied history is unknown. Consolidation requires confirmed
+never-applied eligibility and the required upgrade/equivalence proof.
+Use existing finding thresholds; ordinary polish remains optional.
+
 Helpers return sourced candidates, counterevidence, important clean claims and
 proof gaps; they do not own severity or verdicts. The lead coordinates proof;
 helpers stay read-only except for an explicitly assigned narrow check.
