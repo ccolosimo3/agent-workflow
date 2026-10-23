@@ -134,11 +134,12 @@ changes`, or `hold for <answer/proof>`), actionable findings ordered by merge
 action, verification actually performed, and material remaining proof or decisions.
 For each requested change, explain the supported trigger, practical consequence,
 relevance to the reviewed range, decisive evidence and limits, and smallest
-required outcome. Summarize verification by behavior and actual boundary. Name
-the smallest remaining check that could change the recommendation; keep required
-post-merge proof explicit. Include rejected candidates only when needed to explain
-the recommendation or reconcile prior feedback; otherwise omit them unless
-requested.
+required outcome. Summarize verification by behavior and actual boundary; this
+review is the verification record, so give any exact commands the repository
+requires in that summary. Name the smallest remaining check that could change
+the recommendation; keep required post-merge proof explicit. Include rejected
+candidates only when needed to explain the recommendation or reconcile prior
+feedback; otherwise omit them unless requested.
 
 Do not post, approve, request changes, comment, commit, push, or patch the
 author's branch without a separate operator request and approval.
