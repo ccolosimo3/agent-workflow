@@ -104,8 +104,10 @@ uploaded URLs only. Upload with GitHub CLI 2.99 or later:
 3. Read the uploads back with `gh pr view <n> -R <owner>/<repo> --json body
    --jq .body`, since `gh pr edit` prints only the PR URL. Map each file to its
    `user-attachments` URL. A partial upload still updates the PR and exits
-   nonzero. If any image lacks a URL, keep the URLs that succeeded and rerun the
-   upload with a body that keeps them and references only the missing files.
+   nonzero. If any image lacks a URL, rerun the upload with `--attach` **only for
+   the missing files**, using a body that keeps the URLs that succeeded and
+   references only the missing files. gh uploads every file passed to
+   `--attach`, so passing a file that already succeeded adds a duplicate.
 4. Once every image has a URL, apply the approved table with `gh pr edit <n> -R
    <owner>/<repo> --body-file <final-body>`, putting the URLs in place of the
    local paths. Check that the live body holds every image and matches the
