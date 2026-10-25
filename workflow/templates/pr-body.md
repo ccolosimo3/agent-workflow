@@ -27,7 +27,7 @@ they carry information a reviewer needs; omit empty headings.
 - <optional adjacent behavior deliberately unchanged and why>
 
 ## Screenshots
-<optional UI evidence>
+<optional visual proof; layout and upload in "Visual proof" below>
 
 ## Verification
 <affected local gate summary using only checks that actually passed>
@@ -54,3 +54,49 @@ identify the tested revision and briefly explain why the evidence still applies.
 Never imply a reused check was rerun. Keep exhaustive commands, findings, verdicts,
 and rerun history in the existing evidence owner rather than the PR body. Omit
 `## Docs impact` when tracked docs did not change.
+
+## Visual proof
+
+Add `## Screenshots` only when the change is visible and `FRONTEND.md` calls for
+rendered proof. Capture synthetic or test data only, with no real personal data
+or secrets, and never retouch a capture. Start the section with one line naming
+the tested revision, the devices or browsers and their OS versions, and that the
+data is synthetic. Then put the images in a collapsed block, three across, each
+under a bold caption naming the claim it proves:
+
+```html
+<details>
+<summary>N screenshots (click to expand)</summary>
+
+<table>
+<tr><td width="33%" valign="top"><b>Claim it proves</b> (platform)<br><img src="./01-claim-platform.jpg" width="260" alt="Short description"></td>…</tr>
+</table>
+
+</details>
+```
+
+At width 260 a phone screen stays readable without long scrolling, and GitHub
+opens the full-size image on click. Name files `NN-claim-platform` in display
+order. Don't put more than three images in a row.
+
+Upload with GitHub CLI 2.99 or later; `KERNEL.md` approval applies to each edit:
+
+1. Show the operator the final body, with local paths where the image URLs will
+   go. That one approval covers both edits below, for the same PR, body and
+   images; swapping in the uploaded URLs is mechanical.
+2. Upload from the image folder: `gh pr edit <n> -R <owner>/<repo> --body-file
+   <upload-body> --attach ./01-claim-platform.jpg …`. In the upload body, replace
+   the HTML table with plain Markdown, one caption line and one
+   `![alt](./01-claim-platform.jpg)` line per image, outside any HTML. gh
+   rewrites only Markdown image references; ones inside raw HTML get appended
+   instead.
+3. Read the uploads back: `gh pr view <n> -R <owner>/<repo> --json body --jq
+   .body`, since `gh pr edit` prints only the PR URL. Map each file to its
+   `user-attachments` URL. A partial upload still updates the PR and exits
+   nonzero, so stop if any image lacks a URL, and upload only the missing files.
+4. Once every image has a URL, apply the approved table with a second
+   `gh pr edit --body-file`, putting the URLs in place of the local paths. Check
+   that the live body holds every image and matches the approved text.
+
+Always pass `-R`. From any other checkout, such as a private plans repository,
+gh would otherwise target the repository the current directory belongs to.
