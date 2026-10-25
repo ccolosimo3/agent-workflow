@@ -57,46 +57,59 @@ and rerun history in the existing evidence owner rather than the PR body. Omit
 
 ## Visual proof
 
-Add `## Screenshots` only when the change is visible and `FRONTEND.md` calls for
-rendered proof. Capture synthetic or test data only, with no real personal data
-or secrets, and never retouch a capture. Start the section with one line naming
-the tested revision, the devices or browsers and their OS versions, and that the
-data is synthetic. Then put the images in a collapsed block, three across, each
-under a bold caption naming the claim it proves:
+Add `## Screenshots` when the change is visible and captures help a reviewer.
+`FRONTEND.md` decides when rendered proof is required, and useful existing
+captures may accompany an incidental change. Captures complement behavioral
+verification; they don't replace it. Capture synthetic or test data only, with
+no real personal data or secrets, and never retouch a capture.
+
+Start the section with one line naming the tested revision and the relevant
+environment, such as the devices or browsers, plus OS versions when they matter.
+Say the data is synthetic. Then put the images in a collapsed block, each under
+a bold caption naming the state or appearance it shows. Phone captures default
+to three across at width 260:
 
 ```html
 <details>
 <summary>N screenshots (click to expand)</summary>
 
 <table>
-<tr><td width="33%" valign="top"><b>Claim it proves</b> (platform)<br><img src="./01-claim-platform.jpg" width="260" alt="Short description"></td>…</tr>
+<tr><td width="33%" valign="top"><b>State shown</b> (platform)<br><img src="./01-state-platform.jpg" width="260" alt="Short description"></td>…</tr>
 </table>
 
 </details>
 ```
 
 At width 260 a phone screen stays readable without long scrolling, and GitHub
-opens the full-size image on click. Name files `NN-claim-platform` in display
-order. Don't put more than three images in a row.
+opens the full-size image on click. Wide captures, such as desktop or web
+screens, go one or two across at a larger width instead. One image needs no
+table. Never put more than three in a row. Name files `NN-state-platform` in
+display order.
 
-Upload with GitHub CLI 2.99 or later; `KERNEL.md` approval applies to each edit:
+The local paths are preview and upload placeholders. The published body holds
+uploaded URLs only. Upload with GitHub CLI 2.99 or later:
 
-1. Show the operator the final body, with local paths where the image URLs will
-   go. That one approval covers both edits below, for the same PR, body and
-   images; swapping in the uploaded URLs is mechanical.
-2. Upload from the image folder: `gh pr edit <n> -R <owner>/<repo> --body-file
-   <upload-body> --attach ./01-claim-platform.jpg …`. In the upload body, replace
-   the HTML table with plain Markdown, one caption line and one
-   `![alt](./01-claim-platform.jpg)` line per image, outside any HTML. gh
+1. Use current-session approval covering publication of the selected body and
+   images to the named PR. If that scope isn't already approved, show the final
+   body and the selected captures, and ask once. That approval covers the
+   temporary Markdown upload body and the final table edit; swapping in the
+   uploaded URLs is mechanical.
+2. Upload from the image folder with `gh pr edit <n> -R <owner>/<repo>
+   --body-file <upload-body> --attach ./01-state-platform.jpg --attach
+   ./02-state-platform.jpg …`, repeating `--attach` for each file. In the upload
+   body, replace the HTML table with plain Markdown, one caption line and one
+   `![alt](./01-state-platform.jpg)` line per image, outside any HTML. gh
    rewrites only Markdown image references; ones inside raw HTML get appended
    instead.
-3. Read the uploads back: `gh pr view <n> -R <owner>/<repo> --json body --jq
-   .body`, since `gh pr edit` prints only the PR URL. Map each file to its
+3. Read the uploads back with `gh pr view <n> -R <owner>/<repo> --json body
+   --jq .body`, since `gh pr edit` prints only the PR URL. Map each file to its
    `user-attachments` URL. A partial upload still updates the PR and exits
-   nonzero, so stop if any image lacks a URL, and upload only the missing files.
-4. Once every image has a URL, apply the approved table with a second
-   `gh pr edit --body-file`, putting the URLs in place of the local paths. Check
-   that the live body holds every image and matches the approved text.
+   nonzero. If any image lacks a URL, keep the URLs that succeeded and rerun the
+   upload with a body that keeps them and references only the missing files.
+4. Once every image has a URL, apply the approved table with `gh pr edit <n> -R
+   <owner>/<repo> --body-file <final-body>`, putting the URLs in place of the
+   local paths. Check that the live body holds every image and matches the
+   approved text.
 
 Always pass `-R`. From any other checkout, such as a private plans repository,
 gh would otherwise target the repository the current directory belongs to.
