@@ -87,10 +87,15 @@ against the code, history, and real boundary; agreement is not evidence. Continu
 only while an exchange changes a material candidate, counterexample, or proof.
 One unchanged exchange establishes convergence.
 
-For an unresolved material hypothesis, the lead may create a disposable,
-untracked proof with a stated oracle, including base-versus-tip comparison when
-causality matters. Do not modify tracked code or dependencies, prototype a fix,
-or rerun broad verification for reassurance.
+Before raising a material defect that would change the recommendation, run the
+smallest practical local check that could falsify it, even when source tracing
+looks conclusive; reuse existing decisive evidence. Keep any new proof disposable
+and untracked, state the discriminating expected outcome before running it, and
+compare base and tip when causality matters. If no practical local check can
+settle the finding or the check needs gated access, keep the supported finding
+and state any material remaining uncertainty and what would settle it. Do not
+modify tracked code or dependencies, prototype a fix, or rerun broad verification
+for reassurance.
 
 Then read existing comments and each relevant review thread in full, including
 replies, deduplicate them, recheck the live PR base/head and effective diff, and
