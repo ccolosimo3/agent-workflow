@@ -87,10 +87,15 @@ against the code, history, and real boundary; agreement is not evidence. Continu
 only while an exchange changes a material candidate, counterexample, or proof.
 One unchanged exchange establishes convergence.
 
-For an unresolved material hypothesis, the lead may create a disposable,
-untracked proof with a stated oracle, including base-versus-tip comparison when
-causality matters. Do not modify tracked code or dependencies, prototype a fix,
-or rerun broad verification for reassurance.
+Before raising a material defect that would change the recommendation, run the
+smallest practical local check that could falsify it, even when source tracing
+looks conclusive; reuse existing decisive evidence. Keep any new proof disposable
+and untracked, state the discriminating expected outcome before running it, and
+compare base and tip when causality matters. If no practical local check can
+settle the finding or the check needs gated access, keep the supported finding
+and state any material remaining uncertainty and what would settle it. Do not
+modify tracked code or dependencies, prototype a fix, or rerun broad verification
+for reassurance.
 
 Then read existing comments and each relevant review thread in full, including
 replies, deduplicate them, recheck the live PR base/head and effective diff, and
@@ -134,11 +139,12 @@ changes`, or `hold for <answer/proof>`), actionable findings ordered by merge
 action, verification actually performed, and material remaining proof or decisions.
 For each requested change, explain the supported trigger, practical consequence,
 relevance to the reviewed range, decisive evidence and limits, and smallest
-required outcome. Summarize verification by behavior and actual boundary. Name
-the smallest remaining check that could change the recommendation; keep required
-post-merge proof explicit. Include rejected candidates only when needed to explain
-the recommendation or reconcile prior feedback; otherwise omit them unless
-requested.
+required outcome. Summarize verification by behavior and actual boundary; this
+review is the verification record, so give any exact commands the repository
+requires in that summary. Name the smallest remaining check that could change
+the recommendation; keep required post-merge proof explicit. Include rejected
+candidates only when needed to explain the recommendation or reconcile prior
+feedback; otherwise omit them unless requested.
 
 Do not post, approve, request changes, comment, commit, push, or patch the
 author's branch without a separate operator request and approval.
