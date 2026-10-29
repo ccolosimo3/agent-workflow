@@ -57,17 +57,17 @@ and rerun history in the existing evidence owner rather than the PR body. Omit
 
 ## Visual proof
 
-Add `## Screenshots` when the change is visible and captures help a reviewer.
-`FRONTEND.md` decides when rendered proof is required, and useful existing
-captures may accompany an incidental change. Captures complement behavioral
-verification; they don't replace it. Capture synthetic or test data only, with
-no real personal data or secrets, and never retouch a capture.
+Add `## Screenshots` when the work has captures that help a reviewer.
+[FRONTEND.md](../references/FRONTEND.md#visual-evidence) owns which captures to take,
+keep and relay; this section owns PR layout and upload. Captures complement
+behavioral verification. Publish only captures of synthetic or test data with no
+real personal data or secrets.
 
 Start the section with one line naming the tested revision and the relevant
 environment, such as the devices or browsers, plus OS versions when they matter.
-Say the data is synthetic. Then put the images in a collapsed block, each under
-a bold caption naming the state or appearance it shows. Phone captures default
-to three across at width 260:
+Say the data is synthetic or test data and note any forced state. Then put the
+images in a collapsed block, each under a bold caption naming the state or
+appearance it shows. Phone captures default to three across at width 260:
 
 ```html
 <details>
@@ -87,7 +87,10 @@ table. Never put more than three in a row. Name files `NN-state-platform` in
 display order.
 
 The local paths are preview and upload placeholders. The published body holds
-uploaded URLs only. Upload with GitHub CLI 2.99 or later:
+uploaded URLs only. Use a GitHub CLI whose `gh pr edit --help` lists `--attach`;
+otherwise provide the files and captions locally for the operator to attach.
+The [CLI manual](https://cli.github.com/manual/gh_pr_edit) documents attachment
+support. When it is available:
 
 1. Use current-session approval covering publication of the selected body and
    images to the named PR. If that scope isn't already approved, show the final
@@ -104,14 +107,20 @@ uploaded URLs only. Upload with GitHub CLI 2.99 or later:
 3. Read the uploads back with `gh pr view <n> -R <owner>/<repo> --json body
    --jq .body`, since `gh pr edit` prints only the PR URL. Map each file to its
    `user-attachments` URL. A partial upload still updates the PR and exits
-   nonzero. If any image lacks a URL, rerun the upload with `--attach` **only for
-   the missing files**, using a body that keeps the URLs that succeeded and
+   nonzero. If any image lacks a URL, rerun once with `--attach` **only for the
+   missing files**, using a body that keeps the URLs that succeeded and
    references only the missing files. gh uploads every file passed to
    `--attach`, so passing a file that already succeeded adds a duplicate.
-4. Once every image has a URL, apply the approved table with `gh pr edit <n> -R
-   <owner>/<repo> --body-file <final-body>`, putting the URLs in place of the
-   local paths. Check that the live body holds every image and matches the
-   approved text.
+4. Apply the final body with `gh pr edit <n> -R <owner>/<repo> --body-file
+   <final-body>`, putting the uploaded URLs into the approved table. If files
+   still lack URLs after the rerun, omit those images and their captions from the
+   published table, or omit `## Screenshots` if none uploaded. Keep the rest of
+   the approved body intact. Hand the operator the remaining files and captions
+   and state the limitation in the completion. Check the live body against the
+   final text: every included image has an uploaded URL, no local image paths
+   remain, and the screenshot count matches. If the final edit fails, report the
+   live body's actual state and the remaining repair rather than claiming the
+   publication is complete.
 
 Always pass `-R`. From any other checkout, such as a private plans repository,
 gh would otherwise target the repository the current directory belongs to.
