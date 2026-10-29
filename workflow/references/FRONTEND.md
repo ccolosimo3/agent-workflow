@@ -49,6 +49,33 @@ Judge the rendered surface, not only its tokens:
 - a local spacing or width correction is checked against sibling elements and the
   whole composition.
 
-Capture conclusions and any remaining uncertainty concisely. Temporary fixtures
+Record conclusions and any remaining uncertainty concisely. Temporary fixtures
 are exceptional, must not ship, and are used only for a required state that the
 live route cannot safely reach.
+
+## Visual evidence
+
+When implementing a change to what a user sees or does, show useful captures in
+the completion report without waiting to be asked. Capture while verifying the
+affected surface and reuse required verification captures: a short captioned
+selection for visual-design work, or one capture for an incidental change when
+it helps. Skip captures that add nothing. For incidental changes, don't start an
+environment solely for a capture. Don't add tooling or an exhaustive gallery just
+for presentation. Use ordered screenshots for interactions and a short recording
+when timing or motion matters. Add a before view when already available or cheap
+to obtain without rebuilding the base solely for it.
+
+Capture the actual implementation with synthetic or test data only, never real
+personal data or secrets, and don't retouch captures. Inspect every capture you
+cite. Caption the state shown and name the tested revision, environment and any
+forced state or temporary fixture. Refresh captures when later changes invalidate
+what they show. Keep selected captures with the work item's retained evidence,
+outside product commits; they are not disposable scratch. Show them inline when
+supported, otherwise as accessible file links. A delegated implementer returns
+paths and captions for its lead to relay.
+
+For an authorized PR, use the [PR body template](../templates/pr-body.md#visual-proof)
+for layout and upload. If useful evidence cannot be captured or published, state
+the concrete limitation and what remains unobserved or available only locally in
+the normal completion. This presentation guidance adds no separate approval pause
+or completion gate and does not waive required behavioral or rendered proof.
