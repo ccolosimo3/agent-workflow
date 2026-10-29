@@ -112,12 +112,12 @@ support. When it is available:
 3. Read the uploads back with `gh pr view <n> -R <owner>/<repo> --json body
    --jq .body`, since `gh pr edit` prints only the PR URL. Map each file to its
    `user-attachments` URL. A partial upload still updates the PR and exits
-   nonzero. If any image lacks a URL, rerun once with `--attach` **only for the
+   nonzero. If any file lacks a URL, rerun once with `--attach` **only for the
    missing files**, using a body that keeps the URLs that succeeded and
    references only the missing files. gh uploads every file passed to
    `--attach`, so passing a file that already succeeded adds a duplicate.
 4. Apply the final body with `gh pr edit <n> -R <owner>/<repo> --body-file
-   <final-body>`, putting the uploaded URLs into the approved table. If files
+   <final-body>`, using the uploaded URLs in the approved layout. If files
    still lack URLs after the rerun, omit those captures and their captions from
    the published body, or omit `## Screenshots` if none uploaded. Keep the rest of
    the approved body intact. Hand the operator the remaining files and captions
