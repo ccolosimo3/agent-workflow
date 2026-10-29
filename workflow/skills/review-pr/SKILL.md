@@ -110,20 +110,29 @@ a named unanswered question.
 
 ## Calibrate for the operator
 
-Discovery stays as strict as own-work review. After evidence converges, calibrate
-each action to the supported trigger, relevance to the reviewed range or unmet
-acceptance, and the configured consequence, including recovery. A reproduced
-intermediate failure or synthetic counterexample alone does not settle product
-reachability or merge action. When revising an action, distinguish new evidence
-from a changed risk judgment. Assign each surviving item one action:
+Discovery and `REVIEW.md` severity stay as strict as own-work review; severity
+alone does not choose the merge action here. After evidence converges, calibrate
+each action to the supported trigger, frequency and exposure, relevance to the
+reviewed range or unmet acceptance, and consequence in supported configurations,
+including recovery and aggregate impact at realistic scale. A confirmed defect
+alone does not justify blocking. Infrequent defects with low practical
+consequences should normally be suggestions or omitted when acceptance and
+applicable authority are satisfied. Rare triggers can still justify blocking
+when consequences are serious; a credible risk needs a supported path to harm,
+not merely an imaginable one. A reproduced intermediate failure or synthetic
+counterexample alone does not settle product reachability or merge action. When
+revising an action, distinguish new evidence from a changed risk judgment. Assign
+each surviving item one action:
 
-- **Request changes:** confirmed realistic defect, unmet acceptance, material
-  security/data/migration/contract/deployment risk, or required proof whose
-  absence leaves a credible material regression surface.
+- **Request changes:** confirmed defect with meaningful practical harm; unmet
+  acceptance or required policy; credible material security, permission, data,
+  migration, contract, or deployment risk; or required proof whose absence leaves
+  a credible material regression surface.
 - **Discuss:** product, intent, or team-policy ambiguity that changes the merge
   decision; state the exact question and both outcomes.
-- **Suggestion:** objective improvement when current behavior is correct and no
-  applicable authority is violated.
+- **Suggestion:** objective non-blocking improvement, including a confirmed
+  infrequent, low-consequence defect, when acceptance and applicable authority
+  are satisfied. State a real defect plainly, with its trigger and consequence.
 - **Nit:** introduced, objective, low-consequence detail without behavioral or
   contract impact.
 - **Reject privately:** stale, duplicate, pre-existing, unsupported,
