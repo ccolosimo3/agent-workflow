@@ -86,6 +86,11 @@ screens, go one or two across at a larger width instead. One image needs no
 table. Never put more than three in a row. Name files `NN-state-platform` in
 display order.
 
+Keep recordings outside the image table. In the upload body, put each
+`![](./01-state-platform.mp4)` in its own paragraph, separated from its caption by
+blank lines. In the final body, keep the uploaded video URL alone in its paragraph
+so it renders as a player, following [GitHub's attachment guidance](https://docs.github.com/en/github-cli/github-cli/attaching-files-with-github-cli#embedding-a-video).
+
 The local paths are preview and upload placeholders. The published body holds
 uploaded URLs only. Use a GitHub CLI whose `gh pr edit --help` lists `--attach`;
 otherwise provide the files and captions locally for the operator to attach.
@@ -113,11 +118,11 @@ support. When it is available:
    `--attach`, so passing a file that already succeeded adds a duplicate.
 4. Apply the final body with `gh pr edit <n> -R <owner>/<repo> --body-file
    <final-body>`, putting the uploaded URLs into the approved table. If files
-   still lack URLs after the rerun, omit those images and their captions from the
-   published table, or omit `## Screenshots` if none uploaded. Keep the rest of
+   still lack URLs after the rerun, omit those captures and their captions from
+   the published body, or omit `## Screenshots` if none uploaded. Keep the rest of
    the approved body intact. Hand the operator the remaining files and captions
    and state the limitation in the completion. Check the live body against the
-   final text: every included image has an uploaded URL, no local image paths
+   final text: every included capture has an uploaded URL, no local file paths
    remain, and the screenshot count matches. If the final edit fails, report the
    live body's actual state and the remaining repair rather than claiming the
    publication is complete.

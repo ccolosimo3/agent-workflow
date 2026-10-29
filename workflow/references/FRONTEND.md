@@ -60,7 +60,7 @@ the completion report without waiting to be asked. Capture while verifying the
 affected surface and reuse required verification captures: a short captioned
 selection for visual-design work, or one capture for an incidental change when
 it helps. Skip captures that add nothing. For incidental changes, don't start an
-environment solely for a capture; don't add tooling or an exhaustive gallery just
+environment solely for a capture. Don't add tooling or an exhaustive gallery just
 for presentation. Use ordered screenshots for interactions and a short recording
 when timing or motion matters. Add a before view when already available or cheap
 to obtain without rebuilding the base solely for it.
