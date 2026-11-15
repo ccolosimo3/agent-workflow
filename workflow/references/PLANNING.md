@@ -12,40 +12,67 @@ phase selection and handoffs; each phase skill owns its inputs, process, and res
   evidence.
 - A living work-item document is a decision/evidence index, not a transcript,
   status diary, or review log.
-- Required verification evidence belongs in the work item or its existing evidence
-  owner. Capture exact commands and results there during execution. The optional
-  completion receipt may summarize or point to that evidence; its formatting,
-  schema, availability, or exhaustive contents must not become Task acceptance.
+- Required verification evidence belongs in the active work item or its existing
+  evidence owner. Capture exact commands and results there during execution.
+  Before deleting a finished plan, move unique required proof to its surviving
+  owner under the closeout rule below. The optional completion receipt may
+  summarize or point to that evidence; its formatting, schema, availability, or
+  exhaustive contents must not become Task acceptance.
 - Keep raw CLI responses, stdout/stderr, and test captures in ignored task-local
   scratch storage. Retain findings, candidate and reviewer/session identity,
-  resolutions, and unique required proof in the existing evidence owner. Preserve
-  recovery inputs while work is open; at closeout, remove only task-owned disposable
-  output after retaining required proof. Do not create separate durable files for
-  every payload, result, stderr stream, or exit code by default.
+  resolutions, and unique required proof in the existing evidence owner while
+  work is active. Preserve recovery inputs while work is open; at closeout,
+  preserve only continuing decisions, obligations, material acceptance limits,
+  and unique required proof in their surviving owners. Delete finished plans
+  and task-owned disposable output within the authorized scope. Do not create
+  separate durable files for every payload, result, stderr stream, or exit code
+  by default.
 
 ## Plan storage
 
-Follow the repository's declared planning location, owners, layout, and lifecycle,
-including shared or external repositories. If durable planning needs a location
-and none is configured, use `setup-workflow`'s Repository onboarding; do not create
-or track a plan area silently.
+Follow the repository's declared planning location, owners, and layout, including
+shared or external repositories, under the lifecycle below. If durable planning
+needs a location and none is configured, use `setup-workflow`'s Repository
+onboarding; do not create or track a plan area silently.
+
+Plans exist only for active work: planning, implementation, review, or an owned
+unresolved obligation with a concrete next action. Blocked work remains active
+when that obligation still exists. Store unselected ideas and deferred work as
+one-line entries in the lane's index, without retaining execution plans or
+creating tracker items merely to retain an idea.
 
 ### Routine plan maintenance
 
-Local archival and index updates are ordinary planning work under `WORKFLOW.md`'s
-ownership rule. Confirm terminal status from evidence or an operator decision;
-age, silence, or missing bookkeeping is insufficient. Required proof/review keeps
-work open. Carry continuing obligations to a named owner, retain disposition and
-evidence in the existing plan, then follow its archive lifecycle. For the default
-layout, move the whole folder to `archive/` and fix affected links. Coordinate
-before moving a path an active worker uses. Deletion and off-device publication
-follow `KERNEL.md`.
+A work item is finished when its delivery is merged, or its closure, cancellation
+or abandonment is confirmed, and no required review, acceptance proof or
+continuing obligation remains in that item. Age, silence and folder names do not
+establish completion. Completed children are cleaned up independently of an
+active umbrella.
 
-Retrieve from the current index or named active work; consult archives as needed.
-Replace obsolete status in its owner, preserving decisions/evidence and marking
-superseded direction. Ask only about genuinely unclear dispositions; maintenance
-neither creates a report/ledger nor reopens valid verification or blocks unrelated
-work.
+Before deletion, preserve only decisions governing continuing behavior,
+continuing obligations, material acceptance limits and unique required proof.
+Put these in their existing owner: maintained documentation, the issue or PR,
+or the private operator decision record. Git history preserves committed
+implementation and plans; it does not preserve uncommitted or ignored proof.
+Obtain any required publication approval; never upload private plans or
+transcripts merely to preserve them.
+
+The owning lead checks terminal evidence, active consumers and workers, local
+changes, remote-only material and surviving references. Carry continuing
+obligations to a named active owner. Prepare the exact deletion scope, including
+corresponding paths in any plans remote, and use current-session authorization
+covering that scope or obtain it under `KERNEL.md`.
+
+Delete finished plans and their disposable output without copying them into
+historical storage. Update active indexes and affected links. Preserve unrelated
+changes. Publish approved remote deletions as ordinary scoped commits; history
+rewriting, force pushes and repository deletion require separate explicit
+approval. Do not recreate another machine's deleted plans from stale local copies.
+
+Retrieve current work from the index or named active owner. Replace obsolete
+status in its owner, preserving continuing decisions and evidence. Ask only about
+genuinely unclear dispositions; maintenance neither creates a report/ledger nor
+reopens valid verification or blocks unrelated work.
 
 ## Grounding and scope
 

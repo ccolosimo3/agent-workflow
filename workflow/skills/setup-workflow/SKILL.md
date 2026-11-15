@@ -160,9 +160,9 @@ directory excluded through `.git/info/exclude`; allow a tracked/custom location
 or no durable storage when the user prefers it. Preview the exact directory,
 exclusion, and adapter edit, then request approval before writing. Record private
 storage in the local repository adapter and shared storage in the tracked adapter.
-For a new default private planning area, initialize only `active/` and `archive/`;
-keep each living work item at `active/<short-name>/README.md`. Add `INDEX.md` or
-other buckets only when coordination needs them. Reuse the recorded location and
+For a new default private planning area, initialize only `active/`;
+keep each living work item at `active/<short-name>/README.md`. Add an index or
+maintained reference owner only when needed. Reuse the recorded location and
 visibility without asking again; `PLANNING.md` owns ongoing maintenance. Do not
 initialize a nested Git repository unless requested.
 
