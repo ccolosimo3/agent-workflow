@@ -43,11 +43,11 @@ or obligation remains. Age, silence, or missing bookkeeping is insufficient. A
 finished child does not wait for its umbrella.
 
 Finished plans are deleted, not archived. First move what must outlive the plan
-(decisions that still govern behavior, continuing obligations, unique required
-proof) to its existing owner: maintained documentation, the issue or PR, or the
-operator's decision record. Then delete the plan and its task-owned disposable
-output, and fix the index and affected links. Coordinate before deleting a path
-an active worker uses. Deletion and publication follow `KERNEL.md`.
+(decisions that still govern behavior, reusable findings, continuing obligations,
+unique required proof) to its existing owner: maintained documentation, the issue
+or PR, or the operator's decision record. Then delete the plan and its task-owned
+disposable output, and fix the index and affected links. Coordinate before deleting
+a path an active worker uses. Deletion and publication follow `KERNEL.md`.
 
 Retrieve from the current index or named active work. Replace obsolete status in
 its owner. Ask only about genuinely unclear dispositions; maintenance neither
