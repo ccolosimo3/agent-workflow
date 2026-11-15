@@ -25,27 +25,33 @@ phase selection and handoffs; each phase skill owns its inputs, process, and res
 
 ## Plan storage
 
-Follow the repository's declared planning location, owners, layout, and lifecycle,
-including shared or external repositories. If durable planning needs a location
-and none is configured, use `setup-workflow`'s Repository onboarding; do not create
-or track a plan area silently.
+Follow the repository's declared planning location, owners, and layout, including
+shared or external repositories. If durable planning needs a location and none is
+configured, use `setup-workflow`'s Repository onboarding; do not create or track
+a plan area silently.
+
+Plans exist only for active work: work being planned, implemented or reviewed, or
+blocked with an owned next action. Keep an unselected or deferred idea as one
+line in an existing planning index, not as a plan or a tracker item.
 
 ### Routine plan maintenance
 
-Local archival and index updates are ordinary planning work under `WORKFLOW.md`'s
-ownership rule. Confirm terminal status from evidence or an operator decision;
-age, silence, or missing bookkeeping is insufficient. Required proof/review keeps
-work open. Carry continuing obligations to a named owner, retain disposition and
-evidence in the existing plan, then follow its archive lifecycle. For the default
-layout, move the whole folder to `archive/` and fix affected links. Coordinate
-before moving a path an active worker uses. Deletion and off-device publication
-follow `KERNEL.md`.
+Index updates are ordinary planning work for the planning owner under
+`WORKFLOW.md`. A work item is finished when evidence or an operator decision
+confirms it merged, closed, cancelled or deferred, and no required review, proof
+or obligation remains. Age, silence, or missing bookkeeping is insufficient. A
+finished child does not wait for its umbrella.
 
-Retrieve from the current index or named active work; consult archives as needed.
-Replace obsolete status in its owner, preserving decisions/evidence and marking
-superseded direction. Ask only about genuinely unclear dispositions; maintenance
-neither creates a report/ledger nor reopens valid verification or blocks unrelated
-work.
+Finished plans are deleted, not archived. First move what must outlive the plan
+(decisions that still govern behavior, reusable findings, continuing obligations,
+unique required proof) to its existing owner: maintained documentation, the issue
+or PR, or the operator's decision record. Then delete the plan and its task-owned
+disposable output, and fix the index and affected links. Coordinate before deleting
+a path an active worker uses. Deletion and publication follow `KERNEL.md`.
+
+Retrieve from the current index or named active work. Replace obsolete status in
+its owner. Ask only about genuinely unclear dispositions; maintenance neither
+creates a report/ledger nor reopens valid verification or blocks unrelated work.
 
 ## Grounding and scope
 

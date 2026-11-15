@@ -50,8 +50,8 @@ assuming shared program ownership or dispatching.
   before reporting closeout. On takeover, make a bounded pass through the
   current index or active plans for completed, cancelled, or superseded work left behind;
   during material planning updates, reconcile stale state encountered there.
-  Stay within this project's planning ownership; do not rescan the archive or
-  turn every status check into a cleanup sweep.
+  Stay within this project's planning ownership; do not turn every status check
+  into a cleanup sweep.
 - Shape the next independently reviewable risk boundary. Map a broader
   destination only when it helps sequence work; do not fully specify speculative
   later slices.

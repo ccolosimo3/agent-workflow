@@ -48,6 +48,10 @@ operations; dependency/lockfile/toolchain changes; handling real-data dumps or
 uncertain data; pushes, publication, tracker/messages, deployments or
 infrastructure mutations; other authenticated provider traffic, automated
 live-source collection, and metered calls.
+The operator may record in the host adapter a revocable standing approval for a
+planning owner to delete only its own finished plans after `PLANNING.md`'s
+closeout checks. It excludes shared, uncertain or others' material and leaves
+every other gate unchanged.
 Preserve unrelated environments and unowned changes. History rewrite, force
 operations, and safeguard bypasses require explicit approval; never bypass a
 failed hook or policy check. State the exact target, scope, side effects, and

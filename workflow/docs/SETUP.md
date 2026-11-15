@@ -201,7 +201,7 @@ For durable plans, the default is a private `.agent-workflow/plans/` inside the
 repository, excluded through `.git/info/exclude` and declared in its local
 adapter. Setup previews those writes before approval. A user may instead select a
 tracked or custom path, an existing plan owner, or no durable storage. New private
-stores start with only `active/` and `archive/`; `INDEX.md` appears when multiple
+stores start with only `active/`; `INDEX.md` appears when multiple
 work items need coordination. No nested Git repository is created by default.
 
 ## macOS and Windows
