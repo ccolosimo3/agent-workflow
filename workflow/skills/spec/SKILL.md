@@ -56,8 +56,8 @@ one.
 Write the living spec at the repository's declared plan location. Drafting alone
 does not authorize implementation, tracker mutation, or promotion.
 
-Before review, resolve `review-spec`. If unavailable, report “review phase not
-implemented” without promotion or kickoff. Otherwise invoke it;
+Before review, resolve `review-spec`. If it is unavailable, report that the review
+phase is unavailable and stop without promotion or kickoff. Otherwise invoke it;
 `review-spec` owns authority resolution, payload construction, and review
 loops.
 After required approval, continue into `implement` in this task when execution
