@@ -1,6 +1,6 @@
 ---
 name: show-me
-description: Help the user understand the current topic visually with concise diagrams, code-shape sketches, and focused HTML artifacts.
+description: Help the user understand the current topic visually with concise diagrams, code-shape sketches, and focused HTML artifacts. Use when the user asks to be shown or to see how something works (for example /show-me or "show me how this flows"); not for designing or building product UI.
 metadata:
   opencode/autoinvoke: true
   workflow/kind: advisory-guidance
@@ -9,6 +9,9 @@ metadata:
 Help the user understand the current topic of conversation visually. Skip the
 preamble and keep prose brief. Pick the smallest view that makes the key point
 clear.
+
+The shapes below are illustrative; fill them with the real names, files, and
+flow from the current topic.
 
 - Show logic or an algorithm as pseudocode:
 
